@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 7ceb4c95bea12e628dba0c6aa384634b6fb7a5ca youcaughtafish <dzmoore@gmail.com> 1350758027 -0400	commit (initial): initial commit
+7ceb4c95bea12e628dba0c6aa384634b6fb7a5ca 16eb5ec66a10f7cf6ac5626c296d6d5becf113a7 Dylan Moore <dzmoore@gmail.com> 1350766163 -0400	commit: deprecated some files, commented out unused beans
+16eb5ec66a10f7cf6ac5626c296d6d5becf113a7 39e0d66f6574b056eca6bbf260bb5049824179f6 Dylan Moore <dzmoore@gmail.com> 1350767509 -0400	commit: added documentation and readme
+39e0d66f6574b056eca6bbf260bb5049824179f6 c345d57deba42833f4dc52318accfbd13fb18863 Dylan Moore <dzmoore@gmail.com> 1350767687 -0400	commit: added documentation and readme; small changes to markdown in docs
+c345d57deba42833f4dc52318accfbd13fb18863 16b8021461c10a92c764461faf2ce9e6a0a42afd Dylan Moore <dzmoore@gmail.com> 1350767753 -0400	commit: added documentation and readme; small changes to markdown in docs; and another
+16b8021461c10a92c764461faf2ce9e6a0a42afd a39824ea7b4666f0bbe1ae876afdbfa503069519 Dylan Moore <dzmoore@gmail.com> 1350767804 -0400	commit: added documentation and readme; small changes to markdown in docs; and another
+a39824ea7b4666f0bbe1ae876afdbfa503069519 a79f3cf9337473b73b98829613a02b9157ccd1b5 youcaughtafish <dzmoore@gmail.com> 1350772134 -0400	commit: removed jpa facet from project
+a79f3cf9337473b73b98829613a02b9157ccd1b5 6aa117727c3d0f81cbb37fd7bf7edfc6ae762dde Dylan Moore <dzmoore@gmail.com> 1350772330 -0400	commit: .
+6aa117727c3d0f81cbb37fd7bf7edfc6ae762dde cb31d5f046df8011e0fc5ee05fd53689eb7c6908 Dylan Moore <dzmoore@gmail.com> 1350772657 -0400	commit (merge): ..
