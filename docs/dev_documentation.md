@@ -3,16 +3,18 @@ Dev Documentation
 
 ## 20-Oct-2012
 ### Database / Hibernate Configuration:
-+ create a user table in the db:
-	create table user (
-		id int(21) not null auto_increment,
-		username varchar(40) not null,
-		password varchar(60) not null,
-		active tinyint(1),
-		last_mod timestamp default current_timestamp on update current_timestamp,
-		salt varchar(40),
-		primary key (id)
-	) engine=InnoDB;	
+create a user table in the db:  
+    
+    create table user (
+        id int(21) not null auto_increment,
+        username varchar(40) not null,
+        password varchar(60) not null,
+        active tinyint(1),
+        last_mod timestamp default current_timestamp on update current_timestamp,
+        salt varchar(40),
+        primary key (id)
+    ) engine=InnoDB;	
+
 + Run hibernate tools reverse engineering to generate annotated domain classes
 + src/main/webapp/WEB-INF/root-context.xml loads db.xml.  db.xml reads from src/main/resources/db.properties.
 + db.xml establishes a 'sessionFactory' bean that will be autowired into controller classes
@@ -35,7 +37,7 @@ Dev Documentation
 
 ### Database:
 
-	create user:
+##### create user and database:
 
 	mysql -u root -p
 	
