@@ -1,8 +1,7 @@
 Dev Documentation
 ====================
 
-20-Oct-2012
---------------------
+## 20-Oct-2012
 ### Database / Hibernate Configuration:
 + create a user table in the db:
 	create table user (
@@ -21,11 +20,9 @@ Dev Documentation
 	
 	
 
-19-Oct-2012
---------------------
+## 19-Oct-2012
 
 ### Already Installed:
-
 + Eclipse Indigo --upgraded_to--> Juno
 + Maven Plugin
 + Android SDK
