@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="top" >
-
+
     <TableRow
         android:id="@+id/share_save_row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:layout_weight="1" >
+        android:layout_weight="5"
+        android:minHeight="@string/create_meme_top_row_height" >
 
         <LinearLayout
             android:id="@+id/share_save_linear"
@@ -21,28 +21,25 @@
             <Button
                 android:id="@+id/share_btn"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:minHeight="40dip"
-                android:minWidth="40dip"
-                android:text="Share" />
+                android:text="@string/share_string" />
 
             <Button
                 android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:minHeight="40dip"
-                android:minWidth="40dip"
-                android:text="Save" />
+                android:text="@string/save_string" />
         </LinearLayout>
     </TableRow>
-
+
     <TableRow
         android:id="@+id/top_text_row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5" >
+        android:layout_weight="5"
+        android:minHeight="@string/create_meme_top_row_height">
 
         <LinearLayout
             android:id="@+id/top_text_linear"
@@ -55,62 +52,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:minHeight="40dip"
-                android:minWidth="40dip"
-                android:text="Top Text" />
-
+                android:text="@string/edit_top_text_string" />
+
             <ImageButton
                 android:id="@+id/config_top_text_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
-                android:minHeight="40dip"
-                android:minWidth="40dip"
+                android:adjustViewBounds="true"
                 android:src="@drawable/config_icon" />
-
         </LinearLayout>
     </TableRow>
-
+
     <TableRow
         android:id="@+id/bottom_text_row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:maxHeight="5dp" >
-
+		android:minHeight="@string/create_meme_top_row_height">
+        
         <LinearLayout
             android:id="@+id/bottom_text_linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <Button
                 android:id="@+id/edit_bottom_text_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:minHeight="40dip"
-                android:minWidth="40dip"
-                android:text="Bottom Text" />
-
+                android:text="@string/edit_bottom_text_string" />
+
             <ImageButton
                 android:id="@+id/config_bottom_text_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
-                android:minHeight="40dip"
-                android:minWidth="40dip"
-                android:src="@drawable/config_icon" />
-
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:scaleType="center"
+                android:src="@drawable/ic_config_small" />
         </LinearLayout>
     </TableRow>
-
+
     <TableRow
         android:id="@+id/image_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="75" >
-
+        android:layout_weight="75"
+        android:minHeight="@string/create_meme_top_row_height" >
+
         <LinearLayout
             android:id="@+id/image_linear"
             android:layout_width="wrap_content"
@@ -118,14 +110,13 @@
             android:layout_gravity="center_horizontal"
             android:layout_span="2"
             android:layout_weight="1" >
-
+
             <ImageView
                 android:id="@+id/image_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/tmimitw" />
-
         </LinearLayout>
     </TableRow>
 

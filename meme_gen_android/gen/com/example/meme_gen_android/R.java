@@ -13,8 +13,9 @@ public final class R {
     public static final class drawable {
         public static final int config_icon=0x7f020000;
         public static final int ic_action_search=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int tmimitw=0x7f020003;
+        public static final int ic_config_small=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int tmimitw=0x7f020004;
     }
     public static final class id {
         public static final int TableLayout1=0x7f070000;
@@ -43,8 +44,13 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
+        public static final int create_meme_top_row_height=0x7f040004;
+        public static final int edit_bottom_text_string=0x7f040008;
+        public static final int edit_top_text_string=0x7f040007;
         public static final int hello_world=0x7f040001;
         public static final int menu_settings=0x7f040002;
+        public static final int save_string=0x7f040006;
+        public static final int share_string=0x7f040005;
         public static final int title_activity_create_meme=0x7f040003;
     }
     public static final class style {
