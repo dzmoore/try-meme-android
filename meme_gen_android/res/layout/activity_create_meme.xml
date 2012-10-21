@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:minHeight="@string/create_meme_top_row_height">
+        android:minHeight="@string/create_meme_top_row_height" >
 
         <LinearLayout
             android:id="@+id/top_text_linear"
@@ -69,13 +69,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="5"
-		android:minHeight="@string/create_meme_top_row_height">
-        
+        android:minHeight="@string/create_meme_top_row_height" >
+
         <LinearLayout
             android:id="@+id/bottom_text_linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" >
 
             <Button
                 android:id="@+id/edit_bottom_text_btn"
@@ -95,29 +95,29 @@
                 android:src="@drawable/ic_config_small" />
         </LinearLayout>
     </TableRow>
-
+
     <TableRow
         android:id="@+id/image_row"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="75"
+        android:layout_weight="175"
         android:minHeight="@string/create_meme_top_row_height" >
-
-        <LinearLayout
-            android:id="@+id/image_linear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_span="2"
+
+        <RelativeLayout
+            android:id="@+id/image_relative_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="top"
             android:layout_weight="1" >
-
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="0dip"
+
+            <include
+                android:id="meme_create_meme_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/tmimitw" />
-        </LinearLayout>
+                layout="@layout/meme_view" />
+
+        </RelativeLayout>
+
     </TableRow>
 
 </TableLayout>
