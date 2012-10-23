@@ -111,7 +111,7 @@
             android:layout_weight="1" >
 
             <include
-                android:id="meme_create_meme_view"
+                android:id="@+id/meme_create_meme_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 layout="@layout/meme_view" />
