@@ -11,6 +11,7 @@ public final class R {
     public static final class attr {
     }
     public static final class dimen {
+        public static final int text_padding=0x7f040001;
         public static final int zero_dip=0x7f040000;
     }
     public static final class drawable {
