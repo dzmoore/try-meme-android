@@ -13,21 +13,21 @@ create table lv_meme_text_type (
 	type varchar(20) not null,
 	active tinyint(1),
 	primary key (id)	
-);
+) engine=InnoDB;
 
 create table lv_meme_type (
 	id int(21) not null auto_increment,
 	type varchar(20),
-	desc varchar(100),
+	descr varchar(100),
 	active tinyint(1),
 	primary key (id)
-);
+) engine=InnoDB;
 
 create table background_path (
 	id int(21) not null auto_increment,
 	path varchar(200),
 	primary key (id)
-);
+) engine=InnoDB;
 
 create table meme_background (
 	id int(21) not null auto_increment,
@@ -35,7 +35,7 @@ create table meme_background (
 	active tinyint(1),
 	primary key (id),
 	foreign key (background_path_fk) references background_path(id)
-);
+) engine=InnoDB;
 
 create table meme (
 	id int(21) not null auto_increment,
@@ -44,7 +44,7 @@ create table meme (
 	primary key (id),
 	foreign key (lv_meme_type_fk) references lv_meme_type(id),
 	foreign key (meme_background_fk) references meme_background(id)
-);
+) engine=InnoDB;
 
 create table meme_text (
 	id int(21) not null auto_increment,
@@ -54,5 +54,5 @@ create table meme_text (
 	primary key (id),
 	foreign key (lv_meme_text_type_fk) references lv_meme_text_type(id),
 	foreign key (meme_fk) references meme(id)
-);
+) engine=InnoDB;
 
