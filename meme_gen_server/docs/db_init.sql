@@ -23,18 +23,11 @@ create table lv_meme_type (
 	primary key (id)
 ) engine=InnoDB;
 
-create table background_path (
-	id int(21) not null auto_increment,
-	path varchar(200),
-	primary key (id)
-) engine=InnoDB;
-
 create table meme_background (
 	id int(21) not null auto_increment,
-	background_path_fk int(21),
 	active tinyint(1),
-	primary key (id),
-	foreign key (background_path_fk) references background_path(id)
+	path varchar(200),
+	primary key (id)
 ) engine=InnoDB;
 
 create table meme (

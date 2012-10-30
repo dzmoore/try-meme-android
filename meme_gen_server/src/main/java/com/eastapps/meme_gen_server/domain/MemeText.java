@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Oct 28, 2012 9:12:37 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 29, 2012 8:49:09 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

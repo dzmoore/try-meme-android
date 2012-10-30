@@ -12,8 +12,8 @@
 		<jetty.version>6.1.4</jetty.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<slf4j.version>1.5.10</slf4j.version>
-		<java.version>1.5</java.version>
-		<junit.version>4.8.2</junit.version>
+		<java.version>1.6</java.version>
+		<junit.version>4.10</junit.version>
 	</properties>
 
 	<dependencies>
@@ -197,16 +197,6 @@
 					<wtpversion>2.0</wtpversion>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
-
-			<!-- Plugin to run and test through maven -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.25</version>
-				<configuration>
-					<scanIntervalSeconds>3</scanIntervalSeconds>
 				</configuration>
 			</plugin>
 

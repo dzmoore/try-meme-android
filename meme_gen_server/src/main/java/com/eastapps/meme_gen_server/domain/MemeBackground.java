@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Oct 28, 2012 9:12:37 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 29, 2012 8:49:09 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,17 +21,16 @@ import javax.persistence.Table;
 public class MemeBackground implements java.io.Serializable {
 
 	private Integer id;
-	private BackgroundPath backgroundPath;
 	private Boolean active;
+	private String path;
 	private Set memes = new HashSet(0);
 
 	public MemeBackground() {
 	}
 
-	public MemeBackground(BackgroundPath backgroundPath, Boolean active,
-			Set memes) {
-		this.backgroundPath = backgroundPath;
+	public MemeBackground(Boolean active, String path, Set memes) {
 		this.active = active;
+		this.path = path;
 		this.memes = memes;
 	}
 
@@ -48,16 +45,6 @@ public class MemeBackground implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "background_path_fk")
-	public BackgroundPath getBackgroundPath() {
-		return this.backgroundPath;
-	}
-
-	public void setBackgroundPath(BackgroundPath backgroundPath) {
-		this.backgroundPath = backgroundPath;
-	}
-
 	@Column(name = "active")
 	public Boolean getActive() {
 		return this.active;
@@ -65,6 +52,15 @@ public class MemeBackground implements java.io.Serializable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	@Column(name = "path", length = 200)
+	public String getPath() {
+		return this.path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "memeBackground")
