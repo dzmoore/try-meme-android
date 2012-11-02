@@ -81,7 +81,7 @@ resultQry="select "\
 "	join meme_background mback on "\
 "	(mback.id = m.meme_background_fk) "\
 "where "\
-"	m.id = $memeId ";
+"	m.id = $memeId \G";
 
-result=$(echo $resultQry | $MYSQL_CMD_OUT)
-echo $result
+result=$(echo $resultQry | $MYSQL_CMD_OUT_WITHCOLS)
+printf "$result\n"
