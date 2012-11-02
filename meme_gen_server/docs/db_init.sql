@@ -49,3 +49,8 @@ create table meme_text (
 	foreign key (meme_fk) references meme(id)
 ) engine=InnoDB;
 
+insert into lv_meme_text_type (type, active) values ('TOP', 1);
+insert into lv_meme_text_type (type, active) values ('BOTTOM', 1);
+
+
+
