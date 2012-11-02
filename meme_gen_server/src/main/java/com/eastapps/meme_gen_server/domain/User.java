@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "user", catalog = "mgsdb")
 public class User implements java.io.Serializable {
-
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String username;
     private String password;

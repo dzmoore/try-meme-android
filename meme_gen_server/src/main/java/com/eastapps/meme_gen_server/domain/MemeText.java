@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Oct 29, 2012 8:49:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 2, 2012 1:45:43 PM by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,59 +18,59 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "meme_text", catalog = "mgsdb")
 public class MemeText implements java.io.Serializable {
+    private static final long serialVersionUID = -6589583098854875551L;
+    private Integer id;
+    private LvMemeTextType lvMemeTextType;
+    private Meme meme;
+    private String text;
 
-	private Integer id;
-	private LvMemeTextType lvMemeTextType;
-	private Meme meme;
-	private String text;
+    public MemeText() {
+    }
 
-	public MemeText() {
-	}
+    public MemeText(LvMemeTextType lvMemeTextType, Meme meme, String text) {
+	this.lvMemeTextType = lvMemeTextType;
+	this.meme = meme;
+	this.text = text;
+    }
 
-	public MemeText(LvMemeTextType lvMemeTextType, Meme meme, String text) {
-		this.lvMemeTextType = lvMemeTextType;
-		this.meme = meme;
-		this.text = text;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+	return this.id;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lv_meme_text_type_fk")
+    public LvMemeTextType getLvMemeTextType() {
+	return this.lvMemeTextType;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lv_meme_text_type_fk")
-	public LvMemeTextType getLvMemeTextType() {
-		return this.lvMemeTextType;
-	}
+    public void setLvMemeTextType(LvMemeTextType lvMemeTextType) {
+	this.lvMemeTextType = lvMemeTextType;
+    }
 
-	public void setLvMemeTextType(LvMemeTextType lvMemeTextType) {
-		this.lvMemeTextType = lvMemeTextType;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meme_fk")
+    public Meme getMeme() {
+	return this.meme;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "meme_fk")
-	public Meme getMeme() {
-		return this.meme;
-	}
+    public void setMeme(Meme meme) {
+	this.meme = meme;
+    }
 
-	public void setMeme(Meme meme) {
-		this.meme = meme;
-	}
+    @Column(name = "text", length = 200)
+    public String getText() {
+	return this.text;
+    }
 
-	@Column(name = "text", length = 200)
-	public String getText() {
-		return this.text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+	this.text = text;
+    }
 
 }

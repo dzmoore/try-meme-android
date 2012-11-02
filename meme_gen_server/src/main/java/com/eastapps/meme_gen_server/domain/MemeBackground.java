@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Oct 29, 2012 8:49:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 2, 2012 1:45:43 PM by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,57 +19,57 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "meme_background", catalog = "mgsdb")
 public class MemeBackground implements java.io.Serializable {
+    private static final long serialVersionUID = -678181842721165320L;
+    private Integer id;
+    private Boolean active;
+    private String path;
+    private Set<Meme> memes = new HashSet<Meme>(0);
 
-	private Integer id;
-	private Boolean active;
-	private String path;
-	private Set memes = new HashSet(0);
+    public MemeBackground() {
+    }
 
-	public MemeBackground() {
-	}
+    public MemeBackground(Boolean active, String path, Set<Meme> memes) {
+	this.active = active;
+	this.path = path;
+	this.memes = memes;
+    }
 
-	public MemeBackground(Boolean active, String path, Set memes) {
-		this.active = active;
-		this.path = path;
-		this.memes = memes;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+	return this.id;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "active")
+    public Boolean getActive() {
+	return this.active;
+    }
 
-	@Column(name = "active")
-	public Boolean getActive() {
-		return this.active;
-	}
+    public void setActive(Boolean active) {
+	this.active = active;
+    }
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
+    @Column(name = "path", length = 200)
+    public String getPath() {
+	return this.path;
+    }
 
-	@Column(name = "path", length = 200)
-	public String getPath() {
-		return this.path;
-	}
+    public void setPath(String path) {
+	this.path = path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "memeBackground")
+    public Set<Meme> getMemes() {
+	return this.memes;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "memeBackground")
-	public Set getMemes() {
-		return this.memes;
-	}
-
-	public void setMemes(Set memes) {
-		this.memes = memes;
-	}
+    public void setMemes(Set<Meme> memes) {
+	this.memes = memes;
+    }
 
 }
