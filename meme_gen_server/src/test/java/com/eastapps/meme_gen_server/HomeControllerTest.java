@@ -36,6 +36,7 @@ public class HomeControllerTest {
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testHib() {
 	    final Session sesh = sessionFactory.openSession();

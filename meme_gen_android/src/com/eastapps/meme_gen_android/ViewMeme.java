@@ -1,4 +1,6 @@
-package com.example.meme_gen_android;
+package com.eastapps.meme_gen_android;
+
+import com.example.meme_gen_android.R;
 
 import android.os.Bundle;
 import android.app.Activity;

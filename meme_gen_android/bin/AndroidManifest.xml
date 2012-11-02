@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ViewMeme"
+            android:name="com.eastapps.meme_gen_android.ViewMeme"
             android:label="@string/title_activity_view_meme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
