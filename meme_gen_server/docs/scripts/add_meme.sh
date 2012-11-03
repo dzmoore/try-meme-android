@@ -1,5 +1,5 @@
 #!/bin/bash
-imgPath='./tmimitw.jpg';
+imgPath='/full/path/here/tmimitw.jpg';
 memeType='most_int_man';
 memeTypeDesc='The Most Interesting Man in the World';
 topText="I don\'t always test my code, but when I do..."
