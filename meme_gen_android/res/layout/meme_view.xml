@@ -6,7 +6,7 @@
         android:id="@+id/meme_view_rel_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
+
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:scaleType="fitStart"
-            android:src="@drawable/tmimitw" />
+            android:src="@drawable/config_icon" />
 
         <TextView
             android:id="@+id/top_text_textview"

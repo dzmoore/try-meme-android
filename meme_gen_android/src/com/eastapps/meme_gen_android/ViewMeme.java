@@ -1,11 +1,19 @@
 package com.eastapps.meme_gen_android;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 import com.example.meme_gen_android.R;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.ViewTreeObserver;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -15,12 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ViewMeme extends Activity {
-    
-    public ViewMeme() {
-        super();
-        
-        
-    }
+    private static final String TAG = ViewMeme.class.getSimpleName();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,8 +42,20 @@ public class ViewMeme extends Activity {
         bottomTxtView.setTypeface(robotoBoldCondensedTypeFace);
         bottomTxtView.setTextSize(26);
         
-        
-//        addViewTreeObserverToImgView();
+        final ImageView imgView = (ImageView) findViewById(R.id.image_view);
+        try {
+			URL url = new URL("http://192.168.1.17:8080/meme_gen_server/spring/meme_data/2/background");
+			URLConnection connection = url.openConnection();
+			connection.setUseCaches(true);
+			Bitmap response = BitmapFactory.decodeStream(connection.getInputStream());
+			
+			if (response != null) {
+				imgView.setImageBitmap(response);
+			}
+			
+		} catch (Exception e) {
+			Log.e(TAG, "error occurred", e);
+		}
     }
 
     private void addViewTreeObserverToImgView() {
