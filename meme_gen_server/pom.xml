@@ -27,6 +27,12 @@
 			<version>1.0.0.GA</version>
 			<scope>compile</scope>
 		</dependency>
+  
+        <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>1.9.9</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>

@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eastapps.meme_gen_server.domain.User;
 
@@ -89,12 +90,14 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/meme_data/{id}/background", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getMemeBackground(@PathVariable("id") final String backgroundId) throws IOException {
-	final File img = new File("docs/scripts/tmimitw.jpg");
+    @ResponseBody
+    public byte[] getMemeBackground(@PathVariable("id") final String backgroundId) throws IOException {
+	final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
 
-	final HttpHeaders responseHeaders = httpHeaderExcelFileAttachment(img.getName(), (int) img.length());
+//	final HttpHeaders responseHeaders = httpHeaderExcelFileAttachment(img.getName(), (int) img.length());
 
-	return new ResponseEntity<byte[]>(getBytesFromFile(img), responseHeaders, HttpStatus.OK);
+//	return new ResponseEntity<byte[]>(getBytesFromFile(img), responseHeaders, HttpStatus.OK);
+	return getBytesFromFile(img);
     }
 
     public static HttpHeaders httpHeaderExcelFileAttachment(final String fileName, final int fileSize) {
