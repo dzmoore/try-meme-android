@@ -98,7 +98,7 @@ public class HomeController {
 
     @RequestMapping(value = "/meme_data/{id}/background", method = RequestMethod.GET)
     @ResponseBody
-    public byte[] getMemeBackground(@PathVariable("id") final String backgroundId) throws IOException {
+    public byte[] getMemeBackground(@PathVariable("id") final int backgroundId) throws IOException {
 	final Session session = sessionFactory.openSession();
 	
 	byte[] resultBytes = new byte[0];
@@ -106,7 +106,8 @@ public class HomeController {
 	    session.beginTransaction();
 	    
 	    final Query qry = session.createQuery("from MemeBackground bg where bg.id = :bgId");
-	    qry.setInteger("bgId", Integer.parseInt(backgroundId));
+//	    qry.setInteger("bgId", Integer.parseInt(backgroundId));
+	    qry.setInteger("bgId", backgroundId);
 	    final List<?> result = qry.list();
 	    
 	    MemeBackground bg = new MemeBackground();
@@ -138,7 +139,7 @@ public class HomeController {
 
     @RequestMapping(value = { "/meme_data/{id}/json" }, method = RequestMethod.GET)
     @ResponseBody
-    public ShallowMeme getMeme(@RequestParam("id") final int memeId) {
+    public ShallowMeme getMeme(@PathVariable("id") final int memeId) {
 	return new ShallowMeme(new Meme());
     }
 
