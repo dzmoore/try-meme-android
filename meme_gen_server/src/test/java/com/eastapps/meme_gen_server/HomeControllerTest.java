@@ -23,11 +23,12 @@ import org.springframework.ui.Model;
 
 public class HomeControllerTest {
     private SessionFactory sessionFactory;
-
+    private String imgsRoot;
+    
     @Ignore
     @Test
     public void testController() {
-	HomeController controller = new HomeController(sessionFactory);
+	HomeController controller = new HomeController(sessionFactory, imgsRoot);
 	Model model = new ExtendedModelMap();
 	Assert.assertEquals("home", controller.home(model));
 
@@ -48,17 +49,11 @@ public class HomeControllerTest {
 
     @Before
     public void setUp() throws Exception {
-	Resource rsrc = new FileSystemResource(new File(
-		"src/test/resources/test-context.xml"));
+	final Resource rsrc = new FileSystemResource(new File("src/test/resources/test-context.xml"));
 	BeanFactory fac = new XmlBeanFactory(rsrc);
-	// LocalContainerEntityManagerFactoryBean mgrFacBen
-	// = (LocalContainerEntityManagerFactoryBean)
-	// fac.getBean("entityManagerFactory");
 
-	// A SessionFactory is set up once for an application
 	sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
-	// .configure() // configures settings from hibernate.cfg.xml
-	// .buildSessionFactory();
+	imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
     }
 
     @After

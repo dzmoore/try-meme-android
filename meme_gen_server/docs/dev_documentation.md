@@ -1,5 +1,14 @@
 Dev Documentation
 ====================
+## 04-Nov-2012
+### More Setup
+As mentioned previously, a symlink will be created in order to reference the actual background image files.  Here are some relevant commands to get this started:
+
+    cd /home/dylan
+    ln -s /workspace/meme_gen/meme_gen_server/docs/imgs meme_imgs 
+    sudo ln -s /home/dylan/meme_imgs /meme_imgs
+    sudo chown -h dylan:dylan /meme_imgs
+    
 
 ## 03-Nov-2012
 ### Database Initialization and Population:

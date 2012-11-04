@@ -2,7 +2,9 @@ package com.eastapps.meme_gen_server.domain;
 
 // Generated Nov 2, 2012 1:45:43 PM by Hibernate Tools 4.0.0
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +72,35 @@ public class MemeBackground implements java.io.Serializable {
 
     public void setMemes(Set<Meme> memes) {
 	this.memes = memes;
+    }
+
+    @Override
+    public String toString() {
+	final int maxLen = 10;
+	StringBuilder builder = new StringBuilder();
+	builder.append("MemeBackground [id=");
+	builder.append(id);
+	builder.append(", active=");
+	builder.append(active);
+	builder.append(", path=");
+	builder.append(path);
+	builder.append(", memes=");
+	builder.append(memes != null ? toString(memes, maxLen) : null);
+	builder.append("]");
+	return builder.toString();
+    }
+
+    private String toString(Collection<?> collection, int maxLen) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("[");
+	int i = 0;
+	for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+	    if (i > 0)
+		builder.append(", ");
+	    builder.append(iterator.next());
+	}
+	builder.append("]");
+	return builder.toString();
     }
 
 }

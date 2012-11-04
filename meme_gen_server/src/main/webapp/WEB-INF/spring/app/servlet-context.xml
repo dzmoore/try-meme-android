@@ -77,6 +77,10 @@
         </beans:property>
     </beans:bean>
     
+    <beans:bean name="memeImagesRootDir" class="java.lang.String">
+        <beans:constructor-arg value="/meme_imgs"/>
+    </beans:bean>
+    
     <beans:import resource="controllers.xml" />
 
 </beans:beans>

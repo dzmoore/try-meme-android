@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.ejb.criteria.expression.ConcatExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eastapps.meme_gen_server.domain.Meme;
+import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.User;
 
@@ -33,10 +36,14 @@ public class HomeController {
 
     @Autowired
     private SessionFactory sessionFactory;
+    
+    @Autowired
+    private String memeImagesRootDir;
 
     @Autowired
-    public HomeController(final SessionFactory sessionFactory) {
+    public HomeController(final SessionFactory sessionFactory, final String memeStringImagesRootDir) {
 	this.sessionFactory = sessionFactory;
+	this.memeImagesRootDir = memeStringImagesRootDir;
     }
 
     /**
@@ -93,22 +100,40 @@ public class HomeController {
     @ResponseBody
     public byte[] getMemeBackground(@PathVariable("id") final String backgroundId) throws IOException {
 	final Session session = sessionFactory.openSession();
-
+	
+	byte[] resultBytes = new byte[0];
 	try {
 	    session.beginTransaction();
 	    
-	    final Query qry = session.createQuery("from User");
-	    qry.setInteger(1, Integer.parseInt(backgroundId));
+	    final Query qry = session.createQuery("from MemeBackground bg where bg.id = :bgId");
+	    qry.setInteger("bgId", Integer.parseInt(backgroundId));
+	    final List<?> result = qry.list();
 	    
-	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
+	    MemeBackground bg = new MemeBackground();
+	    if (result != null && result.size() > 0) {
+		final Object obj = result.get(0);
+		
+		if (obj instanceof MemeBackground) {
+		    bg = (MemeBackground)obj;
+		}
+	    }
+	    
 
+//	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
+	    final String imgPath = StringUtils.join(new Object[]{memeImagesRootDir, File.separator, bg.getPath()});
+	    final File img = new File(imgPath);
+	    resultBytes = getBytesFromFile(img);
+	    
 	} catch (Exception e) {
+	    logger.error("error occurred while attempting to find bg img", e);
+	    
 	} finally {
 	    if (session != null) {
 		session.close();
 	    }
 	}
-	return getBytesFromFile(null);
+	
+	return resultBytes;
     }
 
     @RequestMapping(value = { "/meme_data/{id}/json" }, method = RequestMethod.GET)
