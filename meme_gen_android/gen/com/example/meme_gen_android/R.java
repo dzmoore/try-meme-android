@@ -71,6 +71,10 @@ public final class R {
         public static final int sslHttp=0x7f05000c;
         public static final int title_activity_create_meme=0x7f050003;
         public static final int title_activity_view_meme=0x7f050009;
+        public static final int webServiceAddress=0x7f05000e;
+        public static final int webServiceBackgroundSuffix=0x7f050010;
+        public static final int webServiceJsonSuffix=0x7f050011;
+        public static final int webServiceMemeDataSuffix=0x7f05000f;
         public static final int webServiceResource=0x7f05000b;
         public static final int web_service_address=0x7f05000a;
     }

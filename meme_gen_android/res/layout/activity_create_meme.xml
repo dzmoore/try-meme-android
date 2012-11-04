@@ -53,14 +53,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/edit_top_text_string" />
-
+
             <ImageButton
                 android:id="@+id/config_top_text_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
                 android:adjustViewBounds="true"
+                android:cropToPadding="true"
                 android:src="@drawable/config_icon" />
+
         </LinearLayout>
     </TableRow>
 
@@ -83,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/edit_bottom_text_string" />
-
+
             <ImageButton
                 android:id="@+id/config_bottom_text_btn"
                 android:layout_width="match_parent"
@@ -92,7 +94,8 @@
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
                 android:scaleType="center"
-                android:src="@drawable/ic_config_small" />
+                android:src="@drawable/config_icon" />
+
         </LinearLayout>
     </TableRow>
 

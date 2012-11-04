@@ -6,7 +6,7 @@
         android:id="@+id/meme_view_rel_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
+
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="wrap_content"
@@ -14,9 +14,9 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
-            android:scaleType="fitStart"
-            android:src="@drawable/config_icon" />
-
+            android:scaleType="fitCenter"
+            android:src="@drawable/tmimitw" />
+
         <TextView
             android:id="@+id/top_text_textview"
             android:layout_width="wrap_content"
@@ -28,8 +28,8 @@
             android:gravity="center_horizontal"
             android:paddingLeft="@dimen/text_padding"
             android:paddingRight="@dimen/text_padding"
-            android:text="I don&apos;t always deploy my code without testing..." />
-
+            android:text="DUMMY TOP TEXT" />
+
         <TextView
             android:id="@+id/bottom_text_textview"
             android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             android:gravity="center_horizontal"
             android:paddingLeft="@dimen/text_padding"
             android:paddingRight="@dimen/text_padding"
-            android:text="but when I do, it&apos;s in production." />
+            android:text="DUMMY BOTTOM TEXT" />
 
     </RelativeLayout>
 
