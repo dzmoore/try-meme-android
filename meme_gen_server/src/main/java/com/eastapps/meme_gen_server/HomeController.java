@@ -140,7 +140,37 @@ public class HomeController {
     @RequestMapping(value = { "/meme_data/{id}/json" }, method = RequestMethod.GET)
     @ResponseBody
     public ShallowMeme getMeme(@PathVariable("id") final int memeId) {
-	return new ShallowMeme(new Meme());
+        final Session session = sessionFactory.openSession();
+	
+        ShallowMeme shallowMeme = new ShallowMeme(new Meme());
+        try {
+	    session.beginTransaction();
+	    
+	    final Query qry = session.createQuery("from Meme m where m.id = :mId");
+	    qry.setInteger("mId", memeId);
+	    final List<?> result = qry.list();
+	    
+	    Meme meme = new Meme();
+	    if (result != null && result.size() > 0) {
+		final Object obj = result.get(0);
+		
+		if (obj instanceof Meme) {
+		    meme = (Meme)obj;
+		}
+	    }
+	    
+	    shallowMeme = new ShallowMeme(meme);
+	    
+	} catch (Exception e) {
+	    logger.error("error occurred while attempting to meme", e);
+	    
+	} finally {
+	    if (session != null) {
+		session.close();
+	    }
+	}
+	
+	return shallowMeme;
     }
 
     public static byte[] getBytesFromFile(File file) throws IOException {
