@@ -97,7 +97,7 @@ public class HomeController {
 	try {
 	    session.beginTransaction();
 	    
-	    final Query qry = session.createQuery("");
+	    final Query qry = session.createQuery("from User");
 	    qry.setInteger(1, Integer.parseInt(backgroundId));
 	    
 	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
