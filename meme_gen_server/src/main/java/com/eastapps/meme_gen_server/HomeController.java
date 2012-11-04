@@ -6,22 +6,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eastapps.meme_gen_server.domain.Meme;
+import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.User;
 
 /**
@@ -92,29 +92,35 @@ public class HomeController {
     @RequestMapping(value = "/meme_data/{id}/background", method = RequestMethod.GET)
     @ResponseBody
     public byte[] getMemeBackground(@PathVariable("id") final String backgroundId) throws IOException {
-	final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
+	final Session session = sessionFactory.openSession();
 
-//	final HttpHeaders responseHeaders = httpHeaderExcelFileAttachment(img.getName(), (int) img.length());
+	try {
+	    session.beginTransaction();
+	    
+	    final Query qry = session.createQuery("");
+	    qry.setInteger(1, Integer.parseInt(backgroundId));
+	    
+	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
 
-//	return new ResponseEntity<byte[]>(getBytesFromFile(img), responseHeaders, HttpStatus.OK);
-	return getBytesFromFile(img);
+	} catch (Exception e) {
+	} finally {
+	    if (session != null) {
+		session.close();
+	    }
+	}
+	return getBytesFromFile(null);
     }
 
-    public static HttpHeaders httpHeaderExcelFileAttachment(final String fileName, final int fileSize) {
-	String encodedFileName = fileName.replace('"', ' ').replace(' ', '_');
-
-	HttpHeaders responseHeaders = new HttpHeaders();
-	responseHeaders.setContentType(MediaType.parseMediaType("image/jpeg"));
-	responseHeaders.setContentLength(fileSize);
-	responseHeaders.set("Content-Disposition", "attachment");
-	responseHeaders.add("Content-Disposition", "filename=\"" + encodedFileName + '\"');
-	return responseHeaders;
+    @RequestMapping(value = { "/meme_data/{id}/json" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ShallowMeme getMeme(@RequestParam("id") final int memeId) {
+	return new ShallowMeme(new Meme());
     }
 
     public static byte[] getBytesFromFile(File file) throws IOException {
 	InputStream is = null;
 	byte[] bytes = new byte[0];
-	
+
 	try {
 	    is = new FileInputStream(file);
 
