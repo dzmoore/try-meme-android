@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/share_save_linear"
+        android:layout_width="match_parent"
+        android:layout_height="@string/create_meme_top_row_height"
+        android:layout_weight="0"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/share_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/share_string" />
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/save_string" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/top_text_linear"
+        android:layout_width="match_parent"
+        android:layout_height="@string/create_meme_top_row_height"
+        android:layout_weight="0" >
+
+        <Button
+            android:id="@+id/edit_top_text_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/edit_top_text_string" />
+
+        <ImageButton
+            android:id="@+id/config_top_text_btn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:src="@drawable/config_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_text_linear"
+        android:layout_width="fill_parent"
+        android:layout_height="@string/create_meme_top_row_height"
+        android:layout_weight="0" >
+
+        <Button
+            android:id="@+id/edit_bottom_text_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/edit_bottom_text_string" />
+
+        <ImageButton
+            android:id="@+id/config_bottom_text_btn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="center"
+            android:src="@drawable/config_icon" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/image_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="top"
+        android:layout_weight="1" >
+
+        <include
+            android:id="@+id/meme_create_meme_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/meme_view_layout" />
+    </RelativeLayout>
+
+</LinearLayout>

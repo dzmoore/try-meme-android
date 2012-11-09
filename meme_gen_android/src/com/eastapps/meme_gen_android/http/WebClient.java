@@ -11,7 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.eastapps.meme_gen_android.ViewMeme;
+import com.eastapps.meme_gen_android.ViewMemeActivity;
 import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.util.Conca;
 
