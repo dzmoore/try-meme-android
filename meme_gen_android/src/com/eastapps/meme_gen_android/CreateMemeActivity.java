@@ -10,16 +10,20 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class CreateMemeActivity extends Activity {
     private MemeViewData memeViewData;
+    private boolean isEditingTopText;
+    private EditText topTextEdit;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,28 +37,58 @@ public class CreateMemeActivity extends Activity {
 			}
 		}).start();
         
-        final Button topTextBtn = (Button) findViewById(R.id.edit_top_text_btn);
+        final Button topTextBtn = getTopTextBtn();
         topTextBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleTopTextClick(v);
 			}
 		});
+        
+		final ImageButton topTextConfigBtn = getConfigTopTextBtn();
+		topTextConfigBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleTopTextConfigBtnClick(v);
+			}
+		});
     }
+
+	private Button getTopTextBtn() {
+		return (Button)findViewById(R.id.edit_top_text_btn);
+	}
     
-    protected void handleTopTextClick(final View v) {
-    	final LayoutParams originalTopTextBtnLayoutParams = new LayoutParams(v.getLayoutParams());
+    protected void handleTopTextConfigBtnClick(View v) {
+    	if (isEditingTopText) {
+    		final String newTopText = topTextEdit.getText().toString();
+    		final TextView memeViewTopTextView = getMemeViewTopTextView();
+    		memeViewTopTextView.setText(newTopText);
+    		
+    		final ImageButton configTopTextBtn = getConfigTopTextBtn();
+    		configTopTextBtn.setImageDrawable(getResources().getDrawable(R.drawable.config_icon));
+    		
+    		topTextEdit.setVisibility(View.GONE);
+    		getTopTextBtn().setVisibility(View.VISIBLE);
+    	}
+	}
+
+	protected void handleTopTextClick(final View v) {
 		v.setVisibility(View.GONE);
 		
 		final LinearLayout topTextLinearLayout = (LinearLayout)findViewById(R.id.top_text_linear);
-		final EditText editText = new EditText(this);
-		editText.setLayoutParams(originalTopTextBtnLayoutParams);
+		topTextEdit = new EditText(this);
+		topTextEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+		topTextLinearLayout.addView(topTextEdit, 0);
 		
-		topTextLinearLayout.addView(editText, 0);
+		final ImageButton topTextConfigBtn = getConfigTopTextBtn();
+		topTextConfigBtn.setImageDrawable(getResources().getDrawable(R.drawable.finish_icon));
 		
-		final ImageButton imgBtn = (ImageButton)findViewById(R.id.config_top_text_btn);
-		imgBtn.getLayoutParams().width = 100;
+		isEditingTopText = true;
     }
+
+	private ImageButton getConfigTopTextBtn() {
+		return (ImageButton)findViewById(R.id.config_top_text_btn);
+	}
 
     
 	public void setMemeViewData(final MemeViewData mvd) {
@@ -73,8 +107,8 @@ public class CreateMemeActivity extends Activity {
 			return;
 		}
 		
-		final TextView topTxtView = (TextView)findViewById(R.id.top_text_textview);
-        final TextView bottomTxtView = (TextView)findViewById(R.id.bottom_text_textview);
+		final TextView topTxtView = getMemeViewTopTextView();
+        final TextView bottomTxtView = getMemeViewBottomTextView();
         
         Typeface robotoBoldCondensedTypeFace = Typeface.createFromAsset(getAssets(), "fonts/Roboto-BoldCondensed.ttf");
         
@@ -88,6 +122,14 @@ public class CreateMemeActivity extends Activity {
 		topTxtView.setText(memeViewData.getTopText());
         bottomTxtView.setText(memeViewData.getBottomText());
         imgView.setImageBitmap(memeViewData.getBackground());
+	}
+
+	private TextView getMemeViewBottomTextView() {
+		return (TextView)findViewById(R.id.bottom_text_textview);
+	}
+
+	private TextView getMemeViewTopTextView() {
+		return (TextView)findViewById(R.id.top_text_textview);
 	}
 
     @Override
