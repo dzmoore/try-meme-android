@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.http.WebClient;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
@@ -22,13 +24,30 @@ import android.widget.TextView;
 
 public class CreateMemeActivity extends Activity {
     private MemeViewData memeViewData;
-    private boolean isEditingTopText;
+    private AtomicBoolean isEditingTopText;
+    private AtomicBoolean isEditingBottomText;
     private EditText topTextEdit;
+    private EditText bottomTextEdit;
+    
+    public CreateMemeActivity() {
+    	super();
+    	
+    	isEditingTopText = new AtomicBoolean(false);
+    	isEditingBottomText = new AtomicBoolean(false);
+    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_meme_layout);
+        
+        if (topTextEdit == null) {
+        	topTextEdit = new EditText(this);
+        }
+        
+        if (bottomTextEdit == null) {
+        	bottomTextEdit = new EditText(this);
+        }
     
         new Thread(new Runnable() {
 			@Override
@@ -52,38 +71,122 @@ public class CreateMemeActivity extends Activity {
 				handleTopTextConfigBtnClick(v);
 			}
 		});
+		
+		final ImageButton bottomTextConfigBtn = getConfigBottomTextBtn();
+		bottomTextConfigBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleBottomTextConfigBtnClick(v);
+			}
+		});
     }
+
+	protected void handleBottomTextConfigBtnClick(View v) {
+		
+	}
+
+	private ImageButton getConfigBottomTextBtn() {
+		return (ImageButton)findViewById(R.id.config_bottom_text_btn);
+	}
 
 	private Button getTopTextBtn() {
 		return (Button)findViewById(R.id.edit_top_text_btn);
 	}
     
     protected void handleTopTextConfigBtnClick(View v) {
-    	if (isEditingTopText) {
-    		final String newTopText = topTextEdit.getText().toString();
-    		final TextView memeViewTopTextView = getMemeViewTopTextView();
-    		memeViewTopTextView.setText(newTopText);
-    		
-    		final ImageButton configTopTextBtn = getConfigTopTextBtn();
-    		configTopTextBtn.setImageDrawable(getResources().getDrawable(R.drawable.config_icon));
-    		
-    		topTextEdit.setVisibility(View.GONE);
-    		getTopTextBtn().setVisibility(View.VISIBLE);
+    	handleConfigBtnClick(
+    		v,
+    		getMemeViewTopTextView(),
+    		getTopTextBtn(),
+    		topTextEdit,
+    		isEditingTopText
+		);
+	}
+
+	private LinearLayout getTopTextLinearLayout() {
+		return (LinearLayout)findViewById(R.id.top_text_linear);
+	}
+    
+    private void handleConfigBtnClick(
+    		final View btnClicked, 
+    		final TextView textViewToSet, 
+    		final Button textEditBtn,
+    		final EditText textEdit,
+    		final AtomicBoolean isEditing) 
+    {
+    	// if editing --> stop editing
+    	if (isEditing.get()) {
+    		final String newText = textEdit.getText().toString();
+    		// set new text in the meme view
+			textViewToSet.setText(newText);
+			
+			// change back to the 'config' icon
+			if (btnClicked instanceof ImageButton) {
+				final ImageButton configImgBtn = (ImageButton)btnClicked;
+				configImgBtn.setImageDrawable(getResources().getDrawable(R.drawable.config_icon));
+			}
+			
+			// hide the text edit field
+			textEdit.setVisibility(View.GONE);
+			
+			// show the text edit btn
+			textEditBtn.setVisibility(View.VISIBLE);
+			
+			// set this editing to false
+			isEditing.set(false);
+    	
+		// handle text config
+    	} else {
     	}
+    }
+
+	private void startEditing(
+			final View btnClicked, 
+			final ImageButton configBtn,
+			final EditText textEdit,
+			final LinearLayout parentLayout, 
+			final AtomicBoolean isEditing) 
+	{
+		btnClicked.setVisibility(View.GONE);
+
+		// determine if edit text has already been
+		// added to the parent layout
+		boolean parentContainsTextEdit = false;
+		for (int i = 0; i < parentLayout.getChildCount(); i++) {
+			if (parentLayout.getChildAt(i) == textEdit) {
+				parentContainsTextEdit = true;
+				break;
+			}
+		}
+		
+		// if it has already been added,
+		// just set it visible
+		if (parentContainsTextEdit) {
+			textEdit.setVisibility(View.VISIBLE);
+			
+		// otherwise, set the layout params and add to
+		// the layout
+		} else {
+			textEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			parentLayout.addView(topTextEdit, 0);
+		}
+		
+		// set the config btn's image to 
+		// the 'finish' icon
+		configBtn.setImageDrawable(getResources().getDrawable(R.drawable.finish_icon));
+		
+		// set this editing flag to true
+		isEditing.set(true);
 	}
 
 	protected void handleTopTextClick(final View v) {
-		v.setVisibility(View.GONE);
-		
-		final LinearLayout topTextLinearLayout = (LinearLayout)findViewById(R.id.top_text_linear);
-		topTextEdit = new EditText(this);
-		topTextEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
-		topTextLinearLayout.addView(topTextEdit, 0);
-		
-		final ImageButton topTextConfigBtn = getConfigTopTextBtn();
-		topTextConfigBtn.setImageDrawable(getResources().getDrawable(R.drawable.finish_icon));
-		
-		isEditingTopText = true;
+		startEditing(
+			v,
+			getConfigTopTextBtn(),
+			topTextEdit,
+			getTopTextLinearLayout(),
+			isEditingTopText
+		);
     }
 
 	private ImageButton getConfigTopTextBtn() {
