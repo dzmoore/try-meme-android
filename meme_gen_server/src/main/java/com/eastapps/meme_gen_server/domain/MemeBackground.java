@@ -21,86 +21,86 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "meme_background", catalog = "mgsdb")
 public class MemeBackground implements java.io.Serializable {
-    private static final long serialVersionUID = -678181842721165320L;
-    private Integer id;
-    private Boolean active;
-    private String path;
-    private Set<Meme> memes = new HashSet<Meme>(0);
+	private static final long serialVersionUID = -678181842721165320L;
+	private Integer id;
+	private Boolean active;
+	private String path;
+	private Set<Meme> memes = new HashSet<Meme>(0);
 
-    public MemeBackground() {
-    }
-
-    public MemeBackground(Boolean active, String path, Set<Meme> memes) {
-	this.active = active;
-	this.path = path;
-	this.memes = memes;
-    }
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
-	return this.id;
-    }
-
-    public void setId(Integer id) {
-	this.id = id;
-    }
-
-    @Column(name = "active")
-    public Boolean getActive() {
-	return this.active;
-    }
-
-    public void setActive(Boolean active) {
-	this.active = active;
-    }
-
-    @Column(name = "path", length = 200)
-    public String getPath() {
-	return this.path;
-    }
-
-    public void setPath(String path) {
-	this.path = path;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "memeBackground")
-    public Set<Meme> getMemes() {
-	return this.memes;
-    }
-
-    public void setMemes(Set<Meme> memes) {
-	this.memes = memes;
-    }
-
-    @Override
-    public String toString() {
-	final int maxLen = 10;
-	StringBuilder builder = new StringBuilder();
-	builder.append("MemeBackground [id=");
-	builder.append(id);
-	builder.append(", active=");
-	builder.append(active);
-	builder.append(", path=");
-	builder.append(path);
-	builder.append(", memes=");
-	builder.append(memes != null ? toString(memes, maxLen) : null);
-	builder.append("]");
-	return builder.toString();
-    }
-
-    private String toString(Collection<?> collection, int maxLen) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("[");
-	int i = 0;
-	for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
-	    if (i > 0)
-		builder.append(", ");
-	    builder.append(iterator.next());
+	public MemeBackground() {
 	}
-	builder.append("]");
-	return builder.toString();
-    }
+
+	public MemeBackground(Boolean active, String path, Set<Meme> memes) {
+		this.active = active;
+		this.path = path;
+		this.memes = memes;
+	}
+
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Column(name = "active")
+	public Boolean getActive() {
+		return this.active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	@Column(name = "path", length = 200)
+	public String getPath() {
+		return this.path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "memeBackground")
+	public Set<Meme> getMemes() {
+		return this.memes;
+	}
+
+	public void setMemes(Set<Meme> memes) {
+		this.memes = memes;
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("MemeBackground [id=");
+		builder.append(id);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", path=");
+		builder.append(path);
+		builder.append(", memes=");
+		builder.append(memes != null ? toString(memes, maxLen) : null);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	private String toString(Collection<?> collection, int maxLen) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int i = 0;
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(iterator.next());
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

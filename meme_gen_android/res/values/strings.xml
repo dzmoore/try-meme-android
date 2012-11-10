@@ -12,7 +12,7 @@
     <string name="edit_top_text_string">Top Text</string>
     <string name="edit_bottom_text_string">Bottom Text</string>
     <string name="title_activity_view_meme">ViewMeme</string>
-    <string name="web_service_address">192.168.1.132</string>
+    <string name="web_service_address">192.168.1.50</string>
     <string name="webServiceResource">/beermap2/android</string>
 
     <item name="sslPort" format="integer" type="integer">8443</item>

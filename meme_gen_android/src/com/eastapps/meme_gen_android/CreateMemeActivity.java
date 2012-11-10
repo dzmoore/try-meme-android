@@ -56,24 +56,21 @@ public class CreateMemeActivity extends Activity {
 			}
 		}).start();
         
-        final Button topTextBtn = getTopTextBtn();
-        topTextBtn.setOnClickListener(new View.OnClickListener() {
+        getTopTextBtn().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleTopTextClick(v);
 			}
 		});
         
-		final ImageButton topTextConfigBtn = getConfigTopTextBtn();
-		topTextConfigBtn.setOnClickListener(new View.OnClickListener() {
+		getConfigTopTextBtn().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleTopTextConfigBtnClick(v);
 			}
 		});
 		
-		final ImageButton bottomTextConfigBtn = getConfigBottomTextBtn();
-		bottomTextConfigBtn.setOnClickListener(new View.OnClickListener() {
+		getConfigBottomTextBtn().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				handleBottomTextConfigBtnClick(v);

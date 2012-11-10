@@ -18,86 +18,86 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "user", catalog = "mgsdb")
 public class User implements java.io.Serializable {
-    private static final long serialVersionUID = 1L;
-    private Integer id;
-    private String username;
-    private String password;
-    private Boolean active;
-    private Date lastMod;
-    private String salt;
+	private static final long serialVersionUID = 1L;
+	private Integer id;
+	private String username;
+	private String password;
+	private Boolean active;
+	private Date lastMod;
+	private String salt;
 
-    public User() {
-    }
+	public User() {
+	}
 
-    public User(String username, String password, Date lastMod) {
-        this.username = username;
-        this.password = password;
-        this.lastMod = lastMod;
-    }
+	public User(String username, String password, Date lastMod) {
+		this.username = username;
+		this.password = password;
+		this.lastMod = lastMod;
+	}
 
-    public User(String username, String password, Boolean active, Date lastMod, String salt) {
-        this.username = username;
-        this.password = password;
-        this.active = active;
-        this.lastMod = lastMod;
-        this.salt = salt;
-    }
+	public User(String username, String password, Boolean active, Date lastMod, String salt) {
+		this.username = username;
+		this.password = password;
+		this.active = active;
+		this.lastMod = lastMod;
+		this.salt = salt;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
-        return this.id;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Column(name = "username", nullable = false, length = 40)
-    public String getUsername() {
-        return this.username;
-    }
+	@Column(name = "username", nullable = false, length = 40)
+	public String getUsername() {
+		return this.username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    @Column(name = "password", nullable = false, length = 60)
-    public String getPassword() {
-        return this.password;
-    }
+	@Column(name = "password", nullable = false, length = 60)
+	public String getPassword() {
+		return this.password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    @Column(name = "active")
-    public Boolean getActive() {
-        return this.active;
-    }
+	@Column(name = "active")
+	public Boolean getActive() {
+		return this.active;
+	}
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_mod", nullable = false, length = 19)
-    public Date getLastMod() {
-        return this.lastMod;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_mod", nullable = false, length = 19)
+	public Date getLastMod() {
+		return this.lastMod;
+	}
 
-    public void setLastMod(Date lastMod) {
-        this.lastMod = lastMod;
-    }
+	public void setLastMod(Date lastMod) {
+		this.lastMod = lastMod;
+	}
 
-    @Column(name = "salt", length = 40)
-    public String getSalt() {
-        return this.salt;
-    }
+	@Column(name = "salt", length = 40)
+	public String getSalt() {
+		return this.salt;
+	}
 
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 
 }

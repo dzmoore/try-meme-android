@@ -19,68 +19,85 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "lv_meme_type", catalog = "mgsdb")
 public class LvMemeType implements java.io.Serializable {
-    private static final long serialVersionUID = -6835315078103523604L;
-    private Integer id;
-    private String type;
-    private String descr;
-    private Boolean active;
-    private Set<Meme> memes = new HashSet<Meme>(0);
+	private static final long serialVersionUID = -6835315078103523604L;
+	private Integer id;
+	private String type;
+	private String descr;
+	private Boolean active;
+	private Set<Meme> memes = new HashSet<Meme>(0);
 
-    public LvMemeType() {
-    }
+	public LvMemeType() {
+	}
 
-    public LvMemeType(String type, String descr, Boolean active, Set<Meme> memes) {
-	this.type = type;
-	this.descr = descr;
-	this.active = active;
-	this.memes = memes;
-    }
+	public LvMemeType(String type, String descr, Boolean active, Set<Meme> memes) {
+		this.type = type;
+		this.descr = descr;
+		this.active = active;
+		this.memes = memes;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
-	return this.id;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Column(name = "type", length = 20)
-    public String getType() {
-	return this.type;
-    }
+	@Column(name = "type", length = 20)
+	public String getType() {
+		return this.type;
+	}
 
-    public void setType(String type) {
-	this.type = type;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    @Column(name = "descr", length = 100)
-    public String getDescr() {
-	return this.descr;
-    }
+	@Column(name = "descr", length = 100)
+	public String getDescr() {
+		return this.descr;
+	}
 
-    public void setDescr(String descr) {
-	this.descr = descr;
-    }
+	public void setDescr(String descr) {
+		this.descr = descr;
+	}
 
-    @Column(name = "active")
-    public Boolean getActive() {
-	return this.active;
-    }
+	@Column(name = "active")
+	public Boolean getActive() {
+		return this.active;
+	}
 
-    public void setActive(Boolean active) {
-	this.active = active;
-    }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")
-    public Set<Meme> getMemes() {
-	return this.memes;
-    }
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")
+	public Set<Meme> getMemes() {
+		return this.memes;
+	}
 
-    public void setMemes(Set<Meme> memes) {
-	this.memes = memes;
-    }
+	public void setMemes(Set<Meme> memes) {
+		this.memes = memes;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("LvMemeType [id=");
+		builder.append(id);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", descr=");
+		builder.append(descr);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 
 }

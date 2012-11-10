@@ -25,92 +25,92 @@ import com.eastapps.meme_gen_server.constants.Constants;
 @Entity
 @Table(name = "meme", catalog = "mgsdb")
 public class Meme implements java.io.Serializable {
-    private static final long serialVersionUID = -5307664010012212548L;
-    private Integer id;
-    private LvMemeType lvMemeType;
-    private MemeBackground memeBackground;
-    private Set<MemeText> memeTexts = new HashSet<MemeText>(0);
+	private static final long serialVersionUID = -5307664010012212548L;
+	private Integer id;
+	private LvMemeType lvMemeType;
+	private MemeBackground memeBackground;
+	private Set<MemeText> memeTexts = new HashSet<MemeText>(0);
 
-    public Meme() {
-	id = Constants.INVALID;
-	lvMemeType = new LvMemeType();
-	memeBackground = new MemeBackground();
-	memeTexts = new HashSet<MemeText>();
-    }
-
-    public Meme(LvMemeType lvMemeType, MemeBackground memeBackground, Set<MemeText> memeTexts) {
-	this.lvMemeType = lvMemeType;
-	this.memeBackground = memeBackground;
-	this.memeTexts = memeTexts;
-    }
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
-	return this.id;
-    }
-
-    public void setId(Integer id) {
-	this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lv_meme_type_fk")
-    public LvMemeType getLvMemeType() {
-	return this.lvMemeType;
-    }
-
-    public void setLvMemeType(LvMemeType lvMemeType) {
-	this.lvMemeType = lvMemeType;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meme_background_fk")
-    public MemeBackground getMemeBackground() {
-	return this.memeBackground;
-    }
-
-    public void setMemeBackground(MemeBackground memeBackground) {
-	this.memeBackground = memeBackground;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "meme")
-    public Set<MemeText> getMemeTexts() {
-	return this.memeTexts;
-    }
-
-    public void setMemeTexts(Set<MemeText> memeTexts) {
-	this.memeTexts = memeTexts;
-    }
-
-    @Override
-    public String toString() {
-	final int maxLen = 10;
-	StringBuilder builder = new StringBuilder();
-	builder.append("Meme [id=");
-	builder.append(id);
-	builder.append(", lvMemeType=");
-	builder.append(lvMemeType);
-	builder.append(", memeBackground=");
-	builder.append(memeBackground == null ? "null" : memeBackground.getId());
-	builder.append(", memeTexts=");
-	builder.append(memeTexts != null ? toString(memeTexts, maxLen) : null);
-	builder.append("]");
-	return builder.toString();
-    }
-
-    private String toString(Collection<?> collection, int maxLen) {
-	StringBuilder builder = new StringBuilder();
-	builder.append("[");
-	int i = 0;
-	for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
-	    if (i > 0)
-		builder.append(", ");
-	    builder.append(iterator.next());
+	public Meme() {
+		id = Constants.INVALID;
+		lvMemeType = new LvMemeType();
+		memeBackground = new MemeBackground();
+		memeTexts = new HashSet<MemeText>();
 	}
-	builder.append("]");
-	return builder.toString();
-    }
+
+	public Meme(LvMemeType lvMemeType, MemeBackground memeBackground, Set<MemeText> memeTexts) {
+		this.lvMemeType = lvMemeType;
+		this.memeBackground = memeBackground;
+		this.memeTexts = memeTexts;
+	}
+
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "lv_meme_type_fk")
+	public LvMemeType getLvMemeType() {
+		return this.lvMemeType;
+	}
+
+	public void setLvMemeType(LvMemeType lvMemeType) {
+		this.lvMemeType = lvMemeType;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "meme_background_fk")
+	public MemeBackground getMemeBackground() {
+		return this.memeBackground;
+	}
+
+	public void setMemeBackground(MemeBackground memeBackground) {
+		this.memeBackground = memeBackground;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "meme")
+	public Set<MemeText> getMemeTexts() {
+		return this.memeTexts;
+	}
+
+	public void setMemeTexts(Set<MemeText> memeTexts) {
+		this.memeTexts = memeTexts;
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("Meme [id=");
+		builder.append(id);
+		builder.append(", lvMemeType=");
+		builder.append(lvMemeType);
+		builder.append(", memeBackground=");
+		builder.append(memeBackground == null ? "null" : memeBackground.getId());
+		builder.append(", memeTexts=");
+		builder.append(memeTexts != null ? toString(memeTexts, maxLen) : null);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	private String toString(Collection<?> collection, int maxLen) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int i = 0;
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(iterator.next());
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 
 }
