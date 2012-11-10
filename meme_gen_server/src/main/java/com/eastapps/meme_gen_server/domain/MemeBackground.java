@@ -1,10 +1,8 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Nov 2, 2012 1:45:43 PM by Hibernate Tools 4.0.0
+// Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,16 +19,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "meme_background", catalog = "mgsdb")
 public class MemeBackground implements java.io.Serializable {
-	private static final long serialVersionUID = -678181842721165320L;
+
 	private Integer id;
 	private Boolean active;
 	private String path;
-	private Set<Meme> memes = new HashSet<Meme>(0);
+	private Set<Meme> memes = new HashSet(0);
 
 	public MemeBackground() {
 	}
 
-	public MemeBackground(Boolean active, String path, Set<Meme> memes) {
+	public MemeBackground(Boolean active, String path, Set memes) {
 		this.active = active;
 		this.path = path;
 		this.memes = memes;
@@ -76,7 +74,6 @@ public class MemeBackground implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		final int maxLen = 10;
 		StringBuilder builder = new StringBuilder();
 		builder.append("MemeBackground [id=");
 		builder.append(id);
@@ -84,23 +81,10 @@ public class MemeBackground implements java.io.Serializable {
 		builder.append(active);
 		builder.append(", path=");
 		builder.append(path);
-		builder.append(", memes=");
-		builder.append(memes != null ? toString(memes, maxLen) : null);
 		builder.append("]");
 		return builder.toString();
 	}
-
-	private String toString(Collection<?> collection, int maxLen) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("[");
-		int i = 0;
-		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
-			if (i > 0)
-				builder.append(", ");
-			builder.append(iterator.next());
-		}
-		builder.append("]");
-		return builder.toString();
-	}
+	
+	
 
 }

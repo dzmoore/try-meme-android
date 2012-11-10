@@ -1,3 +1,6 @@
+create database mgsdb;
+use mgsdb;
+
 create table user (
     id int(21) not null auto_increment,
     username varchar(40) not null,
@@ -8,16 +11,8 @@ create table user (
     primary key (id)
 ) engine=InnoDB;	
 
-create table lv_meme_text_type (
-	id int(21) not null auto_increment,
-	type varchar(20) not null,
-	active tinyint(1),
-	primary key (id)	
-) engine=InnoDB;
-
 create table lv_meme_type (
 	id int(21) not null auto_increment,
-	type varchar(20),
 	descr varchar(100),
 	active tinyint(1),
 	primary key (id)
@@ -42,15 +37,19 @@ create table meme (
 create table meme_text (
 	id int(21) not null auto_increment,
 	text varchar(200),
-	lv_meme_text_type_fk int(21),
+	text_type varchar(20),
 	meme_fk int(21),
 	primary key (id),
-	foreign key (lv_meme_text_type_fk) references lv_meme_text_type(id),
 	foreign key (meme_fk) references meme(id)
 ) engine=InnoDB;
 
-insert into lv_meme_text_type (type, active) values ('TOP', 1);
-insert into lv_meme_text_type (type, active) values ('BOTTOM', 1);
-
+create table sample_meme (
+	id int(21) not null auto_increment,
+	lv_meme_type_fk int(21),
+	meme_fk int(21),
+	primary key (id),
+	foreign key (lv_meme_type_fk) references lv_meme_type(id),
+	foreign key (meme_fk) references meme(id)	
+) engine=InnoDB;
 
 

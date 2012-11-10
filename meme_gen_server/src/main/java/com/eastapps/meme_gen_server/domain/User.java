@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Oct 19, 2012 1:10:59 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "user", catalog = "mgsdb")
 public class User implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 	private String username;
 	private String password;

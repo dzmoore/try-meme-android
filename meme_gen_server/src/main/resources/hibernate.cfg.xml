@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC
-		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">password</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/mgsdb</property>
-        <property name="hibernate.connection.username">mgsdb_user</property>
-        
-        <mapping class="com.eastapps.meme_gen_server.domain.MemeText" />
-        <mapping class="com.eastapps.meme_gen_server.domain.LvMemeType" />
-        <mapping class="com.eastapps.meme_gen_server.domain.MemeBackground" />
-        <mapping class="com.eastapps.meme_gen_server.domain.LvMemeTextType" />
-        <mapping class="com.eastapps.meme_gen_server.domain.Meme" />
-        <mapping class="com.eastapps.meme_gen_server.domain.User"/>
-    </session-factory>
+ <session-factory name="">
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">password</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost/mgsdb</property>
+  <property name="hibernate.connection.username">mgsdb_user</property>
+  <mapping class="com.eastapps.meme_gen_server.domain.MemeText"/>
+  <mapping class="com.eastapps.meme_gen_server.domain.LvMemeType"/>
+  <mapping class="com.eastapps.meme_gen_server.domain.MemeBackground"/>
+  <mapping class="com.eastapps.meme_gen_server.domain.LvMemeTextType"/>
+  <mapping class="com.eastapps.meme_gen_server.domain.Meme"/>
+  <mapping class="com.eastapps.meme_gen_server.domain.User"/>
+  <mapping class="com.eastapps.meme_gen_server.domain.SampleMeme"/>
+ </session-factory>
 </hibernate-configuration>

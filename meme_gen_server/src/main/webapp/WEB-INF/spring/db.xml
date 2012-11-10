@@ -42,11 +42,11 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.eastapps.meme_gen_server.domain.User</value>
-				<value>com.eastapps.meme_gen_server.domain.LvMemeTextType</value>
 				<value>com.eastapps.meme_gen_server.domain.LvMemeType</value>
 				<value>com.eastapps.meme_gen_server.domain.Meme</value>
 				<value>com.eastapps.meme_gen_server.domain.MemeBackground</value>
 				<value>com.eastapps.meme_gen_server.domain.MemeText</value>
+                <value>com.eastapps.meme_gen_server.domain.SampleMeme</value>
 			</list>
 		</property>
 		

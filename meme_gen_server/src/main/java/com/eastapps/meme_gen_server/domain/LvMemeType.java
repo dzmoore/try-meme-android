@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Nov 2, 2012 1:45:43 PM by Hibernate Tools 4.0.0
+// Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,21 +19,21 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "lv_meme_type", catalog = "mgsdb")
 public class LvMemeType implements java.io.Serializable {
-	private static final long serialVersionUID = -6835315078103523604L;
+
 	private Integer id;
-	private String type;
 	private String descr;
 	private Boolean active;
-	private Set<Meme> memes = new HashSet<Meme>(0);
+	private Set<Meme> memes = new HashSet(0);
+	private Set<SampleMeme> sampleMemes = new HashSet(0);
 
 	public LvMemeType() {
 	}
 
-	public LvMemeType(String type, String descr, Boolean active, Set<Meme> memes) {
-		this.type = type;
+	public LvMemeType(String descr, Boolean active, Set memes, Set sampleMemes) {
 		this.descr = descr;
 		this.active = active;
 		this.memes = memes;
+		this.sampleMemes = sampleMemes;
 	}
 
 	@Id
@@ -45,15 +45,6 @@ public class LvMemeType implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@Column(name = "type", length = 20)
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	@Column(name = "descr", length = 100)
@@ -83,13 +74,20 @@ public class LvMemeType implements java.io.Serializable {
 		this.memes = memes;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")
+	public Set<SampleMeme> getSampleMemes() {
+		return this.sampleMemes;
+	}
+
+	public void setSampleMemes(Set<SampleMeme> sampleMemes) {
+		this.sampleMemes = sampleMemes;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LvMemeType [id=");
 		builder.append(id);
-		builder.append(", type=");
-		builder.append(type);
 		builder.append(", descr=");
 		builder.append(descr);
 		builder.append(", active=");

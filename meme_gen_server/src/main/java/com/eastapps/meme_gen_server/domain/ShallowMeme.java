@@ -29,7 +29,7 @@ public class ShallowMeme implements Serializable {
 		for (Iterator<MemeText> itr = innerMeme.getMemeTexts().iterator(); itr.hasNext(); ) {
 			final MemeText ea = itr.next();
 
-			final String type = ea.getLvMemeTextType().getType();
+			final String type = ea.getTextType();
 			if (StringUtils.equals(type,Constants.TOP)) {
 				topText = ea.getText();
 

@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
-// Generated Nov 2, 2012 1:45:43 PM by Hibernate Tools 4.0.0
+// Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,19 +18,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "meme_text", catalog = "mgsdb")
 public class MemeText implements java.io.Serializable {
-	private static final long serialVersionUID = -6589583098854875551L;
+
+
 	private Integer id;
-	private LvMemeTextType lvMemeTextType;
 	private Meme meme;
 	private String text;
+	private String textType;
 
 	public MemeText() {
 	}
 
-	public MemeText(LvMemeTextType lvMemeTextType, Meme meme, String text) {
-		this.lvMemeTextType = lvMemeTextType;
+	public MemeText(Meme meme, String text, String textType) {
 		this.meme = meme;
 		this.text = text;
+		this.textType = textType;
 	}
 
 	@Id
@@ -42,16 +43,6 @@ public class MemeText implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lv_meme_text_type_fk")
-	public LvMemeTextType getLvMemeTextType() {
-		return this.lvMemeTextType;
-	}
-
-	public void setLvMemeTextType(LvMemeTextType lvMemeTextType) {
-		this.lvMemeTextType = lvMemeTextType;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -72,5 +63,28 @@ public class MemeText implements java.io.Serializable {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	@Column(name = "text_type", length = 20)
+	public String getTextType() {
+		return this.textType;
+	}
+
+	public void setTextType(String textType) {
+		this.textType = textType;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("MemeText [id=");
+		builder.append(id);
+		builder.append(", text=");
+		builder.append(text);
+		builder.append(", textType=");
+		builder.append(textType);
+		builder.append("]");
+		return builder.toString();
+	}
+
 
 }

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
-
 <hibernate-reverse-engineering>
-	<table-filter match-name="background_path" match-catalog="mgsdb"></table-filter>
-	<table-filter match-name="lv_meme_text_type"
-		match-catalog="mgsdb">
-	</table-filter>
-	<table-filter match-name="lv_meme_type" match-catalog="mgsdb"></table-filter>
-	<table-filter match-name="meme" match-catalog="mgsdb"></table-filter>
-	<table-filter match-name="meme_background" match-catalog="mgsdb"></table-filter>
-	<table-filter match-name="meme_text" match-catalog="mgsdb"></table-filter>
+    <table-filter match-name="lv_meme_type"></table-filter>
+    <table-filter match-name="meme"></table-filter>
+    <table-filter match-name="meme_background"></table-filter>
+    <table-filter match-name="meme_text"></table-filter>
+    <table-filter match-name="sample_meme"></table-filter>
+    <table-filter match-name="user"></table-filter>
 </hibernate-reverse-engineering>
