@@ -5,16 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.ejb.criteria.expression.ConcatExpression;
-import org.hibernate.transaction.BTMTransactionManagerLookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -265,30 +261,35 @@ public class HomeController {
 
 	@RequestMapping(value = "/meme_data/{id}/background", method = RequestMethod.GET)
 	@ResponseBody
-	public byte[] getMemeBackground(@PathVariable("id") final int backgroundId) throws IOException {
+	public byte[] getMemeBackground(@PathVariable("id") final int memeId) throws IOException {
 		final Session session = sessionFactory.openSession();
 	
 		byte[] resultBytes = new byte[0];
 		try {
 			session.beginTransaction();
 
-			final Query qry = session.createQuery("from MemeBackground bg where bg.id = :bgId");
+			final Query qry = session.createQuery("from Meme where id = :id");
 			//	    qry.setInteger("bgId", Integer.parseInt(backgroundId));
-			qry.setInteger("bgId", backgroundId);
-			final List<?> result = qry.list();
+			qry.setInteger("id", memeId);
+			final List<?> results = qry.list();
 
 			MemeBackground bg = new MemeBackground();
-			if (result != null && result.size() > 0) {
-				final Object obj = result.get(0);
+			if (results != null && results.size() > 0) {
+				final Object obj = results.get(0);
 
-				if (obj instanceof MemeBackground) {
-					bg = (MemeBackground)obj;
+				if (obj instanceof Meme) {
+					bg = ((Meme)obj).getMemeBackground();
+					
+					logger.debug(StringUtils.join(new Object[]{"bg=[", bg, "]"}));
 				}
 			}
 
 
 			//	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
 			final String imgPath = StringUtils.join(new Object[]{memeImagesRootDir, File.separator, bg.getPath()});
+			
+			logger.debug(StringUtils.join(new Object[] {"imgPath=[", imgPath, "]"}));
+			
 			final File img = new File(imgPath);
 			resultBytes = getBytesFromFile(img);
 

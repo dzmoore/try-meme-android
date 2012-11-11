@@ -10,7 +10,8 @@ import com.eastapps.meme_gen_server.constants.Constants;
 public class ShallowMeme implements Serializable {
 	private static final long serialVersionUID = 4479464552039295027L;
 	private Meme innerMeme;
-	private String topText, bottomText;
+	private String topText;
+	private String bottomText;
 
 	public ShallowMeme(final Meme inner) {
 		super();
@@ -41,6 +42,14 @@ public class ShallowMeme implements Serializable {
 				break;
 			}
 		}
+	}
+	
+	public int getBackgroundFk() {
+		return innerMeme.getMemeBackground().getId();
+	}
+	
+	public void setBackgroundFk(int fk) {
+		innerMeme.getMemeBackground().setId(fk);
 	}
 
 	public int getId() {

@@ -37,16 +37,6 @@ public class HomeControllerTest {
 
 	}
 
-	@Ignore
-	@Test
-	public void testHib() {
-		final Session sesh = sessionFactory.openSession();
-		sesh.beginTransaction();
-
-		final List<?> users = sesh.createQuery("from User").list();
-		TestCase.assertTrue(users.size() >= 1);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		final Resource rsrc = new FileSystemResource(new File("src/test/resources/test-context.xml"));
@@ -61,5 +51,13 @@ public class HomeControllerTest {
 		if (sessionFactory != null) {
 			sessionFactory.close();
 		}
+	}
+	
+	@Test
+	public void testGetMemeJson() {
+		final Session sesh = sessionFactory.openSession();
+		sesh.beginTransaction();
+		
+		
 	}
 }
