@@ -10,6 +10,8 @@ import com.example.meme_gen_android.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +45,35 @@ public class CreateMemeActivity extends Activity {
         
         if (topTextEdit == null) {
         	topTextEdit = new EditText(this);
+        	topTextEdit.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					getMemeViewTopTextView().setText(topTextEdit.getText());
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+				
+				@Override
+				public void afterTextChanged(Editable s) { }
+			});
         }
         
         if (bottomTextEdit == null) {
         	bottomTextEdit = new EditText(this);
+        	
+        	bottomTextEdit.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					getMemeViewBottomTextView().setText(bottomTextEdit.getText());
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+				
+				@Override
+				public void afterTextChanged(Editable s) { }
+			});
         }
     
         new Thread(new Runnable() {
