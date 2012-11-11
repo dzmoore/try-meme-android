@@ -52,4 +52,3 @@ create table sample_meme (
 	foreign key (meme_fk) references meme(id)	
 ) engine=InnoDB;
 
-

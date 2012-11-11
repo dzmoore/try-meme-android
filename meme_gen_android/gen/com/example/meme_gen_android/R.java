@@ -62,18 +62,17 @@ public final class R {
         public static final int edit_top_text_string=0x7f050007;
         public static final int hello_world=0x7f050001;
         public static final int menu_settings=0x7f050002;
-        public static final int nonSslHttp=0x7f05000d;
+        public static final int nonSslHttp=0x7f05000c;
         public static final int save_string=0x7f050006;
         public static final int share_string=0x7f050005;
-        public static final int sslHttp=0x7f05000c;
+        public static final int sslHttp=0x7f05000b;
         public static final int title_activity_create_meme=0x7f050003;
         public static final int title_activity_view_meme=0x7f050009;
-        public static final int webServiceAddress=0x7f05000e;
-        public static final int webServiceBackgroundSuffix=0x7f050010;
-        public static final int webServiceJsonSuffix=0x7f050011;
-        public static final int webServiceMemeDataSuffix=0x7f05000f;
-        public static final int webServiceResource=0x7f05000b;
-        public static final int web_service_address=0x7f05000a;
+        public static final int webServiceAddress=0x7f05000d;
+        public static final int webServiceBackgroundSuffix=0x7f05000f;
+        public static final int webServiceJsonSuffix=0x7f050010;
+        public static final int webServiceMemeDataSuffix=0x7f05000e;
+        public static final int webServiceResource=0x7f05000a;
     }
     public static final class style {
         public static final int AppTheme=0x7f070000;

@@ -39,7 +39,6 @@ public class CreateMemeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lost
         setContentView(R.layout.create_meme_layout);
         
         if (topTextEdit == null) {
@@ -53,7 +52,7 @@ public class CreateMemeActivity extends Activity {
         new Thread(new Runnable() {
 			@Override
 			public void run() {
-				setMemeViewData(new MemeServerClient(CreateMemeActivity.this).createMemeViewData(1));
+				setMemeViewData(new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9));
 			}
 		}).start();
         
@@ -71,6 +70,15 @@ public class CreateMemeActivity extends Activity {
 			}
 		});
 		
+		
+		
+		getBottomTextBtn().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleBottomTextClick(v);
+			}
+		});	
+		
 		getConfigBottomTextBtn().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -79,8 +87,14 @@ public class CreateMemeActivity extends Activity {
 		});
     }
 
-	protected void handleBottomTextConfigBtnClick(View v) {
-		
+	protected void handleBottomTextClick(View v) {
+		startEditing(
+			v,
+			getConfigBottomTextBtn(),
+			bottomTextEdit,
+			getBottomTextLinearLayout(),
+			isEditingBottomText
+		);
 	}
 
 	private ImageButton getConfigBottomTextBtn() {
@@ -90,6 +104,21 @@ public class CreateMemeActivity extends Activity {
 	private Button getTopTextBtn() {
 		return (Button)findViewById(R.id.edit_top_text_btn);
 	}
+	
+    protected void handleBottomTextConfigBtnClick(View v) {
+    	handleConfigBtnClick(
+    		v,
+    		getMemeViewBottomTextView(),
+    		getBottomTextBtn(),
+    		bottomTextEdit,
+    		isEditingBottomText
+		);
+	}
+    
+    private Button getBottomTextBtn() {
+    	return (Button)findViewById(R.id.edit_bottom_text_btn);
+    }
+
     
     protected void handleTopTextConfigBtnClick(View v) {
     	handleConfigBtnClick(
@@ -103,6 +132,10 @@ public class CreateMemeActivity extends Activity {
 
 	private LinearLayout getTopTextLinearLayout() {
 		return (LinearLayout)findViewById(R.id.top_text_linear);
+	}
+	
+	private LinearLayout getBottomTextLinearLayout() {
+		return (LinearLayout)findViewById(R.id.bottom_text_linear);
 	}
     
     private void handleConfigBtnClick(
@@ -166,7 +199,7 @@ public class CreateMemeActivity extends Activity {
 		// the layout
 		} else {
 			textEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
-			parentLayout.addView(topTextEdit, 0);
+			parentLayout.addView(textEdit, 0);
 		}
 		
 		// set the config btn's image to 
@@ -223,6 +256,8 @@ public class CreateMemeActivity extends Activity {
 		topTxtView.setText(memeViewData.getTopText());
         bottomTxtView.setText(memeViewData.getBottomText());
         imgView.setImageBitmap(memeViewData.getBackground());
+        topTextEdit.setText(memeViewData.getTopText());
+        bottomTextEdit.setText(memeViewData.getBottomText());
 	}
 
 	private TextView getMemeViewBottomTextView() {
