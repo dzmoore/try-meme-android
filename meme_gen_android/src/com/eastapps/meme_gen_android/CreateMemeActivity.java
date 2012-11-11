@@ -39,6 +39,7 @@ public class CreateMemeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        lost
         setContentView(R.layout.create_meme_layout);
         
         if (topTextEdit == null) {
