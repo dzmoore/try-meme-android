@@ -2,27 +2,29 @@ package com.eastapps.meme_gen_android;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.eastapps.meme_gen_android.domain.MemeViewData;
-import com.eastapps.meme_gen_android.http.WebClient;
-import com.eastapps.meme_gen_android.web.MemeServerClient;
-import com.example.meme_gen_android.R;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.eastapps.meme_gen_android.domain.MemeViewData;
+import com.eastapps.meme_gen_android.web.MemeServerClient;
+import com.example.meme_gen_android.R;
 
 public class CreateMemeActivity extends Activity {
     private MemeViewData memeViewData;
@@ -195,6 +197,26 @@ public class CreateMemeActivity extends Activity {
     	
 		// handle text config
     	} else {
+    		final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+    		alertBuilder
+	    		.setTitle("Change Text Size")
+	    		.setCancelable(true)
+	    		.setPositiveButton(
+	    			"Change Font Size",
+	    			new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							
+						}
+					}
+    			);
+    		
+    		final LayoutInflater inflater = getLayoutInflater();
+    		alertBuilder.setView(inflater.inflate(R.layout.text_size_dialog_layout, null));
+    		
+    		final AlertDialog alertDialog = alertBuilder.create();
+    		alertDialog.show();
+    		
     	}
     }
 
