@@ -86,7 +86,7 @@ public class CreateMemeActivity extends Activity {
         getTopTextBtn().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleTopTextClick(v);
+				handleTopTextBtnClick(v);
 			}
 		});
         
@@ -102,7 +102,7 @@ public class CreateMemeActivity extends Activity {
 		getBottomTextBtn().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				handleBottomTextClick(v);
+				handleBottomTextBtnClick(v);
 			}
 		});	
 		
@@ -114,7 +114,7 @@ public class CreateMemeActivity extends Activity {
 		});
     }
 
-	protected void handleBottomTextClick(View v) {
+	protected void handleBottomTextBtnClick(View v) {
 		startEditing(
 			v,
 			getConfigBottomTextBtn(),
@@ -237,7 +237,7 @@ public class CreateMemeActivity extends Activity {
 		isEditing.set(true);
 	}
 
-	protected void handleTopTextClick(final View v) {
+	protected void handleTopTextBtnClick(final View v) {
 		startEditing(
 			v,
 			getConfigTopTextBtn(),
