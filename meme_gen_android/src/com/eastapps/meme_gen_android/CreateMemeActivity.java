@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.*;
 
 public class CreateMemeActivity extends Activity {
     private MemeViewData memeViewData;
@@ -30,18 +31,27 @@ public class CreateMemeActivity extends Activity {
     private AtomicBoolean isEditingBottomText;
     private EditText topTextEdit;
     private EditText bottomTextEdit;
+	private SeekBar topSeekBar;
+	private SeekBar bottomSeekBar;
     
     public CreateMemeActivity() {
     	super();
     	
     	isEditingTopText = new AtomicBoolean(false);
     	isEditingBottomText = new AtomicBoolean(false);
+		
+	
+		
     }
     
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_meme_layout);
+		
+		topSeekBar = new SeekBar(this);
+		
         
         if (topTextEdit == null) {
         	topTextEdit = new EditText(this);
@@ -57,6 +67,14 @@ public class CreateMemeActivity extends Activity {
 				@Override
 				public void afterTextChanged(Editable s) { }
 			});
+			
+			topTextEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			getTopTextLinearLayout().addView(topTextEdit, 0);
+			topTextEdit.setVisibility(View.GONE);
+			
+			topSeekBar.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			getTopTextLinearLayout().addView(topSeekBar, 0);
+			topSeekBar.setVisibility(View.GONE);
         }
         
         if (bottomTextEdit == null) {
@@ -113,6 +131,8 @@ public class CreateMemeActivity extends Activity {
 			}
 		});
     }
+	
+	
 
 	protected void handleBottomTextBtnClick(View v) {
 		startEditing(
@@ -195,6 +215,10 @@ public class CreateMemeActivity extends Activity {
     	
 		// handle text config
     	} else {
+			textEditBtn.setVisibility(View.GONE);
+			textEdit.setVisibility(View.GONE);
+			
+			topSeekBar.setVisibility(View.VISIBLE);
     	}
     }
 
@@ -225,8 +249,7 @@ public class CreateMemeActivity extends Activity {
 		// otherwise, set the layout params and add to
 		// the layout
 		} else {
-			textEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
-			parentLayout.addView(textEdit, 0);
+			
 		}
 		
 		// set the config btn's image to 
