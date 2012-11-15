@@ -75,6 +75,7 @@ public class CreateMemeActivity extends Activity {
 			topSeekBar.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 			getTopTextLinearLayout().addView(topSeekBar, 0);
 			topSeekBar.setVisibility(View.GONE);
+			topSeekBar.setMax(50);
         }
         
         if (bottomTextEdit == null) {
