@@ -1,10 +1,16 @@
 package com.eastapps.meme_gen_android.widgets;
 
+import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.StrUtl;
+import com.eastapps.util.Conca;
+
 import android.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.text.Editable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -13,113 +19,168 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class OutlineTextView extends TextView {
+	private TextPaint textPaint;
+	private TextPaint textPaintOutline;
+	private String text;
+	private int ascent;
+	private float borderSize;
+	private int borderColor;
+	private int color;
+	private float spacingMult;
+	private float spacingAdd;
+	private boolean includePad;
+	
 	public OutlineTextView(Context context) {
 		super(context);
+		
+		init();
 		
 		setTextColor(getResources().getColor(R.color.white));
 		setShadowLayer(10, 0, 0, getResources().getColor(R.color.black));	
 		
 		initPaint();
 	}
-
+	
 	public OutlineTextView(Context context, AttributeSet attrs) {// here
 		super(context, attrs);
 		
+		init();
+		
 		setTextColor(getResources().getColor(R.color.white));
 		
-//		android:shadowRadius
-//		Log.d(getClass().getSimpleName(), "android:shadowRadius:[" + attrs.getAttributeValue("android:shadowRadius") + "]");
+		for (int i = 0; i < attrs.getAttributeCount(); i++) {
+			Log.d(
+				getClass().getSimpleName(), 
+				Conca.t(
+					"attr:[",
+					attrs.getAttributeName(i),
+					"]:[",
+					attrs.getAttributeValue(i),
+					"]"
+				)
+			);
+		}
 		
-		setShadowLayer(10, 0, 0, getResources().getColor(R.color.black));
+		setShadowLayer(getShadowRadius(attrs), 0, 0, getResources().getColor(R.color.black));
 		
 		initPaint();
 	}
-
+	
 	public OutlineTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
+		init();
+		
 		setTextColor(getResources().getColor(R.color.white));
-		setShadowLayer(10, 0, 0, getResources().getColor(R.color.black));
+		setShadowLayer(getShadowRadius(attrs), 0, 0, getResources().getColor(R.color.black));
 		
 		initPaint();
 	}
-
-	private void initPaint() {
-		mTextPaint = new TextPaint();
-		mTextPaint.setAntiAlias(true);
-		mTextPaint.setTextSize(getTextSize());
-		mTextPaint.setColor(mColor);
-		mTextPaint.setStyle(Paint.Style.FILL);
-		mTextPaint.setTypeface(getTypeface());
-
-		mTextPaintOutline = new TextPaint();
-		mTextPaintOutline.setAntiAlias(true);
-		mTextPaintOutline.setTextSize(getTextSize());
-		mTextPaintOutline.setColor(mBorderColor);
-		mTextPaintOutline.setStyle(Paint.Style.STROKE);
-		mTextPaintOutline.setTypeface(getTypeface());
-		mTextPaintOutline.setStrokeWidth(mBorderSize);
+	
+	private void init() {
+		text = Constants.EMPTY_STRING;
+		ascent = 0;
+		spacingMult = 1f;
+		spacingAdd = 0;
+		includePad = true;
+		
+	}
+	
+	private float getShadowRadius(final AttributeSet attrs) {
+		float shadowRadius = 0f;
+		
+		for (int i = 0; i < attrs.getAttributeCount(); i++) {
+			if (StrUtl.equalsIgnoreCase(attrs.getAttributeName(i), "shadowRadius")) {
+				shadowRadius = attrs.getAttributeFloatValue(i, 0f);
+				break;
+			}
+		}
+		
+		return shadowRadius;
 	}
 
+	
+
+	private void initPaint() {
+		textPaint = new TextPaint();
+		textPaint.setAntiAlias(true);
+		textPaint.setTextSize(getTextSize());
+		textPaint.setColor(color);
+		textPaint.setStyle(Paint.Style.FILL);
+		textPaint.setTypeface(getTypeface());
+
+		textPaintOutline = new TextPaint();
+		textPaintOutline.setAntiAlias(true);
+		textPaintOutline.setTextSize(getTextSize());
+		textPaintOutline.setColor(borderColor);
+		textPaintOutline.setStyle(Paint.Style.STROKE);
+		textPaintOutline.setTypeface(getTypeface());
+		textPaintOutline.setStrokeWidth(borderSize);
+	}
+	
 	public void setText(String text) {
 		super.setText(text);
-		mText = text.toString();
-		requestLayout();
+		text = text.toString();
 		invalidate();
+		requestLayout();
 	}
 
 	public void setTextSize(float size) {
 		super.setTextSize(size);
-		requestLayout();
+		
 		invalidate();
+		requestLayout();
 		initPaint();
 	}
 
 	@Override
 	public void setTextColor(int color) {
 		super.setTextColor(color);
-		mColor = color;
+		this.color = color;
 		invalidate();
+		requestLayout();
+		
 		initPaint();
 	}
 
 	@Override
 	public void setShadowLayer(float radius, float dx, float dy, int color) {
-		super.setShadowLayer(radius, dx, dy, color);
+//		super.setShadowLayer(radius, dx, dy, color);
 		Log.d(getClass().getSimpleName(), "setshadowlayer", new Exception("stack trace only"));
-		mBorderSize = radius;
-		mBorderColor = color;
-		requestLayout();
+		borderSize = radius;
+		borderColor = color;
 		invalidate();
+		requestLayout();
 		initPaint();
 	}
 
 	public void setTypeface(Typeface tf, int style) {
 		super.setTypeface(tf, style);
-		requestLayout();
 		invalidate();
+		requestLayout();
 		initPaint();
 	}
 
 	public void setTypeface(Typeface tf) {
 		super.setTypeface(tf);
-		requestLayout();
 		invalidate();
+		requestLayout();
 		initPaint();
 	}
 
+	@SuppressLint({ "DrawAllocation", "DrawAllocation" })
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Layout layout = new StaticLayout(getText(), mTextPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
+		Layout layout = new StaticLayout(getText(), textPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
 		layout.draw(canvas);
-		layout = new StaticLayout(getText(), mTextPaint, getWidth(), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
+		layout = new StaticLayout(getText(), textPaint, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
 		layout.draw(canvas);
 	}
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		Layout layout = new StaticLayout(getText(), mTextPaintOutline, measureWidth(widthMeasureSpec), Layout.Alignment.ALIGN_CENTER, mSpacingMult, mSpacingAdd, mIncludePad);
-		int ex = (int) (mBorderSize * 2 + 1);
+		Layout layout = new StaticLayout(getText(), textPaintOutline, measureWidth(widthMeasureSpec), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
+		int ex = (int) (borderSize * 2 + 1);
 		setMeasuredDimension(measureWidth(widthMeasureSpec) + ex, measureHeight(heightMeasureSpec) * layout.getLineCount() + ex);
 	}
 
@@ -131,7 +192,7 @@ public class OutlineTextView extends TextView {
 		if (specMode == MeasureSpec.EXACTLY) {
 			result = specSize;
 		} else {
-			result = (int) mTextPaintOutline.measureText(mText) + getPaddingLeft() + getPaddingRight();
+			result = (int) textPaintOutline.measureText(text) + getPaddingLeft() + getPaddingRight();
 			if (specMode == MeasureSpec.AT_MOST) {
 				result = Math.min(result, specSize);
 			}
@@ -145,11 +206,11 @@ public class OutlineTextView extends TextView {
 		int specMode = MeasureSpec.getMode(measureSpec);
 		int specSize = MeasureSpec.getSize(measureSpec);
 
-		mAscent = (int) mTextPaintOutline.ascent();
+		ascent = (int) textPaintOutline.ascent();
 		if (specMode == MeasureSpec.EXACTLY) {
 			result = specSize;
 		} else {
-			result = (int) (-mAscent + mTextPaintOutline.descent()) + getPaddingTop() + getPaddingBottom();
+			result = (int) (-ascent + textPaintOutline.descent()) + getPaddingTop() + getPaddingBottom();
 			if (specMode == MeasureSpec.AT_MOST) {
 				result = Math.min(result, specSize);
 			}
@@ -157,14 +218,5 @@ public class OutlineTextView extends TextView {
 		return result;
 	}
 
-	private TextPaint mTextPaint;
-	private TextPaint mTextPaintOutline;
-	private String mText = "";
-	private int mAscent = 0;
-	private float mBorderSize;
-	private int mBorderColor;
-	private int mColor;
-	private float mSpacingMult = 1.0f;
-	private float mSpacingAdd = 0;
-	private boolean mIncludePad = true;
+
 }

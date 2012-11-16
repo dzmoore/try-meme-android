@@ -9,25 +9,31 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.*;
 
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
+import com.eastapps.meme_gen_android.widgets.OutlineTextView;
+import com.eastapps.util.Conca;
 import com.example.meme_gen_android.R;
 
 public class CreateMemeActivity extends Activity {
+	private static final String TAG = CreateMemeActivity.class.getSimpleName();
+	
     private MemeViewData memeViewData;
     private AtomicBoolean isEditingTopText;
     private AtomicBoolean isEditingBottomText;
@@ -41,9 +47,6 @@ public class CreateMemeActivity extends Activity {
     	
     	isEditingTopText = new AtomicBoolean(false);
     	isEditingBottomText = new AtomicBoolean(false);
-		
-	
-		
     }
     
 	
@@ -52,15 +55,12 @@ public class CreateMemeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_meme_layout);
 		
-		topSeekBar = new SeekBar(this);
-		
-        
         if (topTextEdit == null) {
         	topTextEdit = new EditText(this);
         	topTextEdit.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					getMemeViewTopTextView().setText(topTextEdit.getText());
+					getMemeViewTopTextView().setText(topTextEdit.getText().toString());
 				}
 				
 				@Override
@@ -74,11 +74,34 @@ public class CreateMemeActivity extends Activity {
 			getTopTextLinearLayout().addView(topTextEdit, 0);
 			topTextEdit.setVisibility(View.GONE);
 			
+			topSeekBar = new SeekBar(this);
 			topSeekBar.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 			getTopTextLinearLayout().addView(topSeekBar, 0);
 			topSeekBar.setVisibility(View.GONE);
-			topSeekBar.setMax(Integer.parseInt(getString(R.string.maxFontSize)));
+			topSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
 			topSeekBar.setProgress((int)getMemeViewBottomTextView().getTextSize());
+			
+			topSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+					
+				}
+				
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+					
+				}
+				
+				@Override
+				public void onProgressChanged(
+					SeekBar seekBar, 
+					int progress, 
+					boolean fromUser) 
+				{
+					Log.d(TAG, Conca.t("top seek bar progress change={", progress, "} / {", seekBar.getMax(), "}"));
+					getMemeViewTopTextView().setTextSize(seekBar.getProgress());
+				}
+			});
         }
         
         if (bottomTextEdit == null) {
@@ -87,7 +110,7 @@ public class CreateMemeActivity extends Activity {
         	bottomTextEdit.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					getMemeViewBottomTextView().setText(bottomTextEdit.getText());
+					getMemeViewBottomTextView().setText(bottomTextEdit.getText().toString());
 				}
 				
 				@Override
@@ -96,16 +119,25 @@ public class CreateMemeActivity extends Activity {
 				@Override
 				public void afterTextChanged(Editable s) { }
 			});
+        	
+        	bottomTextEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			getBottomTextLinearLayout().addView(bottomTextEdit, 0);
+			bottomTextEdit.setVisibility(View.GONE);
+			
+			bottomSeekBar = new SeekBar(this);
+			bottomSeekBar.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			getBottomTextLinearLayout().addView(bottomSeekBar, 0);
+			bottomSeekBar.setVisibility(View.GONE);
+			bottomSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
+			bottomSeekBar.setProgress((int)getMemeViewBottomTextView().getTextSize());
         }
 		
 		
         new Thread(new Runnable() {
 			@Override
 			public void run() {
-				memeViewData = new MemeViewData(); // new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
+				memeViewData = new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
 			
-			    memeViewData.setTopText("top");
-                memeViewData.setBottomText("bottom");
 	            setMemeViewData(memeViewData);
 			}
 		}).start();
@@ -326,10 +358,10 @@ public class CreateMemeActivity extends Activity {
         Typeface robotoBoldCondensedTypeFace = Typeface.createFromAsset(getAssets(), "fonts/Roboto-BoldCondensed.ttf");
         
         topTxtView.setTypeface(robotoBoldCondensedTypeFace);
-        topTxtView.setTextSize(26);
+        topTxtView.setTextSize(getResources().getInteger(R.integer.initialFontSize));
         
         bottomTxtView.setTypeface(robotoBoldCondensedTypeFace);
-        bottomTxtView.setTextSize(26);
+        bottomTxtView.setTextSize(getResources().getInteger(R.integer.initialFontSize));
         
         final ImageView imgView = (ImageView) findViewById(R.id.image_view);
 		topTxtView.setText(memeViewData.getTopText());
@@ -339,12 +371,12 @@ public class CreateMemeActivity extends Activity {
         bottomTextEdit.setText(memeViewData.getBottomText());
 	}
 
-	private TextView getMemeViewBottomTextView() {
-		return (TextView)findViewById(R.id.bottom_text_textview);
+	private OutlineTextView getMemeViewBottomTextView() {
+		return (OutlineTextView)findViewById(R.id.bottom_text_textview);
 	}
 
-	private TextView getMemeViewTopTextView() {
-		return (TextView)findViewById(R.id.top_text_textview);
+	private OutlineTextView getMemeViewTopTextView() {
+		return (OutlineTextView)findViewById(R.id.top_text_textview);
 	}
 
     @Override
