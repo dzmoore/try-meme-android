@@ -75,7 +75,8 @@ public class CreateMemeActivity extends Activity {
 			topSeekBar.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 			getTopTextLinearLayout().addView(topSeekBar, 0);
 			topSeekBar.setVisibility(View.GONE);
-			topSeekBar.setMax(50);
+			topSeekBar.setMax(Integer.parseInt(getString(R.string.maxFontSize)));
+			topSeekBar.setProgress((int)getMemeViewBottomTextView().getTextSize());
         }
         
         if (bottomTextEdit == null) {
@@ -94,11 +95,16 @@ public class CreateMemeActivity extends Activity {
 				public void afterTextChanged(Editable s) { }
 			});
         }
-    
+		
+		
         new Thread(new Runnable() {
 			@Override
 			public void run() {
-				setMemeViewData(new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9));
+				memeViewData = new MemeViewData(); // new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
+			
+			    memeViewData.setTopText("top");
+                memeViewData.setBottomText("bottom");
+	            setMemeViewData(memeViewData);
 			}
 		}).start();
         
