@@ -17,20 +17,20 @@
             android:scaleType="fitCenter"
             android:src="@drawable/tmimitw" />
 
-        <TextView
+        <com.eastapps.meme_gen_android.widgets.OutlineTextView
             android:id="@+id/top_text_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/image_view"
             android:layout_alignRight="@id/image_view"
             android:layout_alignTop="@id/image_view"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:paddingLeft="@dimen/text_padding"
             android:paddingRight="@dimen/text_padding"
+            android:shadowRadius="7"
             android:text="DUMMY TOP TEXT" />
 
-        <TextView
+        <com.eastapps.meme_gen_android.widgets.OutlineTextView
             android:id="@+id/bottom_text_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,6 +40,7 @@
             android:gravity="center_horizontal"
             android:paddingLeft="@dimen/text_padding"
             android:paddingRight="@dimen/text_padding"
+            android:shadowRadius="7"
             android:text="DUMMY BOTTOM TEXT" />
     </RelativeLayout>
 

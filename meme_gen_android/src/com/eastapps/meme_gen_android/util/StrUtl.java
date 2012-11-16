@@ -43,4 +43,30 @@ public class StrUtl {
 
 		return str;
 	}
+	
+	public static boolean equalsIgnoreCase(final String str1, final String str2) {
+		boolean equal = false;
+		
+		if (str1 != null && str2 != null) {
+			equal = str1.equalsIgnoreCase(str2);
+		}
+		
+		
+		return equal;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -45,6 +45,8 @@ public final class R {
         public static final int top_text_textview=0x7f09000e;
     }
     public static final class integer {
+        public static final int initialFontSize=0x7f060003;
+        public static final int maxFontSize=0x7f060002;
         public static final int nonSslPort=0x7f060001;
         public static final int sslPort=0x7f060000;
     }
@@ -63,7 +65,6 @@ public final class R {
         public static final int edit_bottom_text_string=0x7f050008;
         public static final int edit_top_text_string=0x7f050007;
         public static final int hello_world=0x7f050001;
-        public static final int maxFontSize=0x7f050011;
         public static final int menu_settings=0x7f050002;
         public static final int nonSslHttp=0x7f05000c;
         public static final int save_string=0x7f050006;
