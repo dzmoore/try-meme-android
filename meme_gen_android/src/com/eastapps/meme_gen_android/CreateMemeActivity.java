@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.*;
 
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
@@ -32,18 +33,27 @@ public class CreateMemeActivity extends Activity {
     private AtomicBoolean isEditingBottomText;
     private EditText topTextEdit;
     private EditText bottomTextEdit;
+	private SeekBar topSeekBar;
+	private SeekBar bottomSeekBar;
     
     public CreateMemeActivity() {
     	super();
     	
     	isEditingTopText = new AtomicBoolean(false);
     	isEditingBottomText = new AtomicBoolean(false);
+		
+	
+		
     }
     
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_meme_layout);
+		
+		topSeekBar = new SeekBar(this);
+		
         
         if (topTextEdit == null) {
         	topTextEdit = new EditText(this);
@@ -59,6 +69,16 @@ public class CreateMemeActivity extends Activity {
 				@Override
 				public void afterTextChanged(Editable s) { }
 			});
+			
+			topTextEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			getTopTextLinearLayout().addView(topTextEdit, 0);
+			topTextEdit.setVisibility(View.GONE);
+			
+			topSeekBar.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			getTopTextLinearLayout().addView(topSeekBar, 0);
+			topSeekBar.setVisibility(View.GONE);
+			topSeekBar.setMax(Integer.parseInt(getString(R.string.maxFontSize)));
+			topSeekBar.setProgress((int)getMemeViewBottomTextView().getTextSize());
         }
         
         if (bottomTextEdit == null) {
@@ -77,11 +97,16 @@ public class CreateMemeActivity extends Activity {
 				public void afterTextChanged(Editable s) { }
 			});
         }
-    
+		
+		
         new Thread(new Runnable() {
 			@Override
 			public void run() {
-				setMemeViewData(new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9));
+				memeViewData = new MemeViewData(); // new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
+			
+			    memeViewData.setTopText("top");
+                memeViewData.setBottomText("bottom");
+	            setMemeViewData(memeViewData);
 			}
 		}).start();
         
@@ -115,6 +140,8 @@ public class CreateMemeActivity extends Activity {
 			}
 		});
     }
+	
+	
 
 	protected void handleBottomTextBtnClick(View v) {
 		startEditing(
@@ -217,6 +244,10 @@ public class CreateMemeActivity extends Activity {
     		final AlertDialog alertDialog = alertBuilder.create();
     		alertDialog.show();
     		
+			textEditBtn.setVisibility(View.GONE);
+			textEdit.setVisibility(View.GONE);
+			
+			topSeekBar.setVisibility(View.VISIBLE);
     	}
     }
 
@@ -247,8 +278,7 @@ public class CreateMemeActivity extends Activity {
 		// otherwise, set the layout params and add to
 		// the layout
 		} else {
-			textEdit.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f));
-			parentLayout.addView(textEdit, 0);
+			
 		}
 		
 		// set the config btn's image to 
