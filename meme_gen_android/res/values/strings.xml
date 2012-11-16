@@ -24,5 +24,6 @@
     <string name="webServiceMemeDataSuffix">meme_data</string>
     <string name="webServiceBackgroundSuffix">background</string>
     <string name="webServiceJsonSuffix">json</string>
+	<string name="maxFontSize">100</string>
 
 </resources>
