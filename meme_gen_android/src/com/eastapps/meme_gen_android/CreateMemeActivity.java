@@ -37,6 +37,8 @@ public class CreateMemeActivity extends Activity {
     private MemeViewData memeViewData;
     private AtomicBoolean isEditingTopText;
     private AtomicBoolean isEditingBottomText;
+	private AtomicBoolean isTopTextSizing;
+	private AtomicBoolean isBottomTextSizing;
     private EditText topTextEdit;
     private EditText bottomTextEdit;
 	private SeekBar topSeekBar;
@@ -47,6 +49,9 @@ public class CreateMemeActivity extends Activity {
     	
     	isEditingTopText = new AtomicBoolean(false);
     	isEditingBottomText = new AtomicBoolean(false);
+		
+		isTopTextSizing = new AtomicBoolean(false);
+		isBottomTextSizing = new AtomicBoolean(false);
     }
     
 	
@@ -80,28 +85,8 @@ public class CreateMemeActivity extends Activity {
 			topSeekBar.setVisibility(View.GONE);
 			topSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
 			topSeekBar.setProgress((int)getMemeViewBottomTextView().getTextSize());
+			createSeekBarChangeListener(topSeekBar, getMemeViewTopTextView());
 			
-			topSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-				@Override
-				public void onStopTrackingTouch(SeekBar seekBar) {
-					
-				}
-				
-				@Override
-				public void onStartTrackingTouch(SeekBar seekBar) {
-					
-				}
-				
-				@Override
-				public void onProgressChanged(
-					SeekBar seekBar, 
-					int progress, 
-					boolean fromUser) 
-				{
-					Log.d(TAG, Conca.t("top seek bar progress change={", progress, "} / {", seekBar.getMax(), "}"));
-					getMemeViewTopTextView().setTextSize(seekBar.getProgress());
-				}
-			});
         }
         
         if (bottomTextEdit == null) {
@@ -130,6 +115,8 @@ public class CreateMemeActivity extends Activity {
 			bottomSeekBar.setVisibility(View.GONE);
 			bottomSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
 			bottomSeekBar.setProgress((int)getMemeViewBottomTextView().getTextSize());
+			
+			createSeekBarChangeListener(bottomSeekBar, getMemeViewBottomTextView());
         }
 		
 		
@@ -173,6 +160,35 @@ public class CreateMemeActivity extends Activity {
 		});
     }
 	
+	private void createSeekBarChangeListener(
+	    final SeekBar seekBar, 
+		final OutlineTextView textView)
+	{
+		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			    @Override
+				public void onStopTrackingTouch(SeekBar seekBar)
+				{
+
+				}
+
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar)
+				{
+
+				}
+
+				@Override
+				public void onProgressChanged(
+					SeekBar seekBar, 
+					int progress, 
+					boolean fromUser) 
+				{
+					Log.d(TAG, Conca.t("seek bar progress change={", progress, "} / {", seekBar.getMax(), "}"));
+					textView.setTextSize(seekBar.getProgress());
+				}
+			});
+	}
+	
 	
 
 	protected void handleBottomTextBtnClick(View v) {
@@ -199,7 +215,9 @@ public class CreateMemeActivity extends Activity {
     		getMemeViewBottomTextView(),
     		getBottomTextBtn(),
     		bottomTextEdit,
-    		isEditingBottomText
+    		isEditingBottomText,
+			isBottomTextSizing,
+			bottomSeekBar
 		);
 	}
     
@@ -214,7 +232,9 @@ public class CreateMemeActivity extends Activity {
     		getMemeViewTopTextView(),
     		getTopTextBtn(),
     		topTextEdit,
-    		isEditingTopText
+    		isEditingTopText,
+			isTopTextSizing,
+			topSeekBar
 		);
 	}
 
@@ -231,7 +251,9 @@ public class CreateMemeActivity extends Activity {
     		final TextView textViewToSet, 
     		final Button textEditBtn,
     		final EditText textEdit,
-    		final AtomicBoolean isEditing) 
+    		final AtomicBoolean isEditing,
+			final AtomicBoolean isTextSizing,
+			final SeekBar seekBar) 
     {
     	// if editing --> stop editing
     	if (isEditing.get()) {
@@ -256,30 +278,16 @@ public class CreateMemeActivity extends Activity {
     	
 		// handle text config
     	} else {
-    		final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-    		alertBuilder
-	    		.setTitle("Change Text Size")
-	    		.setCancelable(true)
-	    		.setPositiveButton(
-	    			"Change Font Size",
-	    			new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-						}
-					}
-    			);
-    		
-    		final LayoutInflater inflater = getLayoutInflater();
-    		alertBuilder.setView(inflater.inflate(R.layout.text_size_dialog_layout, null));
-    		
-    		final AlertDialog alertDialog = alertBuilder.create();
-    		alertDialog.show();
-    		
-			textEditBtn.setVisibility(View.GONE);
-			textEdit.setVisibility(View.GONE);
-			
-			topSeekBar.setVisibility(View.VISIBLE);
+			if (isTextSizing.get()) {
+				textEditBtn.setVisibility(View.VISIBLE);
+				textEdit.setVisibility(View.GONE);
+				seekBar.setVisibility(View.GONE);
+				
+			} else {
+				textEditBtn.setVisibility(View.GONE);
+			    textEdit.setVisibility(View.GONE);
+		    	seekBar.setVisibility(View.VISIBLE);
+			}
     	}
     }
 
