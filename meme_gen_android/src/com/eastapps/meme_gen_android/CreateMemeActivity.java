@@ -53,7 +53,9 @@ public class CreateMemeActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_meme_layout);
-
+		
+		final ImageView imgView = (ImageView) findViewById(R.id.image_view);
+		
 		initTopTextEdit();
 
 		initBottomTextEdit();
@@ -407,6 +409,10 @@ public class CreateMemeActivity extends Activity {
 		topTxtView.setText(memeViewData.getTopText());
 		bottomTxtView.setText(memeViewData.getBottomText());
 		imgView.setImageBitmap(memeViewData.getBackground());
+		
+		final float widthHeightRatio = memeViewData.getBackground().getWidth() / memeViewData.getBackground().getHeight();
+		
+		
 		topTextEdit.setText(memeViewData.getTopText());
 		bottomTextEdit.setText(memeViewData.getBottomText());
 	}
