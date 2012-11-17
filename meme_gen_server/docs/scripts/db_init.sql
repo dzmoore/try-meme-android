@@ -38,6 +38,7 @@ create table meme_text (
 	id int(21) not null auto_increment,
 	text varchar(200),
 	text_type varchar(20),
+	font_size int(3),
 	meme_fk int(21),
 	primary key (id),
 	foreign key (meme_fk) references meme(id)
