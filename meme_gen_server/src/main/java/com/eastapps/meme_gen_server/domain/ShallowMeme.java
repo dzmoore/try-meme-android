@@ -12,6 +12,10 @@ public class ShallowMeme implements Serializable {
 	private Meme innerMeme;
 	private String topText;
 	private String bottomText;
+	
+	public ShallowMeme() {
+		this(new Meme());
+	}
 
 	public ShallowMeme(final Meme inner) {
 		super();

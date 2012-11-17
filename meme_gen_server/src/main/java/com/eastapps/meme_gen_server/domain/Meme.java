@@ -27,17 +27,25 @@ public class Meme implements java.io.Serializable {
 	private Integer id;
 	private LvMemeType lvMemeType;
 	private MemeBackground memeBackground;
-	private Set<MemeText> memeTexts = new HashSet(0);
-	private Set<SampleMeme> sampleMemes = new HashSet(0);
+	private User user;
+	private Set<MemeText> memeTexts = new HashSet<MemeText>(0);
+	private Set<SampleMeme> sampleMemes = new HashSet<SampleMeme>(0);
 
 	public Meme() {
 	}
 
-	public Meme(LvMemeType lvMemeType, MemeBackground memeBackground, Set memeTexts, Set sampleMemes) {
+	public Meme(
+		LvMemeType lvMemeType, 
+		MemeBackground memeBackground, 
+		Set<MemeText> memeTexts, 
+		Set<SampleMeme> sampleMemes,
+		User user) 
+	{
 		this.lvMemeType = lvMemeType;
 		this.memeBackground = memeBackground;
 		this.memeTexts = memeTexts;
 		this.sampleMemes = sampleMemes;
+		this.user = user;
 	}
 
 	@Id
@@ -118,6 +126,16 @@ public class Meme implements java.io.Serializable {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by_user_fk")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

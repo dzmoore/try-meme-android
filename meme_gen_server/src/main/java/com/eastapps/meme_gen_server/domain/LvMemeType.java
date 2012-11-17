@@ -19,21 +19,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "lv_meme_type", catalog = "mgsdb")
 public class LvMemeType implements java.io.Serializable {
-
+	private static final long serialVersionUID = -5105139654526429935L;
 	private Integer id;
 	private String descr;
 	private Boolean active;
-	private Set<Meme> memes = new HashSet(0);
-	private Set<SampleMeme> sampleMemes = new HashSet(0);
+	private Set<Meme> memes = new HashSet<Meme>(0);
 
 	public LvMemeType() {
 	}
 
-	public LvMemeType(String descr, Boolean active, Set memes, Set sampleMemes) {
+	public LvMemeType(String descr, Boolean active, Set<Meme> memes) {
 		this.descr = descr;
 		this.active = active;
 		this.memes = memes;
-		this.sampleMemes = sampleMemes;
 	}
 
 	@Id
@@ -72,15 +70,6 @@ public class LvMemeType implements java.io.Serializable {
 
 	public void setMemes(Set<Meme> memes) {
 		this.memes = memes;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")
-	public Set<SampleMeme> getSampleMemes() {
-		return this.sampleMemes;
-	}
-
-	public void setSampleMemes(Set<SampleMeme> sampleMemes) {
-		this.sampleMemes = sampleMemes;
 	}
 
 	@Override

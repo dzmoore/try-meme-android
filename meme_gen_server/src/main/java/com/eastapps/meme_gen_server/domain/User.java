@@ -2,12 +2,18 @@ package com.eastapps.meme_gen_server.domain;
 
 // Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,13 +24,15 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "user", catalog = "mgsdb")
 public class User implements java.io.Serializable {
-
+	private static final long serialVersionUID = 8212798718211670129L;
 	private Integer id;
 	private String username;
 	private String password;
 	private Boolean active;
 	private Date lastMod;
 	private String salt;
+	private Set<DeviceInfo> deviceInfos = new HashSet<DeviceInfo>(0);
+	private Set<Meme> memes = new HashSet<Meme>(0);
 
 	public User() {
 	}
@@ -35,12 +43,22 @@ public class User implements java.io.Serializable {
 		this.lastMod = lastMod;
 	}
 
-	public User(String username, String password, Boolean active, Date lastMod, String salt) {
+	public User(
+		String username, 
+		String password, 
+		Boolean active, 
+		Date lastMod, 
+		String salt, 
+		Set<DeviceInfo> deviceInfos, 
+		Set<Meme> memes) 
+	{
 		this.username = username;
 		this.password = password;
 		this.active = active;
 		this.lastMod = lastMod;
 		this.salt = salt;
+		this.deviceInfos = deviceInfos;
+		this.memes = memes;
 	}
 
 	@Id
@@ -98,6 +116,24 @@ public class User implements java.io.Serializable {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<DeviceInfo> getDeviceInfos() {
+		return this.deviceInfos;
+	}
+
+	public void setDeviceInfos(Set<DeviceInfo> deviceInfos) {
+		this.deviceInfos = deviceInfos;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Meme> getMemes() {
+		return this.memes;
+	}
+
+	public void setMemes(Set<Meme> memes) {
+		this.memes = memes;
 	}
 
 }

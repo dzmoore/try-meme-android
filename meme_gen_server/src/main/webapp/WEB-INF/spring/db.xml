@@ -38,8 +38,8 @@
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties" value="${db.hibernatedialect}"/>
-				<!-- hibernate.dialect=org.hibernate.dialect.MySQLDialect-->
-		<property name="annotatedClasses">
+        
+        <property name="annotatedClasses">
 			<list>
 				<value>com.eastapps.meme_gen_server.domain.User</value>
 				<value>com.eastapps.meme_gen_server.domain.LvMemeType</value>
@@ -47,6 +47,8 @@
 				<value>com.eastapps.meme_gen_server.domain.MemeBackground</value>
 				<value>com.eastapps.meme_gen_server.domain.MemeText</value>
                 <value>com.eastapps.meme_gen_server.domain.SampleMeme</value>
+                <value>com.eastapps.meme_gen_server.domain.DeviceInfo</value>
+                
 			</list>
 		</property>
 		

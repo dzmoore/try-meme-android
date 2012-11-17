@@ -21,14 +21,12 @@ public class SampleMeme implements java.io.Serializable {
 
 	private Integer id;
 	private Meme meme;
-	private LvMemeType lvMemeType;
 
 	public SampleMeme() {
 	}
 
-	public SampleMeme(Meme meme, LvMemeType lvMemeType) {
+	public SampleMeme(Meme meme) {
 		this.meme = meme;
-		this.lvMemeType = lvMemeType;
 	}
 
 	@Id
@@ -50,16 +48,6 @@ public class SampleMeme implements java.io.Serializable {
 
 	public void setMeme(Meme meme) {
 		this.meme = meme;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lv_meme_type_fk")
-	public LvMemeType getLvMemeType() {
-		return this.lvMemeType;
-	}
-
-	public void setLvMemeType(LvMemeType lvMemeType) {
-		this.lvMemeType = lvMemeType;
 	}
 
 }
