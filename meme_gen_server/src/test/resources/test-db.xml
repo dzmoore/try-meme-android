@@ -36,7 +36,7 @@
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost/mgsdb" />
-		<property name="username" value="root" />
+		<property name="username" value="mgsdb_user" />
 		<property name="password" value="password" />
 	</bean>
 
@@ -50,8 +50,14 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.eastapps.meme_gen_server.domain.User</value>
-			</list>
+		      <value>com.eastapps.meme_gen_server.domain.User</value>
+              <value>com.eastapps.meme_gen_server.domain.LvMemeType</value>
+              <value>com.eastapps.meme_gen_server.domain.Meme</value>
+              <value>com.eastapps.meme_gen_server.domain.MemeBackground</value>
+              <value>com.eastapps.meme_gen_server.domain.MemeText</value>
+              <value>com.eastapps.meme_gen_server.domain.SampleMeme</value>
+              <value>com.eastapps.meme_gen_server.domain.DeviceInfo</value>	
+            </list>
 		</property>
 		
 	</bean>

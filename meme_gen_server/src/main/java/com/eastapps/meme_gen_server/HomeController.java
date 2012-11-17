@@ -17,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eastapps.meme_gen_server.constants.Constants;
+import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.LvMemeType;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
@@ -58,6 +60,14 @@ public class HomeController {
 		logger.info("Welcome home!");
 		model.addAttribute("controllerMessage", "This is the message from the controller!");
 		return "home";
+	}
+	
+	@RequestMapping(value = "/store_meme", method = RequestMethod.POST)
+    @ResponseBody
+	public IntResult storeMeme(@RequestBody ShallowMeme meme) {
+		IntResult result = new IntResult();
+		
+		return result;
 	}
 
 	@RequestMapping(value="/add_meme_admin", method = RequestMethod.POST)
@@ -162,6 +172,7 @@ public class HomeController {
 		} catch (Exception e) {
 			logger.error("err", e);
 		}
+		
 		commit(session);
 		
 		session.beginTransaction();
@@ -198,7 +209,6 @@ public class HomeController {
 		commit(session);
 		
 		final SampleMeme sample = new SampleMeme();
-		sample.setLvMemeType(memeType);
 		sample.setMeme(meme1);
 		
 		session.beginTransaction();

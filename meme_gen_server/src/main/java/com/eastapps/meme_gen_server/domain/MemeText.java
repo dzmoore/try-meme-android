@@ -24,14 +24,17 @@ public class MemeText implements java.io.Serializable {
 	private Meme meme;
 	private String text;
 	private String textType;
+	private Integer fontSize;
+
 
 	public MemeText() {
 	}
 
-	public MemeText(Meme meme, String text, String textType) {
+	public MemeText(Meme meme, String text, String textType, Integer fontSize) {
 		this.meme = meme;
 		this.text = text;
 		this.textType = textType;
+		this.fontSize = fontSize;
 	}
 
 	@Id
@@ -71,6 +74,15 @@ public class MemeText implements java.io.Serializable {
 
 	public void setTextType(String textType) {
 		this.textType = textType;
+	}
+	
+	@Column(name = "font_size")
+	public Integer getFontSize() {
+		return this.fontSize;
+	}
+
+	public void setFontSize(Integer fontSize) {
+		this.fontSize = fontSize;
 	}
 	
 	@Override
