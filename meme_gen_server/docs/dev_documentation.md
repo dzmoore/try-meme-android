@@ -78,6 +78,6 @@ create a user table in the db:
 	create user 'mgsdb_user'@'localhost' identified by 'password';
 	create database mgsdb;
 	grant  
-		select,insert,update,delete,create,drop
+		select,insert,update,delete,create,drop,alter
 		on mgsdb.*
 		to 'mgsdb_user'@'localhost';
