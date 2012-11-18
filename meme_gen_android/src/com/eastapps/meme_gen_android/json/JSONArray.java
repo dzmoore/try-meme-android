@@ -30,6 +30,7 @@ import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -158,7 +159,17 @@ public class JSONArray {
 		if (collection != null) {
 			Iterator iter = collection.iterator();
 			while (iter.hasNext()) {
-				this.myArrayList.add(JSONObject.wrap(iter.next()));
+				this.myArrayList.add(new JSONObject(iter.next()));
+			}
+		}
+	}
+	
+	public JSONArray(Collection collection, final HashSet<Object> visited) {
+		this.myArrayList = new ArrayList();
+		if (collection != null) {
+			Iterator iter = collection.iterator();
+			while (iter.hasNext()) {
+				this.myArrayList.add(new JSONObject(iter.next(), visited));
 			}
 		}
 	}
@@ -174,7 +185,20 @@ public class JSONArray {
 		if (array.getClass().isArray()) {
 			int length = Array.getLength(array);
 			for (int i = 0; i < length; i += 1) {
-				this.put(JSONObject.wrap(Array.get(array, i)));
+				this.put(new JSONObject(Array.get(array, i)));
+			}
+		} else {
+			throw new JSONException(
+					"JSONArray initial value should be a string or collection or array.");
+		}
+	}
+	
+	public JSONArray(Object array, HashSet<Object> visited) throws JSONException {
+		this();
+		if (array.getClass().isArray()) {
+			int length = Array.getLength(array);
+			for (int i = 0; i < length; i += 1) {
+				this.put(new JSONObject(Array.get(array, i), visited));
 			}
 		} else {
 			throw new JSONException(

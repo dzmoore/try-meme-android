@@ -1,18 +1,22 @@
 package com.eastapps.meme_gen_android.http;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import android.R.string;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.eastapps.meme_gen_android.ViewMemeActivity;
 import com.eastapps.meme_gen_android.json.JSONObject;
+import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.util.Conca;
 
 public class WebClient implements IWebClient {
@@ -25,14 +29,9 @@ public class WebClient implements IWebClient {
 		try {
 			final URLConnection conn = createURLConnection(addr);
 			
-			final BufferedReader bufReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			final StringBuilder sb = new StringBuilder();
-			String line = "";
-			while ((line = bufReader.readLine()) != null) {
-				sb.append(line);
-			}
+			final String result = getResponseText(conn);
 			
-			jsonObj = new JSONObject(sb.toString());
+			jsonObj = new JSONObject(result);
 			
 		} catch (Exception e) {
 			Log.e(
@@ -47,6 +46,27 @@ public class WebClient implements IWebClient {
 		}
 		
 		return jsonObj;
+	}
+
+	private String getResponseText(final URLConnection conn) {
+		final StringBuilder sb = new StringBuilder();
+		BufferedReader bufReader = null;
+		try {
+			bufReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			
+			while ((line = bufReader.readLine()) != null) {
+				sb.append(line);
+			}
+			
+		} catch (Exception e) {
+			Log.e(TAG, "err", e);
+			
+		} finally {
+			
+		}
+		
+		return sb.toString();
 	}
 
 	@Override
@@ -72,6 +92,56 @@ public class WebClient implements IWebClient {
 		
 		
 		return bitmap;
+	}
+	
+	public JSONObject getJsonObject(final String addr, final JSONObject request) {
+		JSONObject respJsonObj = new JSONObject();
+		
+		BufferedWriter bw = null;
+		HttpURLConnection conn = null;
+		try {
+			conn = createHttpURLConnection(addr);
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			
+			final OutputStream connOut = conn.getOutputStream();
+			bw = new BufferedWriter(new OutputStreamWriter(connOut));
+			
+			Log.d(TAG, Conca.t("writing json object:[", request.toString()));
+			
+			bw.write(request.toString());
+			bw.flush();
+			
+			final String responseText = getResponseText(conn);
+			if (StringUtils.isNotBlank(responseText)) {
+				respJsonObj = new JSONObject(responseText);
+			}
+			
+			
+		} catch (Exception e) {
+			Log.e(TAG, "error occurred while attempting to get JSON obj", e);
+			
+		} finally {
+			if (bw != null) {
+				try {
+					bw.close();
+				} catch (IOException e) { }
+			}
+			
+			if (conn != null) {
+				conn.disconnect();
+			}
+		}
+		
+		
+		return respJsonObj;
+	}
+	
+	private static HttpURLConnection createHttpURLConnection(final String addr) throws IOException {
+		final URL url = new URL(addr);
+		final HttpURLConnection httpURLConn = (HttpURLConnection)url.openConnection();
+		
+		return httpURLConn;
 	}
 	
 	private static URLConnection createURLConnection(final String addr) throws IOException {

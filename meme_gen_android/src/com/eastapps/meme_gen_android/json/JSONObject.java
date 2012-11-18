@@ -27,17 +27,24 @@ package com.eastapps.meme_gen_android.json;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+
+import android.opengl.Visibility;
+
+import com.eastapps.meme_gen_android.annotation.JSONIgnore;
 
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its external
@@ -146,12 +153,17 @@ public class JSONObject {
 	 * <code>JSONObject.NULL.toString()</code> returns <code>"null"</code>.
 	 */
 	public static final Object NULL = new Null();
+	
+	
+	private HashSet<Object> visitedObjects;
 
 	/**
 	 * Construct an empty JSONObject.
 	 */
 	public JSONObject() {
+		super();
 		this.map = new HashMap();
+		this.visitedObjects = new HashSet<Object>();
 	}
 
 	/**
@@ -253,7 +265,23 @@ public class JSONObject {
 				Map.Entry e = (Map.Entry) i.next();
 				Object value = e.getValue();
 				if (value != null) {
-					this.map.put(e.getKey(), wrap(value));
+					this.map.put(e.getKey(), wrapObj(value));
+				}
+			}
+		}
+	}
+	
+	public JSONObject(Map map, HashSet<Object> visited) {
+		this.map = new HashMap();
+		this.visitedObjects = visited;
+		
+		if (map != null) {
+			Iterator i = map.entrySet().iterator();
+			while (i.hasNext()) {
+				Map.Entry e = (Map.Entry) i.next();
+				Object value = e.getValue();
+				if (value != null) {
+					this.map.put(e.getKey(), wrapObj(value));
 				}
 			}
 		}
@@ -282,6 +310,13 @@ public class JSONObject {
 	 */
 	public JSONObject(Object bean) {
 		this();
+		this.populateMap(bean);
+	}
+	
+	JSONObject(Object bean, HashSet<Object> visited) {
+		this();
+		this.visitedObjects = visited;
+		
 		this.populateMap(bean);
 	}
 
@@ -998,6 +1033,12 @@ public class JSONObject {
 			try {
 				Method method = methods[i];
 				if (Modifier.isPublic(method.getModifiers())) {
+					// if this method has a 'JSONIgnore' annotation
+					// do not map it
+					if (hasIgnoreAnnotation(method)) {
+						continue;
+					}
+					
 					String name = method.getName();
 					String key = "";
 					if (name.startsWith("get")) {
@@ -1022,13 +1063,26 @@ public class JSONObject {
 
 						Object result = method.invoke(bean, (Object[]) null);
 						if (result != null) {
-							this.map.put(key, wrap(result));
+							this.map.put(key, wrapObj(result));
 						}
 					}
 				}
 			} catch (Exception ignore) {
 			}
 		}
+	}
+
+	private boolean hasIgnoreAnnotation(Method method) {
+		boolean hasAnnotation = false;
+		for (Annotation eaAnn : method.getAnnotations()) {
+			if (eaAnn.annotationType().isAssignableFrom(JSONIgnore.class)) {
+				hasAnnotation = true;
+				break;
+			}
+		}
+		
+		
+		return hasAnnotation;
 	}
 
 	/**
@@ -1500,11 +1554,13 @@ public class JSONObject {
 	 *            The object to wrap
 	 * @return The wrapped value
 	 */
-	public static Object wrap(Object object) {
+	public Object wrapObj(Object object) {
 		try {
 			if (object == null) {
 				return NULL;
 			}
+			
+			
 			if (object instanceof JSONObject || object instanceof JSONArray
 					|| NULL.equals(object) || object instanceof JSONString
 					|| object instanceof Byte || object instanceof Character
@@ -1516,13 +1572,13 @@ public class JSONObject {
 			}
 
 			if (object instanceof Collection) {
-				return new JSONArray((Collection) object);
+				return new JSONArray((Collection) object, visitedObjects);
 			}
 			if (object.getClass().isArray()) {
-				return new JSONArray(object);
+				return new JSONArray(object, visitedObjects);
 			}
 			if (object instanceof Map) {
-				return new JSONObject((Map) object);
+				return new JSONObject((Map) object, visitedObjects);
 			}
 			Package objectPackage = object.getClass().getPackage();
 			String objectPackageName = objectPackage != null ? objectPackage
@@ -1532,7 +1588,20 @@ public class JSONObject {
 					|| object.getClass().getClassLoader() == null) {
 				return object.toString();
 			}
-			return new JSONObject(object);
+			
+			if (visitedObjects.contains(object)) {
+				return new JSONObject();
+				
+			} else {
+				visitedObjects.add(object);
+			}
+			
+			final JSONObject newJsonObj = new JSONObject(object, visitedObjects);
+			
+			visitedObjects.remove(object);
+			
+			return newJsonObj;
+			
 		} catch (Exception exception) {
 			return null;
 		}

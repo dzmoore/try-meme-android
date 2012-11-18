@@ -1,5 +1,12 @@
 Dev Documentation
 ====================
+## 18-Nov-2012
+### Android Sources in Eclipse
+Help > Install New Software > add:
+
+    http://adt-addons.googlecode.com/svn/trunk/source/com.android.ide.eclipse.source.update/
+
+
 ## 04-Nov-2012
 ### More Setup
 As mentioned previously, a symlink will be created in order to reference the actual background image files.  Here are some relevant commands to get this started:
