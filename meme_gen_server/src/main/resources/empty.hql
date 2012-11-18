@@ -1,1 +1,1 @@
-from MemeBackground bg join Meme m
+from Meme where id = 2
