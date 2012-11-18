@@ -1,7 +1,7 @@
 package com.eastapps.meme_gen_android.widgets;
 
 import com.eastapps.meme_gen_android.util.Constants;
-import com.eastapps.meme_gen_android.util.StrUtl;
+import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.util.Conca;
 
 import android.R;
@@ -90,7 +90,7 @@ public class OutlineTextView extends TextView {
 		float shadowRadius = 0f;
 		
 		for (int i = 0; i < attrs.getAttributeCount(); i++) {
-			if (StrUtl.equalsIgnoreCase(attrs.getAttributeName(i), "shadowRadius")) {
+			if (StringUtils.equalsIgnoreCase(attrs.getAttributeName(i), "shadowRadius")) {
 				shadowRadius = attrs.getAttributeFloatValue(i, 0f);
 				break;
 			}
