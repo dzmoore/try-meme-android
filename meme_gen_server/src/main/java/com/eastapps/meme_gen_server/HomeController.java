@@ -32,6 +32,7 @@ import com.eastapps.meme_gen_server.domain.MemeText;
 import com.eastapps.meme_gen_server.domain.SampleMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.User;
+import com.eastapps.meme_gen_server.util.Util;
 
 /**
  * Sample controller for going to the home page with a message
@@ -62,10 +63,58 @@ public class HomeController {
 		return "home";
 	}
 	
+	private MemeText saveMemeText(final MemeText mt, final Session sesh) {
+		sesh.beginTransaction();
+		
+		mt.setId(Util.getId(sesh.save(mt)));
+		
+		Util.commit(sesh);
+		
+		return mt;
+	}
+	
 	@RequestMapping(value = "/store_meme", method = RequestMethod.POST)
     @ResponseBody
-	public IntResult storeMeme(@RequestBody ShallowMeme meme) {
+	public IntResult storeMeme(@RequestBody Meme meme) {
 		IntResult result = new IntResult();
+		
+		logger.debug(StringUtils.join(new Object[] {
+			"store_meme receive meme={ ", meme.toString(), " }"
+		}));
+		
+		if (meme.getMemeTexts() == null || meme.getMemeTexts().size() != 2) {
+			return result;
+		}
+		
+		final Session sesh = sessionFactory.openSession();
+		
+        sesh.beginTransaction();
+		
+		try {
+    		result.setResult(Util.getId(sesh.save(meme)));
+    		Util.commit(sesh);
+    		
+		} catch (Exception e) {
+			logger.error(
+				Util.concat(
+					"error occurred while attempting to store meme={", 
+					meme.toString(), "}"), 
+				e
+			);
+		}
+		
+		
+		for (MemeText eaMt : meme.getMemeTexts()) {
+			try {
+    			saveMemeText(eaMt, sesh);
+    			
+			} catch (Exception e) {
+				logger.error("error occurred while trying to save meme text", e);
+			}
+		}
+		
+		
+		
 		
 		return result;
 	}
@@ -118,7 +167,7 @@ public class HomeController {
 			}
 
 			
-			commit(session);
+			Util.commit(session);
 			
 			session.beginTransaction();
 			
@@ -138,7 +187,7 @@ public class HomeController {
 				overallResult.append("memeType_store_result=[" + memeType.toString() + "]");
 			}
 			
-			commit(session);
+			Util.commit(session);
 			
 			addNewMeme(sample1TopText, sample1BottomText, session, overallResult, bg, memeType);
 			addNewMeme(sample2TopText, sample2BottomText, session, overallResult, bg, memeType);
@@ -173,7 +222,7 @@ public class HomeController {
 			logger.error("err", e);
 		}
 		
-		commit(session);
+		Util.commit(session);
 		
 		session.beginTransaction();
 		final MemeText txtBtm1 = new MemeText();
@@ -184,7 +233,7 @@ public class HomeController {
 		} catch (Exception e) {
 			logger.error("err", e);
 		}
-		commit(session);	
+		Util.commit(session);	
 		
 		
 		final Meme meme1 = new Meme();
@@ -206,7 +255,7 @@ public class HomeController {
 			overallResult.append(meme1.toString()).append("]");
 		}
 		
-		commit(session);
+		Util.commit(session);
 		
 		final SampleMeme sample = new SampleMeme();
 		sample.setMeme(meme1);
@@ -217,15 +266,7 @@ public class HomeController {
 		} catch (Exception e) {
 			logger.error("err", e);
 		}
-		commit(session);
-	}
-
-	private void commit(final Session session) {
-		if (session != null) {
-			if (session.getTransaction() != null) {
-				session.getTransaction().commit();
-			}
-		}
+		Util.commit(session);
 	}
 
 	@RequestMapping(value = "/add_meme_admin", method = RequestMethod.GET)
@@ -258,7 +299,7 @@ public class HomeController {
 			}
 
 			model.addAttribute("controllerMessage", sb.toString());
-			commit(session);
+			Util.commit(session);
 
 		} finally {
 			if (session != null) {
