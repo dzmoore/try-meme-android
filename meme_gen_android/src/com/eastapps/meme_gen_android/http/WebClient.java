@@ -10,6 +10,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.R.string;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -63,7 +70,12 @@ public class WebClient implements IWebClient {
 			Log.e(TAG, "err", e);
 			
 		} finally {
-			
+			if (bufReader != null) {
+				try {
+					bufReader.close();
+					
+				} catch (Exception e) { }
+			}
 		}
 		
 		return sb.toString();
@@ -100,34 +112,26 @@ public class WebClient implements IWebClient {
 		BufferedWriter bw = null;
 		HttpURLConnection conn = null;
 		try {
-			conn = createHttpURLConnection(addr);
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
+			DefaultHttpClient client = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(addr);
+			StringEntity strEnt = new StringEntity(request.toString());
 			
-			final OutputStream connOut = conn.getOutputStream();
-			bw = new BufferedWriter(new OutputStreamWriter(connOut));
+			httpPost.setEntity(strEnt);
 			
-			Log.d(TAG, Conca.t("writing json object:[", request.toString()));
+			httpPost.setHeader("Accept", "application/json");
+			httpPost.setHeader("Content-type", "application/json");
 			
-			bw.write(request.toString());
-			bw.flush();
+			ResponseHandler<String> respHandler = new BasicResponseHandler();
 			
-			final String responseText = getResponseText(conn);
-			if (StringUtils.isNotBlank(responseText)) {
-				respJsonObj = new JSONObject(responseText);
+			final String respStr = client.execute(httpPost, respHandler);
+			if (StringUtils.isNotBlank(respStr)) {
+				respJsonObj = new JSONObject(respStr);
 			}
-			
 			
 		} catch (Exception e) {
 			Log.e(TAG, "error occurred while attempting to get JSON obj", e);
 			
 		} finally {
-			if (bw != null) {
-				try {
-					bw.close();
-				} catch (IOException e) { }
-			}
-			
 			if (conn != null) {
 				conn.disconnect();
 			}

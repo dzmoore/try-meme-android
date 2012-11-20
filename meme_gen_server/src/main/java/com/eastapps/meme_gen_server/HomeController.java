@@ -75,43 +75,75 @@ public class HomeController {
 	
 	@RequestMapping(value = "/store_meme", method = RequestMethod.POST)
     @ResponseBody
-	public IntResult storeMeme(@RequestBody Meme meme) {
+	public IntResult storeMeme(@RequestBody ShallowMeme shallowMeme) {
 		IntResult result = new IntResult();
 		
 		logger.debug(StringUtils.join(new Object[] {
-			"store_meme receive meme={ ", meme.toString(), " }"
+			"store_meme receive meme={ ", shallowMeme.toString(), " }"
 		}));
-		
-		if (meme.getMemeTexts() == null || meme.getMemeTexts().size() != 2) {
-			return result;
-		}
 		
 		final Session sesh = sessionFactory.openSession();
 		
         sesh.beginTransaction();
 		
+		final Meme meme = shallowMeme.toMeme();
 		try {
     		result.setResult(Util.getId(sesh.save(meme)));
     		Util.commit(sesh);
+    		
+    		meme.setId(result.getResult());
     		
 		} catch (Exception e) {
 			logger.error(
 				Util.concat(
 					"error occurred while attempting to store meme={", 
-					meme.toString(), "}"), 
+					shallowMeme.toString(), "}"), 
 				e
 			);
 		}
 		
+		final MemeText topText = new MemeText(
+			meme, 
+			shallowMeme.getTopText(), 
+			shallowMeme.getTopTextType(), 
+			shallowMeme.getTopTextFontSize()
+		);
 		
-		for (MemeText eaMt : meme.getMemeTexts()) {
-			try {
-    			saveMemeText(eaMt, sesh);
-    			
-			} catch (Exception e) {
-				logger.error("error occurred while trying to save meme text", e);
-			}
+		sesh.beginTransaction();
+		try {
+			topText.setId(Util.getId(sesh.save(topText)));
+			Util.commit(sesh);
+			
+		} catch (Exception e) {
+			logger.error(Util.concat("err while storing top text:{", topText, "}"), e);
 		}
+		
+		final MemeText bottomText = new MemeText(
+			meme,
+			shallowMeme.getBottomText(),
+			shallowMeme.getBottomTextType(),
+			shallowMeme.getBottomTextFontSize()
+		);
+		
+		sesh.beginTransaction();
+		try {
+			bottomText.setId(Util.getId(sesh.save(bottomText)));
+			Util.commit(sesh);
+			
+		} catch (Exception e) {
+			logger.error(Util.concat("err while storing bottom text:{", bottomText, "}"), e);
+		}
+
+			
+		
+//		for (MemeText eaMt : meme.getMemeTexts()) {
+//			try {
+//    			saveMemeText(eaMt, sesh);
+//    			
+//			} catch (Exception e) {
+//				logger.error("error occurred while trying to save meme text", e);
+//			}
+//		}
 		
 		
 		return result;

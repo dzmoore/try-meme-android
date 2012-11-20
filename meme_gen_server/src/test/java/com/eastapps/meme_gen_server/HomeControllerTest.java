@@ -29,6 +29,7 @@ import com.eastapps.meme_gen_server.domain.LvMemeType;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
+import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.User;
 import com.eastapps.meme_gen_server.util.Util;
 
@@ -93,7 +94,7 @@ public class HomeControllerTest {
 		
 		final HomeController controller = new HomeController(sessionFactory, imgsRoot);
 
-		final IntResult result = controller.storeMeme(m);
+		final IntResult result = controller.storeMeme(new ShallowMeme(m));
 		Assert.assertNotNull(result);
 		Assert.assertTrue(result.getResult() > Constants.INVALID);
 		m.setId(result.getResult());
