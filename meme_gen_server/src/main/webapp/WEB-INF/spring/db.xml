@@ -54,11 +54,6 @@
 		
 	</bean>
 
-	<!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>-->
-
-
 	<tx:annotation-driven />
 
-	<!-- <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />-->
-	
 </beans>

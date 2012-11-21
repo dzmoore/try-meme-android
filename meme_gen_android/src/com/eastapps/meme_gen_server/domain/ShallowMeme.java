@@ -3,9 +3,8 @@ package com.eastapps.meme_gen_server.domain;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.eastapps.meme_gen_server.constants.Constants;
+import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.StringUtils;
 
 public class ShallowMeme implements Serializable {
 	private static final long serialVersionUID = 4479464552039295027L;
@@ -30,7 +29,8 @@ public class ShallowMeme implements Serializable {
 	}
 
 	private void initTopAndBottomText() {
-		setMemeTextBottomText(setMemeTextTopText(null));
+		setMemeTextBottomText(null);
+		setMemeTextTopText(null);
 		for (Iterator<MemeText> itr = getInnerMeme().getMemeTexts().iterator(); itr.hasNext(); ) {
 			final MemeText ea = itr.next();
 
@@ -185,32 +185,6 @@ public class ShallowMeme implements Serializable {
 	private void setMemeTextBottomText(MemeText memeTextBottomText) {
 		this.memeTextBottomText = memeTextBottomText;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ShallowMeme [getBackgroundFk()=");
-		builder.append(getBackgroundFk());
-		builder.append(", getId()=");
-		builder.append(getId());
-		builder.append(", getTopText()=");
-		builder.append(getTopText());
-		builder.append(", getBottomText()=");
-		builder.append(getBottomText());
-		builder.append(", getTopTextFontSize()=");
-		builder.append(getTopTextFontSize());
-		builder.append(", getBottomTextFontSize()=");
-		builder.append(getBottomTextFontSize());
-		builder.append(", getUserId()=");
-		builder.append(getUserId());
-		builder.append(", getTopTextType()=");
-		builder.append(getTopTextType());
-		builder.append(", getBottomTextType()=");
-		builder.append(getBottomTextType());
-		builder.append("]");
-		return builder.toString();
-	}
-	
 	
 	public String getMemeTypeDescr() {
 		return getInnerMeme().getLvMemeType().getDescr();
@@ -227,6 +201,9 @@ public class ShallowMeme implements Serializable {
 	public void setMemeTypeId(int typeId) {
 		getInnerMeme().getLvMemeType().setId(typeId);
 	}
+	
+	
+	
 
 
 }
