@@ -31,6 +31,7 @@ import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.User;
+import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
 
 public class HomeControllerTest {
@@ -41,7 +42,7 @@ public class HomeControllerTest {
 	@Ignore
 	@Test
 	public void testController() {
-		HomeController controller = new HomeController(sessionFactory, imgsRoot);
+		HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot));
 		Model model = new ExtendedModelMap();
 		Assert.assertEquals("home", controller.home(model));
 
@@ -92,7 +93,7 @@ public class HomeControllerTest {
 		m.getMemeTexts().add(new MemeText(m, bottomText, Constants.BOTTOM, 26));
 		m.setUser(user);
 		
-		final HomeController controller = new HomeController(sessionFactory, imgsRoot);
+		final HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot));
 
 		final IntResult result = controller.storeMeme(new ShallowMeme(m));
 		Assert.assertNotNull(result);
