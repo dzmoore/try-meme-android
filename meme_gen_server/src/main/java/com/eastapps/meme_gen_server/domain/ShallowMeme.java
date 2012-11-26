@@ -1,232 +1,192 @@
 package com.eastapps.meme_gen_server.domain;
 
 import java.io.Serializable;
-import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.eastapps.meme_gen_server.constants.Constants;
 
 public class ShallowMeme implements Serializable {
-	private static final long serialVersionUID = 4479464552039295027L;
-	private Meme innerMeme;
-	private MemeText memeTextTopText;
-	private MemeText memeTextBottomText;
+	private static final long serialVersionUID = -3090509294368066083L;
+
+	private int backgroundFk;
+	private int id;
+	private String topText;
+	private String bottomText;
+	private int userId;
+	private String memeTypeDescr;
+	private int memeTypeId;
+	private int topTextFontSize;
+	private int bottomTextFontSize;
+	
 	
 	public ShallowMeme() {
-		this(new Meme());
-	}
-
-	public ShallowMeme(final Meme inner) {
 		super();
-
-		this.setInnerMeme(inner);
-
-		if (this.getInnerMeme() == null) {
-			this.setInnerMeme(new Meme());
-		}
-
-		initTopAndBottomText();
-	}
-
-	private void initTopAndBottomText() {
-		setMemeTextBottomText(setMemeTextTopText(null));
-		for (Iterator<MemeText> itr = getInnerMeme().getMemeTexts().iterator(); itr.hasNext(); ) {
-			final MemeText ea = itr.next();
-
-			final String type = ea.getTextType();
-			if (StringUtils.equals(type,Constants.TOP)) {
-				setMemeTextTopText(ea);
-
-			} else if (StringUtils.equals(type, Constants.BOTTOM)) {
-				setMemeTextBottomText(ea);
-			}
-
-			if (getMemeTextTopText() != null && getMemeTextBottomText() != null) {
-				break;
-			}
-		}
-	}
-	
-	public int getBackgroundFk() {
-		return getInnerMeme().getMemeBackground().getId();
-	}
-	
-	public void setBackgroundFk(int fk) {
-		getInnerMeme().getMemeBackground().setId(fk);
-	}
-
-	public int getId() {
-		return getInnerMeme().getId();
-	}
-
-	public void setId(int id) {
-		getInnerMeme().setId(id);
-	}
-
-	public String getTopText() {
-		return getMemeTextTopText().getText();
-	}
-
-	public void setTopText(String topText) {
-		this.getMemeTextTopText().setText(topText);
-	}
-
-	public String getBottomText() {
-		return getMemeTextBottomText().getText();
-	}
-
-	public void setBottomText(String bottomText) {
-		this.getMemeTextBottomText().setText(bottomText);
-	}
-
-	public int getTopTextFontSize() {
-		return getMemeTextTopText().getFontSize();
-	}
-
-	public void setTopTextFontSize(int topTextFontSize) {
-		this.getMemeTextTopText().setFontSize(topTextFontSize);
-	}
-
-	public int getBottomTextFontSize() {
-		return getMemeTextBottomText().getFontSize();
-	}
-
-	public void setBottomTextFontSize(int bottomTextFontSize) {
-		this.getMemeTextBottomText().setFontSize(bottomTextFontSize);
-	}
-
-	public int getUserId() {
-		return getInnerMeme().getUser().getId();
-	}
-
-	public void setUserId(int id) {
-		this.getInnerMeme().getUser().setId(id);
-	}
-
-	private synchronized Meme getInnerMeme() {
-		if (innerMeme == null) {
-			innerMeme = new Meme();
-		}
+		backgroundFk = Constants.INVALID;
+		id = Constants.INVALID;
+		userId = Constants.INVALID;
+		memeTypeId = Constants.INVALID;
+		topTextFontSize = Constants.INVALID;
+		bottomTextFontSize = Constants.INVALID;
 		
-		return innerMeme;
+		topText = Constants.EMPTY_STRING;
+		bottomText = Constants.EMPTY_STRING;
+		memeTypeDescr = Constants.EMPTY_STRING;
 	}
-
-	private void setInnerMeme(Meme innerMeme) {
-		this.innerMeme = innerMeme;
+	
+	public ShallowMeme(final Meme from) {
+		this();
+		
+		backgroundFk = from.getMemeBackground() == null 
+				? Constants.INVALID : from.getMemeBackground().getId();
+		
+		id = from.getId();
+		userId = from.getUser() == null 
+				? Constants.INVALID : from.getUser().getId();
+		
+		memeTypeId = from.getLvMemeType() == null 
+				? Constants.INVALID : from.getLvMemeType().getId();
+		
+		final MemeText topTextMemeText = getMemeText(from, Constants.TOP);
+		topTextFontSize = topTextMemeText.getFontSize();
+		topText = topTextMemeText.getText();
+		
+		final MemeText bottomTextMemeText = getMemeText(from, Constants.BOTTOM);
+		bottomTextFontSize = bottomTextMemeText.getFontSize();
+		bottomText = bottomTextMemeText.getText();
+		
+		memeTypeDescr = from.getLvMemeType() == null
+				? Constants.EMPTY_STRING : from.getLvMemeType().getDescr();
+		
+		
 	}
 	
 	public Meme toMeme() {
-		return getInnerMeme();
-	}
-
-	public String getTopTextType() {
-		return getMemeTextTopText().getTextType();
+		final Meme meme = new Meme();
+		
+		meme.getMemeBackground().setId(getBackgroundFk());
+		meme.setId(getId());
+		meme.getUser().setId(getUserId());
+		meme.getLvMemeType().setId(getMemeTypeId());
+		meme.getLvMemeType().setDescr(getMemeTypeDescr());
+		meme.getLvMemeType().getMemes().add(meme);
+	
+		final MemeText topTextMemeText = new MemeText();
+		topTextMemeText.setText(getTopText());
+		topTextMemeText.setFontSize(getTopTextFontSize());
+		
+		final MemeText bottomTextMemeText = new MemeText();
+		bottomTextMemeText.setText(getBottomText());
+		bottomTextMemeText.setFontSize(getBottomTextFontSize());
+		
+		meme.getMemeTexts().add(topTextMemeText);
+		meme.getMemeTexts().add(bottomTextMemeText);
+		
+		return meme;
 	}
 	
-	public void setTopTextType(final String type) {
-		getMemeTextTopText().setTextType(type);
-	}
-	
-	public String getBottomTextType() {
-		return getMemeTextBottomText().getTextType();
-	}
-	
-	public void setBottomTextType(final String textType) {
-		getMemeTextBottomText().setTextType(textType);
-	}
-
-	private synchronized MemeText getMemeTextTopText() {
-		if (memeTextTopText == null) {
-			MemeText found = findText(Constants.TOP);
-			if (found == null || getInnerMeme().getMemeTexts().size() == 0) {
-				memeTextTopText = new MemeText(getInnerMeme(), StringUtils.EMPTY, Constants.TOP, 26);
-			
-			} else {
-				memeTextTopText = found;
+	private MemeText getMemeText(final Meme from, final String type) {
+		MemeText memeText = new MemeText();
+		
+		for (final MemeText eaTxt : from.getMemeTexts()) {
+			if (StringUtils.equalsIgnoreCase(eaTxt.getTextType(), type)) {
+				memeText = eaTxt;
+				break;
 			}
 		}
 		
-		return memeTextTopText;
+		return memeText;
 	}
 
-	private MemeText findText(final String textType) {
-		for (Iterator<MemeText> iterator = getInnerMeme().getMemeTexts().iterator(); iterator.hasNext();) {
-			MemeText type = iterator.next();
-			
-			if (StringUtils.equals(type.getTextType(), textType)) {
-				return type;
-			}
-			
-		}
-		
-		return new MemeText();
+
+	public int getBackgroundFk() {
+		return backgroundFk;
 	}
 
-	private MemeText setMemeTextTopText(MemeText memeTextTopText) {
-		this.memeTextTopText = memeTextTopText;
-		return memeTextTopText;
+
+	public void setBackgroundFk(int backgroundFk) {
+		this.backgroundFk = backgroundFk;
 	}
 
-	private synchronized MemeText getMemeTextBottomText() {
-		if (memeTextBottomText == null) {
-			MemeText found = findText(Constants.BOTTOM);
-			if (found == null || getInnerMeme().getMemeTexts().size() == 0) {
-				memeTextBottomText = new MemeText(getInnerMeme(), StringUtils.EMPTY, Constants.BOTTOM, 26);
-			
-			} else {
-				memeTextBottomText = found;
-			}
-		}
-		
-		return memeTextBottomText;
+
+	public int getId() {
+		return id;
 	}
 
-	private void setMemeTextBottomText(MemeText memeTextBottomText) {
-		this.memeTextBottomText = memeTextBottomText;
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ShallowMeme [getBackgroundFk()=");
-		builder.append(getBackgroundFk());
-		builder.append(", getId()=");
-		builder.append(getId());
-		builder.append(", getTopText()=");
-		builder.append(getTopText());
-		builder.append(", getBottomText()=");
-		builder.append(getBottomText());
-		builder.append(", getTopTextFontSize()=");
-		builder.append(getTopTextFontSize());
-		builder.append(", getBottomTextFontSize()=");
-		builder.append(getBottomTextFontSize());
-		builder.append(", getUserId()=");
-		builder.append(getUserId());
-		builder.append(", getTopTextType()=");
-		builder.append(getTopTextType());
-		builder.append(", getBottomTextType()=");
-		builder.append(getBottomTextType());
-		builder.append("]");
-		return builder.toString();
+
+	public String getTopText() {
+		return topText;
 	}
-	
-	
+
+
+	public void setTopText(String topText) {
+		this.topText = topText;
+	}
+
+
+	public String getBottomText() {
+		return bottomText;
+	}
+
+
+	public void setBottomText(String bottomText) {
+		this.bottomText = bottomText;
+	}
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+
 	public String getMemeTypeDescr() {
-		return getInnerMeme().getLvMemeType().getDescr();
+		return memeTypeDescr;
 	}
-	
-	public void setMemeTypeDescr(final String descr) {
-		getInnerMeme().getLvMemeType().setDescr(descr);
+
+
+	public void setMemeTypeDescr(String memeTypeDescr) {
+		this.memeTypeDescr = memeTypeDescr;
 	}
-	
+
+
 	public int getMemeTypeId() {
-		return getInnerMeme().getLvMemeType().getId();
-	}
-	
-	public void setMemeTypeId(int typeId) {
-		getInnerMeme().getLvMemeType().setId(typeId);
+		return memeTypeId;
 	}
 
 
+	public void setMemeTypeId(int memeTypeId) {
+		this.memeTypeId = memeTypeId;
+	}
+
+
+	public int getTopTextFontSize() {
+		return topTextFontSize;
+	}
+
+
+	public void setTopTextFontSize(int topTextFontSize) {
+		this.topTextFontSize = topTextFontSize;
+	}
+
+
+	public int getBottomTextFontSize() {
+		return bottomTextFontSize;
+	}
+
+
+	public void setBottomTextFontSize(int bottomTextFontSize) {
+		this.bottomTextFontSize = bottomTextFontSize;
+	}
 }
+	
+	

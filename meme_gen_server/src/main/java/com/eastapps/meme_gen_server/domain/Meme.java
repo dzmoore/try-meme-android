@@ -2,21 +2,27 @@ package com.eastapps.meme_gen_server.domain;
 
 // Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.eastapps.meme_gen_server.annotation.ParentField;
+import com.eastapps.meme_gen_server.annotation.PrimitiveField;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 /**
@@ -26,11 +32,22 @@ import com.eastapps.meme_gen_server.constants.Constants;
 @Table(name = "meme", catalog = "mgsdb")
 public class Meme implements java.io.Serializable {
 	private static final long serialVersionUID = 7984784355451389282L;
+	
+	@PrimitiveField(fieldName = "id")
 	private Integer id;
+	
+	@ParentField(prefix = "meme_type")
 	private LvMemeType lvMemeType;
+	
+	@ParentField(prefix = "meme_bg")
 	private MemeBackground memeBackground;
+	
+	@ParentField(prefix = "created_by")
 	private User user;
+	
+	@PrimitiveField(fieldName = "meme_txts")
 	private Set<MemeText> memeTexts = new HashSet<MemeText>(0);
+	
 	private Set<SampleMeme> sampleMemes = new HashSet<SampleMeme>(0);
 
 	public Meme() {
@@ -148,6 +165,36 @@ public class Meme implements java.io.Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public Map<String, Object> toMap() {
+		final Map<String, Object> map = new HashMap<String, Object>();
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

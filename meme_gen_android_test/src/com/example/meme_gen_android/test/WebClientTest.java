@@ -2,11 +2,13 @@ package com.example.meme_gen_android.test;
 
 import android.os.Build;
 import android.test.AndroidTestCase;
+import android.text.Html.TagHandler;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.http.WebClient;
 import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeText;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -49,6 +51,7 @@ public class WebClientTest extends AndroidTestCase {
 	
 	public void testGetJsonObjWithJsonRequestBody() {
 		final String storeAddress = Conca.t(ADDR, "/store_meme");
+		
 		final Meme meme = new Meme();
 		meme.getUser().setId(USER_ID);
 		meme.getLvMemeType().setId(LV_MEME_TYPE_ID);
@@ -62,14 +65,18 @@ public class WebClientTest extends AndroidTestCase {
 		
 		Log.d(getClass().getSimpleName(), Conca.t("request={",reqBodyJsonObj.toString()));
 	
-		final JSONObject respObj = webClient.getJsonObject(storeAddress, reqBodyJsonObj);
+//		final JSONObject respObj = webClient.getJsonObject(storeAddress, reqBodyJsonObj);
+//		
+//		Log.d(getClass().getSimpleName(), Conca.t("response={",respObj.toString()));
+//		
+//		
+//		assertNotNull(respObj);
+//		assertTrue(respObj.keySet().size() > 0);
 		
-		Log.d(getClass().getSimpleName(), Conca.t("response={",respObj.toString()));
-		
-		
-		assertNotNull(respObj);
-		assertTrue(respObj.keySet().size() > 0);
-		
+	}
+	
+	public void testJson() {
+		Log.d(getClass().getSimpleName(), new JSONObject(new IntResult()).toString());
 	}
 	
 	public static void main(String[] args) {

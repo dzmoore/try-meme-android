@@ -72,6 +72,8 @@ public class HomeControllerTest {
 	public void testGetMemeJson() {
 		final Session sesh = sessionFactory.openSession();
 		sesh.beginTransaction();
+		
+		
 	}
 
 	@Test

@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.eastapps.meme_gen_server.annotation.PrimitiveField;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 /**
@@ -29,11 +30,18 @@ import com.eastapps.meme_gen_server.constants.Constants;
 @Table(name = "user", catalog = "mgsdb")
 public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 8212798718211670129L;
+	
+	@PrimitiveField(fieldName = "id")
 	private Integer id;
+	
+	@PrimitiveField(fieldName = "un")
 	private String username;
+	
 	private String password;
+	
 	private Boolean active;
 	private Date lastMod;
+	
 	private String salt;
 	private Set<DeviceInfo> deviceInfos = new HashSet<DeviceInfo>(0);
 	private Set<Meme> memes = new HashSet<Meme>(0);
