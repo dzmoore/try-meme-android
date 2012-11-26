@@ -68,7 +68,7 @@ public class MemeService {
 			final MemeText topText = new MemeText(
 				meme,
 				shallowMeme.getTopText(), 
-				shallowMeme.getTopTextType(), 
+				Constants.TOP,
 				shallowMeme.getTopTextFontSize()
 				);
 
@@ -80,7 +80,7 @@ public class MemeService {
 			final MemeText bottomText = new MemeText(
 				meme,
 				shallowMeme.getBottomText(),
-				shallowMeme.getBottomTextType(),
+				Constants.BOTTOM,
 				shallowMeme.getBottomTextFontSize()
 				);
 

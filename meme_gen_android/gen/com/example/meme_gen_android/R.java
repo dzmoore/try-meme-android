@@ -75,8 +75,11 @@ public final class R {
         public static final int webServiceAddress=0x7f05000d;
         public static final int webServiceBackgroundSuffix=0x7f05000f;
         public static final int webServiceJsonSuffix=0x7f050010;
+        /** <string name="webServiceAddress">http://192.168.1.50:8080/meme_gen_server/spring</string> 
+         */
         public static final int webServiceMemeDataSuffix=0x7f05000e;
         public static final int webServiceResource=0x7f05000a;
+        public static final int webServiceStoreMemePrefix=0x7f050011;
     }
     public static final class style {
         public static final int AppTheme=0x7f070000;

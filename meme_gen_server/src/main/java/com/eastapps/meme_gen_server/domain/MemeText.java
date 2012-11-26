@@ -2,11 +2,12 @@ package com.eastapps.meme_gen_server.domain;
 
 // Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.eastapps.meme_gen_server.annotation.ParentField;
+import com.eastapps.meme_gen_server.annotation.PrimitiveField;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 /**
@@ -23,10 +26,20 @@ import com.eastapps.meme_gen_server.constants.Constants;
 @Table(name = "meme_text", catalog = "mgsdb")
 public class MemeText implements java.io.Serializable {
 	private static final long serialVersionUID = -2665509303313696077L;
+	
+	@PrimitiveField(fieldName = "id")
 	private Integer id;
+	
+	@ParentField(prefix = "meme")
 	private Meme meme;
+	
+	@PrimitiveField(fieldName = "txt")
 	private String text;
+	
+	@PrimitiveField(fieldName = "txt_type")
 	private String textType;
+	
+	@PrimitiveField(fieldName = "font_size")
 	private Integer fontSize;
 
 	public MemeText() {

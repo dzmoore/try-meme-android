@@ -2,19 +2,22 @@ package com.eastapps.meme_gen_server.domain;
 
 // Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.eastapps.meme_gen_server.annotation.PrimitiveField;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 /**
@@ -24,9 +27,15 @@ import com.eastapps.meme_gen_server.constants.Constants;
 @Table(name = "lv_meme_type", catalog = "mgsdb")
 public class LvMemeType implements java.io.Serializable {
 	private static final long serialVersionUID = -5105139654526429935L;
+	
+	@PrimitiveField(fieldName = "id")
 	private Integer id;
+	
+	@PrimitiveField(fieldName = "descr")
 	private String descr;
+	
 	private Boolean active;
+	
 	private Set<Meme> memes = new HashSet<Meme>(0);
 
 	public LvMemeType() {
