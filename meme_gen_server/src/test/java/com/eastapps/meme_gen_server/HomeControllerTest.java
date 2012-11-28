@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -38,19 +39,8 @@ public class HomeControllerTest {
 	private SessionFactory sessionFactory;
 	private String imgsRoot;
 	private static final Logger logger = Logger.getLogger(HomeControllerTest.class);
-
-	@Ignore
-	@Test
-	public void testController() {
-		HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot));
-		Model model = new ExtendedModelMap();
-		Assert.assertEquals("home", controller.home(model));
-
-		Object message = model.asMap().get("controllerMessage");
-		Assert.assertEquals("This is the message from the controller!", message);
-
-	}
-
+	private HomeController homeCtrllr;
+	
 	@Before
 	public void setUp() throws Exception {
 		final Resource rsrc = new FileSystemResource(new File("src/test/resources/test-context.xml"));
@@ -58,6 +48,8 @@ public class HomeControllerTest {
 
 		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
 		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
+		
+		homeCtrllr = new HomeController(new MemeService(sessionFactory, imgsRoot));
 	}
 
 	@After
@@ -67,12 +59,14 @@ public class HomeControllerTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testGetMemeJson() {
-		final Session sesh = sessionFactory.openSession();
-		sesh.beginTransaction();
+		final int id = 1;
+		final ShallowMeme shMeme = homeCtrllr.getMeme(id);
 		
+		TestCase.assertNotNull(shMeme);
+		TestCase.assertTrue(shMeme.getId() == id);
+		TestCase.assertTrue(shMeme.getBackgroundFk() > 0);
 		
 	}
 

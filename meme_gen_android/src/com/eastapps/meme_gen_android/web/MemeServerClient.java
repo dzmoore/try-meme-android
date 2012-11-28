@@ -42,22 +42,30 @@ public class MemeServerClient {
 	public MemeViewData createMemeViewData(final int memeId) {
 		final MemeViewData dat = new MemeViewData();
 		dat.setBackground(getBackground(memeId));
-
-		final JSONObject textsJson = getTexts(memeId);
-
-		try {
-			dat.setTopText(textsJson.getString(Constants.KEY_TOP_TEXT));
-		} catch (JSONException e) {
-			Log.e(TAG, "error while parsing top text", e);
-		}
-
-		try {
-			dat.setBottomText(textsJson.getString(Constants.KEY_BOTTOM_TEXT));
-		} catch (JSONException e) {
-			Log.e(TAG, "error while parsing bottom text", e);
-		}
+		
+		dat.setMeme(getMeme(memeId));
 
 		return dat;
+	}
+	
+	public ShallowMeme getMeme(final int memeId) {
+		final String result = 
+			webClient.getJSONObject(Conca.t(
+				webSvcAddr,
+				Constants.URL_SEPARATOR,
+				webSvcMemeDataSuffix,
+				Constants.URL_SEPARATOR,
+				memeId,
+				Constants.URL_SEPARATOR,
+				webSvcJsonSuffix
+		));
+		
+		ShallowMeme shMemeResult = new ShallowMeme();
+		if (StringUtils.isNotBlank(result)) {
+			shMemeResult = new Gson().fromJson(result, ShallowMeme.class);
+		}
+		
+		return shMemeResult;
 	}
 
 	public Bitmap getBackground(final int memeId) {
@@ -72,20 +80,6 @@ public class MemeServerClient {
 				webSvcBgrndSuffix
 			));
 	}
-
-	public JSONObject getTexts(final int memeId) {
-		return 
-			webClient.getJSONObject(Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				webSvcMemeDataSuffix,
-				Constants.URL_SEPARATOR,
-				memeId,
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-			));
-	}
-
 
 	public int storeMeme(final ShallowMeme shallowMeme) {
 		int resultId = Constants.INVALID;

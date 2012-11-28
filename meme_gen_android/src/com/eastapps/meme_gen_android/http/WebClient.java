@@ -29,15 +29,13 @@ public class WebClient implements IWebClient {
 	private static final String TAG = WebClient.class.getSimpleName();
 	
 	@Override
-	public JSONObject getJSONObject(final String addr) {
-		JSONObject jsonObj = new JSONObject();
+	public String getJSONObject(final String addr) {
+		String result = Constants.EMPTY_STRING;
 		
 		try {
 			final URLConnection conn = createURLConnection(addr);
 			
-			final String result = getResponseText(conn);
-			
-			jsonObj = new JSONObject(result);
+			result = getResponseText(conn);
 			
 		} catch (Exception e) {
 			Log.e(
@@ -51,7 +49,7 @@ public class WebClient implements IWebClient {
 			);
 		}
 		
-		return jsonObj;
+		return result;
 	}
 
 	private String getResponseText(final URLConnection conn) {

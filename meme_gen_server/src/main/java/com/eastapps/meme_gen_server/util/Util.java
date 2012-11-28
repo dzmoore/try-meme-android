@@ -12,6 +12,11 @@ import org.hibernate.Session;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 public class Util {
+	public static int getInt(final Integer i) {
+		return i == null ? Constants.INVALID : i;
+	}
+	
+	
 	public static int getId(final Serializable s) {
 		int result = Constants.INVALID;
 		
