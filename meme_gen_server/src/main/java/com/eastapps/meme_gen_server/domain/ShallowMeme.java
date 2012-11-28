@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 
+import antlr.Utils;
+
 import com.eastapps.meme_gen_server.constants.Constants;
+import com.eastapps.meme_gen_server.util.Util;
 
 public class ShallowMeme implements Serializable {
 	private static final long serialVersionUID = -3090509294368066083L;
@@ -37,22 +40,29 @@ public class ShallowMeme implements Serializable {
 	public ShallowMeme(final Meme from) {
 		this();
 		
-		backgroundFk = from.getMemeBackground() == null 
-				? Constants.INVALID : from.getMemeBackground().getId();
+		backgroundFk = Util.getInt(from.getMemeBackground() == null ? 
+			Constants.INVALID : 
+			from.getMemeBackground().getId()
+		);
 		
-		id = from.getId();
-		userId = from.getUser() == null 
-				? Constants.INVALID : from.getUser().getId();
+		id = Util.getInt(from.getId());
 		
-		memeTypeId = from.getLvMemeType() == null 
-				? Constants.INVALID : from.getLvMemeType().getId();
+		userId = Util.getInt(from.getUser() == null ? 
+			Constants.INVALID : 
+			from.getUser().getId()
+		);
+		
+		memeTypeId = Util.getInt(from.getLvMemeType() == null ? 
+			Constants.INVALID : 
+			from.getLvMemeType().getId()
+		);
 		
 		final MemeText topTextMemeText = getMemeText(from, Constants.TOP);
-		topTextFontSize = topTextMemeText.getFontSize();
+		topTextFontSize = Util.getInt(topTextMemeText.getFontSize());
 		topText = topTextMemeText.getText();
 		
 		final MemeText bottomTextMemeText = getMemeText(from, Constants.BOTTOM);
-		bottomTextFontSize = bottomTextMemeText.getFontSize();
+		bottomTextFontSize = Util.getInt(bottomTextMemeText.getFontSize());
 		bottomText = bottomTextMemeText.getText();
 		
 		memeTypeDescr = from.getLvMemeType() == null
@@ -187,6 +197,33 @@ public class ShallowMeme implements Serializable {
 	public void setBottomTextFontSize(int bottomTextFontSize) {
 		this.bottomTextFontSize = bottomTextFontSize;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ShallowMeme [backgroundFk=");
+		builder.append(backgroundFk);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", topText=");
+		builder.append(topText);
+		builder.append(", bottomText=");
+		builder.append(bottomText);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", memeTypeDescr=");
+		builder.append(memeTypeDescr);
+		builder.append(", memeTypeId=");
+		builder.append(memeTypeId);
+		builder.append(", topTextFontSize=");
+		builder.append(topTextFontSize);
+		builder.append(", bottomTextFontSize=");
+		builder.append(bottomTextFontSize);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }
 	
 	

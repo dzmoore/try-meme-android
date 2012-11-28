@@ -296,6 +296,26 @@ public class MemeService {
 		return resultBytes;
 	}
 	
+	public ShallowMeme getShallowMeme(final int memeId) {
+		final Session session = sessionFactory.openSession();
+		
+		ShallowMeme meme = new ShallowMeme();
+		try {
+			meme = new ShallowMeme(doGetMeme(memeId, session));
+			
+		} catch (Exception e) {
+			logger.error("err", e);
+			session.clear();
+			
+		} finally {
+			try {
+    			session.close();
+			} catch (Exception e) { /* */ }
+		}
+		
+		return meme;
+	}
+	
 	public Meme getMeme(final int memeId) {
 		final Session session = sessionFactory.openSession();
 
@@ -303,17 +323,7 @@ public class MemeService {
 		try {
 			session.beginTransaction();
 
-			final Query qry = session.createQuery("from Meme m where m.id = :mId");
-			qry.setInteger("mId", memeId);
-			final List<?> result = qry.list();
-
-			if (result != null && result.size() > 0) {
-				final Object obj = result.get(0);
-
-				if (obj instanceof Meme) {
-					meme = (Meme)obj;
-				}
-			}
+			meme = doGetMeme(memeId, session);
 
 		} catch (Exception e) {
 			logger.error("error occurred while attempting to meme", e);
@@ -324,6 +334,28 @@ public class MemeService {
 			}
 		}
 
+		return meme;
+	}
+
+
+	private Meme doGetMeme(final int memeId, final Session session) {
+		final Query qry = session.createQuery("from Meme m where m.id = :mId");
+		qry.setInteger("mId", memeId);
+		final List<?> result = qry.list();
+
+		Meme meme = new Meme(); 
+		try {
+    		if (result != null && result.size() > 0) {
+    			final Object obj = result.get(0);
+    
+    			if (obj instanceof Meme) {
+    				meme = (Meme)obj;
+    			}
+    		}
+		} catch (Exception e) {
+			logger.error("err", e);
+		}
+		
 		return meme;
 	}
 

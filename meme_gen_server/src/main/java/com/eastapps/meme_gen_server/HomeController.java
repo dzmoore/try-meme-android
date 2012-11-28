@@ -2,6 +2,8 @@ package com.eastapps.meme_gen_server;
 
 import java.io.IOException;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.ejb.criteria.expression.ConcatExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eastapps.meme_gen_server.domain.IntResult;
+import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.service.MemeService;
+import com.eastapps.meme_gen_server.util.Util;
 
 /**
  * Sample controller for going to the home page with a message
@@ -52,6 +56,7 @@ public class HomeController {
 		result.setResult(memeService.storeMeme(shallowMeme));
 		return result;
 	}
+	
 
 	@RequestMapping(value="/add_meme_admin", method = RequestMethod.POST)
 	public String addMemeAdmin(
@@ -81,10 +86,14 @@ public class HomeController {
 		return memeService.getMemeBackground(memeId);
 	}
 
-	@RequestMapping(value = { "/meme_data/{id}/json" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/meme_data/{meme_id}/json" }, method = RequestMethod.GET)
 	@ResponseBody
-	public ShallowMeme getMeme(@PathVariable("id") final int memeId) {
-		return new ShallowMeme(memeService.getMeme(memeId));
+	public ShallowMeme getMeme(@PathVariable("meme_id") final int memeId) {
+		ShallowMeme result = memeService.getShallowMeme(memeId);
+		
+		logger.debug(Util.concat("getmeme: id=", memeId, "] result=", result, "]"));
+		
+		return result;
 	}
 
 

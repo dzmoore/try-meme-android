@@ -62,3 +62,13 @@ create table sample_meme (
 	foreign key (meme_fk) references meme(id)	
 ) engine=InnoDB;
 
+insert into meme_background (active, path) values (1, 'tmimitw.jpg');
+
+insert into meme_background (active, path) values (1, 'most_int.jpg');
+insert into lv_meme_type (active, descr) values (1, 'MostIntManWorld');
+insert into lv_meme_type (active, descr) values (1, 'Most_Int_Man_In_World');
+
+insert into user (active, username) values (1, 'mostintuser');
+insert into user (active, username) values (1, 'most_inty_user_world');
+
+
