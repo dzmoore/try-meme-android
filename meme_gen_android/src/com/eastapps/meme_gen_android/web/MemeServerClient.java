@@ -4,17 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
-import com.eastapps.meme_gen_android.json.JSONException;
-import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.util.Conca;
-import com.example.meme_gen_android.R;
 import com.google.gson.Gson;
 
 public class MemeServerClient {

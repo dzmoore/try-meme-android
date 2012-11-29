@@ -71,4 +71,13 @@ insert into lv_meme_type (active, descr) values (1, 'Most_Int_Man_In_World');
 insert into user (active, username) values (1, 'mostintuser');
 insert into user (active, username) values (1, 'most_inty_user_world');
 
+insert into user (username, password) values ('testuser', 'password');
+
+insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk) values (1, 1, 1);
+
+insert into meme_text (text, text_type, font_size, meme_fk) values ("Top Text Test", "TOP", 26, 1);
+
+insert into meme_text (text, text_type, font_size, meme_fk) values ("Bottom Text Test", "BOTTOM", 26, 1);
+
+
 
