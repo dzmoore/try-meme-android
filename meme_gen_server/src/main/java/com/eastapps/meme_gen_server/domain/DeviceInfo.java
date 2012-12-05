@@ -88,4 +88,19 @@ public class DeviceInfo implements java.io.Serializable {
 		this.lastMod = lastMod;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DeviceInfo [id=");
+		builder.append(id);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", uniqueId=");
+		builder.append(uniqueId);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+
 }

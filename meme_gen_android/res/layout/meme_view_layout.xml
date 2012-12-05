@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/meme_view_rel_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <RelativeLayout
-        android:id="@+id/meme_view_rel_layout"
+    <com.eastapps.meme_gen_android.widget.ResizableImageView
+        android:id="@+id/image_view"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-
-        <com.eastapps.meme_gen_android.widgets.ResizableImageView
-            android:id="@+id/image_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/tmimitw" />
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/tmimitw" />
 
-        <com.eastapps.meme_gen_android.widgets.OutlineTextView
-            android:id="@+id/top_text_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/image_view"
-            android:layout_alignRight="@id/image_view"
-            android:layout_alignTop="@id/image_view"
-            android:gravity="center_horizontal"
-            android:paddingLeft="@dimen/text_padding"
-            android:paddingRight="@dimen/text_padding"
-            android:shadowRadius="7"
-            android:text="DUMMY TOP TEXT" />
+    <com.eastapps.meme_gen_android.widget.OutlineTextView
+        android:id="@+id/top_text_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/image_view"
+        android:layout_alignRight="@id/image_view"
+        android:layout_alignTop="@id/image_view"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/text_padding"
+        android:paddingRight="@dimen/text_padding"
+        android:shadowRadius="7"
+        android:text="DUMMY TOP TEXT" />
 
-        <com.eastapps.meme_gen_android.widgets.OutlineTextView
-            android:id="@+id/bottom_text_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/image_view"
-            android:layout_alignLeft="@id/image_view"
-            android:layout_alignRight="@id/image_view"
-            android:gravity="center_horizontal"
-            android:paddingLeft="@dimen/text_padding"
-            android:paddingRight="@dimen/text_padding"
-            android:shadowRadius="7"
-            android:text="DUMMY BOTTOM TEXT" />
-    </RelativeLayout>
+    <com.eastapps.meme_gen_android.widget.OutlineTextView
+        android:id="@+id/bottom_text_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/image_view"
+        android:layout_alignLeft="@id/image_view"
+        android:layout_alignRight="@id/image_view"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/text_padding"
+        android:paddingRight="@dimen/text_padding"
+        android:shadowRadius="7"
+        android:text="DUMMY BOTTOM TEXT" />
 
-</merge>
+</RelativeLayout>

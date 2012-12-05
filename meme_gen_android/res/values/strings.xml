@@ -20,12 +20,13 @@
     <string name="sslHttp">https://</string>
     <string name="nonSslHttp">http://</string>
     
-    <string name="webServiceAddress">http://192.168.1.131:8080/meme_gen_server/spring</string>
+    <string name="webServiceAddress">http://192.168.1.20:8080/meme_gen_server/spring</string>
     <!--<string name="webServiceAddress">http://192.168.1.50:8080/meme_gen_server/spring</string> -->
     <string name="webServiceMemeDataSuffix">meme_data</string>
     <string name="webServiceBackgroundSuffix">background</string>
     <string name="webServiceJsonSuffix">json</string>
     <string name="webServiceStoreMemePrefix">store_meme</string>
+    <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
 
 	<item name="maxFontSize" format="integer" type="integer">50</item>
 	<item name="initialFontSize" format="integer" type="integer">26</item>

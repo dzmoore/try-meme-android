@@ -1,1 +1,1 @@
-from Meme where id = 2
+from Meme m where m.lvMemeType.id = 6 and m.isSampleMeme = true

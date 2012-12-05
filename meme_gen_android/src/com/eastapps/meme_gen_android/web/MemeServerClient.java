@@ -1,5 +1,10 @@
 package com.eastapps.meme_gen_android.web;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -14,6 +19,7 @@ import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class MemeServerClient {
 	private static final String TAG = MemeServerClient.class.getSimpleName();
@@ -24,6 +30,7 @@ public class MemeServerClient {
 	private String webSvcJsonSuffix;
 	private String webSvcMemeDataSuffix;
 	private String webSvcStoreMemePrefix;
+	private String webSvcSampleMemeDataPrefix;
 
 	public MemeServerClient(final Context context) {
 		super();
@@ -33,6 +40,7 @@ public class MemeServerClient {
 		webSvcBgrndSuffix = context.getString(R.string.webServiceBackgroundSuffix);
 		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
 		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
+		webSvcSampleMemeDataPrefix = context.getString(R.string.webServiceSampleMemeDataPrefix);
 
 		webClient = new WebClient();
 	}
@@ -105,6 +113,27 @@ public class MemeServerClient {
 
 
 		return resultId;
+	}
+
+	public List<ShallowMeme> getSampleMemes(int typeId) {
+		final String result = 
+			webClient.getJSONObject(Conca.t(
+				webSvcAddr,
+				Constants.URL_SEPARATOR,
+				webSvcSampleMemeDataPrefix,
+				Constants.URL_SEPARATOR,
+				typeId,
+				Constants.URL_SEPARATOR,
+				webSvcJsonSuffix
+		));
+		
+		List<ShallowMeme> shMemeResult = new ArrayList<ShallowMeme>(0);
+		if (StringUtils.isNotBlank(result)) {
+			Type listType = new TypeToken<Collection<ShallowMeme>>(){}.getType();
+			shMemeResult = new Gson().fromJson(result, listType);
+		}
+		
+		return shMemeResult;
 	}
 
 }

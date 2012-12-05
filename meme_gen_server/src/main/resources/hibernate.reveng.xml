@@ -6,6 +6,5 @@
     <table-filter match-name="meme"></table-filter>
     <table-filter match-name="meme_background"></table-filter>
     <table-filter match-name="meme_text"></table-filter>
-    <table-filter match-name="sample_meme"></table-filter>
     <table-filter match-name="user"></table-filter>
 </hibernate-reverse-engineering>

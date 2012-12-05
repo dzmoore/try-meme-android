@@ -4,8 +4,10 @@ package com.eastapps.meme_gen_server.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -157,6 +159,18 @@ public class User implements java.io.Serializable {
 
 	public void setMemes(Set<Meme> memes) {
 		this.memes = memes;
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
