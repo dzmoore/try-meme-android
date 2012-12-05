@@ -1,9 +1,11 @@
 package com.eastapps.meme_gen_server;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.ejb.criteria.expression.ConcatExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eastapps.meme_gen_server.domain.IntResult;
-import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
@@ -94,6 +95,21 @@ public class HomeController {
 		logger.debug(Util.concat("getmeme: id=", memeId, "] result=", result, "]"));
 		
 		return result;
+	}
+	
+	@RequestMapping(value = {"/sample_meme_data/{meme_type_id}/json"}, method = RequestMethod.GET)
+	@ResponseBody
+	public ShallowMeme[] getSampleMemes(@PathVariable("meme_type_id") final int memeTypeId) {
+		List<ShallowMeme> samples = new ArrayList<ShallowMeme>();
+		
+		try {
+    		samples = memeService.getSampleMemes(memeTypeId);
+    		
+		} catch (Exception e) {
+			logger.error("error occurred", e);
+		}
+		
+		return samples.toArray(new ShallowMeme[samples.size()]);
 	}
 
 

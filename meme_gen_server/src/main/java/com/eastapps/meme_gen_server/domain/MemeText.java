@@ -27,19 +27,14 @@ import com.eastapps.meme_gen_server.constants.Constants;
 public class MemeText implements java.io.Serializable {
 	private static final long serialVersionUID = -2665509303313696077L;
 	
-	@PrimitiveField(fieldName = "id")
 	private Integer id;
 	
-	@ParentField(prefix = "meme")
 	private Meme meme;
 	
-	@PrimitiveField(fieldName = "txt")
 	private String text;
 	
-	@PrimitiveField(fieldName = "txt_type")
 	private String textType;
 	
-	@PrimitiveField(fieldName = "font_size")
 	private Integer fontSize;
 
 	public MemeText() {

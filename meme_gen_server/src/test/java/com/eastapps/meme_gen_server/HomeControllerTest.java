@@ -14,14 +14,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 
 import com.eastapps.meme_gen_server.constants.Constants;
 import com.eastapps.meme_gen_server.domain.DeviceInfo;
@@ -121,90 +118,6 @@ public class HomeControllerTest {
 		}
 	}
 
-	private Meme addNewMeme(
-		final String topText,
-		final String bottomText,
-		final MemeBackground bg,
-		final LvMemeType memeType,
-		final User user,
-		final Session sesh,
-		final StringBuilder overallResult)
-	{
-		final MemeText memeTextTopText = createMemeTopText(topText, sesh);
-
-		final MemeText memeTextBottomText = createBottomText(bottomText, sesh);
-
-		createMemeBackground(bg, sesh);
-		
-		createMemeType(memeType, sesh);
-		
-		createUser(sesh);
-		
-		final Meme meme = new Meme();
-		memeTextTopText.setMeme(meme);
-		memeTextBottomText.setMeme(meme);
-		meme.setLvMemeType(memeType);
-		meme.setMemeBackground(bg);
-		
-		meme.getMemeTexts().add(memeTextTopText);
-		meme.getMemeTexts().add(memeTextBottomText);
-		meme.setUser(user);
-		
-		sesh.beginTransaction();
-
-		meme.setId(Util.getId(sesh.save(meme)));
-		Util.commit(sesh);
-		
-		overallResult.append("meme_store_result=[");
-		overallResult.append(meme.toString()).append("]");
-
-
-//		final SampleMeme sample = new SampleMeme();
-//		sample.setMeme(meme);
-//
-//		sesh.beginTransaction();
-//		try {
-//			sample.setId((Integer) sesh.save(sample));
-//		} catch (Exception e) {
-//			logger.error("err", e);
-//		}
-//		Util.commit(sesh);
-		
-		return meme;
-	}
-
-	private MemeText createMemeTopText(final String topText, final Session sesh) {
-		sesh.beginTransaction();
-		
-		final MemeText memeTextTopText = new MemeText();
-		memeTextTopText.setText(topText);
-		memeTextTopText.setTextType(Constants.TOP);
-		try {
-    		// save top text
-			memeTextTopText.setId(Util.getId(sesh.save(memeTextTopText)));
-			
-		} catch (Exception e) {
-			logger.error("err", e);
-		}
-		Util.commit(sesh);
-		return memeTextTopText;
-	}
-
-	private MemeText createBottomText(final String bottomText, final Session sesh) {
-		// save bottom text
-		sesh.beginTransaction();
-		final MemeText memeTextBottomText = new MemeText();
-		memeTextBottomText.setText(bottomText);
-		memeTextBottomText.setTextType(Constants.BOTTOM);
-		try {
-			memeTextBottomText.setId(Util.getId(sesh.save(memeTextBottomText)));
-			
-		} catch (Exception e) {
-			logger.error("err", e);
-		}
-		Util.commit(sesh);
-		return memeTextBottomText;
-	}
 
 	private MemeBackground createMemeBackground(final MemeBackground bg, final Session sesh) {
 		bg.setActive(true);
@@ -259,5 +172,21 @@ public class HomeControllerTest {
 		return testUser;
 	}
 	
+	@Test
+	public void testGetSamples() {
+		final int memeTypeId = 1;
+		
+		HomeController cntrller = new HomeController(new MemeService(sessionFactory, imgsRoot));
+		
+		ShallowMeme[] samples = cntrller.getSampleMemes(memeTypeId);
+		
+		TestCase.assertNotNull(samples);
+		TestCase.assertTrue(samples.length > 0);
+		
+		for (ShallowMeme ea : samples) {
+			TestCase.assertNotNull(ea);
+			TestCase.assertTrue(ea.getMemeTypeId() == memeTypeId);
+		}
+	}
 
 }

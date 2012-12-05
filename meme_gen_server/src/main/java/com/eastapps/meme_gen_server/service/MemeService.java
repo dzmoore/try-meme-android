@@ -3,6 +3,7 @@ package com.eastapps.meme_gen_server.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,13 +21,13 @@ import com.eastapps.meme_gen_server.domain.LvMemeType;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
-import com.eastapps.meme_gen_server.domain.SampleMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.util.Util;
 
 @Component
 public class MemeService {
 	private static final Logger logger = LoggerFactory.getLogger(MemeService.class);
+	private static final int ADMIN_USER_ID = 1;
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -174,9 +175,9 @@ public class MemeService {
 
 			Util.commit(session);
 
-			doAddMemeAdmin(sample1TopText, sample1BottomText, session, overallResult, bg, memeType);
-			doAddMemeAdmin(sample2TopText, sample2BottomText, session, overallResult, bg, memeType);
-			doAddMemeAdmin(sample3TopText, sample3BottomText, session, overallResult, bg, memeType);
+			doAddSampleMemeAdmin(sample1TopText, sample1BottomText, session, overallResult, bg, memeType);
+			doAddSampleMemeAdmin(sample2TopText, sample2BottomText, session, overallResult, bg, memeType);
+			doAddSampleMemeAdmin(sample3TopText, sample3BottomText, session, overallResult, bg, memeType);
 
 			model.addAttribute("controllerMessage", overallResult.toString());
 
@@ -187,7 +188,7 @@ public class MemeService {
 		}
 	}
 
-	private void doAddMemeAdmin(
+	private void doAddSampleMemeAdmin(
 		final String sample1TopText, 
 		final String sample1BottomText, 
 		final Session session,
@@ -195,12 +196,33 @@ public class MemeService {
 		final MemeBackground bg, 
 		final LvMemeType memeType) 
 	{
+
+		final Meme meme = new Meme();
+
+		meme.setLvMemeType(memeType);
+		meme.setMemeBackground(bg);
+		meme.getUser().setId(ADMIN_USER_ID);
+		meme.setIsSampleMeme(true);
+
 		session.beginTransaction();
-		final MemeText txtTop1 = new MemeText();
-		txtTop1.setText(sample1TopText);
-		txtTop1.setTextType(Constants.TOP);
+
+		final Serializable meme1Result = session.save(meme);
+
+		if (meme1Result instanceof Integer) {
+			meme.setId((Integer)meme1Result);
+			overallResult.append("meme1_store_result=[");
+			overallResult.append(meme.toString()).append("]");
+		}
+
+		Util.commit(session);
+		
+		session.beginTransaction();
+		final MemeText txtTop = new MemeText();
+		txtTop.setText(sample1TopText);
+		txtTop.setTextType(Constants.TOP);
+		txtTop.setMeme(meme);
 		try {
-			txtTop1.setId((Integer)session.save(txtTop1));
+			txtTop.setId((Integer)session.save(txtTop));
 		} catch (Exception e) {
 			logger.error("err", e);
 		}
@@ -208,48 +230,17 @@ public class MemeService {
 		Util.commit(session);
 
 		session.beginTransaction();
-		final MemeText txtBtm1 = new MemeText();
-		txtBtm1.setText(sample1BottomText);
-		txtBtm1.setTextType(Constants.BOTTOM);
+		final MemeText txtBtm = new MemeText();
+		txtBtm.setText(sample1BottomText);
+		txtBtm.setTextType(Constants.BOTTOM);
+		txtBtm.setMeme(meme);
 		try {
-			txtBtm1.setId((Integer)session.save(txtBtm1));
+			txtBtm.setId((Integer)session.save(txtBtm));
 		} catch (Exception e) {
 			logger.error("err", e);
 		}
 		Util.commit(session);	
 
-
-		final Meme meme1 = new Meme();
-		txtTop1.setMeme(meme1);
-		txtBtm1.setMeme(meme1);
-
-		meme1.setLvMemeType(memeType);
-		meme1.setMemeBackground(bg);
-		meme1.getMemeTexts().add(txtTop1);
-		meme1.getMemeTexts().add(txtBtm1);
-
-		session.beginTransaction();
-
-		final Serializable meme1Result = session.save(meme1);
-
-		if (meme1Result instanceof Integer) {
-			meme1.setId((Integer)meme1Result);
-			overallResult.append("meme1_store_result=[");
-			overallResult.append(meme1.toString()).append("]");
-		}
-
-		Util.commit(session);
-
-		final SampleMeme sample = new SampleMeme();
-		sample.setMeme(meme1);
-
-		session.beginTransaction();
-		try {
-			sample.setId((Integer)session.save(sample));
-		} catch (Exception e) {
-			logger.error("err", e);
-		}
-		Util.commit(session);
 	}
 	
 	public byte[] getMemeBackground(final int memeId) throws IOException {
@@ -357,6 +348,52 @@ public class MemeService {
 		}
 		
 		return meme;
+	}
+	
+	public List<ShallowMeme> getSampleMemes(final int memeTypeId) {
+		final Session sesh = sessionFactory.openSession();
+		
+		List<ShallowMeme> samples = new ArrayList<ShallowMeme>(0);
+		try {
+			sesh.beginTransaction();
+			samples = doGetSampleMemes(memeTypeId, sesh);
+			
+		} catch (Exception e) {
+			logger.error("error occurred", e);
+			
+		} finally {
+			try {
+				sesh.close();
+			} catch (Exception e) {}
+		}
+		
+		return samples;
+	}
+	
+	private List<ShallowMeme> doGetSampleMemes(final int memeTypeId, final Session session) {
+		List<ShallowMeme> samples = new ArrayList<ShallowMeme>();
+		
+		final Query qry = session.createQuery("from Meme m where m.lvMemeType.id = :id and m.isSampleMeme = true");
+		qry.setInteger("id", memeTypeId);
+		
+		try {
+			final List<?> memes = qry.list();
+			
+			boolean typeMatches = false;
+			for (final Object ea : memes) {
+				if (typeMatches || ea instanceof Meme) {
+					samples.add(new ShallowMeme((Meme)ea));
+					
+					typeMatches = true;
+				}
+			}
+			
+		} catch (Exception e) {
+			logger.error("error occurred while getting sample memes", e);
+		}
+		
+		
+		return samples;
 	}
 
 }

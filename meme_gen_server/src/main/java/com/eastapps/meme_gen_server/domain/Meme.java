@@ -21,8 +21,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.eastapps.meme_gen_server.annotation.ParentField;
-import com.eastapps.meme_gen_server.annotation.PrimitiveField;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 /**
@@ -33,22 +31,17 @@ import com.eastapps.meme_gen_server.constants.Constants;
 public class Meme implements java.io.Serializable {
 	private static final long serialVersionUID = 7984784355451389282L;
 	
-	@PrimitiveField(fieldName = "id")
 	private Integer id;
 	
-	@ParentField(prefix = "meme_type")
 	private LvMemeType lvMemeType;
 	
-	@ParentField(prefix = "meme_bg")
 	private MemeBackground memeBackground;
 	
-	@ParentField(prefix = "created_by")
 	private User user;
 	
-	@PrimitiveField(fieldName = "meme_txts")
-	private Set<MemeText> memeTexts = new HashSet<MemeText>(0);
+	private Set<MemeText> memeTexts;
 	
-	private Set<SampleMeme> sampleMemes = new HashSet<SampleMeme>(0);
+	private Boolean isSampleMeme;
 
 	public Meme() {
 		super();
@@ -57,22 +50,17 @@ public class Meme implements java.io.Serializable {
 		memeBackground = new MemeBackground();
 		user = new User();
 		memeTexts = new HashSet<MemeText>(0);
-		sampleMemes = new HashSet<SampleMeme>(0);
+	}
+	
+	public Meme(LvMemeType lvMemeType, User user, MemeBackground memeBackground, Boolean isSampleMeme, Set<MemeText> memeTexts) {
+		this();
+		this.lvMemeType = lvMemeType;
+		this.user = user;
+		this.memeBackground = memeBackground;
+		this.isSampleMeme = isSampleMeme;
+		this.memeTexts = memeTexts;
 	}
 
-	public Meme(
-		LvMemeType lvMemeType, 
-		MemeBackground memeBackground, 
-		Set<MemeText> memeTexts, 
-		Set<SampleMeme> sampleMemes,
-		User user) 
-	{
-		this.lvMemeType = lvMemeType;
-		this.memeBackground = memeBackground;
-		this.memeTexts = memeTexts;
-		this.sampleMemes = sampleMemes;
-		this.user = user;
-	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -113,49 +101,7 @@ public class Meme implements java.io.Serializable {
 	public void setMemeTexts(Set<MemeText> memeTexts) {
 		this.memeTexts = memeTexts;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "meme")
-	public Set<SampleMeme> getSampleMemes() {
-		return this.sampleMemes;
-	}
-
-	public void setSampleMemes(Set<SampleMeme> sampleMemes) {
-		this.sampleMemes = sampleMemes;
-	}
-
-	@Override
-	public String toString() {
-		final int maxLen = 10;
-		StringBuilder builder = new StringBuilder();
-		builder.append("Meme [id=");
-		builder.append(id);
-		builder.append(", lvMemeType=");
-		builder.append(lvMemeType);
-		builder.append(", memeBackground=");
-		builder.append(memeBackground);
-		builder.append(", memeTexts=");
-		builder.append(memeTexts != null ? toString(memeTexts, maxLen) : null);
-		builder.append(", sampleMemes=");
-		builder.append(sampleMemes != null && sampleMemes.size() > 0 ? "size=" + sampleMemes.size() : "null_or_empty");
-		builder.append(", user=");
-		builder.append(user == null ? "null" : "id=" + user.getId() + ",name=" + user.getUsername());
-		builder.append("]");
-		return builder.toString();
-	}
-
-	private String toString(Collection<?> collection, int maxLen) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("[");
-		int i = 0;
-		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
-			if (i > 0)
-				builder.append(", ");
-			builder.append(iterator.next());
-		}
-		builder.append("]");
-		return builder.toString();
-	}
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "created_by_user_fk")
 	public User getUser() {
@@ -172,30 +118,47 @@ public class Meme implements java.io.Serializable {
 		return null;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Column(name = "is_sample_meme")
+	public Boolean getIsSampleMeme() {
+		return this.isSampleMeme;
+	}
 
+	public void setIsSampleMeme(Boolean isSampleMeme) {
+		this.isSampleMeme = isSampleMeme;
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 10;
+		StringBuilder builder = new StringBuilder();
+		builder.append("Meme [id=");
+		builder.append(id);
+		builder.append(", lvMemeType=");
+		builder.append(lvMemeType);
+		builder.append(", memeBackground=");
+		builder.append(memeBackground);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", memeTexts=");
+		builder.append(memeTexts != null ? toString(memeTexts, maxLen) : null);
+		builder.append(", isSampleMeme=");
+		builder.append(isSampleMeme);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	private String toString(Collection<?> collection, int maxLen) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int i = 0;
+		for (Iterator<?> iterator = collection.iterator(); iterator.hasNext() && i < maxLen; i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(iterator.next());
+		}
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }
