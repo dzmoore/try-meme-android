@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +33,7 @@ import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.adapter.CreateMemePagerAdapter;
+import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.util.Conca;
 
@@ -48,6 +50,7 @@ public class CreateMemeActivity extends Activity {
 	private SeekBar topSeekBar;
 	private SeekBar bottomSeekBar;
 	private IMemeService memeService;
+	private ShallowMeme userMeme;
 	
 	
 	private ViewPager memePager;
@@ -70,6 +73,25 @@ public class CreateMemeActivity extends Activity {
 		MemeService.initialize(this);
 		memeService = MemeService.getInstance();		
 		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				memeViewData = memeService.createMemeViewData(1);//new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
+				
+				setMemeViewData(memeViewData);
+			}
+		}).start();
+	}
+	
+	@Override
+	public void onSaveInstanceState(final Bundle outState) {
+		if (memeViewData != null) {
+			outState.putParcelable("memebg", memeViewData.getBackground());
+			outState.putSerializable("samplememes", new ArrayList<ShallowMeme>(memeViewData.getSampleMemes()));
+		}
+	}
+
+	private void initGui() {
 		initTopTextEdit();
 
 		initBottomTextEdit();
@@ -83,15 +105,6 @@ public class CreateMemeActivity extends Activity {
 		initConfigBottomTextBtn();
 		
 		initSaveBtn();
-
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				memeViewData = memeService.createMemeViewData(6);//new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
-				
-				setMemeViewData(memeViewData);
-			}
-		}).start();
 	}
 
 	private void initSaveBtn() {
@@ -222,9 +235,9 @@ public class CreateMemeActivity extends Activity {
 			
 			bottomSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize)); 
 			
-//			bottomSeekBar.setProgress((int) getMemeViewBottomTextView().getTextSize());
-//
-//			createSeekBarChangeListener(bottomSeekBar, getMemeViewBottomTextView());
+			bottomSeekBar.setProgress((int) getMemeViewBottomTextView().getTextSize());
+
+			createSeekBarChangeListener(bottomSeekBar, getMemeViewBottomTextView());
 		}
 	}
 
@@ -267,6 +280,32 @@ public class CreateMemeActivity extends Activity {
 			createSeekBarChangeListener(topSeekBar, getMemeViewTopTextView());
 
 		}
+	}
+
+	private void createSeekBarChangeListener(
+			final SeekBar seekBar,
+			final OutlineTextView textView) 
+	{
+		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				
+			}
+			
+			@Override
+			public void onProgressChanged(
+					final SeekBar seekBar, 
+					final int progress,
+					final boolean fromUser) 
+			{	
+				textView.setTextSize(progress);
+			}
+		});
 	}
 
 	protected void handleBottomTextBtnClick(View v) {
@@ -434,31 +473,19 @@ public class CreateMemeActivity extends Activity {
 			return;
 		}
 
-		final TextView topTxtView = getMemeViewTopTextView();
-		final TextView bottomTxtView = getMemeViewBottomTextView();
-
-		final ImageView imgView = (ImageView) findViewById(R.id.image_view);
-		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
 		
-		Typeface robotoBoldCondensedTypeFace = Typeface.createFromAsset(
-			getAssets(), 
-			"fonts/Roboto-BoldCondensed.ttf"
-		);
+//		Typeface robotoBoldCondensedTypeFace = Typeface.createFromAsset(
+//			getAssets(), 
+//			"fonts/Roboto-BoldCondensed.ttf"
+//		);
 
-		setFieldsInMemeView(
-			topTxtView, 
-			bottomTxtView, 
-			imgView, 
-			memePager,
-			robotoBoldCondensedTypeFace
-		);
+		setFieldsInMemeView();
+		
+		initGui();
 	}
 
-	private void setFieldsInMemeView(final TextView topTxtView,
-			final TextView bottomTxtView, final ImageView imgView,
-			final ViewPager memePager, Typeface robotoBoldCondensedTypeFace) 
-	{
+	private void setFieldsInMemeView() {
 //		topTxtView.setTypeface(robotoBoldCondensedTypeFace);
 //		topTxtView.setTextSize(
 //			getResources().getInteger(
@@ -530,6 +557,8 @@ public class CreateMemeActivity extends Activity {
 		final MemeViewData editableMeme = new MemeViewData();
 		final ShallowMeme meme = new ShallowMeme();
 		editableMeme.setMeme(meme);
+		editableMeme.setBackground(bgBm);
+		
 		shMemes.add(editableMeme);
 		
 		for (final ShallowMeme eaShMeme : memeViewData.getSampleMemes()) {
