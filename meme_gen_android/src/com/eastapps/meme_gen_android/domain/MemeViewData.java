@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,9 @@ import android.graphics.Bitmap;
 
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 
-public class MemeViewData {
+public class MemeViewData implements Serializable {
+	private static final long serialVersionUID = 7334702044762722957L;
+	
 	private ShallowMeme meme;
 	private List<ShallowMeme> sampleMemes;
 	private Bitmap background;

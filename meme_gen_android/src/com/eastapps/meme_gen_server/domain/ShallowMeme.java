@@ -1,9 +1,12 @@
 package com.eastapps.meme_gen_server.domain;
 
+import java.io.Serializable;
+
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 
-public class ShallowMeme {
+public class ShallowMeme implements Serializable {
+	private static final long serialVersionUID = 4788259733303349011L;
 	private int backgroundFk;
 	private int id;
 	private String topText;

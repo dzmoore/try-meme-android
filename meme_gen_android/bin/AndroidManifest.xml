@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.CreateMemeActivity"
-            android:label="@string/title_activity_create_meme" >
+            android:label="@string/title_activity_create_meme" 
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
