@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,16 +18,28 @@ import android.widget.TextView;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
+import com.eastapps.meme_gen_server.domain.ShallowMeme;
 
-public class CreateMemePagerAdapter extends PagerAdapter {
+public class CreateMemePagerAdapter extends PagerAdapter implements Parcelable {
 	private List<MemeViewData> memes;
-	private List<View> memeViews;
 
 	public CreateMemePagerAdapter() {
 		super();
 
 		setMemes(Collections.synchronizedList(new ArrayList<MemeViewData>(0)));
-		memeViews = Collections.synchronizedList(new ArrayList<View>());
+	}
+	
+	public CreateMemePagerAdapter(final Parcel source) {
+		this();
+		
+		final int memeCount = source.readInt();
+		
+		for (int i = 0; i < memeCount; i++) {
+			final MemeViewData memeViewData = new MemeViewData();
+			memeViewData.setMeme((ShallowMeme)source.readSerializable());
+			memeViewData.setBackground((Bitmap)source.readParcelable(Bitmap.class.getClassLoader()));
+			memes.add(memeViewData);
+		}
 	}
 
 	@Override
@@ -59,10 +73,17 @@ public class CreateMemePagerAdapter extends PagerAdapter {
 			((ImageView)newView.findViewById(R.id.image_view)).setImageBitmap(mvd.getBackground());
 
 			viewPager.addView(newView, position);
+			
 		}
 
 
 		return newView;
+	}
+	
+	public void loadIntoView(final ViewGroup container) {
+		for (int i = 0; i < memes.size(); i++) {
+			instantiateItem(container, i++);
+		}
 	}
 	
 	@Override
@@ -89,14 +110,41 @@ public class CreateMemePagerAdapter extends PagerAdapter {
 
 	
 	@Override
-	public Parcelable saveState() {
-		return super.saveState();
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(memes.size());
+		for (final MemeViewData ea : this.memes) {
+			dest.writeSerializable(ea.getMeme());
+			dest.writeParcelable(ea.getBackground(), 0);
+		}
 	}
 	
-	@Override
-	public void restoreState(Parcelable state, ClassLoader loader) {
-		super.restoreState(state, loader);
-	}
+	public static final Parcelable.Creator<CreateMemePagerAdapter> CREATOR = new Parcelable.Creator<CreateMemePagerAdapter>() {
+		@Override
+		public CreateMemePagerAdapter[] newArray(int size) {
+			return new CreateMemePagerAdapter[size];
+		}
+		
+		@Override
+		public CreateMemePagerAdapter createFromParcel(Parcel source) {
+			final CreateMemePagerAdapter adapter = new CreateMemePagerAdapter();
+			final int memeCount = source.readInt();
+			
+			for (int i = 0; i < memeCount; i++) {
+				final MemeViewData memeViewData = new MemeViewData();
+				memeViewData.setMeme((ShallowMeme)source.readSerializable());
+				memeViewData.setBackground((Bitmap)source.readParcelable(Bitmap.class.getClassLoader()));
+				adapter.memes.add(memeViewData);
+			}
+			
+			return adapter;
+		}
+	};
 	
 	
 

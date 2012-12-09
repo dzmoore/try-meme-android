@@ -7,9 +7,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,6 +53,7 @@ public class CreateMemeActivity extends Activity {
 	private SeekBar bottomSeekBar;
 	private IMemeService memeService;
 	private ShallowMeme userMeme;
+	private AtomicBoolean isLoadComplete;
 	
 	
 	private ViewPager memePager;
@@ -63,6 +66,8 @@ public class CreateMemeActivity extends Activity {
 
 		isTopTextSizing = new AtomicBoolean(false);
 		isBottomTextSizing = new AtomicBoolean(false);
+		
+		isLoadComplete = new AtomicBoolean(false);
 	}
 
 	@Override
@@ -73,24 +78,64 @@ public class CreateMemeActivity extends Activity {
 		MemeService.initialize(this);
 		memeService = MemeService.getInstance();		
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				memeViewData = memeService.createMemeViewData(1);//new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
-				
-				setMemeViewData(memeViewData);
-			}
-		}).start();
+		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
+		
+		loadBundle(savedInstanceState);
+		
+		if (!isLoadComplete.get()) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					memeViewData = memeService.createMemeViewData(1);//new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
+					
+					setMemeViewData(memeViewData);
+				}
+			}).start();
+			
+		} else {
+			setFieldsInMemeView();
+			
+			initGui();
+		}
 	}
 	
+	private void loadBundle(Bundle savedInstanceState) {
+		if (savedInstanceState == null) {
+			return;
+		}
+		
+		memeViewData = new MemeViewData();
+		if (savedInstanceState.containsKey("memebg")) {
+			final Bitmap bg = (Bitmap)savedInstanceState.getParcelable("memebg");
+			memeViewData.setBackground(bg);
+		}
+		
+		if (savedInstanceState.containsKey("samplememes")) {
+			@SuppressWarnings("unchecked")
+			final ArrayList<ShallowMeme> shMemes = (ArrayList<ShallowMeme>) savedInstanceState.getSerializable("samplememes");
+			
+			memeViewData.setSampleMemes(shMemes);
+		}
+		
+		if (savedInstanceState.containsKey("loaded")) {
+			isLoadComplete.set(savedInstanceState.getBoolean("loaded"));
+		}
+		
+		if (savedInstanceState.containsKey("pageradapter")) {
+			memePager.setAdapter((PagerAdapter) savedInstanceState.getParcelable("pageradapter"));
+		}
+	}
+
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		if (memeViewData != null) {
 			outState.putParcelable("memebg", memeViewData.getBackground());
 			outState.putSerializable("samplememes", new ArrayList<ShallowMeme>(memeViewData.getSampleMemes()));
+			outState.putBoolean("loaded", isLoadComplete.get());
+			outState.putParcelable("pageradapter", (CreateMemePagerAdapter)memePager.getAdapter());
 		}
 	}
-
+	
 	private void initGui() {
 		initTopTextEdit();
 
@@ -473,7 +518,7 @@ public class CreateMemeActivity extends Activity {
 			return;
 		}
 
-		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
+		
 		
 //		Typeface robotoBoldCondensedTypeFace = Typeface.createFromAsset(
 //			getAssets(), 
@@ -483,6 +528,8 @@ public class CreateMemeActivity extends Activity {
 		setFieldsInMemeView();
 		
 		initGui();
+		
+		isLoadComplete.set(true);
 	}
 
 	private void setFieldsInMemeView() {
@@ -509,6 +556,8 @@ public class CreateMemeActivity extends Activity {
 		pagerAdapter.setMemes(createSampleMemeViewDataList());
 		
 		memePager.setAdapter(pagerAdapter);
+		
+		pagerAdapter.loadIntoView(memePager);
 		
 		memePager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -583,7 +632,7 @@ public class CreateMemeActivity extends Activity {
 	private View getCurrentPage() {
 		final int currentPageIndex = memePager.getCurrentItem();
 		final View currentPage = memePager.getChildAt(currentPageIndex);
-		return currentPage;
+		return currentPage; 
 	}
 	
 	private View getPageAt(final int pos) {
