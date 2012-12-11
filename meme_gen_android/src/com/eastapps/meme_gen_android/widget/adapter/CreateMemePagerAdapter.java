@@ -21,6 +21,7 @@ import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 
 public class CreateMemePagerAdapter extends PagerAdapter implements Parcelable {
+	public static final String TAG = CreateMemePagerAdapter.class.getSimpleName();
 	private List<MemeViewData> memes;
 
 	public CreateMemePagerAdapter() {
@@ -69,8 +70,17 @@ public class CreateMemePagerAdapter extends PagerAdapter implements Parcelable {
 			
 			final MemeViewData mvd = memes.get(position);
 			
-			((TextView)newView.findViewById(R.id.top_text_textview)).setText(mvd.getMeme().getTopText());
+			TextView topTextView = (TextView)newView.findViewById(R.id.top_text_textview);
+			topTextView.setText(mvd.getMeme().getTopText());
+			topTextView.setTextSize(mvd.getMeme().getTopTextFontSize());
+			
+			TextView bottomTextView = (TextView)newView.findViewById(R.id.bottom_text_textview);
+			bottomTextView.setText(mvd.getMeme().getBottomText());
+			bottomTextView.setTextSize(mvd.getMeme().getBottomTextFontSize());
+			
+			
 			((ImageView)newView.findViewById(R.id.image_view)).setImageBitmap(mvd.getBackground());
+			
 
 			viewPager.addView(newView, position);
 			
@@ -78,6 +88,11 @@ public class CreateMemePagerAdapter extends PagerAdapter implements Parcelable {
 
 
 		return newView;
+	}
+	
+	@Override
+	public int getItemPosition(Object object) {
+		return POSITION_NONE;
 	}
 	
 	public void loadIntoView(final ViewGroup container) {
