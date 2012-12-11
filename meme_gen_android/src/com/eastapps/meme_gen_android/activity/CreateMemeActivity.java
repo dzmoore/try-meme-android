@@ -248,7 +248,7 @@ public class CreateMemeActivity extends Activity {
 			bottomTextEdit.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					getMemeViewBottomTextView().setText(bottomTextEdit.getText().toString());
+					
 				}
 
 				@Override
@@ -293,8 +293,10 @@ public class CreateMemeActivity extends Activity {
 				@Override
 				public void onTextChanged(CharSequence s, int start,
 						int before, int count) {
-					getMemeViewTopTextView().setText(
-							topTextEdit.getText().toString());
+					final ShallowMeme meme = getMemePagerAdapter().getMemeAt(memePager.getCurrentItem()).getMeme();
+					meme.setTopText(topTextEdit.getText().toString());
+					
+					getMemePagerAdapter().notifyDataSetChanged();
 				}
 
 				@Override
@@ -358,7 +360,6 @@ public class CreateMemeActivity extends Activity {
 			v, 
 			getConfigBottomTextBtn(), 
 			bottomTextEdit,
-			getBottomTextLinearLayout(), 
 			isEditingBottomText
 		);
 }
@@ -470,7 +471,6 @@ public class CreateMemeActivity extends Activity {
 			final View btnClicked,
 			final ImageButton configBtn, 
 			final EditText textEdit,
-			final LinearLayout parentLayout, 
 			final AtomicBoolean isEditing) 
 	{
 		if (!isEditing.get()) {
@@ -494,8 +494,7 @@ public class CreateMemeActivity extends Activity {
 	}
 
 	protected void handleTopTextBtnClick(final View v) {
-		startEditing(v, getConfigTopTextBtn(), topTextEdit,
-				getTopTextLinearLayout(), isEditingTopText);
+		startEditing(v, getConfigTopTextBtn(), topTextEdit, isEditingTopText);
 	}
 
 	private ImageButton getConfigTopTextBtn() {
@@ -518,8 +517,6 @@ public class CreateMemeActivity extends Activity {
 			return;
 		}
 
-		
-		
 //		Typeface robotoBoldCondensedTypeFace = Typeface.createFromAsset(
 //			getAssets(), 
 //			"fonts/Roboto-BoldCondensed.ttf"
@@ -533,25 +530,6 @@ public class CreateMemeActivity extends Activity {
 	}
 
 	private void setFieldsInMemeView() {
-//		topTxtView.setTypeface(robotoBoldCondensedTypeFace);
-//		topTxtView.setTextSize(
-//			getResources().getInteger(
-//				R.integer.initialFontSize
-//		));
-//
-//		bottomTxtView.setTypeface(robotoBoldCondensedTypeFace);
-//		bottomTxtView.setTextSize(
-//			getResources().getInteger(
-//				R.integer.initialFontSize
-//		));
-//
-//		topTxtView.setText(memeViewData.getMeme().getTopText());
-//		bottomTxtView.setText(memeViewData.getMeme().getBottomText());
-//		imgView.setImageBitmap(memeViewData.getBackground());
-		
-//		topTextEdit.setText(topTxtView.getText());
-//		bottomTextEdit.setText(bottomTxtView.getText());
-		
 		final CreateMemePagerAdapter pagerAdapter = new CreateMemePagerAdapter();
 		pagerAdapter.setMemes(createSampleMemeViewDataList());
 		
@@ -589,6 +567,8 @@ public class CreateMemeActivity extends Activity {
 		
 		getTopTextView().setText(selectedMeme.getTopText());
 		getBottomTextView().setText(selectedMeme.getBottomText());
+		
+
 	}
 
 	private CreateMemePagerAdapter getMemePagerAdapter() {
@@ -599,7 +579,7 @@ public class CreateMemeActivity extends Activity {
 
 	private List<MemeViewData> createSampleMemeViewDataList() {
 		final List<MemeViewData> shMemes 
-			= new ArrayList<MemeViewData>(memeViewData.getSampleMemes().size());
+			= new ArrayList<MemeViewData>(memeViewData.getSampleMemes().size()+1);
 		
 		final Bitmap bgBm = memeViewData.getBackground();
 		
@@ -648,7 +628,6 @@ public class CreateMemeActivity extends Activity {
 	}
 	
 	private TextView getTopTextView() {
-		
 		return (TextView)getCurrentPage().findViewById(R.id.top_text_textview);
 	}
 	
