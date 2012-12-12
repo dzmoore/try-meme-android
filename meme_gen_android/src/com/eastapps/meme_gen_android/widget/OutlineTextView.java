@@ -29,6 +29,8 @@ public class OutlineTextView extends TextView {
 	private float spacingMult;
 	private float spacingAdd;
 	private boolean includePad;
+	private boolean shouldOverrideShadowRadiusAttr;
+	private int overrideShadowRadius;
 	
 	public OutlineTextView(Context context) {
 		super(context);
@@ -78,6 +80,9 @@ public class OutlineTextView extends TextView {
 	}
 	
 	private void init() {
+		shouldOverrideShadowRadiusAttr = false;
+		overrideShadowRadius = 0;
+		
 		text = Constants.EMPTY_STRING;
 		ascent = 0;
 		spacingMult = 1f;
@@ -86,13 +91,26 @@ public class OutlineTextView extends TextView {
 		
 	}
 	
+	public void overrideShadowRadius(boolean override, int optionalRadius) {
+		shouldOverrideShadowRadiusAttr = override;
+		
+		if (override) {
+			this.overrideShadowRadius = optionalRadius;
+		}
+	}
+	
 	private float getShadowRadius(final AttributeSet attrs) {
 		float shadowRadius = 0f;
-		
-		for (int i = 0; i < attrs.getAttributeCount(); i++) {
-			if (StringUtils.equalsIgnoreCase(attrs.getAttributeName(i), "shadowRadius")) {
-				shadowRadius = attrs.getAttributeFloatValue(i, 0f);
-				break;
+		if (shouldOverrideShadowRadiusAttr) {
+			shadowRadius = overrideShadowRadius;
+			
+		} else {
+			
+			for (int i = 0; i < attrs.getAttributeCount(); i++) {
+				if (StringUtils.equalsIgnoreCase(attrs.getAttributeName(i), "shadowRadius")) {
+					shadowRadius = attrs.getAttributeFloatValue(i, 0f);
+					break;
+				}
 			}
 		}
 		
