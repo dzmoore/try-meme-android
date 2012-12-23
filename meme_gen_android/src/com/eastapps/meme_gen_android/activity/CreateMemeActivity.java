@@ -3,26 +3,20 @@ package com.eastapps.meme_gen_android.activity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Parcel;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
@@ -33,16 +27,17 @@ import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
+import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
-import com.eastapps.meme_gen_android.widget.adapter.CreateMemePagerAdapter;
-import com.eastapps.meme_gen_server.domain.Meme;
+import com.eastapps.meme_gen_android.widget.TagMgr;
+import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.util.Conca;
 
-public class CreateMemeActivity extends Activity {
+public class CreateMemeActivity extends FragmentActivity {
 	private static final String TAG = CreateMemeActivity.class.getSimpleName();
 
 	private MemeViewData memeViewData;
+	private List<MemeViewData> sampledList;
 	private AtomicBoolean isEditingTopText;
 	private AtomicBoolean isEditingBottomText;
 	private AtomicBoolean isTopTextSizing;
@@ -52,7 +47,6 @@ public class CreateMemeActivity extends Activity {
 	private SeekBar topSeekBar;
 	private SeekBar bottomSeekBar;
 	private IMemeService memeService;
-	private ShallowMeme userMeme;
 	private AtomicBoolean isLoadComplete;
 	
 	
@@ -82,21 +76,25 @@ public class CreateMemeActivity extends Activity {
 		
 		loadBundle(savedInstanceState);
 		
-		if (!isLoadComplete.get()) {
+		if (isLoaded()) {
+			setFieldsInMemeView();
+			
+			initGui();
+			
+		} else {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					memeViewData = memeService.createMemeViewData(1);//new MemeServerClient(CreateMemeActivity.this).createMemeViewData(9);
+					memeViewData = memeService.createMemeViewData(1);
 					
 					setMemeViewData(memeViewData);
 				}
 			}).start();
-			
-		} else {
-			setFieldsInMemeView();
-			
-			initGui();
 		}
+	}
+	
+	private boolean isLoaded() {
+		return isLoadComplete.get();
 	}
 	
 	private void loadBundle(Bundle savedInstanceState) {
@@ -132,14 +130,18 @@ public class CreateMemeActivity extends Activity {
 			outState.putParcelable("memebg", memeViewData.getBackground());
 			outState.putSerializable("samplememes", new ArrayList<ShallowMeme>(memeViewData.getSampleMemes()));
 			outState.putBoolean("loaded", isLoadComplete.get());
-			outState.putParcelable("pageradapter", (CreateMemePagerAdapter)memePager.getAdapter());
+			outState.putParcelable("pageradapter", getMemePagerAdapter());
 		}
 	}
 	
 	private void initGui() {
 		initTopTextEdit();
+		
+		initTopSeekbar();
 
 		initBottomTextEdit();
+		
+		initBottomSeekbar();
 
 		initTopTextBtn();
 
@@ -150,6 +152,39 @@ public class CreateMemeActivity extends Activity {
 		initConfigBottomTextBtn();
 		
 		initSaveBtn();
+	}
+
+	private void initTopSeekbar() {
+		topSeekBar = new SeekBar(this);
+		topSeekBar.setLayoutParams(new TableLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+		
+		getTopTextLinearLayout().addView(topSeekBar, 0);
+		
+		topSeekBar.setVisibility(View.GONE);
+		topSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
+		topSeekBar.setProgress((int) getSelectedMeme().getTopTextFontSize());
+		createSeekBarChangeListener(topSeekBar, getSelectedTopTextView());
+	}
+
+	private void initBottomSeekbar() {
+		bottomSeekBar = new SeekBar(this);
+		bottomSeekBar.setLayoutParams(new TableLayout.LayoutParams(
+			ViewGroup.LayoutParams.MATCH_PARENT,
+			ViewGroup.LayoutParams.MATCH_PARENT, 
+			1f
+		));
+		
+		getBottomTextLinearLayout().addView(bottomSeekBar, 0);
+		
+		bottomSeekBar.setVisibility(View.GONE);
+		
+		bottomSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize)); 
+		
+		bottomSeekBar.setProgress((int) getSelectedMeme().getBottomTextFontSize());
+
+		createSeekBarChangeListener(bottomSeekBar, getSelectedBottomTextView());
 	}
 
 	private void initSaveBtn() {
@@ -197,12 +232,30 @@ public class CreateMemeActivity extends Activity {
 	private ShallowMeme createShallowMemeFromUi() {
 		final ShallowMeme sm = memeViewData.getMeme();
 		
-		sm.setTopText(String.valueOf(getTopTextView().getText()));
-		sm.setBottomText(String.valueOf(getBottomTextView().getText()));
+		sm.setTopText(getSelectedTopTextView().getText().toString());
+				
+		sm.setBottomText(getSelectedBottomTextView().getText().toString());
+		
 		sm.setTopTextFontSize(topSeekBar.getProgress());
 		sm.setBottomTextFontSize(bottomSeekBar.getProgress());
 		
 		return sm;
+	}
+
+	private TextView getSelectedBottomTextView() {
+		return (TextView)memePager.findViewWithTag(TagMgr.getTextViewTag(getSelectedMemeViewId(), false));
+	}
+
+	private TextView getSelectedTopTextView() {
+		return (TextView)memePager.findViewWithTag(TagMgr.getTextViewTag(getSelectedMemeViewId(), true));
+	}
+
+	private int getSelectedMemeViewId() {
+		final int selected = memePager.getCurrentItem();
+		
+		final int selectedId = sampledList == null ? Constants.INVALID : sampledList.get(selected).getId();
+		
+		return selectedId;
 	}
 
 	private void initConfigBottomTextBtn() {
@@ -248,7 +301,14 @@ public class CreateMemeActivity extends Activity {
 			bottomTextEdit.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					
+					final TextView selectBottomTextView = getSelectedBottomTextView();
+					if (selectBottomTextView != null) {
+						final String newBottomText = bottomTextEdit.getText().toString();
+						
+						selectBottomTextView.setText(newBottomText);
+						
+//						getSelectedMeme().setBottomText(newBottomText);
+					}
 				}
 
 				@Override
@@ -266,23 +326,9 @@ public class CreateMemeActivity extends Activity {
 			
 			getBottomTextLinearLayout().addView(bottomTextEdit, 0);
 			bottomTextEdit.setVisibility(View.GONE);
+			bottomTextEdit.setText(getSelectedMeme().getBottomText());
 
-			bottomSeekBar = new SeekBar(this);
-			bottomSeekBar.setLayoutParams(new TableLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT, 
-				1f
-			));
 			
-			getBottomTextLinearLayout().addView(bottomSeekBar, 0);
-			
-			bottomSeekBar.setVisibility(View.GONE);
-			
-			bottomSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize)); 
-			
-			bottomSeekBar.setProgress((int) getMemeViewBottomTextView().getTextSize());
-
-			createSeekBarChangeListener(bottomSeekBar, getMemeViewBottomTextView());
 		}
 	}
 
@@ -291,13 +337,21 @@ public class CreateMemeActivity extends Activity {
 			topTextEdit = new EditText(this);
 			topTextEdit.addTextChangedListener(new TextWatcher() {
 				@Override
-				public void onTextChanged(CharSequence s, int start,
-						int before, int count) {
-					final ShallowMeme meme = getMemePagerAdapter().getMemeAt(memePager.getCurrentItem()).getMeme();
-					meme.setTopText(topTextEdit.getText().toString());
-					
-					getMemePagerAdapter().notifyDataSetChanged();
-				}
+				public void onTextChanged(
+					final CharSequence s, 
+					final int start,
+					final int before, 
+					final int count) 
+				{
+					final TextView selectedTopTextView = getSelectedTopTextView();
+					if (selectedTopTextView != null) {
+						final String newTopText = topTextEdit.getText().toString();
+						
+						selectedTopTextView.setText(newTopText);
+						
+//						getSelectedMeme().setTopText(newTopText);
+					}
+				} 
 
 				@Override
 				public void beforeTextChanged(CharSequence s, int start,
@@ -305,33 +359,25 @@ public class CreateMemeActivity extends Activity {
 				}
 
 				@Override
-				public void afterTextChanged(Editable s) {
-				}
+				public void afterTextChanged(Editable s) { /* blank */ }
 			});
 
 			topTextEdit.setLayoutParams(new TableLayout.LayoutParams(
 					ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+			
 			getTopTextLinearLayout().addView(topTextEdit, 0);
 			topTextEdit.setVisibility(View.GONE);
+			topTextEdit.setText(getSelectedMeme().getTopText());
 
-			topSeekBar = new SeekBar(this);
-			topSeekBar.setLayoutParams(new TableLayout.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT, 1f));
-			getTopTextLinearLayout().addView(topSeekBar, 0);
-			topSeekBar.setVisibility(View.GONE);
-			topSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
-			topSeekBar.setProgress((int) getMemeViewBottomTextView()
-					.getTextSize());
-			createSeekBarChangeListener(topSeekBar, getMemeViewTopTextView());
+			
 
 		}
 	}
 
 	private void createSeekBarChangeListener(
 			final SeekBar seekBar,
-			final OutlineTextView textView) 
+			final TextView textView) 
 	{
 		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
@@ -350,7 +396,16 @@ public class CreateMemeActivity extends Activity {
 					final int progress,
 					final boolean fromUser) 
 			{	
-				textView.setTextSize(progress);
+				if (textView != null) {
+					if (textView == getSelectedTopTextView()) {
+						getSelectedMeme().setTopTextFontSize(progress);
+						
+					} else {
+						getSelectedMeme().setBottomTextFontSize(progress);
+					}
+					
+					textView.setTextSize(progress);
+				}
 			}
 		});
 	}
@@ -375,7 +430,6 @@ public class CreateMemeActivity extends Activity {
 	protected void handleBottomTextConfigBtnClick(View v) {
 		handleConfigBtnClick(
 			v, 
-			getMemeViewBottomTextView(),
 			getBottomTextBtn(), 
 			bottomTextEdit, 
 			isEditingBottomText,
@@ -390,8 +444,13 @@ public class CreateMemeActivity extends Activity {
 
 	protected void handleTopTextConfigBtnClick(View v) {
 		handleConfigBtnClick(
-				v, getMemeViewTopTextView(), getTopTextBtn(),
-				topTextEdit, isEditingTopText, isTopTextSizing, topSeekBar);
+			v, 
+			getTopTextBtn(),
+			topTextEdit, 
+			isEditingTopText, 
+			isTopTextSizing, 
+			topSeekBar
+		);
 	}
 
 	private LinearLayout getTopTextLinearLayout() {
@@ -404,7 +463,6 @@ public class CreateMemeActivity extends Activity {
 
 	private void handleConfigBtnClick(
 			final View btnClicked,
-			final TextView textViewToSet, 
 			final Button textEditBtn,
 			final EditText textEdit, 
 			final AtomicBoolean isEditing,
@@ -414,9 +472,7 @@ public class CreateMemeActivity extends Activity {
 		// if editing --> stop editing
 		if (isEditing.get()) {
 			final String newText = textEdit.getText().toString();
-			// set new text in the meme view
-			textViewToSet.setText(newText);
-
+		
 			// change back to the 'config' icon
 			setBtnToConfigImg(btnClicked);
 
@@ -530,12 +586,18 @@ public class CreateMemeActivity extends Activity {
 	}
 
 	private void setFieldsInMemeView() {
-		final CreateMemePagerAdapter pagerAdapter = new CreateMemePagerAdapter();
-		pagerAdapter.setMemes(createSampleMemeViewDataList());
+//		final CreateMemePagerAdapter pagerAdapter = new CreateMemePagerAdapter();
+//		pagerAdapter.setMemes(createSampleMemeViewDataList());
+		
+		final MemePagerFragmentAdapter pagerAdapter 
+			= new MemePagerFragmentAdapter(getSupportFragmentManager());
+		
+		sampledList = createSampleMemeViewDataList();
+		pagerAdapter.setMemes(sampledList);
 		
 		memePager.setAdapter(pagerAdapter);
 		
-		pagerAdapter.loadIntoView(memePager);
+//		pagerAdapter.loadIntoView(memePager);
 		
 		memePager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -551,7 +613,7 @@ public class CreateMemeActivity extends Activity {
 			@Override
 			public void onPageScrollStateChanged(int state) {
 				if (state == ViewPager.SCROLL_STATE_IDLE) {
-					loadCurrentlySelectedPage();
+//					loadCurrentlySelectedPage();
 				}
 			}
 		});
@@ -559,23 +621,25 @@ public class CreateMemeActivity extends Activity {
 	
 	private void loadCurrentlySelectedPage() {
 		final int currentPageIndex = memePager.getCurrentItem();
-		final CreateMemePagerAdapter createMemePagerAdapter = getMemePagerAdapter();
+		final MemePagerFragmentAdapter createMemePagerAdapter = getMemePagerAdapter();
 		final ShallowMeme selectedMeme = createMemePagerAdapter.getMemeAt(currentPageIndex).getMeme();
 		
 		topSeekBar.setProgress(selectedMeme.getTopTextFontSize());
 		bottomSeekBar.setProgress(selectedMeme.getBottomTextFontSize());
 		
-		getTopTextView().setText(selectedMeme.getTopText());
-		getBottomTextView().setText(selectedMeme.getBottomText());
+//		getSelectedMeme().setTopText(selectedMeme.getTopText()); 
+//		getSelectedMeme().setBottomText(selectedMeme.getBottomText());
+		
+//		getTopMemeTextFragment().setText(selectedMeme.getTopText());
+//		getBottomMemeTextFragment().setText(selectedMeme.getBottomText());
 		
 
 	}
 
-	private CreateMemePagerAdapter getMemePagerAdapter() {
-		return (CreateMemePagerAdapter)memePager.getAdapter();
+	private MemePagerFragmentAdapter getMemePagerAdapter() {
+		return (MemePagerFragmentAdapter)memePager.getAdapter();
 	}
 	
-
 
 	private List<MemeViewData> createSampleMemeViewDataList() {
 		final List<MemeViewData> shMemes 
@@ -585,6 +649,9 @@ public class CreateMemeActivity extends Activity {
 		
 		final MemeViewData editableMeme = new MemeViewData();
 		final ShallowMeme meme = new ShallowMeme();
+//		meme.setTopText("<usertop>");
+//		meme.setBottomText("<userbottom>");
+		
 		editableMeme.setMeme(meme);
 		editableMeme.setBackground(bgBm);
 		
@@ -609,30 +676,40 @@ public class CreateMemeActivity extends Activity {
 		return true;
 	}
 	
-	private View getCurrentPage() {
-		final int currentPageIndex = memePager.getCurrentItem();
-		final View currentPage = memePager.getChildAt(currentPageIndex);
-		return currentPage; 
+//	private MemeViewFragment getCurrentPage() {
+//		final int currentPageIndex = memePager.getCurrentItem();
+//		
+//		return (MemeViewFragment) getMemePagerAdapter().getItem(currentPageIndex);
+//	}
+	
+	private ShallowMeme getSelectedMeme() {
+		final int current = memePager.getCurrentItem();
+		
+		ShallowMeme currentMeme = getMemePagerAdapter().getMemeAt(current).getMeme();
+		
+//		if (memeViewData != null) {
+//			if (current == 0) {
+//				currentMeme = memeViewData.getMeme();
+//				
+//			} else if (current > 0 && current < memeViewData.getSampleMemes().size() + 1) {
+//				currentMeme = memeViewData.getSampleMemes().get(current - 1);
+//			}
+//			
+//		}
+		
+		return currentMeme;
 	}
 	
-	private View getPageAt(final int pos) {
-		return memePager.getChildAt(pos);
-	}
+//	private View getPageAt(final int pos) {
+//		return memePager.getChildAt(pos);
+//	}
 	
-	private OutlineTextView getMemeViewBottomTextView() {
-		return (OutlineTextView)getCurrentPage().findViewById(R.id.bottom_text_textview);
-	}
-
-	private OutlineTextView getMemeViewTopTextView() {
-		return (OutlineTextView)getCurrentPage().findViewById(R.id.top_text_textview);
-	}
-	
-	private TextView getTopTextView() {
-		return (TextView)getCurrentPage().findViewById(R.id.top_text_textview);
-	}
-	
-	private TextView getBottomTextView() {
-		return (TextView)getCurrentPage().findViewById(R.id.bottom_text_textview);
-	}
+//	private MemeTextFragment getBottomMemeTextFragment() {
+//		return (MemeTextFragment)getSupportFragmentManager().findFragmentByTag("toptextfrag");
+//	}
+//
+//	private MemeTextFragment getTopMemeTextFragment() {
+//		return (MemeTextFragment)getSupportFragmentManager().findFragmentByTag("bottomtextfrag");
+//	}
 	
 }

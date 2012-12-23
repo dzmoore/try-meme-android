@@ -45,14 +45,14 @@ public class MemeServerClient {
 		webClient = new WebClient();
 	}
 
-	public MemeViewData createMemeViewData(final int memeId) {
-		final MemeViewData dat = new MemeViewData();
-		dat.setBackground(getBackground(memeId));
-		
-		dat.setMeme(getMeme(memeId));
-
-		return dat;
-	}
+//	public MemeViewData createMemeViewData(final int memeId) {
+//		final MemeViewData dat = new MemeViewData();
+//		dat.setBackground(getBackground(memeId));
+//		
+//		dat.setMeme(getMeme(memeId));
+//
+//		return dat;
+//	}
 	
 	public ShallowMeme getMeme(final int memeId) {
 		final String result = 
