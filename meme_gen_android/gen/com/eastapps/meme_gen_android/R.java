@@ -25,7 +25,7 @@ public final class R {
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
         public static final int bottom_text_linear=0x7f090007;
-        public static final int bottom_text_textview=0x7f09000f;
+        public static final int bottom_text_view=0x7f09000f;
         public static final int config_bottom_text_btn=0x7f090009;
         public static final int config_top_text_btn=0x7f090006;
         public static final int current_font_size_text_view=0x7f090011;
@@ -42,7 +42,7 @@ public final class R {
         public static final int share_save_linear=0x7f090001;
         public static final int text_size_dialog_label=0x7f090010;
         public static final int top_text_linear=0x7f090004;
-        public static final int top_text_textview=0x7f09000e;
+        public static final int top_text_view=0x7f09000e;
     }
     public static final class integer {
         public static final int initialFontSize=0x7f060003;

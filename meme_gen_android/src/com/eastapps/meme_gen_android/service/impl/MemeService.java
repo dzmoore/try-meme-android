@@ -12,6 +12,7 @@ import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
+import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 
 public class MemeService implements IMemeService {
@@ -58,6 +59,7 @@ public class MemeService implements IMemeService {
 	@Override
 	public MemeViewData createMemeViewData(int memeId) {
 		final MemeViewData dat = new MemeViewData();
+		
 		dat.setBackground(client.getBackground(memeId));
 		
 		dat.setMeme(getMeme(memeId));

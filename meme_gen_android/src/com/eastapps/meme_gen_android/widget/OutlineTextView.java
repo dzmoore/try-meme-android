@@ -6,10 +6,13 @@ import com.eastapps.util.Conca;
 
 import android.R;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -136,13 +139,21 @@ public class OutlineTextView extends TextView {
 		textPaintOutline.setStrokeWidth(borderSize);
 	}
 	
-	public void setText(String text) {
-		super.setText(text);
-		text = text.toString();
+	@Override
+	public void setText(CharSequence text, BufferType type) {
+		this.text = text.toString();
+		
+		super.setText(text, type);
+		
 		invalidate();
 		requestLayout();
 	}
-
+	
+	@Override
+	public CharSequence getText() {
+		return this.text;
+	}
+	
 	public void setTextSize(float size) {
 		super.setTextSize(size);
 		
@@ -189,9 +200,9 @@ public class OutlineTextView extends TextView {
 	@SuppressLint({ "DrawAllocation", "DrawAllocation" })
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Layout layout = new StaticLayout(getText(), textPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
+		Layout layout = new StaticLayout(this.text, textPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
 		layout.draw(canvas);
-		layout = new StaticLayout(getText(), textPaint, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
+		layout = new StaticLayout(this.text, textPaint, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);
 		layout.draw(canvas);
 	}
 
