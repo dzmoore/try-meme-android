@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
+import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.ResizableImageView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -20,7 +21,7 @@ public class MemeViewFragment extends Fragment {
 	
 	private MemeViewData meme;
 	private View inflatedMemeView;
-	private TextView topTextView, bottomTextView;
+	private OutlineTextView topTextView, bottomTextView;
 
 	public MemeViewFragment() {
 		this(new MemeViewData());
@@ -36,39 +37,33 @@ public class MemeViewFragment extends Fragment {
 		return inflatedMemeView;
 	}
 	
-	public TextView getTopTextView() {
-		return topTextView;
-	}
-	
-	public TextView getBottomTextView() {
-		return bottomTextView;
-	}
-	
 	@Override
 	public View onCreateView(
 		final LayoutInflater inflater, 
 		final ViewGroup container,
 		final Bundle savedInstanceState) 
 	{
-		if (inflatedMemeView == null) {
+//		if (inflatedMemeView == null) {
 			try {
 				inflatedMemeView = inflater.inflate(R.layout.meme_view_layout, container, false);
 				
 				ResizableImageView bgView = (ResizableImageView) inflatedMemeView.findViewById(R.id.image_view);
 				bgView.setImageBitmap(meme.getBackground());
 				
-				topTextView = (TextView)inflatedMemeView.findViewById(R.id.top_text_view);
+				topTextView = (OutlineTextView)inflatedMemeView.findViewById(R.id.top_text_view);
 				topTextView.setTag(TagMgr.getTextViewTag(meme.getId(), true));
 				topTextView.setText(meme.getMeme().getTopText());
+				topTextView.setTextSize(meme.getMeme().getTopTextFontSize());
 				
-				bottomTextView = (TextView)inflatedMemeView.findViewById(R.id.bottom_text_view);
+				bottomTextView = (OutlineTextView)inflatedMemeView.findViewById(R.id.bottom_text_view);
 				bottomTextView.setTag(TagMgr.getTextViewTag(meme.getId(), false));
 				bottomTextView.setText(meme.getMeme().getBottomText());
+				topTextView.setTextSize(meme.getMeme().getBottomTextFontSize());
 				
 			} catch (Exception e) {
 				Log.e(TAG, "err", e);
 			}
-		}
+//		}
 		
 		return inflatedMemeView;
 	}

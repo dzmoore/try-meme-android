@@ -242,12 +242,12 @@ public class CreateMemeActivity extends FragmentActivity {
 		return sm;
 	}
 
-	private TextView getSelectedBottomTextView() {
-		return (TextView)memePager.findViewWithTag(TagMgr.getTextViewTag(getSelectedMemeViewId(), false));
+	private OutlineTextView getSelectedBottomTextView() {
+		return (OutlineTextView)memePager.findViewWithTag(TagMgr.getTextViewTag(getSelectedMemeViewId(), false));
 	}
 
-	private TextView getSelectedTopTextView() {
-		return (TextView)memePager.findViewWithTag(TagMgr.getTextViewTag(getSelectedMemeViewId(), true));
+	private OutlineTextView getSelectedTopTextView() {
+		return (OutlineTextView)memePager.findViewWithTag(TagMgr.getTextViewTag(getSelectedMemeViewId(), true));
 	}
 
 	private int getSelectedMemeViewId() {
@@ -377,7 +377,7 @@ public class CreateMemeActivity extends FragmentActivity {
 
 	private void createSeekBarChangeListener(
 			final SeekBar seekBar,
-			final TextView textView) 
+			final OutlineTextView textView) 
 	{
 		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
@@ -397,12 +397,12 @@ public class CreateMemeActivity extends FragmentActivity {
 					final boolean fromUser) 
 			{	
 				if (textView != null) {
-					if (textView == getSelectedTopTextView()) {
-						getSelectedMeme().setTopTextFontSize(progress);
-						
-					} else {
-						getSelectedMeme().setBottomTextFontSize(progress);
-					}
+//					if (textView == getSelectedTopTextView()) {
+//						getSelectedTopTextView().setTextSize(progress);
+//						
+//					} else {
+//						getSelectedBottomTextView().setTextSize(progress);
+//					}
 					
 					textView.setTextSize(progress);
 				}

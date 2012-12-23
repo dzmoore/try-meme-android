@@ -34,6 +34,7 @@ public class OutlineTextView extends TextView {
 	private boolean includePad;
 	private boolean shouldOverrideShadowRadiusAttr;
 	private int overrideShadowRadius;
+	private float textSize;
 	
 	public OutlineTextView(Context context) {
 		super(context);
@@ -157,10 +158,18 @@ public class OutlineTextView extends TextView {
 	public void setTextSize(float size) {
 		super.setTextSize(size);
 		
+		this.textSize = size;
+		
 		invalidate();
 		requestLayout();
 		initPaint();
 	}
+	
+	@Override
+	public float getTextSize() {
+		return this.textSize;
+	}
+	
 
 	@Override
 	public void setTextColor(int color) {
