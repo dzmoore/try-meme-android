@@ -165,11 +165,13 @@ public class CreateMemeActivity extends FragmentActivity {
 		topSeekBar.setVisibility(View.GONE);
 		topSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize));
 		topSeekBar.setProgress((int) getSelectedMeme().getTopTextFontSize());
-		createSeekBarChangeListener(topSeekBar, getSelectedTopTextView());
+		
+		createSeekBarChangeListener(true);
 	}
 
 	private void initBottomSeekbar() {
 		bottomSeekBar = new SeekBar(this);
+		
 		bottomSeekBar.setLayoutParams(new TableLayout.LayoutParams(
 			ViewGroup.LayoutParams.MATCH_PARENT,
 			ViewGroup.LayoutParams.MATCH_PARENT, 
@@ -179,12 +181,10 @@ public class CreateMemeActivity extends FragmentActivity {
 		getBottomTextLinearLayout().addView(bottomSeekBar, 0);
 		
 		bottomSeekBar.setVisibility(View.GONE);
-		
 		bottomSeekBar.setMax(getResources().getInteger(R.integer.maxFontSize)); 
-		
 		bottomSeekBar.setProgress((int) getSelectedMeme().getBottomTextFontSize());
 
-		createSeekBarChangeListener(bottomSeekBar, getSelectedBottomTextView());
+		createSeekBarChangeListener(false);
 	}
 
 	private void initSaveBtn() {
@@ -307,7 +307,7 @@ public class CreateMemeActivity extends FragmentActivity {
 						
 						selectBottomTextView.setText(newBottomText);
 						
-//						getSelectedMeme().setBottomText(newBottomText);
+						getSelectedMeme().setBottomText(newBottomText);
 					}
 				}
 
@@ -349,7 +349,7 @@ public class CreateMemeActivity extends FragmentActivity {
 						
 						selectedTopTextView.setText(newTopText);
 						
-//						getSelectedMeme().setTopText(newTopText);
+						getSelectedMeme().setTopText(newTopText);
 					}
 				} 
 
@@ -375,11 +375,8 @@ public class CreateMemeActivity extends FragmentActivity {
 		}
 	}
 
-	private void createSeekBarChangeListener(
-			final SeekBar seekBar,
-			final OutlineTextView textView) 
-	{
-		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+	private void createSeekBarChangeListener(final boolean isTop) {
+		final SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				
@@ -396,18 +393,23 @@ public class CreateMemeActivity extends FragmentActivity {
 					final int progress,
 					final boolean fromUser) 
 			{	
-				if (textView != null) {
-//					if (textView == getSelectedTopTextView()) {
-//						getSelectedTopTextView().setTextSize(progress);
-//						
-//					} else {
-//						getSelectedBottomTextView().setTextSize(progress);
-//					}
-					
-					textView.setTextSize(progress);
+				if (isTop) {
+					getSelectedTopTextView().setTextSize(progress);
+					getSelectedMeme().setTopTextFontSize(progress);
+				
+				} else {
+					getSelectedBottomTextView().setTextSize(progress);
+					getSelectedMeme().setBottomTextFontSize(progress);
 				}
 			}
-		});
+		};
+		
+		if (isTop) {
+			topSeekBar.setOnSeekBarChangeListener(listener);
+		
+		} else {
+			bottomSeekBar.setOnSeekBarChangeListener(listener);
+		}
 	}
 
 	protected void handleBottomTextBtnClick(View v) {
@@ -613,27 +615,20 @@ public class CreateMemeActivity extends FragmentActivity {
 			@Override
 			public void onPageScrollStateChanged(int state) {
 				if (state == ViewPager.SCROLL_STATE_IDLE) {
-//					loadCurrentlySelectedPage();
+					loadCurrentlySelectedPage();
 				}
 			}
 		});
 	}
 	
 	private void loadCurrentlySelectedPage() {
-		final int currentPageIndex = memePager.getCurrentItem();
-		final MemePagerFragmentAdapter createMemePagerAdapter = getMemePagerAdapter();
-		final ShallowMeme selectedMeme = createMemePagerAdapter.getMemeAt(currentPageIndex).getMeme();
+		final ShallowMeme selectedMeme = getSelectedMeme();
 		
 		topSeekBar.setProgress(selectedMeme.getTopTextFontSize());
 		bottomSeekBar.setProgress(selectedMeme.getBottomTextFontSize());
 		
-//		getSelectedMeme().setTopText(selectedMeme.getTopText()); 
-//		getSelectedMeme().setBottomText(selectedMeme.getBottomText());
-		
-//		getTopMemeTextFragment().setText(selectedMeme.getTopText());
-//		getBottomMemeTextFragment().setText(selectedMeme.getBottomText());
-		
-
+		topTextEdit.setText(selectedMeme.getTopText());
+		bottomTextEdit.setText(selectedMeme.getBottomText());
 	}
 
 	private MemePagerFragmentAdapter getMemePagerAdapter() {
