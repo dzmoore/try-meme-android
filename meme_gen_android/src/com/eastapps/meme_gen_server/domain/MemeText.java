@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_server.domain;
 
 // Generated Nov 10, 2012 3:21:20 PM by Hibernate Tools 3.4.0.CR1
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 

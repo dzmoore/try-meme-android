@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_android.util;
 
 import java.util.Collection;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_server.domain.MemeText;
 
 public class Utils {

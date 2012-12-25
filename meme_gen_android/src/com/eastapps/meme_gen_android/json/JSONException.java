@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.json;
 
+import com.eastapps.meme_gen_android.R;
+
 /**
  * The JSONException is thrown by the JSON.org classes when things are amiss.
  * 

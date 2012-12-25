@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_android.service;
 
 import java.util.List;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 

@@ -22,6 +22,7 @@ import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.util.Util;
 
 @Component
@@ -31,21 +32,25 @@ public class MemeService {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	private String memeImagesRootDir;
 	
-	
+	@Autowired
+	private String memeThumbImagesRootDir;
+
+
 	public MemeService() {
 		super();
 	}
-	
-	
-	public MemeService(final SessionFactory sessionFactory, final String memeImagesRootDir) {
+
+
+	public MemeService(final SessionFactory sessionFactory, final String memeImagesRootDir, final String memeThumbImagesRootDir) {
 		super();
 
 		this.sessionFactory = sessionFactory;
 		this.memeImagesRootDir = memeImagesRootDir;
+		this.memeThumbImagesRootDir = memeThumbImagesRootDir;
 	}
 
 	public int storeMeme(final ShallowMeme shallowMeme) {
@@ -76,7 +81,7 @@ public class MemeService {
 			sesh.beginTransaction();
 			topText.setId(Util.getId(sesh.save(topText)));
 			Util.commit(sesh);
-			
+
 			// save bottom text
 			final MemeText bottomText = new MemeText(
 				meme,
@@ -97,7 +102,7 @@ public class MemeService {
 			} catch (Exception e2) { }
 
 			logger.error("error occurred while attempting to store meme", e);
-			
+
 		} finally {
 			try {
 				sesh.close();
@@ -106,6 +111,7 @@ public class MemeService {
 
 		return result;
 	}
+
 
 	public void addMemeAdmin(		
 		final String backgroundFileName,
@@ -215,7 +221,7 @@ public class MemeService {
 		}
 
 		Util.commit(session);
-		
+
 		session.beginTransaction();
 		final MemeText txtTop = new MemeText();
 		txtTop.setText(sample1TopText);
@@ -242,10 +248,10 @@ public class MemeService {
 		Util.commit(session);	
 
 	}
-	
+
 	public byte[] getMemeBackground(final int memeId) throws IOException {
 		final Session session = sessionFactory.openSession();
-	
+
 		byte[] resultBytes = new byte[0];
 		try {
 			session.beginTransaction();
@@ -261,7 +267,7 @@ public class MemeService {
 
 				if (obj instanceof Meme) {
 					bg = ((Meme)obj).getMemeBackground();
-					
+
 					logger.debug(StringUtils.join(new Object[]{"bg=[", bg, "]"}));
 				}
 			}
@@ -269,9 +275,9 @@ public class MemeService {
 
 			//	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
 			final String imgPath = StringUtils.join(new Object[]{memeImagesRootDir, File.separator, bg.getPath()});
-			
+
 			logger.debug(StringUtils.join(new Object[] {"imgPath=[", imgPath, "]"}));
-			
+
 			final File img = new File(imgPath);
 			resultBytes = Util.getBytesFromFile(img);
 
@@ -286,27 +292,27 @@ public class MemeService {
 
 		return resultBytes;
 	}
-	
+
 	public ShallowMeme getShallowMeme(final int memeId) {
 		final Session session = sessionFactory.openSession();
-		
+
 		ShallowMeme meme = new ShallowMeme();
 		try {
 			meme = new ShallowMeme(doGetMeme(memeId, session));
-			
+
 		} catch (Exception e) {
 			logger.error("err", e);
 			session.clear();
-			
+
 		} finally {
 			try {
-    			session.close();
+				session.close();
 			} catch (Exception e) { /* */ }
 		}
-		
+
 		return meme;
 	}
-	
+
 	public Meme getMeme(final int memeId) {
 		final Session session = sessionFactory.openSession();
 
@@ -336,64 +342,174 @@ public class MemeService {
 
 		Meme meme = new Meme(); 
 		try {
-    		if (result != null && result.size() > 0) {
-    			final Object obj = result.get(0);
-    
-    			if (obj instanceof Meme) {
-    				meme = (Meme)obj;
-    			}
-    		}
+			if (result != null && result.size() > 0) {
+				final Object obj = result.get(0);
+
+				if (obj instanceof Meme) {
+					meme = (Meme)obj;
+				}
+			}
 		} catch (Exception e) {
 			logger.error("err", e);
 		}
-		
+
 		return meme;
 	}
-	
+
 	public List<ShallowMeme> getSampleMemes(final int memeTypeId) {
 		final Session sesh = sessionFactory.openSession();
-		
+
 		List<ShallowMeme> samples = new ArrayList<ShallowMeme>(0);
 		try {
 			sesh.beginTransaction();
 			samples = doGetSampleMemes(memeTypeId, sesh);
-			
+
 		} catch (Exception e) {
 			logger.error("error occurred", e);
-			
+
 		} finally {
 			try {
 				sesh.close();
 			} catch (Exception e) {}
 		}
-		
+
 		return samples;
 	}
-	
+
 	private List<ShallowMeme> doGetSampleMemes(final int memeTypeId, final Session session) {
 		List<ShallowMeme> samples = new ArrayList<ShallowMeme>();
-		
+
 		final Query qry = session.createQuery("from Meme m where m.lvMemeType.id = :id and m.isSampleMeme = true");
 		qry.setInteger("id", memeTypeId);
-		
+
 		try {
 			final List<?> memes = qry.list();
-			
+
 			boolean typeMatches = false;
 			for (final Object ea : memes) {
 				if (typeMatches || ea instanceof Meme) {
 					samples.add(new ShallowMeme((Meme)ea));
-					
+
 					typeMatches = true;
 				}
 			}
-			
+
 		} catch (Exception e) {
 			logger.error("error occurred while getting sample memes", e);
 		}
-		
-		
+
+
 		return samples;
+	}
+
+	private static boolean memeTypeListContainsMemeType(final List<ShallowMemeType> typeList, LvMemeType lmt) {
+		boolean contains = false;
+
+		for (final ShallowMemeType eaType : typeList) {
+			if (eaType.getTypeId() == lmt.getId()) {
+				contains = true;
+				break;
+			}
+		}
+
+		return contains;
+	}
+
+	private static boolean doesNotContain(final List<ShallowMemeType> typeList, LvMemeType lmt) {
+		return !memeTypeListContainsMemeType(typeList, lmt);
+	}
+
+	public List<ShallowMemeType> getAllMemeTypes() {
+		final List<ShallowMemeType> types = new ArrayList<ShallowMemeType>();
+
+		final Session sesh = sessionFactory.openSession();
+		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true");
+
+		try {
+			final List<?> results = qry.list();
+
+			boolean typeMatch = false;
+			for (final Object ea : results) {
+				if (typeMatch || ea instanceof Meme) {
+					final LvMemeType eaLvType = ((Meme)ea).getLvMemeType();
+
+					if (doesNotContain(types, eaLvType)) {
+						types.add(new ShallowMemeType(eaLvType));
+					}
+
+					typeMatch = true;
+				}
+			}
+
+		} catch (Exception e) {
+			logger.error("error occurred while attempting to get all meme types", e);
+
+		} finally {
+			try {
+				sesh.close();
+
+			} catch (Exception e) { }
+		}
+
+		return types;
+	}
+
+	public byte[] getThumbForType(final int typeId) {
+
+		final Session session = sessionFactory.openSession();
+
+		byte[] resultBytes = new byte[0];
+		try {
+			session.beginTransaction();
+
+			final Query qry = session.createQuery(
+				StringUtils.join(new Object[] {
+    				"from Meme m ",
+    				"where ",
+    				"	m.isSampleMeme 			= true and ",
+    				"	m.lvMemeType.active 	= true and ",
+    				"	m.lvMemeType.id 		= :typeId"
+				}
+			));
+			
+			qry.setInteger("typeId", typeId);
+			
+			final List<?> results = qry.list();
+			
+			MemeBackground bg = null;
+			if (results != null && results.size() > 0) {
+				final Object obj = results.get(0);
+
+				if (obj instanceof Meme) {
+					bg = ((Meme)obj).getMemeBackground();
+					
+					if (logger.isDebugEnabled()) {
+    					logger.debug(StringUtils.join(new Object[]{"bg=[", bg, "]"}));
+					}
+				}
+			}
+
+			if (bg != null) {
+    			final String imgPath = StringUtils.join(new Object[]{memeThumbImagesRootDir, File.separator, bg.getPath()});
+
+    			if (logger.isDebugEnabled()) {
+        			logger.debug(StringUtils.join(new Object[] {"imgPath=[", imgPath, "]"}));
+    			}
+
+    			final File img = new File(imgPath);
+    			resultBytes = Util.getBytesFromFile(img);
+			}
+
+		} catch (Exception e) {
+			logger.error("error occurred while attempting to find bg img", e);
+
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		return resultBytes;
 	}
 
 }

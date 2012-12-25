@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.util;
 
+import com.eastapps.meme_gen_android.R;
+
 public class Constants {
 	public static final String EMPTY_STRING = "";
 	public static final String URL_SEPARATOR = "/";

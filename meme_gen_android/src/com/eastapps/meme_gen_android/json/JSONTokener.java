@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.json;
 
+import com.eastapps.meme_gen_android.R;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

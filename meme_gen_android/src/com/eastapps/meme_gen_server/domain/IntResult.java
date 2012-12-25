@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.Constants;
 
 public class IntResult {

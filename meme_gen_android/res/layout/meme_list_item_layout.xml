@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/list_item_heart_img_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:minWidth="165dp"
+        android:src="@drawable/icon_heart" />
+
+    <com.eastapps.meme_gen_android.widget.ResizableImageView
+        android:id="@+id/list_item_thumb_img_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2.5"
+        android:scaleType="fitStart"
+        android:src="@drawable/config_icon"
+        android:text="OutlineTextView" />
+
+    <TextView
+        android:id="@+id/list_item_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:minWidth="300dp"
+        android:text="The Most Interesting Man in the World" />
+
+</LinearLayout>

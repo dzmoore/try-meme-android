@@ -97,40 +97,56 @@ public class CreateMemeActivity extends FragmentActivity {
 		return isLoadComplete.get();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void loadBundle(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			return;
 		}
 		
 		memeViewData = new MemeViewData();
-		if (savedInstanceState.containsKey("memebg")) {
-			final Bitmap bg = (Bitmap)savedInstanceState.getParcelable("memebg");
+		
+		final String memeBgKey = getString(R.string.bundleconst_memebg);
+		if (savedInstanceState.containsKey(memeBgKey)) {
+			final Bitmap bg = (Bitmap)savedInstanceState.getParcelable(memeBgKey);
 			memeViewData.setBackground(bg);
 		}
 		
-		if (savedInstanceState.containsKey("samplememes")) {
-			@SuppressWarnings("unchecked")
-			final ArrayList<ShallowMeme> shMemes = (ArrayList<ShallowMeme>) savedInstanceState.getSerializable("samplememes");
+		String sampleMemesKey = getString(R.string.bundleconst_samplememes);
+		if (savedInstanceState.containsKey(sampleMemesKey)) {
+			final ArrayList<ShallowMeme> shMemes = (ArrayList<ShallowMeme>) savedInstanceState.getSerializable(sampleMemesKey);
 			
 			memeViewData.setSampleMemes(shMemes);
 		}
 		
-		if (savedInstanceState.containsKey("loaded")) {
-			isLoadComplete.set(savedInstanceState.getBoolean("loaded"));
+		final String loadedKey = getString(R.string.bundleconst_loaded);
+		if (savedInstanceState.containsKey(loadedKey)) {
+			isLoadComplete.set(savedInstanceState.getBoolean(loadedKey));
 		}
 		
-		if (savedInstanceState.containsKey("pageradapter")) {
-			memePager.setAdapter((PagerAdapter) savedInstanceState.getParcelable("pageradapter"));
+		final String pagerAdapterKey = getString(R.string.bundleconst_pageradapter);
+		if (savedInstanceState.containsKey(pagerAdapterKey)) {
+			memePager.setAdapter((PagerAdapter) savedInstanceState.getParcelable(pagerAdapterKey));
 		}
+		
+		final String sampledListKey = getString(R.string.bundleconst_sampledlist);
+		if (savedInstanceState.containsKey(sampledListKey)) {
+			this.sampledList = (ArrayList<MemeViewData>) savedInstanceState.getSerializable(sampledListKey);
+			
+			final MemePagerFragmentAdapter pagerAdapter = new MemePagerFragmentAdapter(getSupportFragmentManager());
+			memePager.setAdapter(pagerAdapter);
+			
+			pagerAdapter.setMemes(sampledList);
+		}
+		
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		if (memeViewData != null) {
-			outState.putParcelable("memebg", memeViewData.getBackground());
-			outState.putSerializable("samplememes", new ArrayList<ShallowMeme>(memeViewData.getSampleMemes()));
-			outState.putBoolean("loaded", isLoadComplete.get());
-			outState.putParcelable("pageradapter", getMemePagerAdapter());
+			outState.putParcelable(getString(R.string.bundleconst_memebg), memeViewData.getBackground());
+			outState.putSerializable(getString(R.string.bundleconst_samplememes), new ArrayList<ShallowMeme>(memeViewData.getSampleMemes()));
+			outState.putBoolean(getString(R.string.bundleconst_loaded), isLoadComplete.get());
+			outState.putSerializable(getString(R.string.bundleconst_sampledlist), new ArrayList<MemeViewData>(sampledList));
 		}
 	}
 	
@@ -205,7 +221,8 @@ public class CreateMemeActivity extends FragmentActivity {
 	}
 
 	private void doHandleSaveBtnClick(final View v) {
-		final ShallowMeme shallowMeme = createShallowMemeFromUi();
+		final ShallowMeme shallowMeme = getSelectedMeme();
+		
 		final int id = memeService.storeMeme(shallowMeme);
 		
 		final StringBuilder sb = new StringBuilder();
@@ -227,19 +244,6 @@ public class CreateMemeActivity extends FragmentActivity {
 				}
 			}
 		);
-	}
-
-	private ShallowMeme createShallowMemeFromUi() {
-		final ShallowMeme sm = memeViewData.getMeme();
-		
-		sm.setTopText(getSelectedTopTextView().getText().toString());
-				
-		sm.setBottomText(getSelectedBottomTextView().getText().toString());
-		
-		sm.setTopTextFontSize(topSeekBar.getProgress());
-		sm.setBottomTextFontSize(bottomSeekBar.getProgress());
-		
-		return sm;
 	}
 
 	private OutlineTextView getSelectedBottomTextView() {
@@ -588,9 +592,6 @@ public class CreateMemeActivity extends FragmentActivity {
 	}
 
 	private void setFieldsInMemeView() {
-//		final CreateMemePagerAdapter pagerAdapter = new CreateMemePagerAdapter();
-//		pagerAdapter.setMemes(createSampleMemeViewDataList());
-		
 		final MemePagerFragmentAdapter pagerAdapter 
 			= new MemePagerFragmentAdapter(getSupportFragmentManager());
 		
@@ -598,8 +599,6 @@ public class CreateMemeActivity extends FragmentActivity {
 		pagerAdapter.setMemes(sampledList);
 		
 		memePager.setAdapter(pagerAdapter);
-		
-//		pagerAdapter.loadIntoView(memePager);
 		
 		memePager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -644,8 +643,8 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		final MemeViewData editableMeme = new MemeViewData();
 		final ShallowMeme meme = new ShallowMeme();
-//		meme.setTopText("<usertop>");
-//		meme.setBottomText("<userbottom>");
+		meme.setTopTextFontSize(getResources().getInteger(R.integer.initialFontSize));
+		meme.setBottomTextFontSize(getResources().getInteger(R.integer.initialFontSize));
 		
 		editableMeme.setMeme(meme);
 		editableMeme.setBackground(bgBm);
@@ -671,40 +670,13 @@ public class CreateMemeActivity extends FragmentActivity {
 		return true;
 	}
 	
-//	private MemeViewFragment getCurrentPage() {
-//		final int currentPageIndex = memePager.getCurrentItem();
-//		
-//		return (MemeViewFragment) getMemePagerAdapter().getItem(currentPageIndex);
-//	}
 	
 	private ShallowMeme getSelectedMeme() {
 		final int current = memePager.getCurrentItem();
 		
-		ShallowMeme currentMeme = getMemePagerAdapter().getMemeAt(current).getMeme();
-		
-//		if (memeViewData != null) {
-//			if (current == 0) {
-//				currentMeme = memeViewData.getMeme();
-//				
-//			} else if (current > 0 && current < memeViewData.getSampleMemes().size() + 1) {
-//				currentMeme = memeViewData.getSampleMemes().get(current - 1);
-//			}
-//			
-//		}
+		final ShallowMeme currentMeme = getMemePagerAdapter().getMemeAt(current).getMeme();
 		
 		return currentMeme;
 	}
-	
-//	private View getPageAt(final int pos) {
-//		return memePager.getChildAt(pos);
-//	}
-	
-//	private MemeTextFragment getBottomMemeTextFragment() {
-//		return (MemeTextFragment)getSupportFragmentManager().findFragmentByTag("toptextfrag");
-//	}
-//
-//	private MemeTextFragment getTopMemeTextFragment() {
-//		return (MemeTextFragment)getSupportFragmentManager().findFragmentByTag("bottomtextfrag");
-//	}
 	
 }

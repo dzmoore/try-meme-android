@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.json;
 
+import com.eastapps.meme_gen_android.R;
+
 /**
  * The <code>JSONString</code> interface allows a <code>toJSONString()</code> 
  * method so that a class can change the behavior of 

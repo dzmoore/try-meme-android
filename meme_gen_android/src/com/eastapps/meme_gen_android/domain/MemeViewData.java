@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 
 public class MemeViewData 
-	implements Serializable, Identifiable {
+	implements Serializable, Identifiable, Parcelable {
 	private static final long serialVersionUID = 7334702044762722957L;
 	
 	private ShallowMeme meme;
@@ -58,4 +59,19 @@ public class MemeViewData
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeSerializable(meme);
+		dest.writeParcelable(background, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+		dest.writeInt(id);
+	}
+	
+	
+	
 }

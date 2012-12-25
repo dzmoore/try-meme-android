@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import com.eastapps.meme_gen_android.R;
 
 public class ResizableImageView extends ImageView {
 

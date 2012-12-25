@@ -14,12 +14,16 @@ import android.view.ViewGroup;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.widget.fragment.MemeViewFragment;
 
-public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter implements Parcelable {
+public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter { //implements Parcelable {
 	private List<MemeViewData> memes;
 	private List<MemeViewFragment> frags;
+	
+	private FragmentManager fragMgr;
 
 	public MemePagerFragmentAdapter(FragmentManager fragmentManager) {
 		super(fragmentManager);
+		
+		this.fragMgr = fragmentManager;
 		
 		frags = new ArrayList<MemeViewFragment>();
 	}
@@ -61,24 +65,6 @@ public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter implemen
 		return memes.get(position);
 	}
 	
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(memes.size());
-		
-		synchronized (memes) {
-			for (final MemeViewData ea : this.memes) {
-				dest.writeSerializable(ea.getMeme());
-				dest.writeParcelable(ea.getBackground(), 0);
-			}
-		}
-	}
-
-	@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
 	public Fragment getItem(int position) {
 		MemeViewFragment fragment = new MemeViewFragment();

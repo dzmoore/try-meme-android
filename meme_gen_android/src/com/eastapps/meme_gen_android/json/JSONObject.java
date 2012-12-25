@@ -44,6 +44,7 @@ import java.util.Set;
 
 import android.opengl.Visibility;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.annotation.JSONIgnore;
 
 /**

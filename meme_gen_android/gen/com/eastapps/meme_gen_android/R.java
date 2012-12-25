@@ -20,29 +20,30 @@ public final class R {
         public static final int ic_action_search=0x7f020002;
         public static final int ic_config_small=0x7f020003;
         public static final int ic_launcher=0x7f020004;
-        public static final int tmimitw=0x7f020005;
+        public static final int icon_heart=0x7f020005;
+        public static final int tmimitw=0x7f020006;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
         public static final int bottom_text_linear=0x7f090007;
-        public static final int bottom_text_view=0x7f09000f;
+        public static final int bottom_text_view=0x7f090012;
         public static final int config_bottom_text_btn=0x7f090009;
         public static final int config_top_text_btn=0x7f090006;
-        public static final int current_font_size_text_view=0x7f090011;
         public static final int edit_bottom_text_btn=0x7f090008;
         public static final int edit_top_text_btn=0x7f090005;
-        public static final int font_size_seek_bar=0x7f090012;
         public static final int image_relative_layout=0x7f09000a;
-        public static final int image_view=0x7f09000d;
+        public static final int image_view=0x7f090010;
+        public static final int list_item_heart_img_btn=0x7f09000c;
+        public static final int list_item_text_view=0x7f09000e;
+        public static final int list_item_thumb_img_view=0x7f09000d;
         public static final int meme_view_pager=0x7f09000b;
-        public static final int meme_view_rel_layout=0x7f09000c;
+        public static final int meme_view_rel_layout=0x7f09000f;
         public static final int menu_settings=0x7f090013;
         public static final int save_btn=0x7f090003;
         public static final int share_btn=0x7f090002;
         public static final int share_save_linear=0x7f090001;
-        public static final int text_size_dialog_label=0x7f090010;
         public static final int top_text_linear=0x7f090004;
-        public static final int top_text_view=0x7f09000e;
+        public static final int top_text_view=0x7f090011;
     }
     public static final class integer {
         public static final int initialFontSize=0x7f060003;
@@ -52,8 +53,8 @@ public final class R {
     }
     public static final class layout {
         public static final int create_meme_layout=0x7f030000;
-        public static final int meme_view_layout=0x7f030001;
-        public static final int text_size_dialog_layout=0x7f030002;
+        public static final int meme_list_item_layout=0x7f030001;
+        public static final int meme_view_layout=0x7f030002;
     }
     public static final class menu {
         public static final int activity_create_meme=0x7f080000;
@@ -61,6 +62,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
+        public static final int bundleconst_loaded=0x7f050015;
+        public static final int bundleconst_memebg=0x7f050013;
+        public static final int bundleconst_pageradapter=0x7f050016;
+        public static final int bundleconst_sampledlist=0x7f050017;
+        public static final int bundleconst_samplememes=0x7f050014;
         public static final int create_meme_top_row_height=0x7f050004;
         public static final int edit_bottom_text_string=0x7f050008;
         public static final int edit_top_text_string=0x7f050007;
