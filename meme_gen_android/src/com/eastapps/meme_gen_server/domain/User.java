@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 

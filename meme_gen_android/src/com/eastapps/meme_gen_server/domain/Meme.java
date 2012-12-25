@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.Constants;
 
 /**

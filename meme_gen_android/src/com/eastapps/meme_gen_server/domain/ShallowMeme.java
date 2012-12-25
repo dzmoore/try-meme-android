@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_server.domain;
 
 import java.io.Serializable;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 

@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.util;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.util.Conca;
 
 public class StringUtils {

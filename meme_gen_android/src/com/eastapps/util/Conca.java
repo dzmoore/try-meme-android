@@ -1,5 +1,7 @@
 package com.eastapps.util;
 
+import com.eastapps.meme_gen_android.R;
+
 public class Conca {
 	private static final String EMPTY = "";
 

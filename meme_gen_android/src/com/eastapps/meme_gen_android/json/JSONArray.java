@@ -24,6 +24,7 @@ package com.eastapps.meme_gen_android.json;
  SOFTWARE.
  */
 
+import com.eastapps.meme_gen_android.R;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;

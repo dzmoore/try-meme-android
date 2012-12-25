@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_server.domain;
 //
+import com.eastapps.meme_gen_android.R;
 import java.io.Serializable;
 //import java.util.Iterator;
 //

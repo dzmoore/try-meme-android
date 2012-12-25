@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
 
@@ -110,6 +111,22 @@ public class HomeController {
 		}
 		
 		return samples.toArray(new ShallowMeme[samples.size()]);
+	}
+	
+	
+	@RequestMapping(value = {"/meme_type_data/json"}, method = RequestMethod.GET)
+	@ResponseBody
+	public ShallowMemeType[] getAllMemeTypes() {
+		List<ShallowMemeType> types = Collections.emptyList();
+		
+		try {
+    		types = memeService.getAllMemeTypes();
+    		
+		} catch (Exception e) {
+			logger.error("error occurred while attempting to retrieve meme data", e);
+		}
+		
+		return types.toArray(new ShallowMemeType[types.size()]);
 	}
 
 

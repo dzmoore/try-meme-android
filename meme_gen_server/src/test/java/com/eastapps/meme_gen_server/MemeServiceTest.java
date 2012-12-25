@@ -1,6 +1,9 @@
 package com.eastapps.meme_gen_server;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -16,12 +19,14 @@ import org.springframework.core.io.Resource;
 
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.service.MemeService;
 
 public class MemeServiceTest {
 	private SessionFactory sessionFactory;
 	private String imgsRoot;
 	private MemeService memeSvc;
+	private String thumbImgsRoot;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,8 +35,9 @@ public class MemeServiceTest {
 
 		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
 		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
+		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
 		
-		memeSvc = new MemeService(sessionFactory, imgsRoot);
+		memeSvc = new MemeService(sessionFactory, imgsRoot, thumbImgsRoot);
 	}
 
 	@After
@@ -66,5 +72,30 @@ public class MemeServiceTest {
 		TestCase.assertTrue(meme.getId() == idToGet);
 		
 		sessionFactory.close();
+	}
+	
+	@Test
+	public void testGetMemeTypes() {
+		final List<ShallowMemeType> types = memeSvc.getAllMemeTypes();
+		
+		TestCase.assertNotNull(types);
+		TestCase.assertTrue(types.size() > 0);
+		
+		final Set<Integer> idSet = new HashSet<Integer>();
+		for (final ShallowMemeType eaType : types) {
+			TestCase.assertFalse(
+				"id " + eaType.getTypeId() + " already exists in id list", 
+				idSet.contains(eaType.getTypeId())
+			);
+			
+			idSet.add(eaType.getTypeId());
+		}
+	}
+	
+	@Test
+	public void testGetMemeTypeBackground() {
+		final byte[] thumbBytes = memeSvc.getThumbForType(1);
+		TestCase.assertNotNull(thumbBytes);
+		TestCase.assertTrue(thumbBytes.length > 0);
 	}
 }

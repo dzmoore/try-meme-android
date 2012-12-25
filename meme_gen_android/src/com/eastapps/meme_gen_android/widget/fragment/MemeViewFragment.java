@@ -81,7 +81,7 @@ public class MemeViewFragment extends Fragment {
 		}
 		
 		meme.setMeme((ShallowMeme) savedInstanceState.getSerializable("meme"));
-		meme.setBackground((Bitmap) savedInstanceState.getParcelable("memebg"));
+		meme.setBackground((Bitmap) savedInstanceState.getParcelable(getActivity().getString(R.string.bundleconst_memebg)));
 	}
 	
 	@Override
@@ -93,7 +93,7 @@ public class MemeViewFragment extends Fragment {
 		}
 		
 		outState.putSerializable("meme", meme.getMeme());
-		outState.putParcelable("memebg", meme.getBackground());
+		outState.putParcelable(getActivity().getString(R.string.bundleconst_memebg), meme.getBackground());
 	}
 	
 	

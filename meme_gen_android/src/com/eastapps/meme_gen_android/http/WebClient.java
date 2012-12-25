@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;

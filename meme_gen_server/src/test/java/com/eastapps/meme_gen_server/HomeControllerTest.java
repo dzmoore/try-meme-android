@@ -35,6 +35,7 @@ import com.eastapps.meme_gen_server.util.Util;
 public class HomeControllerTest {
 	private SessionFactory sessionFactory;
 	private String imgsRoot;
+	private String thumbImgsRoot;
 	private static final Logger logger = Logger.getLogger(HomeControllerTest.class);
 	private HomeController homeCtrllr;
 	
@@ -45,8 +46,9 @@ public class HomeControllerTest {
 
 		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
 		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
+		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
 		
-		homeCtrllr = new HomeController(new MemeService(sessionFactory, imgsRoot));
+		homeCtrllr = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot));
 	}
 
 	@After
@@ -86,7 +88,7 @@ public class HomeControllerTest {
 		m.getMemeTexts().add(new MemeText(m, bottomText, Constants.BOTTOM, 26));
 		m.setUser(user);
 		
-		final HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot));
+		final HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot));
 
 		final IntResult result = controller.storeMeme(new ShallowMeme(m));
 		Assert.assertNotNull(result);
@@ -176,7 +178,7 @@ public class HomeControllerTest {
 	public void testGetSamples() {
 		final int memeTypeId = 1;
 		
-		HomeController cntrller = new HomeController(new MemeService(sessionFactory, imgsRoot));
+		HomeController cntrller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot));
 		
 		ShallowMeme[] samples = cntrller.getSampleMemes(memeTypeId);
 		
