@@ -62,11 +62,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int bundleconst_loaded=0x7f050015;
-        public static final int bundleconst_memebg=0x7f050013;
-        public static final int bundleconst_pageradapter=0x7f050016;
-        public static final int bundleconst_sampledlist=0x7f050017;
-        public static final int bundleconst_samplememes=0x7f050014;
+        public static final int bundleconst_loaded=0x7f050016;
+        public static final int bundleconst_memebg=0x7f050014;
+        public static final int bundleconst_pageradapter=0x7f050017;
+        public static final int bundleconst_sampledlist=0x7f050018;
+        public static final int bundleconst_samplememes=0x7f050015;
         public static final int create_meme_top_row_height=0x7f050004;
         public static final int edit_bottom_text_string=0x7f050008;
         public static final int edit_top_text_string=0x7f050007;
@@ -84,6 +84,7 @@ public final class R {
         /**      <string name="webServiceAddress">http://192.168.1.45:8080/meme_gen_server/spring</string> 
          */
         public static final int webServiceMemeDataSuffix=0x7f05000e;
+        public static final int webServiceMemeType=0x7f050013;
         public static final int webServiceResource=0x7f05000a;
         public static final int webServiceSampleMemeDataPrefix=0x7f050012;
         public static final int webServiceStoreMemePrefix=0x7f050011;

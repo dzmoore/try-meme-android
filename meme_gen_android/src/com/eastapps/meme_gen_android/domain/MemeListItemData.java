@@ -6,20 +6,19 @@ import android.os.Parcelable;
 
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.TagMgr;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 
 public class MemeListItemData implements Identifiable, Parcelable{
 	private Bitmap thumb;
-	private String memeTypeDesc;
-	private int memeTypeId;
 	private int id;
+	private ShallowMemeType memeType;
 	
 	public MemeListItemData() {
 		super();
 		id = TagMgr.getNextMemeListItemId();
 		
 		thumb = null;
-		memeTypeDesc = Constants.EMPTY_STRING;
-		memeTypeId = Constants.INVALID;
+		memeType = new ShallowMemeType();
 	}
 
 	@Override
@@ -31,32 +30,30 @@ public class MemeListItemData implements Identifiable, Parcelable{
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(id);
 		dest.writeParcelable(thumb, PARCELABLE_WRITE_RETURN_VALUE);
-		dest.writeString(memeTypeDesc);
-		dest.writeInt(memeTypeId);
+		dest.writeSerializable(memeType);
 	}
 	
 	private static MemeListItemData createFromParcel(final Parcel src) {
 		final MemeListItemData mlid = new MemeListItemData();
 		mlid.id = src.readInt();
 		mlid.thumb = src.readParcelable(Bitmap.class.getClassLoader());
-		mlid.memeTypeDesc = src.readString();
-		mlid.memeTypeId = src.readInt();
+		mlid.memeType = (ShallowMemeType) src.readSerializable();
 		
 		return mlid;
 	}
 	
 	public static final Parcelable.Creator<MemeListItemData> CREATOR =
-			new Creator<MemeListItemData>() {
-				@Override
-				public MemeListItemData[] newArray(int size) {
-					return new MemeListItemData[size];
-				}
-				
-				@Override
-				public MemeListItemData createFromParcel(Parcel source) {
-					return MemeListItemData.createFromParcel(source);
-				}
-			};
+		new Creator<MemeListItemData>() {
+			@Override
+			public MemeListItemData[] newArray(int size) {
+				return new MemeListItemData[size];
+			}
+			
+			@Override
+			public MemeListItemData createFromParcel(Parcel source) {
+				return MemeListItemData.createFromParcel(source);
+			}
+		};
 
 	@Override
 	public int getId() {
@@ -71,20 +68,12 @@ public class MemeListItemData implements Identifiable, Parcelable{
 		this.thumb = thumb;
 	}
 
-	public String getMemeTypeDesc() {
-		return memeTypeDesc;
+	public ShallowMemeType getMemeType() {
+		return memeType;
 	}
 
-	public void setMemeTypeDesc(String memeTypeDesc) {
-		this.memeTypeDesc = memeTypeDesc;
+	public void setMemeType(ShallowMemeType memeType) {
+		this.memeType = memeType;
 	}
 
-	public int getMemeTypeId() {
-		return memeTypeId;
-	}
-
-	public void setMemeTypeId(int memeTypeId) {
-		this.memeTypeId = memeTypeId;
-	}
-	
 }

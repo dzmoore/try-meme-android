@@ -17,6 +17,7 @@ import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,6 +32,7 @@ public class MemeServerClient {
 	private String webSvcMemeDataSuffix;
 	private String webSvcStoreMemePrefix;
 	private String webSvcSampleMemeDataPrefix;
+	private String webSvcMemeTypePrefix;
 
 	public MemeServerClient(final Context context) {
 		super();
@@ -41,6 +43,7 @@ public class MemeServerClient {
 		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
 		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
 		webSvcSampleMemeDataPrefix = context.getString(R.string.webServiceSampleMemeDataPrefix);
+		webSvcMemeTypePrefix = context.getString(R.string.webServiceMemeType);
 
 		webClient = new WebClient();
 	}
@@ -135,5 +138,36 @@ public class MemeServerClient {
 		
 		return shMemeResult;
 	}
-
+	
+	public List<ShallowMemeType> getMemeTypes() {
+		final String result =
+			webClient.getJSONObject(Conca.t(
+				webSvcAddr,
+				Constants.URL_SEPARATOR,
+				webSvcMemeTypePrefix,
+				Constants.URL_SEPARATOR,
+				webSvcJsonSuffix
+		));
+				
+		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+		if (StringUtils.isNotBlank(result)) {
+			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
+			types = new Gson().fromJson(result, listType);
+		}
+		
+		return types;
+	}
+	
+	public Bitmap getBackgroundForType(final int typeId) {
+		return
+			webClient.getBitmap(Conca.t(
+				webSvcAddr, 
+				Constants.URL_SEPARATOR, 
+				webSvcMemeTypePrefix,
+				Constants.URL_SEPARATOR,
+				typeId,
+				Constants.URL_SEPARATOR,
+				webSvcBgrndSuffix
+			));
+	}
 }

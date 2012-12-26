@@ -10,4 +10,5 @@ public class Constants {
 	public static final int INVALID = -1;
 	public static final String TOP = "TOP";
 	public static final String BOTTOM = "BOTTOM";
+	public static final String EMPTY = "";
 }

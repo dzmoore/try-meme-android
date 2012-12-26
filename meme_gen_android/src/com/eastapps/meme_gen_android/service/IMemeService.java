@@ -3,6 +3,7 @@ package com.eastapps.meme_gen_android.service;
 import java.util.List;
 
 import com.eastapps.meme_gen_android.R;
+import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 
@@ -13,4 +14,6 @@ public interface IMemeService {
 	MemeViewData createMemeViewData(int memeId);
 
 	List<ShallowMeme> getSampleMemes(int typeId);
+
+	List<MemeListItemData> getAllMemeTypesListData();
 }
