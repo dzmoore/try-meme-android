@@ -129,5 +129,11 @@ public class HomeController {
 		return types.toArray(new ShallowMemeType[types.size()]);
 	}
 
+	
+	@RequestMapping(value = "/meme_type_data/{id}/background", method = RequestMethod.GET)
+	@ResponseBody
+	public byte[] getThumbForType(@PathVariable("id") final int typeId) throws IOException {
+		return memeService.getThumbForType(typeId);
+	}
 
 }

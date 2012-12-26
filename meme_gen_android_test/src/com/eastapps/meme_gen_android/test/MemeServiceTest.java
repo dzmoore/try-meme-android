@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_android.test;
 
 import java.util.List;
 
+import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -55,6 +56,15 @@ public class MemeServiceTest extends AndroidTestCase  {
 			assertTrue(eaSamp.getMemeTypeId() == id);
 			assertTrue(eaSamp.getId() > 0);
 		}
+	}
+	
+	public void testGetMemeTypes() {
+		final int id = 1;
+		final List<MemeListItemData> types = memeSvc.getAllMemeTypesListData();
+		assertNotNull(types);
+		assertTrue(types.size() > 0);
+		
+		assertTrue(types.get(0).getThumb() != null);
 	}
 
 	

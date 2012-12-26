@@ -27,6 +27,7 @@
     <string name="webServiceJsonSuffix">json</string>
     <string name="webServiceStoreMemePrefix">store_meme</string>
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
+    <string name="webServiceMemeType">meme_type_data</string>
 
 	<item name="maxFontSize" format="integer" type="integer">50</item>
 	<item name="initialFontSize" format="integer" type="integer">26</item>
