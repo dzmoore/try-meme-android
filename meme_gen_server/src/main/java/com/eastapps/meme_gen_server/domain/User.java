@@ -33,10 +33,8 @@ import com.eastapps.meme_gen_server.constants.Constants;
 public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 8212798718211670129L;
 	
-	@PrimitiveField(fieldName = "id")
 	private Integer id;
 	
-	@PrimitiveField(fieldName = "un")
 	private String username;
 	
 	private String password;
@@ -47,6 +45,7 @@ public class User implements java.io.Serializable {
 	private String salt;
 	private Set<DeviceInfo> deviceInfos = new HashSet<DeviceInfo>(0);
 	private Set<Meme> memes = new HashSet<Meme>(0);
+	private Set<UserFavMemeType> userFavMemeTypes = new HashSet<UserFavMemeType>(0);
 
 	public User() {
 		super();
@@ -74,7 +73,8 @@ public class User implements java.io.Serializable {
 		Date lastMod, 
 		String salt, 
 		Set<DeviceInfo> deviceInfos, 
-		Set<Meme> memes) 
+		Set<Meme> memes,
+		Set<UserFavMemeType> userFavMemeTypes) 
 	{
 		this();
 		this.username = username;
@@ -84,6 +84,7 @@ public class User implements java.io.Serializable {
 		this.salt = salt;
 		this.deviceInfos = deviceInfos;
 		this.memes = memes;
+		this.userFavMemeTypes = userFavMemeTypes;
 	}
 
 	@Id
@@ -159,6 +160,15 @@ public class User implements java.io.Serializable {
 
 	public void setMemes(Set<Meme> memes) {
 		this.memes = memes;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<UserFavMemeType> getUserFavMemeTypes() {
+		return this.userFavMemeTypes;
+	}
+
+	public void setUserFavMemeTypes(Set<UserFavMemeType> userFavMemeTypes) {
+		this.userFavMemeTypes = userFavMemeTypes;
 	}
 
 	@Override

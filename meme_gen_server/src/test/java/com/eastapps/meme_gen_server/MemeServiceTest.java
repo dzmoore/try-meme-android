@@ -20,6 +20,7 @@ import org.springframework.core.io.Resource;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.meme_gen_server.service.MemeService;
 
 public class MemeServiceTest {
@@ -98,4 +99,53 @@ public class MemeServiceTest {
 		TestCase.assertNotNull(thumbBytes);
 		TestCase.assertTrue(thumbBytes.length > 0);
 	}
+	
+	
+	@Test
+	public void testGetUserFavTypes() {
+		final int userId = 1;
+		final List<ShallowMemeType> types = memeSvc.getFavoriteMemeTypesForUser(userId);
+		
+		TestCase.assertNotNull(types);
+		TestCase.assertTrue(types.size() > 0);
+		
+		TestCase.assertTrue(types.get(0).getTypeId() > 0);
+	}
+	
+	@Test
+	public void testGetUserForId() {
+		final int userId = 1;
+		final ShallowUser user = memeSvc.getUser(userId);
+		
+		TestCase.assertNotNull(user);
+		TestCase.assertTrue(user.getId() == userId);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

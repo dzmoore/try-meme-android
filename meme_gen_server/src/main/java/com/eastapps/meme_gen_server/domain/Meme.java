@@ -5,6 +5,7 @@ package com.eastapps.meme_gen_server.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,6 +21,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.eastapps.meme_gen_server.constants.Constants;
 
@@ -42,6 +45,8 @@ public class Meme implements java.io.Serializable {
 	private Set<MemeText> memeTexts;
 	
 	private Boolean isSampleMeme;
+	
+	private Date lastMod;
 
 	public Meme() {
 		super();
@@ -52,12 +57,12 @@ public class Meme implements java.io.Serializable {
 		memeTexts = new HashSet<MemeText>(0);
 	}
 	
-	public Meme(LvMemeType lvMemeType, User user, MemeBackground memeBackground, Boolean isSampleMeme, Set<MemeText> memeTexts) {
-		this();
+	public Meme(LvMemeType lvMemeType, User user, MemeBackground memeBackground, Boolean isSampleMeme, Date lastMod, Set<MemeText> memeTexts) {
 		this.lvMemeType = lvMemeType;
 		this.user = user;
 		this.memeBackground = memeBackground;
 		this.isSampleMeme = isSampleMeme;
+		this.lastMod = lastMod;
 		this.memeTexts = memeTexts;
 	}
 
@@ -125,6 +130,17 @@ public class Meme implements java.io.Serializable {
 
 	public void setIsSampleMeme(Boolean isSampleMeme) {
 		this.isSampleMeme = isSampleMeme;
+	}
+	
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_mod", nullable = false, length = 19)
+	public Date getLastMod() {
+		return this.lastMod;
+	}
+
+	public void setLastMod(Date lastMod) {
+		this.lastMod = lastMod;
 	}
 
 	@Override

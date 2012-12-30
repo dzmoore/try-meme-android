@@ -4,6 +4,7 @@ package com.eastapps.meme_gen_server.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -28,13 +31,13 @@ import com.eastapps.meme_gen_server.constants.Constants;
 public class LvMemeType implements java.io.Serializable {
 	private static final long serialVersionUID = -5105139654526429935L;
 	
-	@PrimitiveField(fieldName = "id")
 	private Integer id;
 	
-	@PrimitiveField(fieldName = "descr")
 	private String descr;
 	
 	private Boolean active;
+	
+	private Date lastMod;
 	
 	private Set<Meme> memes = new HashSet<Meme>(0);
 
@@ -45,8 +48,22 @@ public class LvMemeType implements java.io.Serializable {
 		active = true;
 		memes = new HashSet<Meme>(0);
 	}
+	
+	public LvMemeType(Date lastMod) {
+		this();
+		this.lastMod = lastMod;
+	}
+
+	public LvMemeType(String descr, Date lastMod, Boolean active, Set<Meme> memes) {
+		this();
+		this.descr = descr;
+		this.lastMod = lastMod;
+		this.active = active;
+		this.memes = memes;
+	}
 
 	public LvMemeType(String descr, Boolean active, Set<Meme> memes) {
+		this();
 		this.descr = descr;
 		this.active = active;
 		this.memes = memes;
@@ -88,6 +105,16 @@ public class LvMemeType implements java.io.Serializable {
 
 	public void setMemes(Set<Meme> memes) {
 		this.memes = memes;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_mod", nullable = false, length = 19)
+	public Date getLastMod() {
+		return this.lastMod;
+	}
+
+	public void setLastMod(Date lastMod) {
+		this.lastMod = lastMod;
 	}
 
 	@Override

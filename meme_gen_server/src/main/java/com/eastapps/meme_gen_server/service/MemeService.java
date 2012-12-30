@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +25,9 @@ import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.meme_gen_server.domain.User;
+import com.eastapps.meme_gen_server.domain.UserFavMemeType;
 import com.eastapps.meme_gen_server.util.Util;
 
 @Component
@@ -92,7 +97,7 @@ public class MemeService {
 
 			sesh.beginTransaction();
 			bottomText.setId(Util.getId(sesh.save(bottomText)));
-			Util.commit(sesh);
+			Util.commit(sesh); 
 
 
 
@@ -110,6 +115,52 @@ public class MemeService {
 		}
 
 		return result;
+	}
+	
+	public List<ShallowMemeType> getFavoriteMemeTypesForUser(final int userId) {
+		final Session sesh = sessionFactory.openSession();
+		
+		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>();
+		try {
+			sesh.beginTransaction();
+			
+			// get the user object
+			final Query qry = sesh.createQuery("from User u where u.id = :id");
+			qry.setInteger("id", userId);
+			
+			final List<?> results = qry.list();
+			if (results != null && !results.isEmpty()) {
+				if (results.get(0) instanceof User) {
+					final User u = (User) results.get(0);
+					
+					// build the shallow 'fav types' list
+					for (final UserFavMemeType eaFavType : u.getUserFavMemeTypes()) {
+						final LvMemeType eaLvFavType = eaFavType.getLvMemeType();
+						
+						final ShallowMemeType eaShFavType = new ShallowMemeType();
+						eaShFavType.setTypeId(eaLvFavType.getId());
+						
+						// set the background id (making the assumption
+						// here that all memes of a certain type have the same background)
+						final Iterator<Meme> iterator = eaLvFavType.getMemes().iterator();
+						if (iterator.hasNext()) {
+    						final Meme next = iterator.next();
+    						if (next != null && next.getMemeBackground() != null) {
+    							eaShFavType.setBackgroundId(next.getMemeBackground().getId());
+    						}
+						}
+						
+						types.add(eaShFavType);
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			logger.error("error occurred while attempting to find user favorites for user " + userId, e);
+		}
+		
+		
+		return types;
 	}
 
 
@@ -512,4 +563,77 @@ public class MemeService {
 		return resultBytes;
 	}
 
+	
+	public ShallowUser getUser(final int userId) {
+		ShallowUser user = new ShallowUser();
+		
+		final Session sesh = sessionFactory.openSession();
+		try {
+			sesh.beginTransaction();
+			final Query qry = sesh.createQuery("from User u where u.id = :id");
+			qry.setInteger("id", userId);
+			
+			final List<?> results = qry.list();
+			if (results != null) {
+				
+				final Iterator<?> iterator = results.iterator();
+				if (iterator.hasNext()) {
+					final User resultUser = (User) iterator.next();
+					
+					user.setId(resultUser.getId());
+					user.setUsername(resultUser.getUsername());
+				}
+			}
+			
+			
+		} catch (final Exception e) {
+			logger.error("error occurred while attempting to find user for id " + userId, e);
+		}
+		
+		return user;
+	}
+	
+	public ShallowUser getUserForDeviceId(final String deviceId) {
+		ShallowUser user = new ShallowUser();
+		
+		final Session sesh = sessionFactory.openSession();
+		try {
+			
+			
+		} catch (final Exception e) {
+			logger.error("error occurred while attempting to find user for device id " + deviceId, e);
+		}
+		
+		return user;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -24,13 +24,13 @@ create table lv_meme_type (
 	id int(21) not null auto_increment,
 	descr varchar(100),
     last_mod timestamp default current_timestamp on update current_timestamp,
-	active tinyint(1),
+	active tinyint(1) default 1,
 	primary key (id)
 ) engine=InnoDB;
 
 create table meme_background (
 	id int(21) not null auto_increment,
-	active tinyint(1),
+	active tinyint(1) default 1,
 	path varchar(200),
 	last_mod timestamp default current_timestamp on update current_timestamp,
 	primary key (id)
@@ -60,6 +60,17 @@ create table meme_text (
 	foreign key (meme_fk) references meme(id)
 ) engine=InnoDB;
 
+create table user_fav_meme_type (
+	id int(21) not null auto_increment,
+	meme_type_fk int(21),
+	user_fk int(21),
+	active tinyint(1) default 1,
+	last_mod timestamp default current_timestamp on update current_timestamp,
+	primary key (id),
+	foreign key (meme_type_fk) references lv_meme_type(id),
+	foreign key (user_fk) references user(id)
+);
+
 insert into meme_background (active, path) values (1, 'tmimitw.jpg');
 
 insert into meme_background (active, path) values (1, 'most_int.jpg');
@@ -70,6 +81,8 @@ insert into user (active, username, password) values (1, 'mostintuser', 'passwor
 insert into user (active, username, password) values (1, 'most_inty_user_world', 'password');
 
 insert into user (username, password) values ('testuser', 'password');
+
+insert into user_fav_meme_type (meme_type_fk, user_fk) values (1, 1);
 
 insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk) values (1, 1, 1);
 
