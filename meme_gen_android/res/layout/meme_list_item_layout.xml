@@ -11,7 +11,8 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:minWidth="165dp"
-        android:src="@drawable/icon_heart" />
+        android:src="@drawable/icon_heart" 
+        android:contentDescription="TODO"/>
 
     <com.eastapps.meme_gen_android.widget.ResizableImageView
         android:id="@+id/list_item_thumb_img_view"
@@ -20,8 +21,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="2.5"
         android:scaleType="fitStart"
-        android:src="@drawable/config_icon"
-        android:text="OutlineTextView" />
+        android:src="@drawable/config_icon" />
 
     <TextView
         android:id="@+id/list_item_text_view"
@@ -30,6 +30,6 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:minWidth="300dp"
-        android:text="The Most Interesting Man in the World" />
+        android:text="dummy text" />
 
 </LinearLayout>

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.widget.fragment.MemeViewFragment;
 
-public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter { //implements Parcelable {
+public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter { 
 	private List<MemeViewData> memes;
 	private List<MemeViewFragment> frags;
 	

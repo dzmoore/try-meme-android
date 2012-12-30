@@ -4,6 +4,7 @@ package com.eastapps.meme_gen_server.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -37,6 +40,8 @@ public class MemeBackground implements java.io.Serializable {
 	private String path;
 	
 	private Set<Meme> memes = new HashSet<Meme>(0);
+	
+	private Date lastMod;
 
 	public MemeBackground() {
 		super();
@@ -44,13 +49,23 @@ public class MemeBackground implements java.io.Serializable {
 		active = true;
 		path = StringUtils.EMPTY;
 		memes = new HashSet<Meme>(0);
+		lastMod = new Date();
 	}
 
-	public MemeBackground(Boolean active, String path, Set memes) {
+	public MemeBackground(Boolean active, String path, Date lastMod, Set<Meme> memes) {
+		this();
 		this.active = active;
 		this.path = path;
+		this.lastMod = lastMod;
 		this.memes = memes;
 	}
+
+	
+	public MemeBackground(Date lastMod) {
+		this();
+		this.lastMod = lastMod;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -88,6 +103,16 @@ public class MemeBackground implements java.io.Serializable {
 
 	public void setMemes(Set<Meme> memes) {
 		this.memes = memes;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_mod", nullable = false, length = 19)
+	public Date getLastMod() {
+		return this.lastMod;
+	}
+
+	public void setLastMod(Date lastMod) {
+		this.lastMod = lastMod;
 	}
 
 	@Override

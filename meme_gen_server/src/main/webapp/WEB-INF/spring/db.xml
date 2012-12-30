@@ -48,6 +48,7 @@
 				<value>com.eastapps.meme_gen_server.domain.MemeText</value>
                 <value>com.eastapps.meme_gen_server.domain.SampleMeme</value>
                 <value>com.eastapps.meme_gen_server.domain.DeviceInfo</value>
+                 <value>com.eastapps.meme_gen_server.domain.UserFavMemeType</value>
                 
 			</list>
 		</property>

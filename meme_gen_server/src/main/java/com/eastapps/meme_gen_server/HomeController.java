@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
 
@@ -135,5 +136,69 @@ public class HomeController {
 	public byte[] getThumbForType(@PathVariable("id") final int typeId) throws IOException {
 		return memeService.getThumbForType(typeId);
 	}
+	
+	@RequestMapping(value = "/user_data/user/{id}/json")
+	@ResponseBody
+	public ShallowUser getUserForId(@PathVariable("id") final int userId) {
+		
+		
+		return null;
+	}
+	
+	
+	@RequestMapping(value = "/user_data/device/{id}/json")
+	@ResponseBody
+	public ShallowUser getUserForDeviceId(@PathVariable("id") final String deviceId) {
+//		final ShallowUser user = 
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/user_data/user/{id}/favtypes/json")
+	@ResponseBody
+	public ShallowMemeType[] getFavTypesForUserId(@PathVariable("id") final int userId) {
+		final List<ShallowMemeType> types = memeService.getFavoriteMemeTypesForUser(userId);
+	
+		ShallowMemeType[] typeArr = new ShallowMemeType[0];
+		if (types != null && types.size() > 0) {
+			typeArr = new ShallowMemeType[types.size()];
+		}
+	
+		return types.toArray(typeArr);
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

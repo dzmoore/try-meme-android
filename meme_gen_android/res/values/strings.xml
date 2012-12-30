@@ -4,6 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_create_meme">CreateMemeActivity</string>
+    <string name="title_activity_meme_list">MemeListActivity</string>
 
     <item name="create_meme_top_row_height" type="string">40dp</item>
 

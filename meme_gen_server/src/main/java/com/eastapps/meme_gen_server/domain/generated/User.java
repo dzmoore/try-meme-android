@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain.generated;
 
-// Generated Dec 1, 2012 9:12:22 AM by Hibernate Tools 3.4.0.CR1
+// Generated Dec 29, 2012 10:59:32 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -31,6 +31,7 @@ public class User implements java.io.Serializable {
 	private String salt;
 	private Set deviceInfos = new HashSet(0);
 	private Set memes = new HashSet(0);
+	private Set userFavMemeTypes = new HashSet(0);
 
 	public User() {
 	}
@@ -41,7 +42,8 @@ public class User implements java.io.Serializable {
 		this.lastMod = lastMod;
 	}
 
-	public User(String username, String password, Boolean active, Date lastMod, String salt, Set deviceInfos, Set memes) {
+	public User(String username, String password, Boolean active, Date lastMod, String salt, Set deviceInfos, Set memes,
+		Set userFavMemeTypes) {
 		this.username = username;
 		this.password = password;
 		this.active = active;
@@ -49,6 +51,7 @@ public class User implements java.io.Serializable {
 		this.salt = salt;
 		this.deviceInfos = deviceInfos;
 		this.memes = memes;
+		this.userFavMemeTypes = userFavMemeTypes;
 	}
 
 	@Id
@@ -124,6 +127,15 @@ public class User implements java.io.Serializable {
 
 	public void setMemes(Set memes) {
 		this.memes = memes;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set getUserFavMemeTypes() {
+		return this.userFavMemeTypes;
+	}
+
+	public void setUserFavMemeTypes(Set userFavMemeTypes) {
+		this.userFavMemeTypes = userFavMemeTypes;
 	}
 
 }
