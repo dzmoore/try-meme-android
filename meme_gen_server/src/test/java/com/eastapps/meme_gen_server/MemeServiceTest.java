@@ -1,6 +1,8 @@
 package com.eastapps.meme_gen_server;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -119,6 +121,36 @@ public class MemeServiceTest {
 		
 		TestCase.assertNotNull(user);
 		TestCase.assertTrue(user.getId() == userId);
+	}
+	
+	@Test
+	public void testNewInstallKey() throws InterruptedException {
+		final Set<String> installKeySet = Collections.synchronizedSet(new HashSet<String>());
+		
+		final int threadCount = 3;
+		final int newKeysToGrabPerThread = 25;
+		
+		final List<Thread> threadList = new ArrayList<Thread>();
+		for (int i = 0; i < threadCount; i++) {
+			threadList.add(new Thread(
+				new Runnable() {
+					@Override
+					public void run() {
+						for (int j = 0; j < newKeysToGrabPerThread; j++) {
+							TestCase.assertTrue(installKeySet.add(memeSvc.getNewInstallKey()));
+						}
+					}
+				}
+			));
+		}
+		
+		for (final Thread ea : threadList) {
+			ea.start();
+		}
+		
+		for (final Thread ea : threadList) {
+			ea.join();
+		}
 	}
 }
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
@@ -18,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import antlr.Utils;
+
 import com.eastapps.meme_gen_server.constants.Constants;
+import com.eastapps.meme_gen_server.domain.DeviceInfo;
 import com.eastapps.meme_gen_server.domain.LvMemeType;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
@@ -593,7 +597,8 @@ public class MemeService {
 		return user;
 	}
 	
-	public ShallowUser getUserForDeviceId(final String deviceId) {
+	@Deprecated // probably..
+	private ShallowUser getUserForDeviceId(final String deviceId) {
 		ShallowUser user = new ShallowUser();
 		
 		final Session sesh = sessionFactory.openSession();
@@ -605,6 +610,74 @@ public class MemeService {
 		}
 		
 		return user;
+	}
+
+
+	public String getNewInstallKey() { 
+		String key = UUID.randomUUID().toString();
+		
+		final DeviceInfo di = new DeviceInfo();
+		
+		boolean uniqueKeyNotFound = true;
+		
+		Session sesh = null;
+		try {
+    		while (uniqueKeyNotFound) {
+        		di.setUniqueId(key);
+        		di.setUser(null);
+        		
+        		sesh = sessionFactory.openSession();
+        		sesh.beginTransaction();
+        		
+        		final Serializable result = sesh.save(di);
+        		Util.commit(sesh);
+        		
+    			Util.close(sesh);
+    			
+    			sesh = sessionFactory.openSession();
+    			sesh.beginTransaction();
+    			
+        		final Query qry = sesh.createQuery("from DeviceInfo d where d.uniqueId = :installKey");
+        		qry.setString("installKey", key);
+        	
+        		final List<?> results = qry.list();
+        		uniqueKeyNotFound = results == null || results.size() != 1;
+        		
+        		Util.close(sesh);
+    		}
+    		
+		} catch (Exception e) {
+    		logger.error("err", e);
+    		
+    	} finally {
+    		Util.close(sesh);
+		}
+		
+	    return key;
+	}
+
+
+	public int storeNewUser(String installKey, ShallowUser user) {
+		int userId = -1;
+//	    if (isInstallKeyValid(installKey)) {
+//	        userId = database.storeUser(user);
+//
+//	        database.storeInstallKeyForUser(installKey, user);
+//	    }
+
+	    return userId;
+	}
+
+
+	private boolean isInstallKeyValid(String installKey) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public int storeNewUser(ShallowUser user) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
 

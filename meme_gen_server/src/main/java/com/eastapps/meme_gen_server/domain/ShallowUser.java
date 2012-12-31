@@ -8,6 +8,7 @@ public class ShallowUser implements Serializable {
 	private static final long serialVersionUID = 1853797399462675948L;
 	private int id;
 	private String username;
+	private String installKey;
 	
 	public ShallowUser() {
 		super();

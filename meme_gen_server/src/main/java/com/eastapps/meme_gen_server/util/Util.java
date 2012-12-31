@@ -37,6 +37,14 @@ public class Util {
 		}
 	}
 	
+	public static void close(final Session sesh) {
+		if (sesh != null) {
+			try {
+				sesh.close();
+			} catch (Throwable t) {}
+		}
+	}
+	
 	public static String concat(final Object...objs) {
 		return StringUtils.join(objs);
 	}

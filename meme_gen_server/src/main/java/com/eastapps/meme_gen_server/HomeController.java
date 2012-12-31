@@ -2,9 +2,9 @@ package com.eastapps.meme_gen_server;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,7 @@ import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.meme_gen_server.domain.User;
 import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
 
@@ -167,6 +168,18 @@ public class HomeController {
 		return types.toArray(typeArr);
 	}
 	
+	@RequestMapping(value = "/user_data/new_install_key/json")
+	@ResponseBody
+	public String getNewInstallKey() {
+		return memeService.getNewInstallKey();
+	   
+	}
+
+	@RequestMapping(value = "/user_data/store_new/json")
+	public int storeNewUser(@RequestBody final ShallowUser user) {
+	    return memeService.storeNewUser(user);
+	}
+
 
 }
 
