@@ -141,18 +141,7 @@ public class HomeController {
 	@RequestMapping(value = "/user_data/user/{id}/json")
 	@ResponseBody
 	public ShallowUser getUserForId(@PathVariable("id") final int userId) {
-		
-		
-		return null;
-	}
-	
-	
-	@RequestMapping(value = "/user_data/device/{id}/json")
-	@ResponseBody
-	public ShallowUser getUserForDeviceId(@PathVariable("id") final String deviceId) {
-//		final ShallowUser user = 
-		
-		return null;
+		return memeService.getUser(userId);
 	}
 	
 	@RequestMapping(value = "/user_data/user/{id}/favtypes/json")

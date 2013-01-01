@@ -30,6 +30,7 @@ public class MemeServiceTest {
 	private String imgsRoot;
 	private MemeService memeSvc;
 	private String thumbImgsRoot;
+	private Long installKeyTimeoutMs;
 
 	@Before
 	public void setUp() throws Exception {
@@ -39,8 +40,9 @@ public class MemeServiceTest {
 		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
 		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
 		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
+		installKeyTimeoutMs = (Long) fac.getBean("installKeyTimeoutMs");
 		
-		memeSvc = new MemeService(sessionFactory, imgsRoot, thumbImgsRoot);
+		memeSvc = new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs);
 	}
 
 	@After

@@ -84,7 +84,30 @@
    <beans:bean name ="memeThumbImagesRootDir" class="java.lang.String" >
         <beans:constructor-arg value="/meme_imgs/thumbs" />
    </beans:bean>
+   
+   <beans:bean name="installKeyTimeoutMs" class="java.lang.Long">
+        <beans:constructor-arg>420000</beans:constructor-arg>   
+   </beans:bean>
     
-    <beans:import resource="controllers.xml" />
+   <beans:import resource="controllers.xml" />
 
 </beans:beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

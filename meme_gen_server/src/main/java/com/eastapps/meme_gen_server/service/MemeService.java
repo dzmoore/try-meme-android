@@ -47,19 +47,29 @@ public class MemeService {
 	
 	@Autowired
 	private String memeThumbImagesRootDir;
+	
+	@Autowired
+	private Long installKeyTimeoutMs;
 
 
 	public MemeService() {
 		super();
+		
 	}
 
 
-	public MemeService(final SessionFactory sessionFactory, final String memeImagesRootDir, final String memeThumbImagesRootDir) {
+	public MemeService(
+		final SessionFactory sessionFactory, 
+		final String memeImagesRootDir, 
+		final String memeThumbImagesRootDir,
+		final Long installKeyTimeoutMs) 
+	{
 		super();
 
 		this.sessionFactory = sessionFactory;
 		this.memeImagesRootDir = memeImagesRootDir;
 		this.memeThumbImagesRootDir = memeThumbImagesRootDir;
+		this.installKeyTimeoutMs = installKeyTimeoutMs;
 	}
 
 	public int storeMeme(final ShallowMeme shallowMeme) {
@@ -579,7 +589,6 @@ public class MemeService {
 			
 			final List<?> results = qry.list();
 			if (results != null) {
-				
 				final Iterator<?> iterator = results.iterator();
 				if (iterator.hasNext()) {
 					final User resultUser = (User) iterator.next();
@@ -697,6 +706,24 @@ public class MemeService {
 		
 		
 		return userId;
+	}
+	
+	private boolean isInstallKeyValid(final String installKey) {
+		boolean isValid = false;
+		
+		final Session sesh = sessionFactory.openSession();
+		final Query qry = sesh.createQuery("from DeviceInfo d where d.uniqueId = :installKey");
+		final List<?> results = qry.list();
+		
+		if (results != null && results.size() == 1) {
+			if (results.get(0) instanceof DeviceInfo) {
+				final DeviceInfo devInfo = (DeviceInfo)results.get(0);
+				
+				isValid = System.currentTimeMillis() - devInfo.getLastMod().getTime() <= installKeyTimeoutMs;
+			}
+		}
+		
+		return isValid;
 	}
 }
 
