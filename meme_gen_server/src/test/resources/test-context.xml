@@ -18,6 +18,10 @@
         <bean name ="memeThumbImagesRootDir" class="java.lang.String" >
             <constructor-arg value="/meme_imgs/thumbs" />
         </bean>
+        
+        <bean name="installKeyTimeoutMs" class="java.lang.Long">
+            <constructor-arg>420000</constructor-arg>   
+        </bean>
     
 	<!-- Scans within the base package of the application for @Components to 
 		configure as beans -->

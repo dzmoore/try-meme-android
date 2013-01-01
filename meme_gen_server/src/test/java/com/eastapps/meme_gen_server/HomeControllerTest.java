@@ -36,6 +36,8 @@ public class HomeControllerTest {
 	private SessionFactory sessionFactory;
 	private String imgsRoot;
 	private String thumbImgsRoot;
+	private long installKeyTimeoutMs;
+	
 	private static final Logger logger = Logger.getLogger(HomeControllerTest.class);
 	private HomeController homeCtrllr;
 	
@@ -47,8 +49,9 @@ public class HomeControllerTest {
 		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
 		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
 		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
+		installKeyTimeoutMs = (Long) fac.getBean("installKeyTimeoutMs");
 		
-		homeCtrllr = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot));
+		homeCtrllr = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs));
 	}
 
 	@After
@@ -88,7 +91,7 @@ public class HomeControllerTest {
 		m.getMemeTexts().add(new MemeText(m, bottomText, Constants.BOTTOM, 26));
 		m.setUser(user);
 		
-		final HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot));
+		final HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs));
 
 		final IntResult result = controller.storeMeme(new ShallowMeme(m));
 		Assert.assertNotNull(result);
@@ -178,7 +181,7 @@ public class HomeControllerTest {
 	public void testGetSamples() {
 		final int memeTypeId = 1;
 		
-		HomeController cntrller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot));
+		HomeController cntrller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs));
 		
 		ShallowMeme[] samples = cntrller.getSampleMemes(memeTypeId);
 		
