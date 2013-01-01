@@ -14,6 +14,7 @@ public class ShallowUser implements Serializable {
 		super();
 		id = Constants.INVALID;
 		username = Constants.EMPTY;
+		installKey = Constants.EMPTY;
 	}
 	
 	public int getId() {
@@ -38,6 +39,14 @@ public class ShallowUser implements Serializable {
 		builder.append(username);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public String getInstallKey() {
+		return installKey;
+	}
+
+	public void setInstallKey(String installKey) {
+		this.installKey = installKey;
 	}
 	
 	

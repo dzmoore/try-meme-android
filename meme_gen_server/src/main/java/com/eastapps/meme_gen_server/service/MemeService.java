@@ -657,27 +657,46 @@ public class MemeService {
 	}
 
 
-	public int storeNewUser(String installKey, ShallowUser user) {
-		int userId = -1;
-//	    if (isInstallKeyValid(installKey)) {
-//	        userId = database.storeUser(user);
-//
-//	        database.storeInstallKeyForUser(installKey, user);
-//	    }
-
-	    return userId;
-	}
-
-
-	private boolean isInstallKeyValid(String installKey) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
 	public int storeNewUser(ShallowUser user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int userId = Constants.INVALID;
+		
+		Session sesh = sessionFactory.openSession();
+		sesh.beginTransaction();
+		
+		try {
+			final User u = new User();
+			u.setActive(true);
+			u.setUsername(user.getUsername());
+			
+			userId = Util.getId(sesh.save(u));
+			Util.commit(sesh);
+			Util.close(sesh);
+			
+			if (userId > 0) {
+				u.setId(userId);
+				
+				sesh = sessionFactory.openSession();
+				sesh.beginTransaction();
+				
+    			final DeviceInfo devInfo = new DeviceInfo();
+    			devInfo.setUniqueId(user.getInstallKey());
+    			devInfo.setUser(u);
+    			
+    			final int devId = Util.getId(sesh.save(devInfo));
+    			if (devId <= 0) {
+    				logger.warn("dev info didnt store", new Exception("stack trace only"));
+    			}
+			}
+			
+		} catch (Exception e) {
+			logger.error("err", e);
+			
+		} finally {
+			Util.close(sesh);
+		}
+		
+		
+		return userId;
 	}
 }
 
