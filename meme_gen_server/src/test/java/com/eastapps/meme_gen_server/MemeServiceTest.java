@@ -152,6 +152,17 @@ public class MemeServiceTest {
 			ea.join();
 		}
 	}
+	
+	@Test
+	public void testStoreUser() {
+		final ShallowUser u = new ShallowUser();
+		u.setInstallKey(memeSvc.getNewInstallKey());
+		u.setUsername(u.getInstallKey());
+		
+		final int newId = memeSvc.storeNewUser(u);
+		
+		TestCase.assertTrue(newId > 0);
+	}
 }
 
 

@@ -172,7 +172,6 @@ public class HomeController {
 	@ResponseBody
 	public String getNewInstallKey() {
 		return memeService.getNewInstallKey();
-	   
 	}
 
 	@RequestMapping(value = "/user_data/store_new/json")
