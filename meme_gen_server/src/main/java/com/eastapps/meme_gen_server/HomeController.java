@@ -137,7 +137,7 @@ public class HomeController {
 	public byte[] getThumbForType(@PathVariable("id") final int typeId) throws IOException {
 		return memeService.getThumbForType(typeId);
 	}
-	
+//	http://dylanxpeth:8080/meme_gen_server/spring/user_data/user/1/json
 	@RequestMapping(value = "/user_data/user/{id}/json")
 	@ResponseBody
 	public ShallowUser getUserForId(@PathVariable("id") final int userId) {
@@ -164,6 +164,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/user_data/store_new/json")
+	@ResponseBody
 	public int storeNewUser(@RequestBody final ShallowUser user) {
 	    return memeService.storeNewUser(user);
 	}

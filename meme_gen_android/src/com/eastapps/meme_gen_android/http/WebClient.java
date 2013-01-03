@@ -104,7 +104,7 @@ public class WebClient implements IWebClient {
 	}
 	
 	@Override
-	public String getJsonObject(final String addr, final String jsonRequest) {
+	public String getJSONObject(final String addr, final String jsonRequest) {
 		String responseStr = Constants.EMPTY_STRING;
 		
 		try {

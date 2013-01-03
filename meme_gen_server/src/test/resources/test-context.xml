@@ -20,7 +20,7 @@
         </bean>
         
         <bean name="installKeyTimeoutMs" class="java.lang.Long">
-            <constructor-arg>420000</constructor-arg>   
+            <constructor-arg value="420000" />
         </bean>
     
 	<!-- Scans within the base package of the application for @Components to 

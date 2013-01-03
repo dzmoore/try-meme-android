@@ -8,5 +8,5 @@ import com.eastapps.meme_gen_android.json.JSONObject;
 public interface IWebClient {
 	public String getJSONObject(final String addr);
 	public Bitmap getBitmap(final String addr);
-	public String getJsonObject(String addr, String jsonRequest);
+	public String getJSONObject(String addr, String jsonRequest);
 }
