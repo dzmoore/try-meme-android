@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.R;
-import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -18,6 +17,7 @@ import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,15 +48,6 @@ public class MemeServerClient {
 		webClient = new WebClient();
 	}
 
-//	public MemeViewData createMemeViewData(final int memeId) {
-//		final MemeViewData dat = new MemeViewData();
-//		dat.setBackground(getBackground(memeId));
-//		
-//		dat.setMeme(getMeme(memeId));
-//
-//		return dat;
-//	}
-	
 	public ShallowMeme getMeme(final int memeId) {
 		final String result = 
 			webClient.getJSONObject(Conca.t(
@@ -93,7 +84,7 @@ public class MemeServerClient {
 	public int storeMeme(final ShallowMeme shallowMeme) {
 		int resultId = Constants.INVALID;
 
-		final String respStr = webClient.getJsonObject(
+		final String respStr = webClient.getJSONObject(
 			Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
@@ -157,6 +148,11 @@ public class MemeServerClient {
 		
 		return types;
 	}
+
+//	private <T> Type getTypeForTypedList(final Class<T> type) {
+//		Type listType = new TypeToken<Collection<T>>(){}.getType();
+//		return listType;
+//	}
 	
 	public Bitmap getBackgroundForType(final int typeId) {
 		return
@@ -170,4 +166,147 @@ public class MemeServerClient {
 				webSvcBgrndSuffix
 			));
 	}
+	
+	public ShallowUser getUserForId(final int id) {
+		final String result =
+			webClient.getJSONObject(Conca.t(
+				webSvcAddr,
+				Constants.URL_SEPARATOR,
+				"user_data",
+				Constants.URL_SEPARATOR,
+				"user",
+				Constants.URL_SEPARATOR,
+				id,
+				Constants.URL_SEPARATOR,
+				webSvcJsonSuffix
+			));
+				
+		return new Gson().fromJson(result, ShallowUser.class);
+	}
+
+	public <T> T getObject(final Class<T> type, final Object... addrParts) {
+		final String result = webClient.getJSONObject(Conca.t(addrParts));
+		T typedResult = null;
+		
+		try {
+			typedResult = new Gson().fromJson(result, type);
+			
+		} catch (Exception e) {
+			Log.e(TAG, "err", e);
+		}
+		
+		return typedResult;
+	}
+	
+	public <T> List<T> getList(final Class<T> itemType, final Object... addrParts) {
+		final String result = webClient.getJSONObject(Conca.t(addrParts));
+		List<T> typedResult = new ArrayList<T>();
+		
+		try {
+			typedResult = new Gson().fromJson(result, new TypeToken<Collection<T>>(){}.getType());
+			
+		} catch (Exception e) {
+			Log.e(TAG, "err", e);
+		}
+		
+		return typedResult;
+	}
+	
+	public <T> T getObjectWithArg(
+		final Class<T> type, 
+		final String addr, 
+		final Object arg)
+	{
+		final String result = webClient.getJSONObject(addr, new Gson().toJson(arg));
+		T typedResult = null;
+		
+		try {
+			typedResult = new Gson().fromJson(result, type);
+			
+		} catch (Exception e) {
+			Log.e(TAG, "err", e);
+		}
+		
+		return typedResult;
+	}
+	
+	public String getNewInstallKey() {
+		return getObject(String.class, 
+			webSvcAddr,
+			Constants.URL_SEPARATOR,
+			"user_data",
+			Constants.URL_SEPARATOR,
+			"new_install_key",
+			Constants.URL_SEPARATOR,
+			webSvcJsonSuffix
+		);
+	}
+
+	public int storeNewUser(ShallowUser shallowUser) {
+		return getObjectWithArg(Integer.class, 
+			Conca.t(
+				webSvcAddr,
+				Constants.URL_SEPARATOR,
+				"user_data",
+				Constants.URL_SEPARATOR,
+				"store_new",
+				Constants.URL_SEPARATOR,
+				webSvcJsonSuffix
+			),
+			shallowUser
+		);
+			
+	}
+
+	public List<ShallowMemeType> getFavMemeTypesForUser(int userId) {
+		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+		String result = Constants.EMPTY;
+		
+		result = webClient.getJSONObject(Conca.t(
+			webSvcAddr,
+			Constants.URL_SEPARATOR,
+			"user_data",
+			Constants.URL_SEPARATOR,
+			"user",
+			Constants.URL_SEPARATOR,
+			userId,
+			Constants.URL_SEPARATOR,
+			"favtypes",
+			Constants.URL_SEPARATOR,
+			webSvcJsonSuffix
+		));
+		
+		if (StringUtils.isNotBlank(result)) {
+			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
+			types = new Gson().fromJson(result, listType);
+		}
+		
+		return types;
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

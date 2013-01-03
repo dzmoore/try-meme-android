@@ -2,12 +2,14 @@ package com.eastapps.meme_gen_android.test;
 
 import java.util.List;
 
+import android.test.AndroidTestCase;
+
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
-
-import android.test.AndroidTestCase;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.meme_gen_server.domain.ShallowUser;
 
 public class MemeServiceTest extends AndroidTestCase  {
 	private MemeService memeSvc;
@@ -67,13 +69,61 @@ public class MemeServiceTest extends AndroidTestCase  {
 		assertTrue(types.get(0).getThumb() != null);
 	}
 
-	
-	public static void main(String[] args) {
-		MemeServiceTest test = new MemeServiceTest() {
-			protected void runTest() throws Throwable {
-				testStoreMeme();
-			};
-		};
-		test.run();
+	public void testGetUserForId() {
+		final int id = 1;
+		final ShallowUser u = memeSvc.getUser(id);
+		
+		assertNotNull(u);
+		assertTrue(u.getId() == id);
+		assertTrue(StringUtils.isNotBlank(u.getUsername()));
 	}
+	
+	public void testGetNewInstallKey() {
+		final String newInstallKey = memeSvc.getNewInstallKey();
+		
+		assertTrue(StringUtils.isNotBlank(newInstallKey));
+	}
+	
+	public void testStoreNewUser() {
+		final String newInstallKey = memeSvc.getNewInstallKey();
+		assertTrue(StringUtils.isNotBlank(newInstallKey));
+		
+		final ShallowUser user = new ShallowUser();
+		user.setUsername(newInstallKey);
+		user.setInstallKey(newInstallKey);
+		
+		final int userId = memeSvc.storeNewUser(user);
+		assertTrue(userId > 0);
+	}
+	
+	public void testGetFavMemes() {
+		final int userId = 1;
+		final List<ShallowMemeType> results = memeSvc.getFavMemeTypesForUser(userId);
+		
+		assertNotNull(results);
+		assertTrue(results.size() > 0);
+		assertTrue(StringUtils.isNotBlank(results.get(0).getTypeDescr()));
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

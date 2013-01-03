@@ -86,7 +86,7 @@
    </beans:bean>
    
    <beans:bean name="installKeyTimeoutMs" class="java.lang.Long">
-        <beans:constructor-arg>420000</beans:constructor-arg>   
+        <beans:constructor-arg value="420000" /> 
    </beans:bean>
     
    <beans:import resource="controllers.xml" />

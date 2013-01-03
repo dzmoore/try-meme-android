@@ -23,6 +23,7 @@ import com.eastapps.meme_gen_android.web.MemeServerClient;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.meme_gen_server.domain.ShallowUser;
 
 public class MemeService implements IMemeService {
 	private static final String TAG = MemeService.class.getSimpleName();
@@ -145,6 +146,26 @@ public class MemeService implements IMemeService {
 				MemeService.this.notify();
 			}
 		}
+	}
+	
+	@Override
+	public ShallowUser getUser(final int userId) {
+		return client.getUserForId(userId);
+	}
+
+	@Override
+	public String getNewInstallKey() {
+		return client.getNewInstallKey();
+	}
+
+	@Override
+	public int storeNewUser(final ShallowUser shallowUser) {
+		return client.storeNewUser(shallowUser);
+	}
+
+	@Override
+	public List<ShallowMemeType> getFavMemeTypesForUser(final int userId) {
+		return client.getFavMemeTypesForUser(userId);
 	}
 	
 	

@@ -153,6 +153,7 @@ public class MemeService {
 						
 						final ShallowMemeType eaShFavType = new ShallowMemeType();
 						eaShFavType.setTypeId(eaLvFavType.getId());
+						eaShFavType.setTypeDescr(eaLvFavType.getDescr());
 						
 						// set the background id (making the assumption
 						// here that all memes of a certain type have the same background)
@@ -669,58 +670,77 @@ public class MemeService {
 	public int storeNewUser(ShallowUser user) {
 		int userId = Constants.INVALID;
 		
-		Session sesh = sessionFactory.openSession();
-		sesh.beginTransaction();
-		
-		try {
-			final User u = new User();
-			u.setActive(true);
-			u.setUsername(user.getUsername());
-			
-			userId = Util.getId(sesh.save(u));
-			Util.commit(sesh);
-			Util.close(sesh);
-			
-			if (userId > 0) {
-				u.setId(userId);
-				
-				sesh = sessionFactory.openSession();
-				sesh.beginTransaction();
-				
-    			final DeviceInfo devInfo = new DeviceInfo();
-    			devInfo.setUniqueId(user.getInstallKey());
-    			devInfo.setUser(u);
+		if (isInstallKeyValid(user)) {
+    		Session sesh = sessionFactory.openSession();
+    		sesh.beginTransaction();
+    		
+    		try {
+    			final User u = new User();
+    			u.setActive(true);
+    			u.setUsername(user.getUsername());
     			
-    			final int devId = Util.getId(sesh.save(devInfo));
-    			if (devId <= 0) {
-    				logger.warn("dev info didnt store", new Exception("stack trace only"));
+    			userId = Util.getId(sesh.save(u));
+    			Util.commit(sesh);
+    			Util.close(sesh);
+    			
+    			if (userId > 0) {
+    				u.setId(userId);
+    				
+    				sesh = sessionFactory.openSession();
+    				sesh.beginTransaction();
+    				
+        			final DeviceInfo devInfo = new DeviceInfo();
+        			devInfo.setUniqueId(user.getInstallKey());
+        			devInfo.setUser(u);
+        			
+        			final int devId = Util.getId(sesh.save(devInfo));
+        			if (devId <= 0) {
+        				logger.warn("dev info didnt store", new Exception("stack trace only"));
+        			}
     			}
-			}
-			
-		} catch (Exception e) {
-			logger.error("err", e);
-			
-		} finally {
-			Util.close(sesh);
+    			
+    		} catch (Exception e) {
+    			logger.error("err", e);
+    			
+    		} finally {
+    			Util.close(sesh);
+    		}
+    		
+		} else {
+			logger.info(StringUtils.join(new Object[] {
+				"install key invalid; installKey=", user.getInstallKey(),
+				"; user=", user.toString(), ";"
+			}));
 		}
 		
 		
 		return userId;
 	}
 	
-	private boolean isInstallKeyValid(final String installKey) {
+	private boolean isInstallKeyValid(final ShallowUser u) {
 		boolean isValid = false;
 		
-		final Session sesh = sessionFactory.openSession();
-		final Query qry = sesh.createQuery("from DeviceInfo d where d.uniqueId = :installKey");
-		final List<?> results = qry.list();
-		
-		if (results != null && results.size() == 1) {
-			if (results.get(0) instanceof DeviceInfo) {
-				final DeviceInfo devInfo = (DeviceInfo)results.get(0);
-				
-				isValid = System.currentTimeMillis() - devInfo.getLastMod().getTime() <= installKeyTimeoutMs;
-			}
+		if (u != null && StringUtils.isNotBlank(u.getInstallKey())) {
+    		final Session sesh = sessionFactory.openSession();
+    		try {
+        		final Query qry = sesh.createQuery("from DeviceInfo d where d.uniqueId = :installKey");
+        		qry.setString("installKey", u.getInstallKey());
+        		
+        		final List<?> results = qry.list();
+        		if (results != null && results.size() == 1) {
+        			if (results.get(0) instanceof DeviceInfo) {
+        				final DeviceInfo devInfo = (DeviceInfo)results.get(0);
+        				
+        				isValid = System.currentTimeMillis() - devInfo.getLastMod().getTime() <= installKeyTimeoutMs;
+        			}
+        		}
+        		
+    		} catch (Exception e) {
+    			logger.error("err", e);
+    			
+    		} finally {
+    			Util.close(sesh);
+    		}
 		}
 		
 		return isValid;

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -114,6 +115,7 @@ public class MemeServiceTest {
 		TestCase.assertTrue(types.size() > 0);
 		
 		TestCase.assertTrue(types.get(0).getTypeId() > 0);
+		TestCase.assertTrue(StringUtils.isNotBlank(types.get(0).getTypeDescr()));
 	}
 	
 	@Test
