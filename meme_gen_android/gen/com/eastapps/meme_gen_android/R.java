@@ -23,6 +23,7 @@ public final class R {
         public static final int ic_launcher=0x7f020005;
         public static final int icon_heart=0x7f020006;
         public static final int tmimitw=0x7f020007;
+        public static final int unselected_heart=0x7f020008;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;

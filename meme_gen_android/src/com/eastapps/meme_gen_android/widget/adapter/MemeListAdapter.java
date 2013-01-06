@@ -91,7 +91,10 @@ public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 		}
 		
 		final ImageButton heartImgBtn = (ImageButton) convertView.findViewById(R.id.list_item_heart_img_btn);
-		// TODO
+		heartImgBtn.setImageDrawable(
+			item.isFavorite() ?
+				convertView.getResources().getDrawable(R.drawable.icon_heart) :
+				convertView.getResources().getDrawable(R.drawable.unselected_heart));
 		
 		final ResizableImageView thumbImg = (ResizableImageView) convertView.findViewById(R.id.list_item_thumb_img_view);
 		thumbImg.setImageBitmap(item.getThumb());
