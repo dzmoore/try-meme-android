@@ -11,4 +11,5 @@ public class Constants {
 	public static final String BOTTOM = "BOTTOM";
 	public static final String EMPTY = "";
 	public static final String INSTALL_KEY_USER = "user";
+	public static final String INSTALL_FILE = "INSTALLATION";
 }
