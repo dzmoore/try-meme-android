@@ -12,6 +12,7 @@ public class MemeListItemData implements Identifiable, Parcelable{
 	private Bitmap thumb;
 	private int id;
 	private ShallowMemeType memeType;
+	private boolean isFavorite;
 	
 	public MemeListItemData() {
 		super();
@@ -19,6 +20,7 @@ public class MemeListItemData implements Identifiable, Parcelable{
 		
 		thumb = null;
 		memeType = new ShallowMemeType();
+		isFavorite = false;
 	}
 
 	@Override
@@ -74,6 +76,14 @@ public class MemeListItemData implements Identifiable, Parcelable{
 
 	public void setMemeType(ShallowMemeType memeType) {
 		this.memeType = memeType;
+	}
+
+	public boolean isFavorite() {
+		return isFavorite;
+	}
+
+	public void setFavorite(boolean isFavorite) {
+		this.isFavorite = isFavorite;
 	}
 
 }

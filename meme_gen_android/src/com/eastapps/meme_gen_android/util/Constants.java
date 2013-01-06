@@ -1,6 +1,5 @@
 package com.eastapps.meme_gen_android.util;
 
-import com.eastapps.meme_gen_android.R;
 
 public class Constants {
 	public static final String EMPTY_STRING = "";
@@ -11,4 +10,5 @@ public class Constants {
 	public static final String TOP = "TOP";
 	public static final String BOTTOM = "BOTTOM";
 	public static final String EMPTY = "";
+	public static final String INSTALL_KEY_USER = "user";
 }
