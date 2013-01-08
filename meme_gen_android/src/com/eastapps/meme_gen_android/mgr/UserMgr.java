@@ -3,7 +3,9 @@ package com.eastapps.meme_gen_android.mgr;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +15,11 @@ import android.util.Log;
 
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class UserMgr {
 	protected static final String TAG = UserMgr.class.getSimpleName();
@@ -23,6 +27,8 @@ public class UserMgr {
 	private static UserMgr instance;
 
 	private ShallowUser user;
+	private List<ShallowMemeType> favTypes;
+	
 	private MemeService memeSvc;
 	private Context context;
 	private Map<String, String> installMap;
@@ -44,10 +50,8 @@ public class UserMgr {
 		return instance;
 	}
 
-	public static synchronized void getUser(
-			final ICallback<ShallowUser> setterCallback) {
+	public static synchronized void getUser(final ICallback<ShallowUser> setterCallback) {
 		final UserMgr inst = getInstance();
-
 		
 		if (inst.user == null) {
 			final ShallowUser user =
@@ -100,6 +104,15 @@ public class UserMgr {
 	private void initFieldsIntoMap(final File installation) {
 		// no install file, so a new user must be created;
 		initUser(installation);
+		
+		// query for fav types
+		queryForAndInitFavTypes(installation);
+	}
+
+	private void queryForAndInitFavTypes(File installation) {
+		if (user != null && memeSvc != null) {
+			favTypes = memeSvc.getFavMemeTypesForUser(user.getId());
+		}
 	}
 
 	private void initUser(final File installation) {
@@ -201,6 +214,15 @@ public class UserMgr {
 				// set the reference to 'user' field
 				this.user = shUserObj;
 			}
+			
+			if (this.installMap.containsKey(Constants.INSTALL_KEY_FAV_TYPES)) {
+				final Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
+				
+				this.favTypes = new Gson().fromJson(
+					installMap.get(Constants.INSTALL_KEY_FAV_TYPES),
+					listType
+				);
+			}
 		}
 	}
 
@@ -210,24 +232,30 @@ public class UserMgr {
 		}
 	}
 
-	public static void getFavMemeTypes(
-			final ICallback<List<ShallowMemeType>> callback) {
-		getUser(new ICallback<ShallowUser>() {
-			@Override
-			public void callback(ShallowUser user) {
-				List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
-
-				try {
-					types = getInstance().memeSvc.getFavMemeTypesForUser(user
-							.getId());
-
-				} catch (Exception e) {
-					Log.e(TAG, "err", e);
+	public static synchronized void getFavMemeTypes(final ICallback<List<ShallowMemeType>> callback) {
+		final UserMgr inst = getInstance();
+		
+		if (inst.favTypes == null) {
+			getUser(new ICallback<ShallowUser>() {
+				@Override
+				public void callback(ShallowUser user) {
+					try {
+						final Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();	
+						
+						inst.favTypes = 
+							new Gson().fromJson(
+								inst.getInstallMapLazily().get(Constants.INSTALL_KEY_FAV_TYPES),
+								listType
+							);
+	
+					} catch (Exception e) {
+						Log.e(TAG, "err", e);
+					}
 				}
-
-				callback.callback(types);
-			}
-		});
+			});
+		}
+		
+		callback.callback(inst.favTypes);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.test;
 
+import java.io.File;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import android.test.AndroidTestCase;
@@ -7,7 +9,9 @@ import android.util.Log;
 
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
+import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 
 public class UserMgrTest extends AndroidTestCase {
@@ -49,6 +53,23 @@ public class UserMgrTest extends AndroidTestCase {
 		});
 		
 		Log.i(UserMgrTest.class.getSimpleName(), "user=" + user.get().toString());
+	}
+	
+	public void testGetFavTypes() {
+		UserMgr.getFavMemeTypes(new ICallback<List<ShallowMemeType>>() {
+			@Override
+			public void callback(List<ShallowMemeType> obj) {
+				assertNotNull(obj);
+			}
+		});
+	}
+	
+	private void clearInstallFile() {
+		final File installation = new File(getContext().getFilesDir(), Constants.INSTALL_FILE);
+		
+		if (installation.exists()) {
+			installation.delete();
+		}
 	}
 }
 

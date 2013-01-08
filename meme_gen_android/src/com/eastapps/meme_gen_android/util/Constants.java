@@ -12,4 +12,5 @@ public class Constants {
 	public static final String EMPTY = "";
 	public static final String INSTALL_KEY_USER = "user";
 	public static final String INSTALL_FILE = "INSTALLATION";
+	public static final String INSTALL_KEY_FAV_TYPES = "favtypes";
 }
