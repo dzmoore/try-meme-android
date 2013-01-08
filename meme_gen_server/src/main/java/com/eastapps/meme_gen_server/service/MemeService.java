@@ -745,6 +745,76 @@ public class MemeService {
 		
 		return isValid;
 	}
+
+
+	public boolean saveFavType(int userId, int typeId) {
+		Session sesh = sessionFactory.openSession();
+		sesh.beginTransaction();
+		
+		boolean storeSuccess = false;
+		try {
+			final User user = new User();
+			user.setId(userId);
+			
+			final LvMemeType type = new LvMemeType();
+			type.setId(typeId);
+			
+			UserFavMemeType favType = new UserFavMemeType();
+			favType.setLvMemeType(type);
+			favType.setUser(user);
+			
+			final int resultId = Util.getId(sesh.save(favType));
+			
+			storeSuccess = resultId > 0;
+			
+			Util.commit(sesh);
+			
+		} catch (Exception e) {
+			logger.error("err while store fav type", e);
+			
+		} finally {
+			Util.close(sesh);
+		}
+		
+		return storeSuccess;
+	}
+
+
+	public boolean removeFavType(int userId, int typeId) {
+		boolean removeSuccess = false;
+		
+		final String queryString = StringUtils.join(new Object[] {
+			"delete ",
+			"from ", 
+			"	UserFavMemeType ufmt ",
+			"where ",
+			"	ufmt.lvMemeType.id = :typeid and ",
+			"	ufmt.user.id = :userid"
+		});
+		
+		Session sesh = sessionFactory.openSession();
+		sesh.beginTransaction();
+		
+		try {
+			final Query qry = sesh.createQuery(queryString);
+			qry.setInteger("userid", userId);
+			qry.setInteger("typeid", typeId);
+	
+			final int resultCount = qry.executeUpdate();
+			removeSuccess = resultCount > 0;
+			
+			Util.commit(sesh);
+			
+			
+		} catch (Exception e) {
+			logger.error("Err", e);
+			
+		} finally {
+			Util.close(sesh);
+		}
+		
+		return removeSuccess;
+	}
 }
 
 

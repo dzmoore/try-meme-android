@@ -169,6 +169,24 @@ public class HomeController {
 	    return memeService.storeNewUser(user);
 	}
 
+	@RequestMapping(value = "/user_data/user/{userid}/favtypes/{typeid}/store")
+	@ResponseBody
+	public boolean saveFavType(
+		@PathVariable("userid") final int userId, 
+		@PathVariable("typeid") final int typeId) 
+	{
+		return memeService.saveFavType(userId, typeId);
+	}
+
+	@RequestMapping(value = "/user_data/user/{userid}/favtypes/{typeid}/remove")
+	@ResponseBody
+	public boolean removeFavType(
+		@PathVariable("userid") final int userId,
+		@PathVariable("typeid") final int typeId)
+	{	
+    	return memeService.removeFavType(userId, typeId);
+	}
+
 
 }
 

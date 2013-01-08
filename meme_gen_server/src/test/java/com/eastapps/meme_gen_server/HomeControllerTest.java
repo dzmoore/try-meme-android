@@ -28,6 +28,7 @@ import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.User;
 import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
@@ -91,7 +92,7 @@ public class HomeControllerTest {
 		m.getMemeTexts().add(new MemeText(m, bottomText, Constants.BOTTOM, 26));
 		m.setUser(user);
 		
-		final HomeController controller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs));
+		final HomeController controller = homeCtrllr;
 
 		final IntResult result = controller.storeMeme(new ShallowMeme(m));
 		Assert.assertNotNull(result);
@@ -181,7 +182,7 @@ public class HomeControllerTest {
 	public void testGetSamples() {
 		final int memeTypeId = 1;
 		
-		HomeController cntrller = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs));
+		HomeController cntrller = homeCtrllr;
 		
 		ShallowMeme[] samples = cntrller.getSampleMemes(memeTypeId);
 		
@@ -193,5 +194,69 @@ public class HomeControllerTest {
 			TestCase.assertTrue(ea.getMemeTypeId() == memeTypeId);
 		}
 	}
+	
+	@Test
+	public void testSaveFavType() {
+		final int userId = 1;
+		final int typeId = 1;
+		
+		final boolean success = homeCtrllr.saveFavType(userId, typeId);
+		TestCase.assertTrue(success);
+		
+		TestCase.assertTrue(doesUserHasFavTypeId(userId, typeId));
+		
+	}
+
+	private boolean doesUserHasFavTypeId(final int userId, final int typeId) {
+		final ShallowMemeType[] favs = homeCtrllr.getFavTypesForUserId(userId);
+		boolean favTypeFound = false;
+		for (final ShallowMemeType ea : favs) {
+			if (ea.getTypeId() == typeId) {
+				favTypeFound = true;
+				break;
+			}
+		}
+		
+		return favTypeFound;
+	}
+	
+	@Test
+	public void testRemoveFavType() {
+		final int userId = 1;
+		final int typeId = 1;
+		
+		TestCase.assertTrue(homeCtrllr.saveFavType(userId, typeId));
+		
+		final boolean success = homeCtrllr.removeFavType(userId, typeId);
+		TestCase.assertTrue(success);
+		
+		TestCase.assertFalse(doesUserHasFavTypeId(userId, typeId));
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
