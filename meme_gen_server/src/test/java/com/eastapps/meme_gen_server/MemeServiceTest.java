@@ -109,6 +109,10 @@ public class MemeServiceTest {
 	@Test
 	public void testGetUserFavTypes() {
 		final int userId = 1;
+		final int typeId = 1;
+		
+		TestCase.assertTrue(memeSvc.saveFavType(userId, typeId));
+		
 		final List<ShallowMemeType> types = memeSvc.getFavoriteMemeTypesForUser(userId);
 		
 		TestCase.assertNotNull(types);

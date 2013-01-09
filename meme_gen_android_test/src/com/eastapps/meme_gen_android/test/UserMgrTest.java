@@ -64,6 +64,7 @@ public class UserMgrTest extends AndroidTestCase {
 		});
 	}
 	
+	
 	private void clearInstallFile() {
 		final File installation = new File(getContext().getFilesDir(), Constants.INSTALL_FILE);
 		
