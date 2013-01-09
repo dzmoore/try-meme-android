@@ -97,7 +97,19 @@ public class MemeServiceTest extends AndroidTestCase  {
 	}
 	
 	public void testGetFavMemes() {
-		final int userId = 1;
+		final int typeId = 1;
+		
+		final String newInstallKey = memeSvc.getNewInstallKey();
+		assertTrue(StringUtils.isNotBlank(newInstallKey));
+		
+		final ShallowUser user = new ShallowUser();
+		user.setUsername(newInstallKey);
+		user.setInstallKey(newInstallKey);
+		
+		final int userId = memeSvc.storeNewUser(user);
+		assertTrue(userId > 0);
+		
+		assertTrue(memeSvc.storeFavType(userId, typeId));
 		final List<ShallowMemeType> results = memeSvc.getFavMemeTypesForUser(userId);
 		
 		assertNotNull(results);
@@ -105,8 +117,52 @@ public class MemeServiceTest extends AndroidTestCase  {
 		assertTrue(StringUtils.isNotBlank(results.get(0).getTypeDescr()));
 	}
 	
+	public void testStoreFavType() {
+		final int typeId = 1;
+		
+		final String newInstallKey = memeSvc.getNewInstallKey();
+		assertTrue(StringUtils.isNotBlank(newInstallKey));
+		
+		final ShallowUser user = new ShallowUser();
+		user.setUsername(newInstallKey);
+		user.setInstallKey(newInstallKey);
+		
+		final int userId = memeSvc.storeNewUser(user);
+		assertTrue(userId > 0);
+		
+		final boolean saveSuccess = memeSvc.storeFavType(userId, typeId);
+		
+		assertTrue(saveSuccess);
+		
+		final List<ShallowMemeType> favTypes = memeSvc.getFavMemeTypesForUser(userId);
+		
+		assertNull(favTypes);
+		assertTrue(favTypes.size() == 1);
+		assertTrue(favTypes.get(0).getTypeId() == typeId);
+	}
 	
+	public void testRemoveFavType() {
+		final int typeId = 1;
+
+		final String newInstallKey = memeSvc.getNewInstallKey();
+		assertTrue(StringUtils.isNotBlank(newInstallKey));
+
+		final ShallowUser user = new ShallowUser();
+		user.setUsername(newInstallKey);
+		user.setInstallKey(newInstallKey);
+
+		final int userId = memeSvc.storeNewUser(user);
+		assertTrue(userId > 0);
+
+		final boolean saveSuccess = memeSvc.storeFavType(userId, typeId);
+
+		assertTrue(saveSuccess);
+
+		final boolean removeSuccess = memeSvc.removeFavType(userId, typeId);
+		assertTrue(removeSuccess);
+	}
 }
+
 
 
 

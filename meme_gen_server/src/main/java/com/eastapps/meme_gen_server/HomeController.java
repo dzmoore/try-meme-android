@@ -168,10 +168,10 @@ public class HomeController {
 	public int storeNewUser(@RequestBody final ShallowUser user) {
 	    return memeService.storeNewUser(user);
 	}
-
+	
 	@RequestMapping(value = "/user_data/user/{userid}/favtypes/{typeid}/store")
 	@ResponseBody
-	public boolean saveFavType(
+	public boolean storeFavType(
 		@PathVariable("userid") final int userId, 
 		@PathVariable("typeid") final int typeId) 
 	{

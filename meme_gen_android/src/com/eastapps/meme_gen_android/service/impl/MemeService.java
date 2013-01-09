@@ -167,6 +167,16 @@ public class MemeService implements IMemeService {
 	public List<ShallowMemeType> getFavMemeTypesForUser(final int userId) {
 		return client.getFavMemeTypesForUser(userId);
 	}
+
+	@Override
+	public boolean storeFavType(int userId, int typeId) {
+		return client.storeFavMeme(userId, typeId);
+	}
+
+	@Override
+	public boolean removeFavType(int userId, int typeId) {
+		return client.removeFavMeme(userId, typeId);
+	}
 	
 	
 	

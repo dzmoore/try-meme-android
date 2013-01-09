@@ -26,4 +26,8 @@ public interface IMemeService {
 	int storeNewUser(ShallowUser shallowUser);
 
 	List<ShallowMemeType> getFavMemeTypesForUser(int userId);
+
+	boolean storeFavType(int userId, int typeId);
+
+	boolean removeFavType(int userId, int typeId);
 }

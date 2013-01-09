@@ -760,6 +760,7 @@ public class MemeService {
 			type.setId(typeId);
 			
 			UserFavMemeType favType = new UserFavMemeType();
+			favType.setActive(true);
 			favType.setLvMemeType(type);
 			favType.setUser(user);
 			

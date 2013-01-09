@@ -200,7 +200,7 @@ public class HomeControllerTest {
 		final int userId = 1;
 		final int typeId = 1;
 		
-		final boolean success = homeCtrllr.saveFavType(userId, typeId);
+		final boolean success = homeCtrllr.storeFavType(userId, typeId);
 		TestCase.assertTrue(success);
 		
 		TestCase.assertTrue(doesUserHasFavTypeId(userId, typeId));
@@ -225,7 +225,7 @@ public class HomeControllerTest {
 		final int userId = 1;
 		final int typeId = 1;
 		
-		TestCase.assertTrue(homeCtrllr.saveFavType(userId, typeId));
+		TestCase.assertTrue(homeCtrllr.storeFavType(userId, typeId));
 		
 		final boolean success = homeCtrllr.removeFavType(userId, typeId);
 		TestCase.assertTrue(success);

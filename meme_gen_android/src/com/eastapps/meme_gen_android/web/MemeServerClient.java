@@ -284,6 +284,51 @@ public class MemeServerClient {
 		return types;
 	}
 	
+	public boolean storeFavMeme(int userId, int typeId) {
+		return getObject(Boolean.class, 
+			concatForUrl(
+				webSvcAddr,
+				"user_data",
+				"user",
+				userId,
+				"favtypes",
+				typeId,
+				"store"
+			)
+		);
+	}
+	
+	public boolean removeFavMeme(int userId, int typeId) {
+		return getObject(Boolean.class, 
+			concatForUrl(
+				webSvcAddr,
+				"user_data",
+				"user",
+				userId,
+				"favtypes",
+				typeId,
+				"remove"
+			)
+		);
+	}
+	
+	private static final String concatForUrl(final Object... parts) {
+		final StringBuilder sb = new StringBuilder();
+		
+		boolean isNotFirst = false;
+		for (final Object ea : parts) { 
+			if (isNotFirst) {
+				sb.append(Constants.URL_SEPARATOR);
+			}
+			
+			sb.append(ea);
+			
+			isNotFirst = true;
+		}
+		
+		return sb.toString();
+	}
+	
 	
 	
 }
