@@ -107,8 +107,8 @@ public class MemeServiceTest {
 	
 	
 	@Test
-	public void testGetUserFavTypes() {
-		final int userId = 1;
+	public void testStoreAndGetUserFavTypes() {
+		final int userId = createNewUser();
 		final int typeId = 1;
 		
 		TestCase.assertTrue(memeSvc.saveFavType(userId, typeId));
@@ -163,13 +163,18 @@ public class MemeServiceTest {
 	
 	@Test
 	public void testStoreUser() {
+		final int newId = createNewUser();
+		
+		TestCase.assertTrue(newId > 0);
+	}
+
+	private int createNewUser() {
 		final ShallowUser u = new ShallowUser();
 		u.setInstallKey(memeSvc.getNewInstallKey());
 		u.setUsername(u.getInstallKey());
 		
 		final int newId = memeSvc.storeNewUser(u);
-		
-		TestCase.assertTrue(newId > 0);
+		return newId;
 	}
 }
 

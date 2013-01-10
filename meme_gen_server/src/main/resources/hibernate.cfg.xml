@@ -8,6 +8,12 @@
   <property name="hibernate.connection.password">password</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/mgsdb</property>
   <property name="hibernate.connection.username">mgsdb_user</property>
+  
+  <!-- Use the C3P0 connection pool. -->
+  <property name="c3p0.min_size">3</property>
+  <property name="c3p0.max_size">5</property>
+  <property name="c3p0.timeout">1800</property>
+  
   <mapping class="com.eastapps.meme_gen_server.domain.MemeText"/>
   <mapping class="com.eastapps.meme_gen_server.domain.LvMemeType"/>
   <mapping class="com.eastapps.meme_gen_server.domain.MemeBackground"/>
