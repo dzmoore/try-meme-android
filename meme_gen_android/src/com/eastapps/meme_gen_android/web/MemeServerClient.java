@@ -257,7 +257,7 @@ public class MemeServerClient {
 		);
 			
 	}
-
+//	ue = "/user_data/user/{id}/favtypes/json")
 	public List<ShallowMemeType> getFavMemeTypesForUser(int userId) {
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
 		String result = Constants.EMPTY;
@@ -283,7 +283,7 @@ public class MemeServerClient {
 		
 		return types;
 	}
-	
+//	= "/user_data/user/{userid}/favtypes/{typeid}/store")
 	public boolean storeFavMeme(int userId, int typeId) {
 		return getObject(Boolean.class, 
 			concatForUrl(

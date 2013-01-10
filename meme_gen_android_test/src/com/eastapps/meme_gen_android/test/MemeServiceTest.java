@@ -136,7 +136,7 @@ public class MemeServiceTest extends AndroidTestCase  {
 		
 		final List<ShallowMemeType> favTypes = memeSvc.getFavMemeTypesForUser(userId);
 		
-		assertNull(favTypes);
+		assertNotNull(favTypes);
 		assertTrue(favTypes.size() == 1);
 		assertTrue(favTypes.get(0).getTypeId() == typeId);
 	}
