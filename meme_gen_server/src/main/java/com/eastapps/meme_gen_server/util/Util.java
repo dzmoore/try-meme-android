@@ -5,15 +5,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eastapps.meme_gen_server.constants.Constants;
 
 public class Util {
+	private static final Logger logger = LoggerFactory.getLogger(Util.class);
+	
 	public static int getInt(final Integer i) {
 		return i == null ? Constants.INVALID : i;
 	}
@@ -30,10 +32,15 @@ public class Util {
 	}
 	
 	public static void commit(final Session session) {
-		if (session != null) {
-			if (session.getTransaction() != null) {
-				session.getTransaction().commit();
-			}
+		try {
+    		if (session != null) {
+    			if (session.getTransaction() != null) {
+    				session.getTransaction().commit();
+    			}
+    		}
+    		
+		} catch (Exception e) {
+			logger.error("error committing session", e);
 		}
 	}
 	
@@ -41,7 +48,18 @@ public class Util {
 		if (sesh != null) {
 			try {
 				sesh.close();
-			} catch (Throwable t) {}
+			} catch (Throwable t) {
+			}
+		}
+	}
+	
+	public static void rollback(final Session sesh) {
+		if (sesh != null && sesh.getTransaction() != null) {
+			try {
+				sesh.getTransaction().rollback();
+				
+			} catch (Throwable t) {
+			}
 		}
 	}
 	
