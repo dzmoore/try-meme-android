@@ -73,19 +73,17 @@ public class MemeService {
 	}
 
 	public int storeMeme(final ShallowMeme shallowMeme) {
-		final Session sesh = sessionFactory.openSession();
+		final Session sesh = getSession();
 
 		int result = Constants.INVALID;
 
 		Meme meme = shallowMeme.toMeme();
 
 		try {
-
 			// save meme
 			sesh.beginTransaction();
 
 			result = Util.getId(sesh.save(meme));
-			Util.commit(sesh);
 
 			shallowMeme.setId(result);
 
@@ -95,11 +93,9 @@ public class MemeService {
 				shallowMeme.getTopText(), 
 				Constants.TOP,
 				shallowMeme.getTopTextFontSize()
-				);
+			);
 
-			sesh.beginTransaction();
 			topText.setId(Util.getId(sesh.save(topText)));
-			Util.commit(sesh);
 
 			// save bottom text
 			final MemeText bottomText = new MemeText(
@@ -107,32 +103,26 @@ public class MemeService {
 				shallowMeme.getBottomText(),
 				Constants.BOTTOM,
 				shallowMeme.getBottomTextFontSize()
-				);
+			);
 
-			sesh.beginTransaction();
 			bottomText.setId(Util.getId(sesh.save(bottomText)));
+			
 			Util.commit(sesh); 
 
-
-
 		} catch (Exception e) {
-			try {
-				sesh.getTransaction().rollback();
-			} catch (Exception e2) { }
-
+			Util.rollback(sesh);
+			
 			logger.error("error occurred while attempting to store meme", e);
 
 		} finally {
-			try {
-				sesh.close();
-			} catch (Exception e) { }
+			Util.close(sesh);
 		}
 
 		return result;
 	}
 	
 	public List<ShallowMemeType> getFavoriteMemeTypesForUser(final int userId) {
-		final Session sesh = sessionFactory.openSession();
+		final Session sesh = getSession();
 		
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>();
 		try {
@@ -171,11 +161,21 @@ public class MemeService {
 			}
 			
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("error occurred while attempting to find user favorites for user " + userId, e);
+			
+		} finally {
+			Util.close(sesh);
 		}
 		
 		
 		return types;
+	}
+
+
+	private org.hibernate.classic.Session getSession() {
+		return sessionFactory.getCurrentSession();
 	}
 
 
@@ -201,18 +201,18 @@ public class MemeService {
 			"sample3BottomText=[", sample1BottomText, "] "
 		}));
 
-		final Session session = sessionFactory.openSession();
+		final Session sesh = getSession();
 
 		try {
 			final StringBuilder overallResult = new StringBuilder();
 
-			session.beginTransaction();
 
 			final MemeBackground bg = new MemeBackground();
 			bg.setPath(backgroundFileName);
 			bg.setActive(true);
 
-			final Serializable bgIdResult = session.save(bg);
+			sesh.beginTransaction();
+			final Serializable bgIdResult = sesh.save(bg);
 
 			logger.debug(StringUtils.join(new Object[] {
 				"bg store result=[", bgIdResult, "]"
@@ -224,16 +224,11 @@ public class MemeService {
 				overallResult.append("background_store_result=["+bg.toString()+"]  ");
 			}
 
-
-			Util.commit(session);
-
-			session.beginTransaction();
-
 			final LvMemeType memeType = new LvMemeType();
 			memeType.setActive(true);
 			memeType.setDescr(memeTitle);
 
-			final Serializable memeTypeResult = session.save(memeType);
+			final Serializable memeTypeResult = sesh.save(memeType);
 
 			logger.debug(StringUtils.join(new Object[] {
 				"meme type store result=[", memeTypeResult, "]"
@@ -245,30 +240,32 @@ public class MemeService {
 				overallResult.append("memeType_store_result=[" + memeType.toString() + "]");
 			}
 
-			Util.commit(session);
-
-			doAddSampleMemeAdmin(sample1TopText, sample1BottomText, session, overallResult, bg, memeType);
-			doAddSampleMemeAdmin(sample2TopText, sample2BottomText, session, overallResult, bg, memeType);
-			doAddSampleMemeAdmin(sample3TopText, sample3BottomText, session, overallResult, bg, memeType);
+			doAddSampleMemeAdmin(sample1TopText, sample1BottomText, sesh, overallResult, bg, memeType);
+			doAddSampleMemeAdmin(sample2TopText, sample2BottomText, sesh, overallResult, bg, memeType);
+			doAddSampleMemeAdmin(sample3TopText, sample3BottomText, sesh, overallResult, bg, memeType);
+			
+			Util.commit(sesh);
 
 			model.addAttribute("controllerMessage", overallResult.toString());
 
+		} catch (Exception e) {
+			Util.rollback(sesh);
+			
+			logger.error("err", e);
+			
 		} finally {
-			if (session != null) {
-				session.close();
-			}
+			Util.close(sesh);
 		}
 	}
 
 	private void doAddSampleMemeAdmin(
 		final String sample1TopText, 
 		final String sample1BottomText, 
-		final Session session,
+		final Session sesh,
 		final StringBuilder overallResult, 
 		final MemeBackground bg, 
 		final LvMemeType memeType) 
 	{
-
 		final Meme meme = new Meme();
 
 		meme.setLvMemeType(memeType);
@@ -276,9 +273,7 @@ public class MemeService {
 		meme.getUser().setId(ADMIN_USER_ID);
 		meme.setIsSampleMeme(true);
 
-		session.beginTransaction();
-
-		final Serializable meme1Result = session.save(meme);
+		final Serializable meme1Result = sesh.save(meme);
 
 		if (meme1Result instanceof Integer) {
 			meme.setId((Integer)meme1Result);
@@ -286,45 +281,29 @@ public class MemeService {
 			overallResult.append(meme.toString()).append("]");
 		}
 
-		Util.commit(session);
-
-		session.beginTransaction();
 		final MemeText txtTop = new MemeText();
 		txtTop.setText(sample1TopText);
 		txtTop.setTextType(Constants.TOP);
 		txtTop.setMeme(meme);
-		try {
-			txtTop.setId((Integer)session.save(txtTop));
-		} catch (Exception e) {
-			logger.error("err", e);
-		}
+		txtTop.setId((Integer)sesh.save(txtTop));
 
-		Util.commit(session);
-
-		session.beginTransaction();
 		final MemeText txtBtm = new MemeText();
 		txtBtm.setText(sample1BottomText);
 		txtBtm.setTextType(Constants.BOTTOM);
 		txtBtm.setMeme(meme);
-		try {
-			txtBtm.setId((Integer)session.save(txtBtm));
-		} catch (Exception e) {
-			logger.error("err", e);
-		}
-		Util.commit(session);	
-
+		txtBtm.setId((Integer)sesh.save(txtBtm));
 	}
 
 	public byte[] getMemeBackground(final int memeId) throws IOException {
-		final Session session = sessionFactory.openSession();
+		final Session sesh = getSession();
 
 		byte[] resultBytes = new byte[0];
 		try {
-			session.beginTransaction();
+			sesh.beginTransaction();
 
-			final Query qry = session.createQuery("from Meme where id = :id");
-			//	    qry.setInteger("bgId", Integer.parseInt(backgroundId));
+			final Query qry = sesh.createQuery("from Meme where id = :id");
 			qry.setInteger("id", memeId);
+			
 			final List<?> results = qry.list();
 
 			MemeBackground bg = new MemeBackground();
@@ -338,8 +317,6 @@ public class MemeService {
 				}
 			}
 
-
-			//	    final File img = new File("/home/dylan/workspace/meme_gen/meme_gen_server/docs/imgs/tmimitw.jpg");
 			final String imgPath = StringUtils.join(new Object[]{memeImagesRootDir, File.separator, bg.getPath()});
 
 			logger.debug(StringUtils.join(new Object[] {"imgPath=[", imgPath, "]"}));
@@ -348,53 +325,54 @@ public class MemeService {
 			resultBytes = Util.getBytesFromFile(img);
 
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("error occurred while attempting to find bg img", e);
 
 		} finally {
-			if (session != null) {
-				session.close();
-			}
+			Util.close(sesh);
 		}
 
 		return resultBytes;
 	}
 
 	public ShallowMeme getShallowMeme(final int memeId) {
-		final Session session = sessionFactory.openSession();
+		final Session sesh = getSession();
 
 		ShallowMeme meme = new ShallowMeme();
 		try {
-			meme = new ShallowMeme(doGetMeme(memeId, session));
+			sesh.beginTransaction();
+			
+			meme = new ShallowMeme(doGetMeme(memeId, sesh));
 
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("err", e);
-			session.clear();
 
 		} finally {
-			try {
-				session.close();
-			} catch (Exception e) { /* */ }
+			Util.close(sesh);
 		}
 
 		return meme;
 	}
 
 	public Meme getMeme(final int memeId) {
-		final Session session = sessionFactory.openSession();
+		final Session sesh = getSession();
 
 		Meme meme = new Meme();
 		try {
-			session.beginTransaction();
+			sesh.beginTransaction();
 
-			meme = doGetMeme(memeId, session);
+			meme = doGetMeme(memeId, sesh);
 
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("error occurred while attempting to meme", e);
 
 		} finally {
-			if (session != null) {
-				session.close();
-			}
+			Util.close(sesh);
 		}
 
 		return meme;
@@ -407,23 +385,19 @@ public class MemeService {
 		final List<?> result = qry.list();
 
 		Meme meme = new Meme(); 
-		try {
-			if (result != null && result.size() > 0) {
-				final Object obj = result.get(0);
+		if (result != null && result.size() > 0) {
+			final Object obj = result.get(0);
 
-				if (obj instanceof Meme) {
-					meme = (Meme)obj;
-				}
+			if (obj instanceof Meme) {
+				meme = (Meme)obj;
 			}
-		} catch (Exception e) {
-			logger.error("err", e);
 		}
 
 		return meme;
 	}
 
 	public List<ShallowMeme> getSampleMemes(final int memeTypeId) {
-		final Session sesh = sessionFactory.openSession();
+		final Session sesh = getSession();
 
 		List<ShallowMeme> samples = new ArrayList<ShallowMeme>(0);
 		try {
@@ -431,12 +405,12 @@ public class MemeService {
 			samples = doGetSampleMemes(memeTypeId, sesh);
 
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("error occurred", e);
 
 		} finally {
-			try {
-				sesh.close();
-			} catch (Exception e) {}
+			Util.close(sesh);
 		}
 
 		return samples;
@@ -448,22 +422,16 @@ public class MemeService {
 		final Query qry = session.createQuery("from Meme m where m.lvMemeType.id = :id and m.isSampleMeme = true");
 		qry.setInteger("id", memeTypeId);
 
-		try {
-			final List<?> memes = qry.list();
+		final List<?> memes = qry.list();
 
-			boolean typeMatches = false;
-			for (final Object ea : memes) {
-				if (typeMatches || ea instanceof Meme) {
-					samples.add(new ShallowMeme((Meme)ea));
+		boolean typeMatches = false;
+		for (final Object ea : memes) {
+			if (typeMatches || ea instanceof Meme) {
+				samples.add(new ShallowMeme((Meme)ea));
 
-					typeMatches = true;
-				}
+				typeMatches = true;
 			}
-
-		} catch (Exception e) {
-			logger.error("error occurred while getting sample memes", e);
 		}
-
 
 		return samples;
 	}
@@ -488,10 +456,13 @@ public class MemeService {
 	public List<ShallowMemeType> getAllMemeTypes() {
 		final List<ShallowMemeType> types = new ArrayList<ShallowMemeType>();
 
-		final Session sesh = sessionFactory.openSession();
-		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true");
-
+		final Session sesh = getSession();
+		
 		try {
+			sesh.beginTransaction();
+			
+    		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true");
+    		
 			final List<?> results = qry.list();
 
 			boolean typeMatch = false;
@@ -508,21 +479,19 @@ public class MemeService {
 			}
 
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("error occurred while attempting to get all meme types", e);
 
 		} finally {
-			try {
-				sesh.close();
-
-			} catch (Exception e) { }
+			Util.close(sesh);
 		}
 
 		return types;
 	}
 
 	public byte[] getThumbForType(final int typeId) {
-
-		final Session session = sessionFactory.openSession();
+		final Session session = getSession();
 
 		byte[] resultBytes = new byte[0];
 		try {
@@ -567,12 +536,12 @@ public class MemeService {
 			}
 
 		} catch (Exception e) {
+			Util.rollback(session);
+			
 			logger.error("error occurred while attempting to find bg img", e);
 
 		} finally {
-			if (session != null) {
-				session.close();
-			}
+			Util.close(session);
 		}
 
 		return resultBytes;
@@ -582,7 +551,7 @@ public class MemeService {
 	public ShallowUser getUser(final int userId) {
 		ShallowUser user = new ShallowUser();
 		
-		final Session sesh = sessionFactory.openSession();
+		final Session sesh = getSession();
 		try {
 			sesh.beginTransaction();
 			final Query qry = sesh.createQuery("from User u where u.id = :id");
@@ -601,28 +570,17 @@ public class MemeService {
 			
 			
 		} catch (final Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("error occurred while attempting to find user for id " + userId, e);
+			
+		} finally {
+			Util.close(sesh);
 		}
 		
 		return user;
 	}
 	
-	@Deprecated // probably..
-	private ShallowUser getUserForDeviceId(final String deviceId) {
-		ShallowUser user = new ShallowUser();
-		
-		final Session sesh = sessionFactory.openSession();
-		try {
-			
-			
-		} catch (final Exception e) {
-			logger.error("error occurred while attempting to find user for device id " + deviceId, e);
-		}
-		
-		return user;
-	}
-
-
 	public String getNewInstallKey() { 
 		String key = UUID.randomUUID().toString();
 		
@@ -630,33 +588,31 @@ public class MemeService {
 		
 		boolean uniqueKeyNotFound = true;
 		
-		Session sesh = null;
+		Session sesh = getSession();
 		try {
+			sesh.beginTransaction();
+			
     		while (uniqueKeyNotFound) {
         		di.setUniqueId(key);
         		di.setUser(null);
         		
-        		sesh = sessionFactory.openSession();
+        		sesh = getSession();
         		sesh.beginTransaction();
         		
         		final Serializable result = sesh.save(di);
-        		Util.commit(sesh);
-        		
-    			Util.close(sesh);
-    			
-    			sesh = sessionFactory.openSession();
-    			sesh.beginTransaction();
     			
         		final Query qry = sesh.createQuery("from DeviceInfo d where d.uniqueId = :installKey");
         		qry.setString("installKey", key);
         	
         		final List<?> results = qry.list();
         		uniqueKeyNotFound = results == null || results.size() != 1;
-        		
-        		Util.close(sesh);
     		}
     		
+    		Util.commit(sesh);
+    		
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
     		logger.error("err", e);
     		
     	} finally {
@@ -671,22 +627,21 @@ public class MemeService {
 		int userId = Constants.INVALID;
 		
 		if (isInstallKeyValid(user)) {
-    		Session sesh = sessionFactory.openSession();
-    		sesh.beginTransaction();
-    		
+			
+    		Session sesh = getSession();
     		try {
+        		sesh.beginTransaction();
+        		
     			final User u = new User();
     			u.setActive(true);
     			u.setUsername(user.getUsername());
     			
     			userId = Util.getId(sesh.save(u));
-    			Util.commit(sesh);
-    			Util.close(sesh);
     			
     			if (userId > 0) {
     				u.setId(userId);
     				
-    				sesh = sessionFactory.openSession();
+    				sesh = getSession();
     				sesh.beginTransaction();
     				
         			final DeviceInfo devInfo = new DeviceInfo();
@@ -694,12 +649,21 @@ public class MemeService {
         			devInfo.setUser(u);
         			
         			final int devId = Util.getId(sesh.save(devInfo));
+        			
         			if (devId <= 0) {
         				logger.warn("dev info didnt store", new Exception("stack trace only"));
+        				
+        			} else {
+        				Util.commit(sesh);
         			}
+        			
+    			} else {
+    				logger.warn("user not stored");
     			}
     			
     		} catch (Exception e) {
+    			Util.rollback(sesh);
+    			
     			logger.error("err", e);
     			
     		} finally {
@@ -721,8 +685,11 @@ public class MemeService {
 		boolean isValid = false;
 		
 		if (u != null && StringUtils.isNotBlank(u.getInstallKey())) {
-    		final Session sesh = sessionFactory.openSession();
+    		final Session sesh = getSession();
+    		
     		try {
+        		sesh.beginTransaction();
+        		
         		final Query qry = sesh.createQuery("from DeviceInfo d where d.uniqueId = :installKey");
         		qry.setString("installKey", u.getInstallKey());
         		
@@ -731,11 +698,22 @@ public class MemeService {
         			if (results.get(0) instanceof DeviceInfo) {
         				final DeviceInfo devInfo = (DeviceInfo)results.get(0);
         				
-        				isValid = System.currentTimeMillis() - devInfo.getLastMod().getTime() <= installKeyTimeoutMs;
+        				final long elapsedTime = System.currentTimeMillis() - devInfo.getLastMod().getTime();
+        				
+        				if (logger.isDebugEnabled()) {
+        					logger.debug(StringUtils.join(new Object[] {
+        						"check install key validity; installKeyTimeout=",
+        						installKeyTimeoutMs, "; elapsedTime=", elapsedTime, ";"}
+        					));
+        				}
+        				
+						isValid = elapsedTime <= installKeyTimeoutMs;
         			}
         		}
         		
     		} catch (Exception e) {
+    			Util.rollback(sesh);
+    			
     			logger.error("err", e);
     			
     		} finally {
@@ -745,19 +723,18 @@ public class MemeService {
 		
 		return isValid;
 	}
-
-
+	
 	public boolean saveFavType(int userId, int typeId) {
-		Session sesh = sessionFactory.openSession();
-		sesh.beginTransaction();
+		Session sesh = getSession();
 		
 		boolean storeSuccess = false;
+		
 		try {
-			final User user = new User();
-			user.setId(userId);
+    		sesh.beginTransaction();
+    		
+			final User user = (User) sesh.get(User.class, userId);
 			
-			final LvMemeType type = new LvMemeType();
-			type.setId(typeId);
+			final LvMemeType type = (LvMemeType) sesh.get(LvMemeType.class, typeId);
 			
 			UserFavMemeType favType = new UserFavMemeType();
 			favType.setActive(true);
@@ -771,6 +748,8 @@ public class MemeService {
 			Util.commit(sesh);
 			
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("err while store fav type", e);
 			
 		} finally {
@@ -793,10 +772,11 @@ public class MemeService {
 			"	ufmt.user.id = :userid"
 		});
 		
-		Session sesh = sessionFactory.openSession();
-		sesh.beginTransaction();
+		Session sesh = getSession();
 		
 		try {
+			sesh.beginTransaction();
+			
 			final Query qry = sesh.createQuery(queryString);
 			qry.setInteger("userid", userId);
 			qry.setInteger("typeid", typeId);
@@ -806,8 +786,9 @@ public class MemeService {
 			
 			Util.commit(sesh);
 			
-			
 		} catch (Exception e) {
+			Util.rollback(sesh);
+			
 			logger.error("Err", e);
 			
 		} finally {

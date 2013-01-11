@@ -2,24 +2,28 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory name="">
-  <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
-  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">password</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost/mgsdb</property>
-  <property name="hibernate.connection.username">mgsdb_user</property>
-  
-  <!-- Use the C3P0 connection pool. -->
-  <property name="c3p0.min_size">3</property>
-  <property name="c3p0.max_size">5</property>
-  <property name="c3p0.timeout">1800</property>
-  
-  <mapping class="com.eastapps.meme_gen_server.domain.MemeText"/>
-  <mapping class="com.eastapps.meme_gen_server.domain.LvMemeType"/>
-  <mapping class="com.eastapps.meme_gen_server.domain.MemeBackground"/>
-  <mapping class="com.eastapps.meme_gen_server.domain.Meme"/>
-  <mapping class="com.eastapps.meme_gen_server.domain.User"/>
-  <mapping class="com.eastapps.meme_gen_server.domain.DeviceInfo"/>
-  <mapping class="com.eastapps.meme_gen_server.domain.UserFavMemeType"/>
- </session-factory>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/mgsdb</property>
+        <property name="hibernate.connection.username">mgsdb_user</property>
+        
+        <!-- Use the C3P0 connection pool. -->
+        <property name="c3p0.min_size">3</property>
+        <property name="c3p0.max_size">5</property>
+        <property name="c3p0.timeout">1800</property>
+        
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+        
+        
+        <mapping class="com.eastapps.meme_gen_server.domain.MemeText" />
+        <mapping class="com.eastapps.meme_gen_server.domain.LvMemeType" />
+        <mapping class="com.eastapps.meme_gen_server.domain.MemeBackground" />
+        <mapping class="com.eastapps.meme_gen_server.domain.Meme" />
+        <mapping class="com.eastapps.meme_gen_server.domain.User" />
+        <mapping class="com.eastapps.meme_gen_server.domain.DeviceInfo" />
+        <mapping class="com.eastapps.meme_gen_server.domain.UserFavMemeType" />
+    </session-factory>
 </hibernate-configuration>

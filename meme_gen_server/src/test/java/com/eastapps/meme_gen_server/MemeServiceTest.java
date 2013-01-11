@@ -47,9 +47,13 @@ public class MemeServiceTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		if (sessionFactory != null) {
-			sessionFactory.close();
+	public void tearDown() {
+		try {
+    		if (sessionFactory != null) {
+    			sessionFactory.close();
+    		}
+		} catch (Throwable e) {
+			
 		}
 	}
 	
@@ -171,6 +175,9 @@ public class MemeServiceTest {
 	private int createNewUser() {
 		final ShallowUser u = new ShallowUser();
 		u.setInstallKey(memeSvc.getNewInstallKey());
+		
+		TestCase.assertTrue(StringUtils.isNotBlank(u.getInstallKey()));
+		
 		u.setUsername(u.getInstallKey());
 		
 		final int newId = memeSvc.storeNewUser(u);
