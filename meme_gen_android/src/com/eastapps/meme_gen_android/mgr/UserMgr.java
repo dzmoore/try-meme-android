@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import android.content.Context;
 import android.util.Log;
@@ -258,4 +259,36 @@ public class UserMgr {
 		callback.callback(inst.favTypes);
 	}
 
+	public static void saveFavForUser(int typeId, ICallback<Boolean> iCallback) {
+		final UserMgr inst = getInstance();
+		final ShallowUser u = getUserSync();
+		
+		iCallback.callback(inst.memeSvc.storeFavType(u.getId(), typeId));
+	}
+	
+	public static ShallowUser getUserSync() {
+		final AtomicReference<ShallowUser> u = new AtomicReference<ShallowUser>();
+		
+		getUser(new ICallback<ShallowUser>() {
+			@Override
+			public void callback(ShallowUser obj) {
+				u.set(obj);
+			}
+		});
+		
+		return u.get();
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
