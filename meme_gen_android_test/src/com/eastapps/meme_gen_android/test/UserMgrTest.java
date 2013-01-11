@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import junit.framework.TestCase;
+
 import android.test.AndroidTestCase;
 import android.util.Log;
 
@@ -56,12 +58,74 @@ public class UserMgrTest extends AndroidTestCase {
 	}
 	
 	public void testGetFavTypes() {
+		clearInstallFile();
+		
+		final ShallowUser user = getOrCreateUser();
+		
+		doTestGetFavMemes(false);
+	}
+
+	private void doTestGetFavMemes(final boolean secondAttempt) {
 		UserMgr.getFavMemeTypes(new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> obj) {
-				assertNotNull(obj);
+				if (obj == null) {
+					if (secondAttempt) {
+						TestCase.fail();
+						
+					} else {
+    					final int typeId = 1;
+    					doSaveFavType(typeId);
+    					doTestGetFavMemes(true);
+					}
+				}
+			}
+
+			private void doSaveFavType(final int typeId) {
+				UserMgr.saveFavForUser(
+					typeId,
+					new ICallback<Boolean>() {
+						@Override
+						public void callback(Boolean obj) {
+							TestCase.assertNotNull(obj);
+							TestCase.assertTrue(obj);
+							
+							
+							
+						}
+					});
 			}
 		});
+	}
+
+	private ShallowUser getOrCreateUser() {
+		final AtomicReference<ShallowUser> u = new AtomicReference<ShallowUser>();
+		UserMgr.getUser(new ICallback<ShallowUser>() {
+			@Override
+			public void callback(ShallowUser obj) {
+				u.set(obj);
+			}
+		});
+		
+		return u.get();
+	}
+	
+	public void testSaveFavType() {
+		final int typeId = 1;
+		
+		clearInstallFile();
+		
+		final ShallowUser u = getOrCreateUser();
+		UserMgr.saveFavForUser(
+			typeId,
+			new ICallback<Boolean>() {
+				@Override
+				public void callback(Boolean obj) {
+					TestCase.assertNotNull(obj);
+					TestCase.assertTrue(obj);
+				}
+        	});
+		
 	}
 	
 	
