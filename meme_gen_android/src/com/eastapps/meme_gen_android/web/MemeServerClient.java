@@ -262,7 +262,7 @@ public class MemeServerClient {
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
 		String result = Constants.EMPTY;
 		
-		result = webClient.getJSONObject(Conca.t(
+		final String addr = Conca.t(
 			webSvcAddr,
 			Constants.URL_SEPARATOR,
 			"user_data",
@@ -274,7 +274,9 @@ public class MemeServerClient {
 			"favtypes",
 			Constants.URL_SEPARATOR,
 			webSvcJsonSuffix
-		));
+		);
+		
+		result = webClient.getJSONObject(addr);
 		
 		if (StringUtils.isNotBlank(result)) {
 			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();

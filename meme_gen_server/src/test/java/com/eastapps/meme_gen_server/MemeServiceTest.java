@@ -122,7 +122,7 @@ public class MemeServiceTest {
 		TestCase.assertNotNull(types);
 		TestCase.assertTrue(types.size() > 0);
 		
-		TestCase.assertTrue(types.get(0).getTypeId() > 0);
+		TestCase.assertTrue(types.get(0).getTypeId() == typeId);
 		TestCase.assertTrue(StringUtils.isNotBlank(types.get(0).getTypeDescr()));
 	}
 	

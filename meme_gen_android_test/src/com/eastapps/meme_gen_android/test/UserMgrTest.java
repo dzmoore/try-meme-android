@@ -66,7 +66,7 @@ public class UserMgrTest extends AndroidTestCase {
 	}
 
 	private void doTestGetFavMemes(final boolean secondAttempt) {
-		UserMgr.getFavMemeTypes(new ICallback<List<ShallowMemeType>>() {
+		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> obj) {
 				if (obj == null) {
@@ -126,6 +126,14 @@ public class UserMgrTest extends AndroidTestCase {
 				}
         	});
 		
+		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+			@Override
+			public void callback(List<ShallowMemeType> obj) {
+				TestCase.assertNotNull(obj);
+				TestCase.assertTrue(obj.size() == 1);
+				
+			}
+		});
 	}
 	
 	
@@ -135,6 +143,51 @@ public class UserMgrTest extends AndroidTestCase {
 		if (installation.exists()) {
 			installation.delete();
 		}
+	}
+	
+	public void testRemoveFavType() {
+		final int typeId = 1;
+		
+		clearInstallFile();
+		
+		final ShallowUser u = getOrCreateUser();
+		UserMgr.saveFavForUser(
+			typeId,
+			new ICallback<Boolean>() {
+				@Override
+				public void callback(Boolean obj) {
+					TestCase.assertNotNull(obj);
+					TestCase.assertTrue(obj);
+				}
+    	});
+		
+		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+			@Override
+			public void callback(List<ShallowMemeType> obj) {
+				TestCase.assertNotNull(obj);
+				TestCase.assertTrue(obj.size() == 1);
+				
+			}
+		});
+		
+		UserMgr.removeFavForUser(
+			typeId,
+			new ICallback<Boolean>() {
+				@Override
+				public void callback(Boolean obj) {
+					TestCase.assertNotNull(obj);
+					TestCase.assertTrue(obj);
+				}
+		});
+		
+		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+			@Override
+			public void callback(List<ShallowMemeType> obj) {
+				TestCase.assertNotNull(obj);
+				TestCase.assertTrue(obj.size() == 0);
+				
+			}
+		});
 	}
 }
 

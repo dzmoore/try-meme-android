@@ -99,15 +99,7 @@ public class MemeServiceTest extends AndroidTestCase  {
 	public void testGetFavMemes() {
 		final int typeId = 1;
 		
-		final String newInstallKey = memeSvc.getNewInstallKey();
-		assertTrue(StringUtils.isNotBlank(newInstallKey));
-		
-		final ShallowUser user = new ShallowUser();
-		user.setUsername(newInstallKey);
-		user.setInstallKey(newInstallKey);
-		
-		final int userId = memeSvc.storeNewUser(user);
-		assertTrue(userId > 0);
+		final int userId = createNewUser();
 		
 		assertTrue(memeSvc.storeFavType(userId, typeId));
 		final List<ShallowMemeType> results = memeSvc.getFavMemeTypesForUser(userId);
@@ -116,10 +108,8 @@ public class MemeServiceTest extends AndroidTestCase  {
 		assertTrue(results.size() > 0);
 		assertTrue(StringUtils.isNotBlank(results.get(0).getTypeDescr()));
 	}
-	
-	public void testStoreFavType() {
-		final int typeId = 1;
-		
+
+	private int createNewUser() {
 		final String newInstallKey = memeSvc.getNewInstallKey();
 		assertTrue(StringUtils.isNotBlank(newInstallKey));
 		
@@ -129,6 +119,13 @@ public class MemeServiceTest extends AndroidTestCase  {
 		
 		final int userId = memeSvc.storeNewUser(user);
 		assertTrue(userId > 0);
+		return userId;
+	}
+	
+	public void testStoreFavType() {
+		final int typeId = 1;
+		
+		final int userId = createNewUser();
 		
 		final boolean saveSuccess = memeSvc.storeFavType(userId, typeId);
 		
@@ -144,15 +141,7 @@ public class MemeServiceTest extends AndroidTestCase  {
 	public void testRemoveFavType() {
 		final int typeId = 1;
 
-		final String newInstallKey = memeSvc.getNewInstallKey();
-		assertTrue(StringUtils.isNotBlank(newInstallKey));
-
-		final ShallowUser user = new ShallowUser();
-		user.setUsername(newInstallKey);
-		user.setInstallKey(newInstallKey);
-
-		final int userId = memeSvc.storeNewUser(user);
-		assertTrue(userId > 0);
+		final int userId = createNewUser();
 
 		final boolean saveSuccess = memeSvc.storeFavType(userId, typeId);
 

@@ -43,7 +43,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 
 	private void initListItems() {
 		UserMgr.initialize(getBaseContext());
-		UserMgr.getFavMemeTypes(new ICallback<List<ShallowMemeType>>() {
+		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> favTypes) {
 				handleGetFavMemeTypes(favTypes);

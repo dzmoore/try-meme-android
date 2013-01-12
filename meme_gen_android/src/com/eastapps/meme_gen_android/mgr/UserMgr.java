@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import android.content.Context;
+import android.location.Address;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.service.impl.MemeService;
@@ -104,19 +105,22 @@ public class UserMgr {
 
 	private void initFieldsIntoMap(final File installation) {
 		// no install file, so a new user must be created;
-		initUser(installation);
+		initUser();
 		
 		// query for fav types
-		queryForAndInitFavTypes(installation);
+		queryForAndInitFavTypes();
+		
+		// init the install map
+		createNewInstallMapAndAddValues();
 	}
 
-	private void queryForAndInitFavTypes(File installation) {
+	private void queryForAndInitFavTypes() {
 		if (user != null && memeSvc != null) {
 			favTypes = memeSvc.getFavMemeTypesForUser(user.getId());
 		}
 	}
 
-	private void initUser(final File installation) {
+	private void initUser() {
 		// get a new install key
 		final String installKey = memeSvc.getNewInstallKey();
 		
@@ -136,8 +140,6 @@ public class UserMgr {
 			newUser.setId(newUserId);
 			this.user = newUser;
 			
-		
-			
 		} else {
 			Log.w("unable to create new user", new Exception("stack trace only"));
 		}
@@ -147,8 +149,6 @@ public class UserMgr {
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(installation);
-			
-			createNewInstallMapAndAddValues();
 			
 			// write the map to the install file
 			out.write(new Gson().toJson(installMap).getBytes());
@@ -170,9 +170,9 @@ public class UserMgr {
 		// create the install map and add the user object
 		if (installMap == null) {
 			this.installMap = new HashMap<String, String>();
-		
-			addValuesToInstallMap();
 		}
+		
+		addValuesToInstallMap();
 	}
 
 	private void readMapFromInstallFile(final File installation) {
@@ -231,30 +231,38 @@ public class UserMgr {
 		if (user != null) {
 			installMap.put(Constants.INSTALL_KEY_USER, new Gson().toJson(user));
 		}
+		
+		if (favTypes != null) {
+			installMap.put(Constants.INSTALL_KEY_FAV_TYPES, new Gson().toJson(favTypes));
+		}
 	}
 
-	public static synchronized void getFavMemeTypes(final ICallback<List<ShallowMemeType>> callback) {
+	public static synchronized void getFavMemeTypes(final boolean refreshValue, final ICallback<List<ShallowMemeType>> callback) {
 		final UserMgr inst = getInstance();
 		
-		if (inst.favTypes == null) {
-			getUser(new ICallback<ShallowUser>() {
-				@Override
-				public void callback(ShallowUser user) {
-					try {
-						final Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();	
+		getUser(new ICallback<ShallowUser>() {
+			@Override
+			public void callback(ShallowUser user) {
+				try {
+					if (refreshValue) {
+						inst.queryForAndInitFavTypes();
 						
-						inst.favTypes = 
-							new Gson().fromJson(
-								inst.getInstallMapLazily().get(Constants.INSTALL_KEY_FAV_TYPES),
-								listType
-							);
-	
-					} catch (Exception e) {
-						Log.e(TAG, "err", e);
+						inst.addValuesToInstallMap();
 					}
+					
+					final Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();	
+					
+					inst.favTypes = 
+						new Gson().fromJson(
+							inst.getInstallMapLazily().get(Constants.INSTALL_KEY_FAV_TYPES),
+							listType
+					);
+
+				} catch (Exception e) {
+					Log.e(TAG, "err", e);
 				}
-			});
-		}
+			}
+		});
 		
 		callback.callback(inst.favTypes);
 	}
@@ -277,6 +285,13 @@ public class UserMgr {
 		});
 		
 		return u.get();
+	}
+
+	public static void removeFavForUser(int typeId, ICallback<Boolean> iCallback) {
+		final UserMgr inst = getInstance();
+		final ShallowUser u = getUserSync();
+		
+		iCallback.callback(inst.memeSvc.removeFavType(u.getId(), typeId));
 	}
 
 }
