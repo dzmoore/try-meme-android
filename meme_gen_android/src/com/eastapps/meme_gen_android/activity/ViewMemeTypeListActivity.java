@@ -6,12 +6,15 @@ import java.util.List;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
+import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
+import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
@@ -28,21 +31,26 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		MemeService.initialize(this);
 		memeService = MemeService.getInstance();	
 		
+		CacheMgr.initialize(this);
+		
 		setContentView(R.layout.meme_list);
 		
 		items = Collections.emptyList();
+		
+		final Toast loadingToast = Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT);
+		loadingToast.show();
 		
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				initListItems();
-				
 			}
+			
 		}).start();
 	}
 
 	private void initListItems() {
-		UserMgr.initialize(getBaseContext());
+		UserMgr.initialize(this);
 		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> favTypes) {
@@ -65,7 +73,13 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 
 	private void handleGetFavMemeTypes(List<ShallowMemeType> favTypes) {
-		items = memeService.getAllMemeTypesListData();
+		if (CacheMgr.getInstance().containsKey(Constants.INSTALL_KEY_ALL_TYPE_LIST_DATA)) {
+			items = CacheMgr.getInstance().getListFromCache(Constants.INSTALL_KEY_ALL_TYPE_LIST_DATA, MemeListItemData.class);
+			
+		} else {
+			items = memeService.getAllMemeTypesListData();
+			CacheMgr.getInstance().addToCache(Constants.INSTALL_KEY_ALL_TYPE_LIST_DATA, items);
+		}
 		
 		for (final ShallowMemeType eaFavType : favTypes) {
 			for (final MemeListItemData eaListItem : items) {

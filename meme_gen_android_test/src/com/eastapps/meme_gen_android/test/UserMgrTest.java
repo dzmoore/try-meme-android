@@ -9,6 +9,7 @@ import junit.framework.TestCase;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -20,6 +21,7 @@ public class UserMgrTest extends AndroidTestCase {
 	@Override
 	public void setUp() {
 		UserMgr.initialize(getContext());
+		CacheMgr.initialize(getContext());
 	}
 
 	@Override
