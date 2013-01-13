@@ -1,18 +1,22 @@
 package com.eastapps.meme_gen_android.domain;
 
+import java.io.ByteArrayInputStream;
+
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 
-public class MemeListItemData implements Identifiable, Parcelable{
-	private Bitmap thumb;
+public class MemeListItemData implements Identifiable, Parcelable {
+	private transient Bitmap thumb;
 	private int id;
 	private ShallowMemeType memeType;
 	private boolean isFavorite;
+	private byte[] thumbBytes;
 	
 	public MemeListItemData() {
 		super();
@@ -21,6 +25,10 @@ public class MemeListItemData implements Identifiable, Parcelable{
 		thumb = null;
 		memeType = new ShallowMemeType();
 		isFavorite = false;
+	}
+	
+	public void setId(final int id) {
+		this.id = id;
 	}
 
 	@Override
@@ -62,12 +70,26 @@ public class MemeListItemData implements Identifiable, Parcelable{
 		return id;
 	}
 
-	public Bitmap getThumb() {
+	public synchronized Bitmap getThumb() {
+		if (thumb == null && thumbBytes != null && thumbBytes.length > 0) {
+			final ByteArrayInputStream bais = new ByteArrayInputStream(thumbBytes);
+			
+			try {
+				thumb = BitmapFactory.decodeStream(bais);
+				
+			} catch (Exception e) {
+				Log.e(MemeListItemData.class.getSimpleName(), "Err", e);
+			
+			} finally {
+				if (bais != null) {
+					try {
+						bais.close();
+					} catch (Exception e) { }
+				}
+			}
+		}
+		
 		return thumb;
-	}
-
-	public void setThumb(Bitmap thumb) {
-		this.thumb = thumb;
 	}
 
 	public ShallowMemeType getMemeType() {
@@ -85,5 +107,21 @@ public class MemeListItemData implements Identifiable, Parcelable{
 	public void setFavorite(boolean isFavorite) {
 		this.isFavorite = isFavorite;
 	}
+
+	public byte[] getThumbBytes() {
+		return thumbBytes;
+	}
+
+	public void setThumbBytes(byte[] thumbBytes) {
+		this.thumbBytes = thumbBytes;
+	}
+
+//	public ICallback<Map<String, Object>> getHeartBtnClickedCallback() {
+//		return heartBtnClickedCallback;
+//	}
+//
+//	public void setHeartBtnClickedCallback(ICallback<Map<String, Object>> heartBtnClickedCallback) {
+//		this.heartBtnClickedCallback = heartBtnClickedCallback;
+//	}
 
 }

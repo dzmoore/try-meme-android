@@ -96,6 +96,7 @@ public class UserMgr {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static synchronized void getFavMemeTypes(final boolean refreshValue, final ICallback<List<ShallowMemeType>> callback) {
 		final UserMgr inst = getInstance();
 		
@@ -108,11 +109,11 @@ public class UserMgr {
 		if (inst.favTypes == null) {
 			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
 			if (cacheMgrInst.containsKey(Constants.INSTALL_KEY_FAV_TYPES)) {
-				inst.favTypes = cacheMgrInst.getListFromCache(Constants.INSTALL_KEY_FAV_TYPES, ShallowMemeType.class);
+				inst.favTypes = (List<ShallowMemeType>)cacheMgrInst.getFromCache(Constants.INSTALL_KEY_FAV_TYPES, List.class);
 				
 			} else {
 				inst.favTypes = inst.memeSvc.getFavMemeTypesForUser(user.getId());
-				cacheMgrInst.addToCache(Constants.INSTALL_KEY_FAV_TYPES, inst.favTypes);
+//				cacheMgrInst.addToCache(Constants.INSTALL_KEY_FAV_TYPES, inst.favTypes);
 			}
 		}
 					

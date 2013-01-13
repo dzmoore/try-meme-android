@@ -19,6 +19,7 @@ import com.eastapps.meme_gen_android.json.JSONException;
 import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -137,7 +138,7 @@ public class MemeService implements IMemeService {
 		
 		listData.set(finalIndex, memeListItemData);
 		memeListItemData.setMemeType(eaType);
-		memeListItemData.setThumb(client.getBackgroundForType(eaType.getTypeId()));
+		memeListItemData.setThumbBytes(Utils.getBytesFromBitmap(client.getBackgroundForType(eaType.getTypeId())));
 		
 		final int newToProcess = toProcess.decrementAndGet();
 		

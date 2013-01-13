@@ -14,4 +14,6 @@ public class Constants {
 	public static final String INSTALL_FILE = "INSTALLATION";
 	public static final String INSTALL_KEY_FAV_TYPES = "favtypes";
 	public static final String INSTALL_KEY_ALL_TYPE_LIST_DATA = "all_types_list_data";
+	public static final String KEY_HEART_BTN = "heart_img_btn";
+	public static final String KEY_MEME_TYPE_LIST_ITEM = "meme_type_list_item";
 }
