@@ -1,7 +1,9 @@
 package com.eastapps.meme_gen_android.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -17,6 +19,8 @@ import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.json.JSONException;
 import com.eastapps.meme_gen_android.json.JSONObject;
+import com.eastapps.meme_gen_android.mgr.CacheMgr;
+import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.Utils;
@@ -68,18 +72,67 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public MemeViewData createMemeViewData(int memeId) {
+	public MemeViewData createMemeViewData(int typeId) {
 		final MemeViewData dat = new MemeViewData();
 		
-		dat.setBackground(client.getBackground(memeId));
-		
-		dat.setMeme(getMeme(memeId));
-		
-		if (dat.getMeme().getMemeTypeId() > 0) {
-			dat.setSampleMemes(getSampleMemes(dat.getMeme().getMemeTypeId()));
+		if (typeId > 0) {
+			final ShallowMemeType type = getType(typeId);
+			
+			if (type != null) {
+				dat.setBackground(client.getBackground(typeId));
+				
+				final ShallowMeme meme = new ShallowMeme();
+				meme.setUserId(UserMgr.getUserSync().getId());
+				meme.setMemeTypeId(typeId);
+				meme.setBackgroundFk(type.getBackgroundId());
+				
+				dat.setMeme(meme);
+			
+				dat.setSampleMemes(getSampleMemes(typeId));
+			}
 		}
 		
 		return dat;
+	}
+	
+	private void initAllTypesMap(final List<ShallowMemeType> types) {
+		final HashMap<Integer, ShallowMemeType> allTypesMap = new HashMap<Integer, ShallowMemeType>();
+		
+		for (final ShallowMemeType eaType : types) {
+			allTypesMap.put(eaType.getTypeId(), eaType);
+		}
+		
+		CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES_MAP, allTypesMap);
+	}
+	
+	@Override
+	public ShallowMemeType getType(final int typeId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		if (!cacheMgr.containsKey(Constants.KEY_ALL_TYPES_MAP)) {
+			getAllMemeTypes();
+		}
+		
+		final Map<Integer, ShallowMemeType> typeMap = cacheMgr.getFromCache(Constants.KEY_ALL_TYPES_MAP, Map.class);
+		
+		return typeMap.get(typeId);
+	}
+	
+	@Override
+	public List<ShallowMemeType> getAllMemeTypes() {
+		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+		
+		if (CacheMgr.getInstance().containsKey(Constants.KEY_ALL_TYPES)) {
+			types = CacheMgr.getInstance().getFromCache(Constants.KEY_ALL_TYPES, List.class);
+		
+		} else {
+			types = client.getMemeTypes();
+			
+			CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES, new ArrayList<ShallowMemeType>(types));
+			
+			initAllTypesMap(types);
+		}
+		
+		return types;
 	}
 	
 	@Override

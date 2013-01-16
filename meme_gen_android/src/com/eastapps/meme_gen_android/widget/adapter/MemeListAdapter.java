@@ -14,21 +14,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.mgr.ICallback;
-import com.eastapps.meme_gen_android.mgr.UserMgr;
-import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.ResizableImageView;
-import com.eastapps.util.Conca;
 
 public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 	private List<MemeListItemData> items;
 	private LayoutInflater inflater;
 	private ICallback<Map<String, Object>> heartBtnClickCallback;
+	private ICallback<Map<String, Object>> listItemClickCallback;
 
 	public MemeListAdapter(Context context, int resource,
 			int textViewResourceId, List<MemeListItemData> objects) {
@@ -90,7 +87,7 @@ public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 	public void setHeartBtnClickCallback(final ICallback<Map<String, Object>> callback) {
 		this.heartBtnClickCallback = callback;
 	}
-
+	
 	public MemeListAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
 	}
@@ -103,6 +100,18 @@ public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 		if (convertView == null || convertView.getId() != R.layout.meme_list_item_layout) {
 			convertView = inflater.inflate(R.layout.meme_list_item_layout, parent, false);
 		}
+		
+		convertView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (listItemClickCallback != null) {
+					final Map<String, Object> params = new HashMap<String, Object>();
+					params.put(Constants.KEY_MEME_TYPE_LIST_ITEM, item);
+					
+					listItemClickCallback.callback(params);
+				}
+			}
+		});
 		
 		final ImageButton heartImgBtn = (ImageButton) convertView.findViewById(R.id.list_item_heart_img_btn);
 		heartImgBtn.setImageDrawable(
@@ -133,7 +142,10 @@ public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 		
 		return convertView;
 	}
-	
+
+	public void setListItemClickCallback(ICallback<Map<String, Object>> listItemClickCallback) {
+		this.listItemClickCallback = listItemClickCallback;
+	}
 }
 
 

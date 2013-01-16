@@ -13,7 +13,7 @@ public interface IMemeService {
 	public ShallowMeme getMeme(final int id);
 	
 	int storeMeme(ShallowMeme shallowMeme);
-	MemeViewData createMemeViewData(int memeId);
+	MemeViewData createMemeViewData(int typeId);
 
 	List<ShallowMeme> getSampleMemes(int typeId);
 
@@ -30,4 +30,8 @@ public interface IMemeService {
 	boolean storeFavType(int userId, int typeId);
 
 	boolean removeFavType(int userId, int typeId);
+
+	List<ShallowMemeType> getAllMemeTypes();
+
+	ShallowMemeType getType(int typeId);
 }

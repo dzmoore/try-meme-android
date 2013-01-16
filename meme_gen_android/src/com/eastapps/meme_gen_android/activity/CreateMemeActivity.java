@@ -32,6 +32,7 @@ import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 
 public class CreateMemeActivity extends FragmentActivity {
 	private static final String TAG = CreateMemeActivity.class.getSimpleName();
@@ -74,6 +75,8 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
 		
+		final ShallowMemeType type = (ShallowMemeType) getIntent().getSerializableExtra(Constants.KEY_MEME_TYPE);
+		
 		loadBundle(savedInstanceState);
 		
 		if (isLoaded()) {
@@ -85,7 +88,7 @@ public class CreateMemeActivity extends FragmentActivity {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					memeViewData = memeService.createMemeViewData(1);
+					memeViewData = memeService.createMemeViewData(type.getTypeId());
 					
 					setMemeViewData(memeViewData);
 				}
@@ -675,6 +678,7 @@ public class CreateMemeActivity extends FragmentActivity {
 		final int current = memePager.getCurrentItem();
 		
 		final ShallowMeme currentMeme = getMemePagerAdapter().getMemeAt(current).getMeme();
+		currentMeme.setMemeTypeId(memeViewData.getMeme().getMemeTypeId());
 		
 		return currentMeme;
 	}

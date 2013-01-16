@@ -18,6 +18,7 @@ public class CacheMgrTest extends AndroidTestCase {
 	public void setUp() {
 		clearInstallFile();
 		CacheMgr.initialize(getContext());
+		CacheMgr.getInstance().clearCache();
 	}
 
 	private void clearInstallFile() {

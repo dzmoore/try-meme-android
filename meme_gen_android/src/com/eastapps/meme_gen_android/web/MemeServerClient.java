@@ -68,14 +68,14 @@ public class MemeServerClient {
 		return shMemeResult;
 	}
 
-	public Bitmap getBackground(final int memeId) {
+	public Bitmap getBackground(final int typeId) {
 		return
 			webClient.getBitmap(Conca.t(
 				webSvcAddr, 
 				Constants.URL_SEPARATOR, 
 				webSvcMemeDataSuffix,
 				Constants.URL_SEPARATOR,
-				memeId,
+				typeId,
 				Constants.URL_SEPARATOR,
 				webSvcBgrndSuffix
 			));

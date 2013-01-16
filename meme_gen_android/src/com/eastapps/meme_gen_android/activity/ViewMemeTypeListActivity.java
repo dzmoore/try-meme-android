@@ -1,12 +1,12 @@
 package com.eastapps.meme_gen_android.activity;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -81,6 +81,20 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 				final MemeListItemData item = (MemeListItemData) obj.get(Constants.KEY_MEME_TYPE_LIST_ITEM);
 				
 				handleHeartBtnClicked(item, heartBtn);
+			}
+		});
+		
+		listAdapter.setListItemClickCallback(new ICallback<Map<String,Object>>() {
+			@Override
+			public void callback(Map<String, Object> obj) {
+				final MemeListItemData item = (MemeListItemData) obj.get(Constants.KEY_MEME_TYPE_LIST_ITEM);
+				
+				final Intent intent = new Intent(ViewMemeTypeListActivity.this, CreateMemeActivity.class);
+				
+				final Bundle bundle = new Bundle();
+				intent.putExtra(Constants.KEY_MEME_TYPE, item.getMemeType());
+				
+				startActivity(intent);
 			}
 		});
 		
