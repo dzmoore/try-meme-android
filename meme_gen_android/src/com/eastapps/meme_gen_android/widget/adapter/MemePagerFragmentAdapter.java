@@ -67,19 +67,24 @@ public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public Fragment getItem(int position) {
-		MemeViewFragment fragment = new MemeViewFragment();
+//		MemeViewFragment fragment = new MemeViewFragment();
+//		
+//		if (position < memes.size()) {
+//			if (position < frags.size() && frags.get(position) != null) {
+//				fragment = frags.get(position);
+//				
+//			} else {
+//				fragment = 
+//				if (position >= frags.size()) {
+//					frags.add(fragment);
+//					
+//				} else {
+//					frags.set(position, fragment);
+//				}
+//			}
+//		}
 		
-		if (position < memes.size()) {
-			if (position < frags.size() && frags.get(position) != null) {
-				fragment = frags.get(position);
-				
-			} else {
-				fragment = new MemeViewFragment(memes.get(position));
-				frags.add(position, fragment);
-			}
-		}
-		
-		return fragment;
+		return new MemeViewFragment(memes.get(position));
 	}
 	
 	@Override

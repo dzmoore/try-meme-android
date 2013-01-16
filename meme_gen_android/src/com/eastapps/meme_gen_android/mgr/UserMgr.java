@@ -38,6 +38,8 @@ public class UserMgr {
 
 		MemeService.initialize(context);
 		memeSvc = MemeService.getInstance();
+		
+		CacheMgr.initialize(context);
 	}
 
 	public static synchronized void initialize(final Context context) {

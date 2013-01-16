@@ -294,15 +294,16 @@ public class MemeService {
 		txtBtm.setId((Integer)sesh.save(txtBtm));
 	}
 
-	public byte[] getMemeBackground(final int memeId) throws IOException {
+	public byte[] getMemeBackground(final int typeId) throws IOException {
 		final Session sesh = getSession();
 
 		byte[] resultBytes = new byte[0];
 		try {
 			sesh.beginTransaction();
 
-			final Query qry = sesh.createQuery("from Meme where id = :id");
-			qry.setInteger("id", memeId);
+//			final Query qry = sesh.createQuery("from Meme where id = :id");
+			final Query qry = sesh.createQuery("from Meme m where m.lvMemeType.id = :typeid and m.isSampleMeme = true");
+			qry.setInteger("typeid", typeId);
 			
 			final List<?> results = qry.list();
 

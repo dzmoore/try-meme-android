@@ -12,6 +12,7 @@ import android.util.Log;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
+import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
@@ -20,15 +21,38 @@ import com.eastapps.meme_gen_server.domain.ShallowUser;
 public class UserMgrTest extends AndroidTestCase {
 	@Override
 	public void setUp() {
+		clearInstallFile();
+		
 		UserMgr.initialize(getContext());
+	
 		CacheMgr.initialize(getContext());
+		CacheMgr.getInstance().clearCache();
+		
+		MemeService.initialize(getContext());
 	}
 
 	@Override
 	public void tearDown() {
 	}
 	
+	private int createNewUser() {
+		final String newInstallKey = MemeService.getInstance().getNewInstallKey();
+		assertTrue(StringUtils.isNotBlank(newInstallKey));
+		
+		final ShallowUser user = new ShallowUser();
+		user.setUsername(newInstallKey);
+		user.setInstallKey(newInstallKey);
+		
+		final int userId = MemeService.getInstance().storeNewUser(user);
+		assertTrue(userId > 0);
+		return userId;
+	}
+	
 	public void testGetUser() {
+		clearInstallFile();
+		
+		final int userId = createNewUser();
+		
 		final AtomicReference<ShallowUser> user = new AtomicReference<ShallowUser>(null);
 		UserMgr.getUser(new ICallback<ShallowUser>() {
 			@Override
@@ -113,6 +137,8 @@ public class UserMgrTest extends AndroidTestCase {
 	}
 	
 	public void testSaveFavType() {
+		clearInstallFile();
+		
 		final int typeId = 1;
 		
 		clearInstallFile();

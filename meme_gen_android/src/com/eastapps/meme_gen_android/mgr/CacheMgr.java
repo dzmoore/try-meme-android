@@ -35,6 +35,13 @@ public class CacheMgr {
 		
 		initInstallMap();
 	}
+	
+	public synchronized void clearCache() {
+		final CacheMgr inst = getInstance();
+		if (inst != null && inst.installMap != null) {
+			inst.installMap.clear();
+		}
+	}
 
 	public static synchronized void initialize(final Context context) {
 		if (instance == null) {

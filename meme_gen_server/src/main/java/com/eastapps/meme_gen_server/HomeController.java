@@ -84,10 +84,10 @@ public class HomeController {
 		return "add_meme_admin";
 	}
 
-	@RequestMapping(value = "/meme_data/{id}/background", method = RequestMethod.GET)
+	@RequestMapping(value = "/meme_data/{typeid}/background", method = RequestMethod.GET)
 	@ResponseBody
-	public byte[] getMemeBackground(@PathVariable("id") final int memeId) throws IOException {
-		return memeService.getMemeBackground(memeId);
+	public byte[] getMemeBackground(@PathVariable("typeid") final int typeId) throws IOException {
+		return memeService.getMemeBackground(typeId);
 	}
 
 	@RequestMapping(value = { "/meme_data/{meme_id}/json" }, method = RequestMethod.GET)
