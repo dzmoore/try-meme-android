@@ -19,4 +19,6 @@ public class Constants {
 	public static final String KEY_MEME_TYPE = "meme_type";
 	public static final String KEY_ALL_TYPES = "all_types";
 	public static final String KEY_ALL_TYPES_MAP = "all_types_map";
+	public static final String KEY_BACKGROUND_MAP = "bg_map";
+	public static final String KEY_SAMPLE_MAP = "sample_map";
 }

@@ -61,6 +61,7 @@ public class UserMgr {
 			} else {
 				inst.createNewUser();
 				cacheMgrInst.addToCache(Constants.INSTALL_KEY_USER, inst.user);
+				cacheMgrInst.storeCacheToFile(true);
 			}
 		}
 		

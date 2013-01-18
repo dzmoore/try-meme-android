@@ -30,7 +30,7 @@
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
     <string name="webServiceMemeType">meme_type_data</string>
 
-	<item name="maxFontSize" format="integer" type="integer">50</item>
+	<item name="maxFontSize" format="integer" type="integer">35</item>
 	<item name="initialFontSize" format="integer" type="integer">26</item>
 	<string name="bundleconst_memebg">memebg</string>
 	<string name="bundleconst_samplememes">samplememes</string>

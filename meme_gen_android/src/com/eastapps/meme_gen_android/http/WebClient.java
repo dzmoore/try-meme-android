@@ -83,8 +83,9 @@ public class WebClient implements IWebClient {
 	public Bitmap getBitmap(final String addr) {
 		Bitmap bitmap = null;
 		
+		URLConnection conn = null;
 		try {
-			final URLConnection conn = createURLConnection(addr);
+			conn = createURLConnection(addr);
 			bitmap = BitmapFactory.decodeStream(conn.getInputStream());
 			
 		} catch (Exception e) {
@@ -97,7 +98,7 @@ public class WebClient implements IWebClient {
 				),
 				e
 			);
-		}
+		} 
 		
 		
 		return bitmap;

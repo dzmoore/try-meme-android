@@ -1,17 +1,38 @@
 package com.eastapps.meme_gen_android.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.eastapps.meme_gen_android.R;
+import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_server.domain.MemeText;
 
 public class Utils {
+	public static Bitmap getBitmapFromBytes(final byte[] bytes) {
+		final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+		Bitmap bm = null;
+		
+		try {
+			bm = BitmapFactory.decodeStream(bais);
+			
+		} catch (Exception e) {
+			Log.e(MemeListItemData.class.getSimpleName(), "Err", e);
+		
+		} finally {
+			if (bais != null) {
+				try {
+					bais.close();
+				} catch (Exception e) { }
+			}
+		}
+		
+		return bm;
+	}
 	
 	public static byte[] getBytesFromBitmap(final Bitmap bm) {
 		byte[] bytes = new byte[0];

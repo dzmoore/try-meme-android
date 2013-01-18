@@ -11,7 +11,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.http.cookie.SM;
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.R;
@@ -67,10 +70,65 @@ public class MemeService implements IMemeService {
 	}
 	
 	@Override
-	public List<ShallowMeme> getSampleMemes(final int typeId) {
-		return client.getSampleMemes(typeId);
+	public synchronized List<ShallowMeme> getSampleMemes(final int typeId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final HashMap<Integer, List<ShallowMeme>> sMap = getSampleMap();
+		List<ShallowMeme> samples = null;
+		
+		final boolean containsKey = sMap.containsKey(typeId);
+		if (containsKey) {
+			samples = sMap.get(typeId);
+			
+		} 
+		
+		if (!containsKey || samples == null || samples.size() == 0) {
+			samples = client.getSampleMemes(typeId);
+			sMap.put(typeId, samples);
+			
+			cacheMgr.storeCacheToFile(true);
+		}
+		
+		return samples;
+	}
+	
+	private synchronized HashMap<Integer, List<ShallowMeme>> getSampleMap() {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		HashMap<Integer, List<ShallowMeme>> map = null;
+		if (cacheMgr.containsKey(Constants.KEY_SAMPLE_MAP)) {
+			map = cacheMgr.getFromCache(Constants.KEY_SAMPLE_MAP, HashMap.class);
+			
+		} else {
+			map = new HashMap<Integer, List<ShallowMeme>>();
+			cacheMgr.addToCache(Constants.KEY_SAMPLE_MAP, map);
+		}
+		
+		return map;
 	}
 
+	public byte[] getBackgroundBytes(final int typeId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		byte[] bytes = new byte[0];
+		
+		final HashMap<Integer, Object> backgroundMap = getBackgroundMap();
+		final boolean containsKey = backgroundMap.containsKey(typeId);
+		if (containsKey) {
+			bytes = (byte[]) backgroundMap.get(typeId);
+			
+		} 
+		
+		if (!containsKey || bytes == null || bytes.length == 0) {
+			bytes = Utils.getBytesFromBitmap(client.getBackground(typeId));
+			backgroundMap.put(typeId, bytes);
+			
+			cacheMgr.storeCacheToFile(true);
+		}
+		
+		return bytes;
+	}
+	
 	@Override
 	public MemeViewData createMemeViewData(int typeId) {
 		final MemeViewData dat = new MemeViewData();
@@ -79,7 +137,7 @@ public class MemeService implements IMemeService {
 			final ShallowMemeType type = getType(typeId);
 			
 			if (type != null) {
-				dat.setBackground(client.getBackground(typeId));
+				dat.setBackground(Utils.getBitmapFromBytes(getBackgroundBytes(typeId)));
 				
 				final ShallowMeme meme = new ShallowMeme();
 				meme.setUserId(UserMgr.getUserSync().getId());
@@ -105,6 +163,27 @@ public class MemeService implements IMemeService {
 		CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES_MAP, allTypesMap);
 	}
 	
+	private void addBackgroundToCache(final int typeId, final byte[] background) {
+		final CacheMgr cm = CacheMgr.getInstance();
+		final HashMap<Integer, Object> bgMap = getBackgroundMap();
+		
+		bgMap.put(typeId, background);
+	}
+
+	private synchronized HashMap<Integer, Object> getBackgroundMap() {
+		final CacheMgr cm = CacheMgr.getInstance();
+		
+		HashMap<Integer, Object> bgMap;
+		if (cm.containsKey(Constants.KEY_BACKGROUND_MAP)) {
+			bgMap = cm.getFromCache(Constants.KEY_BACKGROUND_MAP, HashMap.class);
+			
+		} else {
+			bgMap = new HashMap<Integer, Object>();
+			cm.addToCache(Constants.KEY_BACKGROUND_MAP, bgMap);
+		}
+		return bgMap;
+	}
+	
 	@Override
 	public ShallowMemeType getType(final int typeId) {
 		final CacheMgr cacheMgr = CacheMgr.getInstance();
@@ -121,10 +200,13 @@ public class MemeService implements IMemeService {
 	public List<ShallowMemeType> getAllMemeTypes() {
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
 		
-		if (CacheMgr.getInstance().containsKey(Constants.KEY_ALL_TYPES)) {
+		final boolean containsKey = CacheMgr.getInstance().containsKey(Constants.KEY_ALL_TYPES);
+		if (containsKey) {
 			types = CacheMgr.getInstance().getFromCache(Constants.KEY_ALL_TYPES, List.class);
 		
-		} else {
+		} 
+		
+		if (!containsKey || types == null || types.size() == 0) {
 			types = client.getMemeTypes();
 			
 			CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES, new ArrayList<ShallowMemeType>(types));
