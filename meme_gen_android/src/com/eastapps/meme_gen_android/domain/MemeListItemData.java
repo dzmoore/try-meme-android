@@ -8,6 +8,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 
@@ -72,21 +73,7 @@ public class MemeListItemData implements Identifiable, Parcelable {
 
 	public synchronized Bitmap getThumb() {
 		if (thumb == null && thumbBytes != null && thumbBytes.length > 0) {
-			final ByteArrayInputStream bais = new ByteArrayInputStream(thumbBytes);
-			
-			try {
-				thumb = BitmapFactory.decodeStream(bais);
-				
-			} catch (Exception e) {
-				Log.e(MemeListItemData.class.getSimpleName(), "Err", e);
-			
-			} finally {
-				if (bais != null) {
-					try {
-						bais.close();
-					} catch (Exception e) { }
-				}
-			}
+			thumb = Utils.getBitmapFromBytes(thumbBytes);
 		}
 		
 		return thumb;
@@ -116,12 +103,5 @@ public class MemeListItemData implements Identifiable, Parcelable {
 		this.thumbBytes = thumbBytes;
 	}
 
-//	public ICallback<Map<String, Object>> getHeartBtnClickedCallback() {
-//		return heartBtnClickedCallback;
-//	}
-//
-//	public void setHeartBtnClickedCallback(ICallback<Map<String, Object>> heartBtnClickedCallback) {
-//		this.heartBtnClickedCallback = heartBtnClickedCallback;
-//	}
 
 }

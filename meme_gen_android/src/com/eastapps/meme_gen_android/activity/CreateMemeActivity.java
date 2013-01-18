@@ -37,6 +37,10 @@ import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 public class CreateMemeActivity extends FragmentActivity {
 	private static final String TAG = CreateMemeActivity.class.getSimpleName();
 
+	protected static final float SEEK_BAR_MULTIPLIER = 1.6f;
+
+	protected static final float SEEK_BAR_SCALAR = 12;
+
 	private MemeViewData memeViewData;
 	private List<MemeViewData> sampledList;
 	private AtomicBoolean isEditingTopText;
@@ -386,12 +390,10 @@ public class CreateMemeActivity extends FragmentActivity {
 		final SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				
 			}
 			
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				
 			}
 			
 			@Override
@@ -401,11 +403,11 @@ public class CreateMemeActivity extends FragmentActivity {
 					final boolean fromUser) 
 			{	
 				if (isTop) {
-					getSelectedTopTextView().setTextSize(progress);
+					getSelectedTopTextView().setTextSize((progress * SEEK_BAR_MULTIPLIER) + SEEK_BAR_SCALAR);
 					getSelectedMeme().setTopTextFontSize(progress);
 				
 				} else {
-					getSelectedBottomTextView().setTextSize(progress);
+					getSelectedBottomTextView().setTextSize(progress * SEEK_BAR_MULTIPLIER + SEEK_BAR_SCALAR);
 					getSelectedMeme().setBottomTextFontSize(progress);
 				}
 			}

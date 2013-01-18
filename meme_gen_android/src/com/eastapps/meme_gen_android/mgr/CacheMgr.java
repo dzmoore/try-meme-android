@@ -203,10 +203,28 @@ public class CacheMgr {
 	}
 	
 	public void storeCacheToFile() {
-		writeMapIntoInstallFile(getInstallFile());
+		storeCacheToFile(false);
 	}
 	
-	private void writeMapIntoInstallFile(final File installation) {
+	public void storeCacheToFile(final boolean returnImmediately) {
+		final Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				writeMapIntoInstallFile(getInstallFile());
+				
+			}
+		};
+		
+		if (returnImmediately) {
+			new Thread(runnable).start();
+			
+		} else {
+			runnable.run();
+		}
+		
+	}
+	
+	private synchronized void writeMapIntoInstallFile(final File installation) {
 		Kryo kryo = new Kryo();
 		kryo.register(MemeListDataSerializer.class).setInstantiator(new ObjectInstantiator() {
 			@Override
