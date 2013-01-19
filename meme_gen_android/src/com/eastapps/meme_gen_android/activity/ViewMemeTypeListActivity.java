@@ -41,7 +41,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		
 		CacheMgr.initialize(this);
 		
-		setContentView(R.layout.meme_list);
+		setContentView(R.layout.meme_list_layout);
 		
 		items = Collections.emptyList();
 		

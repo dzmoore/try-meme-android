@@ -99,3 +99,16 @@ public class MemeViewFragment extends Fragment {
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

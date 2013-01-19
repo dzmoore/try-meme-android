@@ -4,7 +4,7 @@
 	<groupId>com.eastapps</groupId>
 	<artifactId>meme_gen_server</artifactId>
 	<packaging>war</packaging>
-	<version>0.1.5</version>
+	<version>0.1.6</version>
 	<name>meme_gen_server</name>
 
 	<properties>

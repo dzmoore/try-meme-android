@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="fill_vertical"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/popular_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="fill_vertical"
+        android:layout_weight="1"
+        android:text="@string/filter_bar_btn_txt_popular" />
+
+    <Button
+        android:id="@+id/all_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:text="@string/filter_bar_btn_txt_all" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/icon_heart_cont_descr"
+        android:src="@drawable/icon_heart" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/icon_magnifier_cont_descr"
+        android:src="@drawable/icon_magnifier" />
+
+</LinearLayout>
