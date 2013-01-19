@@ -37,4 +37,8 @@
 	<string name="bundleconst_loaded">loaded</string>
 	<string name="bundleconst_pageradapter">pageradapter</string>
 	<string name="bundleconst_sampledlist">sampledlist</string>
+	<string name="filter_bar_btn_txt_popular">Popular</string>
+	<string name="filter_bar_btn_txt_all">All</string>
+	<string name="icon_heart_cont_descr">heart</string>
+	<string name="icon_magnifier_cont_descr">magnifier</string>
 </resources>
