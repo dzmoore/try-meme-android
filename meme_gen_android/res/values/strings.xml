@@ -41,4 +41,5 @@
 	<string name="filter_bar_btn_txt_all">All</string>
 	<string name="icon_heart_cont_descr">heart</string>
 	<string name="icon_magnifier_cont_descr">magnifier</string>
+	<string name="no_favorites_msg">No Favorites</string>
 </resources>

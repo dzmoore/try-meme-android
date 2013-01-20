@@ -34,4 +34,6 @@ public interface IMemeService {
 	List<ShallowMemeType> getAllMemeTypes();
 
 	ShallowMemeType getType(int typeId);
+
+	List<MemeListItemData> getAllFavMemeTypesListData();
 }

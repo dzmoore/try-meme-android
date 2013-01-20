@@ -1,27 +1,15 @@
 package com.eastapps.meme_gen_android.mgr;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.RandomAccessFile;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import android.content.Context;
-import android.location.Address;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class UserMgr {
 	protected static final String TAG = UserMgr.class.getSimpleName();
@@ -50,17 +38,17 @@ public class UserMgr {
 		return instance;
 	}
 
-	public static synchronized void getUser(final ICallback<ShallowUser> setterCallback) {
+	public static synchronized void getUserAsync(final ICallback<ShallowUser> setterCallback) {
 		final UserMgr inst = getInstance();
 		
 		if (inst.user == null) {
 			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
-			if (cacheMgrInst.containsKey(Constants.INSTALL_KEY_USER)) {
-				inst.user = cacheMgrInst.getFromCache(Constants.INSTALL_KEY_USER, ShallowUser.class);
+			if (cacheMgrInst.containsKey(Constants.KEY_USER)) {
+				inst.user = cacheMgrInst.getFromCache(Constants.KEY_USER, ShallowUser.class);
 				
 			} else {
 				inst.createNewUser();
-				cacheMgrInst.addToCache(Constants.INSTALL_KEY_USER, inst.user);
+				cacheMgrInst.addToCache(Constants.KEY_USER, inst.user);
 				cacheMgrInst.storeCacheToFile(true);
 			}
 		}
@@ -98,43 +86,46 @@ public class UserMgr {
 			Log.w("unable to create new user", new Exception("stack trace only"));
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	public static synchronized void getFavMemeTypes(final boolean refreshValue, final ICallback<List<ShallowMemeType>> callback) {
+	
+	public static synchronized List<ShallowMemeType> getFavMemeTypes(final boolean refresh) {
 		final UserMgr inst = getInstance();
 		
-		final ShallowUser user = getUserSync();
-		
-		if (refreshValue) {
+		if (refresh) {
 			inst.queryForAndInitFavTypes();
 		} 
 			
 		if (inst.favTypes == null) {
 			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
-			if (cacheMgrInst.containsKey(Constants.INSTALL_KEY_FAV_TYPES)) {
-				inst.favTypes = (List<ShallowMemeType>)cacheMgrInst.getFromCache(Constants.INSTALL_KEY_FAV_TYPES, List.class);
+			if (cacheMgrInst.containsKey(Constants.KEY_FAV_TYPES)) {
+				inst.favTypes = (List<ShallowMemeType>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
 				
 			} else {
-				inst.favTypes = inst.memeSvc.getFavMemeTypesForUser(user.getId());
-//				cacheMgrInst.addToCache(Constants.INSTALL_KEY_FAV_TYPES, inst.favTypes);
+				inst.favTypes = inst.memeSvc.getFavMemeTypesForUser(getUser().getId());
 			}
 		}
-					
 		
-		callback.callback(inst.favTypes);
+		return inst.favTypes;
 	}
+
+	public static synchronized void getFavMemeTypesAsync(
+		final boolean refreshValue, 
+		final ICallback<List<ShallowMemeType>> callback) 
+	{
+		callback.callback(getFavMemeTypes(refreshValue));
+	}
+	
 
 	public static void saveFavForUser(int typeId, ICallback<Boolean> iCallback) {
 		final UserMgr inst = getInstance();
-		final ShallowUser u = getUserSync();
+		final ShallowUser u = getUser();
 		
 		iCallback.callback(inst.memeSvc.storeFavType(u.getId(), typeId));
 	}
 	
-	public static ShallowUser getUserSync() {
+	public static ShallowUser getUser() {
 		final AtomicReference<ShallowUser> u = new AtomicReference<ShallowUser>();
 		
-		getUser(new ICallback<ShallowUser>() {
+		getUserAsync(new ICallback<ShallowUser>() {
 			@Override
 			public void callback(ShallowUser obj) {
 				u.set(obj);
@@ -146,7 +137,7 @@ public class UserMgr {
 
 	public static void removeFavForUser(int typeId, ICallback<Boolean> iCallback) {
 		final UserMgr inst = getInstance();
-		final ShallowUser u = getUserSync();
+		final ShallowUser u = getUser();
 		
 		iCallback.callback(inst.memeSvc.removeFavType(u.getId(), typeId));
 	}

@@ -37,9 +37,9 @@ public class MemeService implements IMemeService {
 	private static final String TAG = MemeService.class.getSimpleName();
 	private static MemeService instance;
 	
-	
 	private MemeServerClient client;
 	private static Context context;
+	private UserMgr userMgr;
 	
 	private MemeService() {
 		super();
@@ -48,10 +48,8 @@ public class MemeService implements IMemeService {
 	}
 	
 	public static synchronized void initialize(Context context) {
-		if (MemeService.context == null) {
-			MemeService.context = context;
-			instance = new MemeService();
-		}
+		MemeService.context = context;
+		instance = new MemeService();
 	}
 	
 	public static synchronized MemeService getInstance() {
@@ -140,7 +138,7 @@ public class MemeService implements IMemeService {
 				dat.setBackground(Utils.getBitmapFromBytes(getBackgroundBytes(typeId)));
 				
 				final ShallowMeme meme = new ShallowMeme();
-				meme.setUserId(UserMgr.getUserSync().getId());
+				meme.setUserId(UserMgr.getUser().getId());
 				meme.setMemeTypeId(typeId);
 				meme.setBackgroundFk(type.getBackgroundId());
 				
@@ -163,13 +161,6 @@ public class MemeService implements IMemeService {
 		CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES_MAP, allTypesMap);
 	}
 	
-	private void addBackgroundToCache(final int typeId, final byte[] background) {
-		final CacheMgr cm = CacheMgr.getInstance();
-		final HashMap<Integer, Object> bgMap = getBackgroundMap();
-		
-		bgMap.put(typeId, background);
-	}
-
 	private synchronized HashMap<Integer, Object> getBackgroundMap() {
 		final CacheMgr cm = CacheMgr.getInstance();
 		
@@ -218,10 +209,26 @@ public class MemeService implements IMemeService {
 	}
 	
 	@Override
+	public List<MemeListItemData> getAllFavMemeTypesListData() {
+		final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(false);
+		
+		final List<MemeListItemData> listData = populateMemeListItemDataList(favTypes);
+		
+		return listData;
+	}
+	
+	@Override
 	public List<MemeListItemData> getAllMemeTypesListData() {
 		
-		final List<ShallowMemeType> types = client.getMemeTypes();
+		final List<ShallowMemeType> types = getAllMemeTypes();
 		
+		final List<MemeListItemData> listData = populateMemeListItemDataList(types);
+		
+		return listData;
+	}
+
+	private List<MemeListItemData> populateMemeListItemDataList(
+			final List<ShallowMemeType> types) {
 		final List<MemeListItemData> listData = new ArrayList<MemeListItemData>(types.size());
 		for (int i = 0; i < types.size(); i++) {
 			listData.add(new MemeListItemData());
@@ -261,7 +268,6 @@ public class MemeService implements IMemeService {
 		} catch (InterruptedException e) {
 			Log.e(TAG, "error occurred while getting meme type list item data", e);
 		}
-		
 		return listData;
 	}
 	
@@ -273,7 +279,7 @@ public class MemeService implements IMemeService {
 		
 		listData.set(finalIndex, memeListItemData);
 		memeListItemData.setMemeType(eaType);
-		memeListItemData.setThumbBytes(Utils.getBytesFromBitmap(client.getBackgroundForType(eaType.getTypeId())));
+		memeListItemData.setThumbBytes(getBackgroundBytes(eaType.getTypeId()));
 		
 		final int newToProcess = toProcess.decrementAndGet();
 		
