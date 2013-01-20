@@ -1,6 +1,9 @@
 package com.eastapps.meme_gen_android.web;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -257,7 +260,7 @@ public class MemeServerClient {
 		);
 			
 	}
-//	ue = "/user_data/user/{id}/favtypes/json")
+	
 	public List<ShallowMemeType> getFavMemeTypesForUser(int userId) {
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
 		String result = Constants.EMPTY;
@@ -285,7 +288,7 @@ public class MemeServerClient {
 		
 		return types;
 	}
-//	= "/user_data/user/{userid}/favtypes/{typeid}/store")
+	
 	public boolean storeFavMeme(int userId, int typeId) {
 		return getObject(Boolean.class, 
 			concatForUrl(
@@ -330,6 +333,58 @@ public class MemeServerClient {
 		
 		return sb.toString();
 	}
+
+//	"/meme_type_data/popular/json")
+	public List<ShallowMemeType> getPopularTypes() {
+		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+		String result = Constants.EMPTY;
+		
+		final String addr = concatForUrl(
+			webSvcAddr,
+			webSvcMemeTypePrefix,
+			"popular",
+			webSvcJsonSuffix
+		);
+		
+		result = webClient.getJSONObject(addr);
+		
+		if (StringUtils.isNotBlank(result)) {
+			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
+			types = new Gson().fromJson(result, listType);
+		}
+		
+		return types;
+	}
+
+//	/meme_type_data/search/{searchTerm}/json")
+	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
+		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+		String result = Constants.EMPTY;
+		
+		String addr;
+		try {
+			addr = concatForUrl(
+				webSvcAddr,
+				webSvcMemeTypePrefix,
+				"search",
+				URLEncoder.encode(searchTerm, "utf-8"),
+				webSvcJsonSuffix
+			);
+			
+			result = webClient.getJSONObject(addr);
+			
+			if (StringUtils.isNotBlank(result)) {
+				Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
+				types = new Gson().fromJson(result, listType);
+			}
+			
+		} catch (Exception e) {
+			Log.e(TAG, "err", e);
+		}
+		
+		return types;
+	}
+
 	
 	
 	

@@ -313,6 +313,15 @@ public class MemeService implements IMemeService {
 	public boolean removeFavType(int userId, int typeId) {
 		return client.removeFavMeme(userId, typeId);
 	}
+
+	public List<ShallowMemeType> getPopularTypes() {
+		return client.getPopularTypes();
+	}
+
+	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
+		return client.getTypesForSearch(searchTerm);
+	}
+
 	
 	
 	
