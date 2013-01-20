@@ -240,8 +240,6 @@ public class MemeService implements IMemeService {
 		final BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(Math.min(types.size(), maxPoolSize));
 		ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
 		
-		final AtomicInteger toProcess = new AtomicInteger(types.size());
-		
 		int index = 0;
 		for (final ShallowMemeType eaType : types) {
 			final int finalIndex = index;
@@ -250,7 +248,6 @@ public class MemeService implements IMemeService {
 				public void run() {
 					doPopulateMemeListItemData(
 						listData, 
-						toProcess, 
 						eaType,
 						finalIndex
 					);
@@ -261,33 +258,28 @@ public class MemeService implements IMemeService {
 		}
 		
 		try {
-			synchronized (this) {
-				wait();
-			}
+			tPool.shutdown();
+			tPool.awaitTermination(2L * 60L * 1000L, TimeUnit.MILLISECONDS);
 			
-		} catch (InterruptedException e) {
-			Log.e(TAG, "error occurred while getting meme type list item data", e);
-		}
+		} catch (Exception e) {
+			try {
+				tPool.shutdownNow();
+			} catch (Throwable t) { }
+		}		
+		
 		return listData;
 	}
 	
 	private void doPopulateMemeListItemData(
 			final List<MemeListItemData> listData,
-			final AtomicInteger toProcess,
-			final ShallowMemeType eaType, final int finalIndex) {
+			final ShallowMemeType eaType,
+			final int finalIndex) {
 		final MemeListItemData memeListItemData = new MemeListItemData();
 		
 		listData.set(finalIndex, memeListItemData);
 		memeListItemData.setMemeType(eaType);
 		memeListItemData.setThumbBytes(getBackgroundBytes(eaType.getTypeId()));
 		
-		final int newToProcess = toProcess.decrementAndGet();
-		
-		if (newToProcess == 0) {
-			synchronized (MemeService.this) {
-				MemeService.this.notify();
-			}
-		}
 	}
 	
 	@Override
