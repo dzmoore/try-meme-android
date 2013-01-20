@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain.generated;
 
-// Generated Dec 29, 2012 10:59:32 AM by Hibernate Tools 3.4.0.CR1
+// Generated Jan 20, 2013 12:48:03 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class LvMemeType implements java.io.Serializable {
 	private Date lastMod;
 	private Boolean active;
 	private Set memes = new HashSet(0);
+	private Set memeTypePopularities = new HashSet(0);
 	private Set userFavMemeTypes = new HashSet(0);
 
 	public LvMemeType() {
@@ -37,11 +38,12 @@ public class LvMemeType implements java.io.Serializable {
 		this.lastMod = lastMod;
 	}
 
-	public LvMemeType(String descr, Date lastMod, Boolean active, Set memes, Set userFavMemeTypes) {
+	public LvMemeType(String descr, Date lastMod, Boolean active, Set memes, Set memeTypePopularities, Set userFavMemeTypes) {
 		this.descr = descr;
 		this.lastMod = lastMod;
 		this.active = active;
 		this.memes = memes;
+		this.memeTypePopularities = memeTypePopularities;
 		this.userFavMemeTypes = userFavMemeTypes;
 	}
 
@@ -91,6 +93,15 @@ public class LvMemeType implements java.io.Serializable {
 
 	public void setMemes(Set memes) {
 		this.memes = memes;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")
+	public Set getMemeTypePopularities() {
+		return this.memeTypePopularities;
+	}
+
+	public void setMemeTypePopularities(Set memeTypePopularities) {
+		this.memeTypePopularities = memeTypePopularities;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")

@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -130,12 +131,42 @@ public class HomeController {
 		
 		return types.toArray(new ShallowMemeType[types.size()]);
 	}
+	
+	@RequestMapping(value = "/meme_type_data/popular/json")
+	@ResponseBody
+	public ShallowMemeType[] getPopularTypes() {
+		List<ShallowMemeType> popTypes = Collections.emptyList();
+		
+		try {
+    		popTypes = memeService.getPopularMemeTypes();
+    		
+		} catch (Exception e) {
+			logger.error("pop type err", e);
+		}
+		
+		return popTypes.toArray(new ShallowMemeType[popTypes.size()]);
+	}
 
 	
 	@RequestMapping(value = "/meme_type_data/{id}/background", method = RequestMethod.GET)
 	@ResponseBody
 	public byte[] getThumbForType(@PathVariable("id") final int typeId) throws IOException {
 		return memeService.getThumbForType(typeId);
+	}
+	
+	@RequestMapping(value = "/meme_type_data/search/{searchTerm}/json")
+	@ResponseBody
+	public ShallowMemeType[] getTypesForSearch(@PathVariable("searchTerm") String searchTerm) {
+		List<ShallowMemeType> searchResults = Collections.emptyList();
+		
+		try {
+			searchResults = memeService.getTypesForSearch(searchTerm);
+			
+		} catch (Exception e) {
+			logger.error("search err", e);
+		}
+		
+		return searchResults.toArray(new ShallowMemeType[searchResults.size()]);
 	}
 	
 	@RequestMapping(value = "/user_data/user/{id}/json")
@@ -156,6 +187,8 @@ public class HomeController {
 	
 		return types.toArray(typeArr);
 	}
+	
+
 	
 	@RequestMapping(value = "/user_data/new_install_key/json")
 	@ResponseBody
@@ -186,6 +219,10 @@ public class HomeController {
 	{	
     	return memeService.removeFavType(userId, typeId);
 	}
+
+
+
+
 
 
 }

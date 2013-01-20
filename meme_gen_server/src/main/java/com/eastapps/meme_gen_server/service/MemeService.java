@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -19,14 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import antlr.Utils;
-
 import com.eastapps.meme_gen_server.constants.Constants;
 import com.eastapps.meme_gen_server.domain.DeviceInfo;
 import com.eastapps.meme_gen_server.domain.LvMemeType;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.MemeBackground;
 import com.eastapps.meme_gen_server.domain.MemeText;
+import com.eastapps.meme_gen_server.domain.MemeTypePopularity;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
@@ -797,6 +797,138 @@ public class MemeService {
 		}
 		
 		return removeSuccess;
+	}
+
+
+	public List<ShallowMemeType> getPopularMemeTypes() {
+		final List<ShallowMemeType> types = new ArrayList<ShallowMemeType>();
+
+		final Session sesh = getSession();
+
+		List<MemeTypePopularity> typePopList = null;
+		try {
+			sesh.beginTransaction();
+
+			final Query qry = sesh.createQuery("from MemeTypePopularity");
+
+			final List<?> results = qry.list();
+
+			typePopList = new ArrayList<MemeTypePopularity>();
+			boolean typeMatch = false;
+			for (final Object ea : results) {
+				if (typeMatch || ea instanceof MemeTypePopularity) {
+					final MemeTypePopularity p = (MemeTypePopularity) ea;
+
+					typePopList.add(p);
+
+					typeMatch = true;
+				}
+			}
+
+			if (typePopList != null && typePopList.size() > 1) {
+				Collections.sort(typePopList, new Comparator<MemeTypePopularity>() {
+					@Override
+					public int compare(MemeTypePopularity o1, MemeTypePopularity o2) {
+						int result = 0;
+
+						if (o1 == null && o2 == null) {
+							result = 0;
+
+						} else if (o1 != null && o2 == null) {
+							result = -1;
+
+						} else if (o1 == null && o2 != null) {
+							result = 1;
+
+						} else {
+							result = o1.getRanking().compareTo(o2.getRanking());
+						}
+
+						return result;
+					}
+				});
+
+				for (final MemeTypePopularity eaTypePop : typePopList) {
+					types.add(populateBackgroundId(sesh, eaTypePop.getLvMemeType()));
+				}
+			}
+
+		} catch (Exception e) {
+			Util.rollback(sesh);
+
+			logger.error("error occurred while attempting to get all meme types", e);
+
+		} finally {
+			Util.close(sesh);
+		}
+
+		return types;
+	}
+	
+	private ShallowMemeType populateBackgroundId(final Session sesh, LvMemeType type) {
+		final ShallowMemeType eaShallowType = new ShallowMemeType(type);
+
+		final Query bgQry = sesh.createQuery("from Meme m where m.lvMemeType.id = :typeid and m.isSampleMeme = true");
+		bgQry.setInteger("typeid", type.getId());
+
+		final List<?> memeListForBgs = bgQry.list();
+
+		boolean isTypeMeme = false;
+		if (memeListForBgs != null) {
+			final Iterator<?> iterator = memeListForBgs.iterator();
+
+			if (iterator.hasNext()) {
+				final Object ea = iterator.next();
+
+				if (isTypeMeme || ea instanceof Meme) {
+					final Meme eaMeme = (Meme) ea;
+					eaShallowType.setBackgroundId(eaMeme.getMemeBackground().getId());
+				}
+			}
+		}
+
+		return eaShallowType;
+	}
+
+
+	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
+		final List<ShallowMemeType> types = new ArrayList<ShallowMemeType>();
+
+		if (StringUtils.isNotBlank(searchTerm)) {
+    		final Session sesh = getSession();
+    		
+    		try {
+    			sesh.beginTransaction();
+    			
+        		final Query qry = sesh.createQuery("from LvMemeType lmt where lower(lmt.descr) like :searchterm");
+        		qry.setString("searchterm", StringUtils.join(new Object[] {
+        			"%", StringUtils.lowerCase(StringUtils.trim(searchTerm)), "%" 
+    			}));
+        		
+    			final List<?> results = qry.list();
+    
+    			boolean typeMatch = false;
+    			for (final Object ea : results) {
+    				if (typeMatch || ea instanceof LvMemeType) {
+    					final LvMemeType eaLvType = ((LvMemeType)ea);
+    					
+    					types.add(populateBackgroundId(sesh, eaLvType));
+    					
+    					typeMatch = true;
+    				}
+    			}
+    
+    		} catch (Exception e) {
+    			Util.rollback(sesh);
+    			
+    			logger.error("error occurred while attempting to get all meme types", e);
+    
+    		} finally {
+    			Util.close(sesh);
+    		}
+		}
+
+		return types;
 	}
 }
 

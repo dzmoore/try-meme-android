@@ -232,6 +232,21 @@ public class HomeControllerTest {
 		
 		TestCase.assertFalse(doesUserHasFavTypeId(userId, typeId));
 	}
+	
+	@Test
+	public void testGetPopularTypes() {
+		final ShallowMemeType[] popTypes = homeCtrllr.getPopularTypes();
+		TestCase.assertNotNull(popTypes);
+		TestCase.assertTrue(popTypes.length > 0);
+	}
+	
+	@Test 
+	public void testGetTypesForSearch() {
+		final String searchTerm = "world";
+		final ShallowMemeType[] searchResults = homeCtrllr.getTypesForSearch(searchTerm);
+		TestCase.assertNotNull(searchResults);
+		TestCase.assertTrue(searchResults.length > 0);
+	}
 
 }
 
