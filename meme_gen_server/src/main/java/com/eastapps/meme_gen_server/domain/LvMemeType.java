@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.eastapps.meme_gen_server.annotation.PrimitiveField;
 import com.eastapps.meme_gen_server.constants.Constants;
 
 /**
@@ -39,7 +38,9 @@ public class LvMemeType implements java.io.Serializable {
 	
 	private Date lastMod;
 	
-	private Set<Meme> memes = new HashSet<Meme>(0);
+	private Set<Meme> memes;
+	
+	private Set<MemeTypePopularity> memeTypePopularities;
 
 	public LvMemeType() {
 		super();
@@ -47,6 +48,7 @@ public class LvMemeType implements java.io.Serializable {
 		descr = StringUtils.EMPTY;
 		active = true;
 		memes = new HashSet<Meme>(0);
+		memeTypePopularities = new HashSet<MemeTypePopularity>();
 	}
 	
 	public LvMemeType(Date lastMod) {
@@ -115,6 +117,15 @@ public class LvMemeType implements java.io.Serializable {
 
 	public void setLastMod(Date lastMod) {
 		this.lastMod = lastMod;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lvMemeType")
+	public Set<MemeTypePopularity> getMemeTypePopularities() {
+		return this.memeTypePopularities;
+	}
+
+	public void setMemeTypePopularities(Set<MemeTypePopularity> memeTypePopularities) {
+		this.memeTypePopularities = memeTypePopularities;
 	}
 
 	@Override

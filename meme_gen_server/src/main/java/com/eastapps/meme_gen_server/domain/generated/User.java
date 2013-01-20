@@ -1,6 +1,6 @@
 package com.eastapps.meme_gen_server.domain.generated;
 
-// Generated Dec 29, 2012 10:59:32 AM by Hibernate Tools 3.4.0.CR1
+// Generated Jan 20, 2013 12:48:03 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;

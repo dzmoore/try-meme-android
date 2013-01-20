@@ -25,5 +25,6 @@
         <mapping class="com.eastapps.meme_gen_server.domain.User" />
         <mapping class="com.eastapps.meme_gen_server.domain.DeviceInfo" />
         <mapping class="com.eastapps.meme_gen_server.domain.UserFavMemeType" />
+        <mapping class="com.eastapps.meme_gen_server.domain.MemeTypePopularity" />
     </session-factory>
 </hibernate-configuration>

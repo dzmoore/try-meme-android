@@ -237,7 +237,9 @@ public class MemeService implements IMemeService {
 		final int corePoolSize = 5;
 		final int maxPoolSize = 8;
 		
-		final BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(Math.min(types.size(), maxPoolSize));
+		final BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(
+			Math.max(Math.min(types.size(), maxPoolSize), 1));
+			
 		ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
 		
 		int index = 0;
