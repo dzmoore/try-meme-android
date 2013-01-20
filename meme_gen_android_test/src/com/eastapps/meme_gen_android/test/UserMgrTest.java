@@ -54,7 +54,7 @@ public class UserMgrTest extends AndroidTestCase {
 		final int userId = createNewUser();
 		
 		final AtomicReference<ShallowUser> user = new AtomicReference<ShallowUser>(null);
-		UserMgr.getUser(new ICallback<ShallowUser>() {
+		UserMgr.getUserAsync(new ICallback<ShallowUser>() {
 			@Override
 			public void callback(ShallowUser obj) {
 				assertNotNull(obj);
@@ -68,7 +68,7 @@ public class UserMgrTest extends AndroidTestCase {
 		
 		
 		// ensure subsequent calls returns the same user
-		UserMgr.getUser(new ICallback<ShallowUser>() {
+		UserMgr.getUserAsync(new ICallback<ShallowUser>() {
 			@Override
 			public void callback(ShallowUser obj) {
 				assertNotNull(obj);
@@ -92,7 +92,7 @@ public class UserMgrTest extends AndroidTestCase {
 	}
 
 	private void doTestGetFavMemes(final boolean secondAttempt) {
-		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+		UserMgr.getFavMemeTypesAsync(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> obj) {
 				if (obj == null) {
@@ -126,7 +126,7 @@ public class UserMgrTest extends AndroidTestCase {
 
 	private ShallowUser getOrCreateUser() {
 		final AtomicReference<ShallowUser> u = new AtomicReference<ShallowUser>();
-		UserMgr.getUser(new ICallback<ShallowUser>() {
+		UserMgr.getUserAsync(new ICallback<ShallowUser>() {
 			@Override
 			public void callback(ShallowUser obj) {
 				u.set(obj);
@@ -154,7 +154,7 @@ public class UserMgrTest extends AndroidTestCase {
 				}
         	});
 		
-		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+		UserMgr.getFavMemeTypesAsync(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> obj) {
 				TestCase.assertNotNull(obj);
@@ -189,7 +189,7 @@ public class UserMgrTest extends AndroidTestCase {
 				}
     	});
 		
-		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+		UserMgr.getFavMemeTypesAsync(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> obj) {
 				TestCase.assertNotNull(obj);
@@ -208,7 +208,7 @@ public class UserMgrTest extends AndroidTestCase {
 				}
 		});
 		
-		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+		UserMgr.getFavMemeTypesAsync(true, new ICallback<List<ShallowMemeType>>() {
 			@Override
 			public void callback(List<ShallowMemeType> obj) {
 				TestCase.assertNotNull(obj);

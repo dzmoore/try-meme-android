@@ -5,11 +5,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -17,10 +20,12 @@ import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
+import com.eastapps.meme_gen_android.mgr.Ini;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
+import com.eastapps.meme_gen_android.widget.fragment.MemeListFilterBarFragment;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.util.Conca;
@@ -29,42 +34,112 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	private List<MemeListItemData> items;
 	private MemeListAdapter listAdapter;
 	private MemeService memeService;
+	private UserMgr userMgr;
+	private AtomicBoolean isLoadingList = new AtomicBoolean(false);
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-//		new File(getFilesDir(), Constants.INSTALL_FILE).delete();		
-	
-		MemeService.initialize(this);
-		memeService = MemeService.getInstance();	
+		initActivity();
 		
-		CacheMgr.initialize(this);
-		
-		setContentView(R.layout.meme_list_layout);
-		
-		items = Collections.emptyList();
-		
+	}
+
+	private void initActivity() {
 		final Toast loadingToast = Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT);
 		loadingToast.show();
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				initListItems();
-			}
-			
-		}).start();
+		setContentView(R.layout.meme_list_layout);
+		
+		Ini.t(this);
+		
+		memeService = MemeService.getInstance();	
+		
+		items = Collections.emptyList();
+		
+		if (isLoadingList.compareAndSet(false, true)) {
+			loadAllTypes();
+		}
+		
+		final ICallback<Map<String, Object>> callback = createFilterBarBtnClickListener();
+		final FragmentManager fragMgr = getSupportFragmentManager();
+		final MemeListFilterBarFragment filterBarFrag = (MemeListFilterBarFragment) fragMgr.findFragmentById(R.id.meme_list_filter_bar_fragment);
+		filterBarFrag.setFilterBtnClickedCallback(callback);
 	}
 
-	private void initListItems() {
-		UserMgr.initialize(this);
-		UserMgr.getFavMemeTypes(true, new ICallback<List<ShallowMemeType>>() {
+	private ICallback<Map<String, Object>> createFilterBarBtnClickListener() {
+		return new ICallback<Map<String,Object>>() {
 			@Override
-			public void callback(List<ShallowMemeType> favTypes) {
-				handleGetFavMemeTypes(favTypes);
+			public void callback(Map<String, Object> params) {
+				handleFilterBtnClicked(params);
 			}
-		});
+
+		};
+	}
+
+	private void handleFilterBtnClicked(Map<String, Object> params) {
+		final int btnIdClicked = (Integer) params.get(Constants.KEY_FILTER_BTN_ID_CLICKED);
+		
+		switch (btnIdClicked) {
+		case R.id.popular_btn:
+			loadPopularTypes();
+			break;
+			
+		case R.id.all_btn:
+			loadAllTypes();
+			break;
+			
+		case R.id.fav_btn:
+			handleFavBtnClick();
+			break;
+			
+		case R.id.search_btn:
+			handleSearchBtnClick();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	private void handleFavBtnClick() {
+		final List<ShallowMemeType> types = UserMgr.getFavMemeTypes(true);
+		if (types != null && types.size() > 0) {
+			loadFavTypes(); 
+			
+		} else {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(
+						ViewMemeTypeListActivity.this, 
+						R.string.no_favorites_msg, 
+						Toast.LENGTH_SHORT
+					).show(); 
+				}
+			});
+		}
+		
+	}
+	
+	private void loadAllTypes() {
+		items = memeService.getAllMemeTypesListData();
+		initMemeList();
+	}
+
+	private void handleSearchBtnClick() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void loadFavTypes() {
+		items = memeService.getAllFavMemeTypesListData();
+		initMemeList();
+	}
+
+	private void loadPopularTypes() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void initListAdapter() {
@@ -104,8 +179,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		memeListFrag.setListAdapter(listAdapter);
 	}
 
-	private void handleGetFavMemeTypes(List<ShallowMemeType> favTypes) {
-		initItemList();
+	private void initMemeList() {
+		final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(true);
 		
 		for (final ShallowMemeType eaFavType : favTypes) {
 			for (final MemeListItemData eaListItem : items) {
@@ -148,14 +223,14 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	
 	@SuppressWarnings("unchecked")
 	private void initItemList() {
-		if (CacheMgr.getInstance().containsKey(Constants.INSTALL_KEY_ALL_TYPE_LIST_DATA)) {
+		if (CacheMgr.getInstance().containsKey(Constants.KEY_ALL_TYPE_LIST_DATA)) {
 			items = (List<MemeListItemData>)CacheMgr.getInstance().getFromCache(
-				Constants.INSTALL_KEY_ALL_TYPE_LIST_DATA, 
+				Constants.KEY_ALL_TYPE_LIST_DATA, 
 				List.class);
 			
 		} else {
 			items = memeService.getAllMemeTypesListData();
-			CacheMgr.getInstance().addToCache(Constants.INSTALL_KEY_ALL_TYPE_LIST_DATA, new ArrayList<MemeListItemData>(items));
+			CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPE_LIST_DATA, new ArrayList<MemeListItemData>(items));
 		}
 		
 	}
@@ -184,7 +259,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 					params.put("action", "Removed");
 					
 					final boolean success = MemeService.getInstance().removeFavType(
-						UserMgr.getUserSync().getId(),
+						UserMgr.getUser().getId(),
 						item.getMemeType().getTypeId()
 					);
 					
@@ -209,7 +284,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 					params.put("action", "Stored");
 					
 					final boolean success = MemeService.getInstance().storeFavType(
-						UserMgr.getUserSync().getId(),
+						UserMgr.getUser().getId(),
 						item.getMemeType().getTypeId()
 					);
 					

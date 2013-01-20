@@ -45,12 +45,12 @@ public class CacheMgrTest extends AndroidTestCase {
 		favTypes.add(type1);
 
 		CacheMgr instance = CacheMgr.getInstance();
-		instance.addToCache(Constants.INSTALL_KEY_USER, u);
-		instance.addToCache(Constants.INSTALL_KEY_FAV_TYPES, new ArrayList<ShallowMemeType>(favTypes));
+		instance.addToCache(Constants.KEY_USER, u);
+		instance.addToCache(Constants.KEY_FAV_TYPES, new ArrayList<ShallowMemeType>(favTypes));
 
 		ShallowUser userFromCacheMgr =
 			instance.getFromCache(
-				Constants.INSTALL_KEY_USER, 
+				Constants.KEY_USER, 
 				ShallowUser.class);
 
 		TestCase.assertNotNull(userFromCacheMgr);
@@ -58,7 +58,7 @@ public class CacheMgrTest extends AndroidTestCase {
 		
 		
 		List<ShallowMemeType> typeFromCacheMgr = 
-			instance.getFromCache(Constants.INSTALL_KEY_FAV_TYPES, List.class);
+			instance.getFromCache(Constants.KEY_FAV_TYPES, List.class);
 
 		TestCase.assertNotNull(typeFromCacheMgr);
 		TestCase.assertTrue(typeFromCacheMgr.size() == 1);
@@ -69,14 +69,14 @@ public class CacheMgrTest extends AndroidTestCase {
 
 		userFromCacheMgr =
 			instance.getFromCache(
-				Constants.INSTALL_KEY_USER, 
+				Constants.KEY_USER, 
 				ShallowUser.class);
 
 		TestCase.assertNotNull(userFromCacheMgr);
 		TestCase.assertTrue(userFromCacheMgr.getId() == userId);
 		
 		 typeFromCacheMgr = 
-			instance.getFromCache(Constants.INSTALL_KEY_FAV_TYPES, List.class);
+			instance.getFromCache(Constants.KEY_FAV_TYPES, List.class);
 
 		TestCase.assertNotNull(typeFromCacheMgr);
 		TestCase.assertTrue(typeFromCacheMgr.size() == 1);

@@ -35,8 +35,7 @@ public final class R {
         public static final int config_top_text_btn=0x7f090006;
         public static final int edit_bottom_text_btn=0x7f090008;
         public static final int edit_top_text_btn=0x7f090005;
-        public static final int imageButton1=0x7f09000e;
-        public static final int imageButton2=0x7f09000f;
+        public static final int fav_btn=0x7f09000e;
         public static final int image_relative_layout=0x7f09000a;
         public static final int image_view=0x7f090016;
         public static final int list_item_heart_img_btn=0x7f090010;
@@ -49,6 +48,7 @@ public final class R {
         public static final int menu_settings=0x7f090019;
         public static final int popular_btn=0x7f09000c;
         public static final int save_btn=0x7f090003;
+        public static final int search_btn=0x7f09000f;
         public static final int share_btn=0x7f090002;
         public static final int share_save_linear=0x7f090001;
         public static final int top_text_linear=0x7f090004;
@@ -87,6 +87,7 @@ public final class R {
         public static final int icon_heart_cont_descr=0x7f05001c;
         public static final int icon_magnifier_cont_descr=0x7f05001d;
         public static final int menu_settings=0x7f050002;
+        public static final int no_favorites_msg=0x7f05001e;
         public static final int nonSslHttp=0x7f05000d;
         public static final int save_string=0x7f050007;
         public static final int share_string=0x7f050006;
