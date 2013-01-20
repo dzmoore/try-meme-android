@@ -5,6 +5,7 @@ import java.util.List;
 import android.test.AndroidTestCase;
 
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
+import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -18,6 +19,8 @@ public class MemeServiceTest extends AndroidTestCase  {
 	public void setUp() {
 		MemeService.initialize(getContext());
 		memeSvc = MemeService.getInstance();
+		
+		CacheMgr.initialize(getContext());
 	}
 	
 	@Override
@@ -149,6 +152,22 @@ public class MemeServiceTest extends AndroidTestCase  {
 
 		final boolean removeSuccess = memeSvc.removeFavType(userId, typeId);
 		assertTrue(removeSuccess);
+	}
+	
+	public void testGetPopularTypes() {
+		final List<ShallowMemeType> popTypes = memeSvc.getPopularTypes();
+		assertNotNull(popTypes);
+		assertTrue(popTypes.size() > 0);
+	}
+	
+	public void testGetTypesForSearch() {
+		final String searchTerm = "world";
+		
+		final List<ShallowMemeType> types = memeSvc.getTypesForSearch(searchTerm);
+		
+		assertNotNull(types);
+		assertTrue(types.size() > 0);
+		
 	}
 }
 
