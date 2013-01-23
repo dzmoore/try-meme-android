@@ -11,8 +11,8 @@ public final class R {
     public static final class attr {
     }
     public static final class dimen {
-        public static final int text_padding=0x7f040001;
-        public static final int zero_dip=0x7f040000;
+        public static final int text_padding=0x7f050001;
+        public static final int zero_dip=0x7f050000;
     }
     public static final class drawable {
         public static final int config_icon=0x7f020000;
@@ -27,86 +27,93 @@ public final class R {
         public static final int unselected_heart=0x7f020009;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f090000;
-        public static final int all_btn=0x7f09000d;
-        public static final int bottom_text_linear=0x7f090007;
-        public static final int bottom_text_view=0x7f090018;
-        public static final int config_bottom_text_btn=0x7f090009;
-        public static final int config_top_text_btn=0x7f090006;
-        public static final int edit_bottom_text_btn=0x7f090008;
-        public static final int edit_top_text_btn=0x7f090005;
-        public static final int fav_btn=0x7f09000e;
-        public static final int image_relative_layout=0x7f09000a;
-        public static final int image_view=0x7f090016;
-        public static final int list_item_heart_img_btn=0x7f090010;
-        public static final int list_item_text_view=0x7f090012;
-        public static final int list_item_thumb_img_view=0x7f090011;
-        public static final int meme_list_filter_bar_fragment=0x7f090013;
-        public static final int meme_list_fragment=0x7f090014;
-        public static final int meme_view_pager=0x7f09000b;
-        public static final int meme_view_rel_layout=0x7f090015;
-        public static final int menu_settings=0x7f090019;
-        public static final int popular_btn=0x7f09000c;
-        public static final int save_btn=0x7f090003;
-        public static final int search_btn=0x7f09000f;
-        public static final int share_btn=0x7f090002;
-        public static final int share_save_linear=0x7f090001;
-        public static final int top_text_linear=0x7f090004;
-        public static final int top_text_view=0x7f090017;
+        public static final int LinearLayout1=0x7f0a0000;
+        public static final int all_btn=0x7f0a000d;
+        public static final int bottom_text_linear=0x7f0a0007;
+        public static final int bottom_text_view=0x7f0a0019;
+        public static final int config_bottom_text_btn=0x7f0a0009;
+        public static final int config_top_text_btn=0x7f0a0006;
+        public static final int edit_bottom_text_btn=0x7f0a0008;
+        public static final int edit_top_text_btn=0x7f0a0005;
+        public static final int fav_btn=0x7f0a000e;
+        public static final int image_relative_layout=0x7f0a000a;
+        public static final int image_view=0x7f0a0017;
+        public static final int list_item_heart_img_btn=0x7f0a0010;
+        public static final int list_item_text_view=0x7f0a0012;
+        public static final int list_item_thumb_img_view=0x7f0a0011;
+        public static final int meme_list_filter_bar_fragment=0x7f0a0013;
+        public static final int meme_list_fragment=0x7f0a0014;
+        public static final int meme_type_search_list_fragment=0x7f0a0015;
+        public static final int meme_view_pager=0x7f0a000b;
+        public static final int meme_view_rel_layout=0x7f0a0016;
+        public static final int menu_settings=0x7f0a001a;
+        public static final int popular_btn=0x7f0a000c;
+        public static final int save_btn=0x7f0a0003;
+        public static final int search_btn=0x7f0a000f;
+        public static final int share_btn=0x7f0a0002;
+        public static final int share_save_linear=0x7f0a0001;
+        public static final int top_text_linear=0x7f0a0004;
+        public static final int top_text_view=0x7f0a0018;
     }
     public static final class integer {
-        public static final int initialFontSize=0x7f060003;
-        public static final int maxFontSize=0x7f060002;
-        public static final int nonSslPort=0x7f060001;
-        public static final int sslPort=0x7f060000;
+        public static final int initialFontSize=0x7f070003;
+        public static final int maxFontSize=0x7f070002;
+        public static final int nonSslPort=0x7f070001;
+        public static final int sslPort=0x7f070000;
     }
     public static final class layout {
         public static final int create_meme_layout=0x7f030000;
         public static final int meme_list_filter_bar_layout=0x7f030001;
         public static final int meme_list_item_layout=0x7f030002;
         public static final int meme_list_layout=0x7f030003;
-        public static final int meme_view_layout=0x7f030004;
+        public static final int meme_type_search_list_layout=0x7f030004;
+        public static final int meme_view_layout=0x7f030005;
     }
     public static final class menu {
-        public static final int activity_create_meme=0x7f080000;
-        public static final int activity_view_meme=0x7f080001;
+        public static final int activity_create_meme=0x7f090000;
+        public static final int activity_view_meme=0x7f090001;
     }
     public static final class string {
-        public static final int app_name=0x7f050000;
-        public static final int bundleconst_loaded=0x7f050017;
-        public static final int bundleconst_memebg=0x7f050015;
-        public static final int bundleconst_pageradapter=0x7f050018;
-        public static final int bundleconst_sampledlist=0x7f050019;
-        public static final int bundleconst_samplememes=0x7f050016;
-        public static final int create_meme_top_row_height=0x7f050005;
-        public static final int edit_bottom_text_string=0x7f050009;
-        public static final int edit_top_text_string=0x7f050008;
-        public static final int filter_bar_btn_txt_all=0x7f05001b;
-        public static final int filter_bar_btn_txt_popular=0x7f05001a;
-        public static final int hello_world=0x7f050001;
-        public static final int icon_heart_cont_descr=0x7f05001c;
-        public static final int icon_magnifier_cont_descr=0x7f05001d;
-        public static final int menu_settings=0x7f050002;
-        public static final int no_favorites_msg=0x7f05001e;
-        public static final int nonSslHttp=0x7f05000d;
-        public static final int save_string=0x7f050007;
-        public static final int share_string=0x7f050006;
-        public static final int sslHttp=0x7f05000c;
-        public static final int title_activity_create_meme=0x7f050003;
-        public static final int title_activity_meme_list=0x7f050004;
-        public static final int title_activity_view_meme=0x7f05000a;
-        public static final int webServiceAddress=0x7f05000e;
-        public static final int webServiceBackgroundSuffix=0x7f050010;
-        public static final int webServiceJsonSuffix=0x7f050011;
+        public static final int app_name=0x7f060000;
+        public static final int bundleconst_loaded=0x7f060017;
+        public static final int bundleconst_memebg=0x7f060015;
+        public static final int bundleconst_pageradapter=0x7f060018;
+        public static final int bundleconst_sampledlist=0x7f060019;
+        public static final int bundleconst_samplememes=0x7f060016;
+        public static final int create_meme_top_row_height=0x7f060005;
+        public static final int edit_bottom_text_string=0x7f060009;
+        public static final int edit_top_text_string=0x7f060008;
+        public static final int filter_bar_btn_txt_all=0x7f06001b;
+        public static final int filter_bar_btn_txt_popular=0x7f06001a;
+        public static final int hello_world=0x7f060001;
+        public static final int icon_heart_cont_descr=0x7f06001c;
+        public static final int icon_magnifier_cont_descr=0x7f06001d;
+        public static final int menu_settings=0x7f060002;
+        public static final int no_favorites_msg=0x7f06001e;
+        public static final int nonSslHttp=0x7f06000d;
+        public static final int save_string=0x7f060007;
+        public static final int share_string=0x7f060006;
+        public static final int sslHttp=0x7f06000c;
+        public static final int string_hint=0x7f06001f;
+        public static final int title_activity_create_meme=0x7f060003;
+        public static final int title_activity_meme_list=0x7f060004;
+        public static final int title_activity_meme_type_search_results=0x7f060020;
+        public static final int title_activity_view_meme=0x7f06000a;
+        public static final int webServiceAddress=0x7f06000e;
+        public static final int webServiceBackgroundSuffix=0x7f060010;
+        public static final int webServiceJsonSuffix=0x7f060011;
         /**      <string name="webServiceAddress">http://192.168.1.45:8080/meme_gen_server/spring</string> 
          */
-        public static final int webServiceMemeDataSuffix=0x7f05000f;
-        public static final int webServiceMemeType=0x7f050014;
-        public static final int webServiceResource=0x7f05000b;
-        public static final int webServiceSampleMemeDataPrefix=0x7f050013;
-        public static final int webServiceStoreMemePrefix=0x7f050012;
+        public static final int webServiceMemeDataSuffix=0x7f06000f;
+        public static final int webServiceMemeType=0x7f060014;
+        public static final int webServiceResource=0x7f06000b;
+        public static final int webServiceSampleMemeDataPrefix=0x7f060013;
+        public static final int webServiceStoreMemePrefix=0x7f060012;
     }
     public static final class style {
-        public static final int AppTheme=0x7f070000;
+        public static final int AppTheme=0x7f080000;
+    }
+    public static final class xml {
+        public static final int searchable=0x7f040000;
     }
 }

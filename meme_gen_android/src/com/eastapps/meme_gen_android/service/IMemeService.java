@@ -36,4 +36,8 @@ public interface IMemeService {
 	ShallowMemeType getType(int typeId);
 
 	List<MemeListItemData> getAllFavMemeTypesListData();
+
+	List<MemeListItemData> getAllPopularTypesListData();
+
+	List<MemeListItemData> getAllTypesForSearch(String query);
 }
