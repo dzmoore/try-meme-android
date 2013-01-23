@@ -218,6 +218,14 @@ public class MemeService implements IMemeService {
 	}
 	
 	@Override
+	public List<MemeListItemData> getAllPopularTypesListData() {
+		final List<ShallowMemeType> types = getPopularTypes();
+		final List<MemeListItemData> listData = populateMemeListItemDataList(types);
+		
+		return listData;
+	}
+	
+	@Override
 	public List<MemeListItemData> getAllMemeTypesListData() {
 		
 		final List<ShallowMemeType> types = getAllMemeTypes();
@@ -226,6 +234,14 @@ public class MemeService implements IMemeService {
 		
 		return listData;
 	}
+	
+	@Override
+	public List<MemeListItemData> getAllTypesForSearch(final String query) {
+		final List<ShallowMemeType> results = getTypesForSearch(query);
+		
+		return populateMemeListItemDataList(results);
+	}
+	
 
 	private List<MemeListItemData> populateMemeListItemDataList(
 			final List<ShallowMemeType> types) {
@@ -321,6 +337,7 @@ public class MemeService implements IMemeService {
 	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
 		return client.getTypesForSearch(searchTerm);
 	}
+	
 
 	
 	

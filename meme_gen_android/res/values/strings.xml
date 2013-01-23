@@ -42,4 +42,6 @@
 	<string name="icon_heart_cont_descr">heart</string>
 	<string name="icon_magnifier_cont_descr">magnifier</string>
 	<string name="no_favorites_msg">No Favorites</string>
+	<string name="string_hint">Search for Meme Types</string>
+	<string name="title_activity_meme_type_search_results">Search Results</string>
 </resources>
