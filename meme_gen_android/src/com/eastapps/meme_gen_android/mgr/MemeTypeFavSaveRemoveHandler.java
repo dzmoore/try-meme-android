@@ -25,15 +25,17 @@ public class MemeTypeFavSaveRemoveHandler {
 		final ICallback<Map<String, String>> c = new ICallback<Map<String,String>>() {
 			@Override
 			public void callback(final Map<String, String> obj) {
-				activity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(
-							activity,
-							Conca.t(obj.get("action"), " fav type: ", obj.get("success")),
-							Toast.LENGTH_SHORT).show();
-					}
-				});
+				if (activity.getResources().getBoolean(R.bool.debug_toasts_enabled)) {
+					activity.runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(
+								activity,
+								Conca.t(obj.get("action"), " fav type: ", obj.get("success")),
+								Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
 			}
 		};
 		

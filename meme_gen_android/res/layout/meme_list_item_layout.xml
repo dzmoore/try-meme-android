@@ -12,6 +12,7 @@
         android:layout_weight="1"
         android:minWidth="165dp"
         android:src="@drawable/icon_heart" 
+        android:background="@null"
         android:contentDescription="TODO"/>
 
     <com.eastapps.meme_gen_android.widget.ResizableImageView
@@ -30,6 +31,8 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:minWidth="300dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
         android:text="dummy text" />
 
 </LinearLayout>
