@@ -44,4 +44,7 @@
 	<string name="no_favorites_msg">No Favorites</string>
 	<string name="string_hint">Search for Meme Types</string>
 	<string name="title_activity_meme_type_search_results">Search Results</string>
+	<item type="bool" format="boolean" name="debug_toasts_enabled">false</item>
+    
+    
 </resources>

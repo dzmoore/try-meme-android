@@ -1,7 +1,6 @@
 package com.eastapps.meme_gen_android.activity;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,19 +18,18 @@ import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.Ini;
+import com.eastapps.meme_gen_android.mgr.MemeTypeFavSaveRemoveHandler;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.util.Conca;
 
 public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	private List<MemeListItemData> items;
 	private MemeListAdapter listAdapter;
 	private MemeService memeService;
-	private UserMgr userMgr;
 	private AtomicBoolean isLoadingList = new AtomicBoolean(false);
 	private AtomicBoolean isSearchAction = new AtomicBoolean(false);
 	private AtomicBoolean isViewSet = new AtomicBoolean(false);
@@ -87,20 +85,21 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 			}
 		}
 		
-		runOnUiThread(
-			new Runnable() {
-				@Override
-				public void run() {
-					initListAdapter();
-					
-					Toast.makeText(
-						MemeTypeSearchResultsActivity.this, 
-						"Loading Complete",
-						Toast.LENGTH_SHORT
-					).show();
-				}
-
-		});
+			runOnUiThread(
+				new Runnable() {
+					@Override
+					public void run() {
+						initListAdapter();
+						
+						if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
+							Toast.makeText(
+									MemeTypeSearchResultsActivity.this, 
+									"Loading Complete",
+									Toast.LENGTH_SHORT
+									).show();
+						}
+					}
+			});
 		
 		new Thread(new Runnable() {
 			@Override
@@ -111,76 +110,7 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	}
 	
 	private void handleHeartBtnClicked(final MemeListItemData item, final ImageButton heartImgBtn) {
-		final ICallback<Map<String, String>> c = new ICallback<Map<String,String>>() {
-			@Override
-			public void callback(final Map<String, String> obj) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(
-							MemeTypeSearchResultsActivity.this,
-							Conca.t(obj.get("action"), " fav type: ", obj.get("success")),
-							Toast.LENGTH_SHORT).show();
-					}
-				});
-			}
-		};
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				if (item.isFavorite()) {
-					final Map<String, String> params = new HashMap<String, String>();
-					params.put("action", "Removed");
-					
-					final boolean success = MemeService.getInstance().removeFavType(
-						UserMgr.getUser().getId(),
-						item.getMemeType().getTypeId()
-					);
-					
-					item.setFavorite(false);
-					
-					if (heartImgBtn != null) {
-						runOnUiThread(
-							new Runnable() {
-								public void run() {
-									heartImgBtn.setImageDrawable(getResources().getDrawable(R.drawable.heart_unchecked));
-								}
-							}
-						);
-					}
-					
-					params.put("success", String.valueOf(success));
-					
-					c.callback(params);
-					
-				} else {
-					final Map<String, String> params = new HashMap<String, String>();
-					params.put("action", "Stored");
-					
-					final boolean success = MemeService.getInstance().storeFavType(
-						UserMgr.getUser().getId(),
-						item.getMemeType().getTypeId()
-					);
-					
-					item.setFavorite(true);
-					
-					if (heartImgBtn != null) {
-						runOnUiThread(
-							new Runnable() {
-								public void run() {
-									heartImgBtn.setImageDrawable(getResources().getDrawable(R.drawable.icon_heart));
-								}
-							}
-						);
-					}
-					
-					params.put("success", String.valueOf(success));
-					
-					c.callback(params);
-				}
-			}
-		}).start();
+		new MemeTypeFavSaveRemoveHandler(this).handle(item, heartImgBtn);
 	}
 	
 	private void initListAdapter() {
@@ -231,7 +161,6 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-//				initActivity();
 				initMemeList();
 			}
 		});
