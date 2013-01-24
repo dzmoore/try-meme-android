@@ -608,7 +608,7 @@ public class CreateMemeActivity extends FragmentActivity {
 		memePager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
-				
+				loadCurrentlySelectedPage();
 			}
 			
 			@Override
@@ -618,9 +618,9 @@ public class CreateMemeActivity extends FragmentActivity {
 			
 			@Override
 			public void onPageScrollStateChanged(int state) {
-				if (state == ViewPager.SCROLL_STATE_IDLE) {
-					loadCurrentlySelectedPage();
-				}
+//				if (state == ViewPager.SCROLL_STATE_SETTLING) {
+//					loadCurrentlySelectedPage();
+//				}
 			}
 		});
 	}

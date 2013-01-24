@@ -7,7 +7,7 @@
 
     <Button
         android:id="@+id/popular_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill_vertical"
         android:layout_weight="1"
@@ -15,14 +15,14 @@
 
     <Button
         android:id="@+id/all_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:text="@string/filter_bar_btn_txt_all" />
 
     <ImageButton
         android:id="@+id/fav_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:contentDescription="@string/icon_heart_cont_descr"
@@ -30,7 +30,7 @@
 
     <ImageButton
         android:id="@+id/search_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:contentDescription="@string/icon_magnifier_cont_descr"
