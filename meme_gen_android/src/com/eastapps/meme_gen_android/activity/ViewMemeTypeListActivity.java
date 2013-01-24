@@ -20,6 +20,7 @@ import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.Ini;
+import com.eastapps.meme_gen_android.mgr.MemeTypeFavSaveRemoveHandler;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -33,66 +34,30 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	private List<MemeListItemData> items;
 	private MemeListAdapter listAdapter;
 	private MemeService memeService;
-	private UserMgr userMgr;
 	private AtomicBoolean isLoadingList = new AtomicBoolean(false);
-//	private AtomicBoolean isSearchAction = new AtomicBoolean(false);
 	private AtomicBoolean isViewSet = new AtomicBoolean(false);
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Get the intent, verify the action and get the query
-//		Intent intent = getIntent();
-//		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//			isSearchAction.set(true);
-//			
-//			initActivity();
-//			
-//			final String query = intent.getStringExtra(SearchManager.QUERY);
-//			
-//			new Thread(new Runnable() {
-//				@Override
-//				public void run() {
-//					processSearch(query);
-//				}
-//			}).start();
-//			
-//		} else {
-//			isSearchAction.set(false);
-			
-			initActivity();
-//		}
+		initActivity();
 	}
 	
-//	private void processSearch(final String query) {
-//		final List<MemeListItemData> results = memeService.getAllTypesForSearch(query);
-//		
-//		if (results != null && results.size() > 0) {
-//			items = results;
-//		}
-//			
-//		runOnUiThread(new Runnable() {
-//			@Override
-//			public void run() {
-//				initActivity();
-//				initMemeList();
-//			}
-//		});
-//	}
-
-//	@Override
-//	public boolean onSearchRequested() {
-//		isSearchAction.set(true);
-//		
-//		initFilterBar();
-//	
-//		return super.onSearchRequested();
-//	}
-
+	@Override
+	protected void onResume() {
+		final ICallback<Map<String, Object>> callback = createFilterBarBtnClickListener();
+		final FragmentManager fragMgr = getSupportFragmentManager();
+		final MemeListFilterBarFragment filterBarFrag = (MemeListFilterBarFragment) fragMgr.findFragmentById(R.id.meme_list_filter_bar_fragment);
+		filterBarFrag.setFilterBtnClickedCallback(callback);
+		super.onResume();
+	}
+	
 	private void initActivity() {
-		final Toast loadingToast = Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT);
-		loadingToast.show();
+		if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
+			final Toast loadingToast = Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT);
+			loadingToast.show();
+		}
 	
 		if (isViewSet.compareAndSet(false, true)) {
 			setContentView(R.layout.meme_list_layout);
@@ -108,26 +73,18 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 
 	private void initFilterBar() {
-//		if (isSearchAction.get()) {
-//			final FragmentManager fragMgr = getSupportFragmentManager();
-//			final MemeListFilterBarFragment filterBarFrag = (MemeListFilterBarFragment) fragMgr.findFragmentById(R.id.meme_list_filter_bar_fragment);
-//			
-//			final FragmentTransaction beginTransaction = fragMgr.beginTransaction();
-//			beginTransaction.remove(filterBarFrag);
-//			beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-//			beginTransaction.addToBackStack(null);
-//			final int commit = beginTransaction.commit();	
-//			
-//		} else {
-			if (isLoadingList.compareAndSet(false, true)) {
+		if (isLoadingList.compareAndSet(false, true)) {
+			try {
 				loadPopularTypes();
+			} finally {
+				isLoadingList.set(false);
 			}
-			
-			final ICallback<Map<String, Object>> callback = createFilterBarBtnClickListener();
-			final FragmentManager fragMgr = getSupportFragmentManager();
-			final MemeListFilterBarFragment filterBarFrag = (MemeListFilterBarFragment) fragMgr.findFragmentById(R.id.meme_list_filter_bar_fragment);
-			filterBarFrag.setFilterBtnClickedCallback(callback);
-//		}
+		}
+		
+		final ICallback<Map<String, Object>> callback = createFilterBarBtnClickListener();
+		final FragmentManager fragMgr = getSupportFragmentManager();
+		final MemeListFilterBarFragment filterBarFrag = (MemeListFilterBarFragment) fragMgr.findFragmentById(R.id.meme_list_filter_bar_fragment);
+		filterBarFrag.setFilterBtnClickedCallback(callback);
 	}
 
 	private ICallback<Map<String, Object>> createFilterBarBtnClickListener() {
@@ -135,7 +92,11 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 			@Override
 			public void callback(Map<String, Object> params) {
 				if (isLoadingList.compareAndSet(false, true)) {
-					handleFilterBtnClicked(params);
+					try {
+						handleFilterBtnClicked(params);
+					} finally {
+						isLoadingList.set(false);
+					}
 				}
 			}
 
@@ -183,8 +144,6 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 					).show(); 
 				}
 			});
-			
-			isLoadingList.set(false);
 		}
 		
 	}
@@ -242,8 +201,6 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		final MemeListFragment memeListFrag = (MemeListFragment) fragMgr.findFragmentById(R.id.meme_list_fragment);
 		
 		memeListFrag.setListAdapter(listAdapter);
-		
-		isLoadingList.set(false);
 	}
 
 	private void initMemeList() {
@@ -264,11 +221,13 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 				public void run() {
 					initListAdapter();
 					
-					Toast.makeText(
-						ViewMemeTypeListActivity.this, 
-						"Loading Complete",
-						Toast.LENGTH_SHORT
-					).show();
+					if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
+						Toast.makeText(
+							ViewMemeTypeListActivity.this, 
+							"Loading Complete",
+							Toast.LENGTH_SHORT
+						).show();
+					}
 				}
 
 		});
@@ -289,77 +248,10 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 	
 	private void handleHeartBtnClicked(final MemeListItemData item, final ImageButton heartImgBtn) {
-		final ICallback<Map<String, String>> c = new ICallback<Map<String,String>>() {
-			@Override
-			public void callback(final Map<String, String> obj) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(
-							ViewMemeTypeListActivity.this,
-							Conca.t(obj.get("action"), " fav type: ", obj.get("success")),
-							Toast.LENGTH_SHORT).show();
-					}
-				});
-			}
-		};
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				if (item.isFavorite()) {
-					final Map<String, String> params = new HashMap<String, String>();
-					params.put("action", "Removed");
-					
-					final boolean success = MemeService.getInstance().removeFavType(
-						UserMgr.getUser().getId(),
-						item.getMemeType().getTypeId()
-					);
-					
-					item.setFavorite(false);
-					
-					if (heartImgBtn != null) {
-						runOnUiThread(
-							new Runnable() {
-								public void run() {
-									heartImgBtn.setImageDrawable(getResources().getDrawable(R.drawable.heart_unchecked));
-								}
-							}
-						);
-					}
-					
-					params.put("success", String.valueOf(success));
-					
-					c.callback(params);
-					
-				} else {
-					final Map<String, String> params = new HashMap<String, String>();
-					params.put("action", "Stored");
-					
-					final boolean success = MemeService.getInstance().storeFavType(
-						UserMgr.getUser().getId(),
-						item.getMemeType().getTypeId()
-					);
-					
-					item.setFavorite(true);
-					
-					if (heartImgBtn != null) {
-						runOnUiThread(
-							new Runnable() {
-								public void run() {
-									heartImgBtn.setImageDrawable(getResources().getDrawable(R.drawable.icon_heart));
-								}
-							}
-						);
-					}
-					
-					params.put("success", String.valueOf(success));
-					
-					c.callback(params);
-				}
-			}
-		}).start();
+		new MemeTypeFavSaveRemoveHandler(this).handle(item, heartImgBtn);
 	}
+
+	
 }
 
 
