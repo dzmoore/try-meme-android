@@ -46,6 +46,7 @@ public class MemeViewFragment extends Fragment {
 //		if (inflatedMemeView == null) {
 			try {
 				inflatedMemeView = inflater.inflate(R.layout.meme_view_layout, container, false);
+				inflatedMemeView.setTag(TagMgr.getMemeViewLayoutTag(meme.getId()));
 				
 				ResizableImageView bgView = (ResizableImageView) inflatedMemeView.findViewById(R.id.image_view);
 				bgView.setImageBitmap(meme.getBackground());

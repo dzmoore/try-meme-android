@@ -1,16 +1,25 @@
 package com.eastapps.meme_gen_android.activity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +37,15 @@ import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.StringUtils;
+import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.util.Conca;
+import com.esotericsoftware.kryo.util.Util;
 
 public class CreateMemeActivity extends FragmentActivity {
 	private static final String TAG = CreateMemeActivity.class.getSimpleName();
@@ -175,6 +188,119 @@ public class CreateMemeActivity extends FragmentActivity {
 		initConfigBottomTextBtn();
 		
 		initSaveBtn();
+		
+		initShareBtn();
+	}
+
+	private void initShareBtn() {
+		final Button shareBtn = (Button) findViewById(R.id.share_btn);
+		shareBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						doHandleShareBtnClick(v);
+					}
+
+
+				
+				}).start();
+			}
+		});
+	}
+
+	private void doHandleShareBtnClick(View v) {
+		final View memeView = (View)memePager.findViewWithTag(TagMgr.getMemeViewLayoutTag(getSelectedMemeViewId()));
+		
+		Bitmap b = Bitmap.createBitmap(memeView.getWidth(), memeView.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas c = new Canvas(b);
+		memeView.draw(c);
+		
+		boolean isExternalStorageAvailable = false;
+		boolean isExternalStorageWriteable = false;
+		
+		final String state = Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+		    // We can read and write the media
+		    isExternalStorageAvailable = isExternalStorageWriteable = true;
+		    
+		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		    // We can only read the media
+		    isExternalStorageAvailable = true;
+		    isExternalStorageWriteable = false;
+		    
+		} else {
+		    // Something else is wrong. It may be one of many other states, but all we need
+		    //  to know is we can neither read nor write
+		    isExternalStorageAvailable = isExternalStorageWriteable = false;
+		}
+		
+		if (!isExternalStorageWriteable) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(
+						CreateMemeActivity.this,
+						"Unable to write to storage",
+						Toast.LENGTH_SHORT
+					).show();
+				}
+			});
+			
+			return;
+		}
+		
+		try {
+			final File eastAppsDir =
+			new File(
+				Conca.t(
+					Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath(),
+					File.separator, "eastapps_memes"));
+			
+			if (!eastAppsDir.exists()) {
+				eastAppsDir.mkdirs();
+			}
+			
+			final File imgFile = new File(
+				eastAppsDir, 
+				TagMgr.getMemeFileName(getSelectedMeme().getId()
+			));
+			
+			FileOutputStream fos = new FileOutputStream(imgFile);
+			
+			b.compress(CompressFormat.JPEG, 90, fos);
+			fos.flush();
+			fos.close();
+		
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			
+			intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imgFile));
+			intent.setType("image/jpg");
+			
+			startActivity(Intent.createChooser(intent,"MMS Meme"));
+					
+		} catch (final IOException e) {
+			Log.e(TAG, "err", e);
+			
+			runOnUiThread(
+				new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(
+							CreateMemeActivity.this,
+							Conca.t(
+								"There was a problem storing the meme",
+								StringUtils.isNotBlank(e.getMessage())
+									? ": " + e.getMessage()
+									: ""
+							),
+							Toast.LENGTH_SHORT
+						).show();
+					}
+			});
+		}
 	}
 
 	private void initTopSeekbar() {
