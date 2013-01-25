@@ -63,8 +63,6 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 			setContentView(R.layout.meme_list_layout);
 		}
 		
-		Ini.t(this);
-		
 		memeService = MemeService.getInstance();	
 		
 		items = Collections.emptyList();

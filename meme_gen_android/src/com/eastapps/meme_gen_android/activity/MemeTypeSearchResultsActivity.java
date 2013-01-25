@@ -66,8 +66,6 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 			setContentView(R.layout.meme_type_search_list_layout);
 		}
 	
-		Ini.t(this);
-		
 		memeService = MemeService.getInstance();	
 		
 		items = Collections.emptyList();

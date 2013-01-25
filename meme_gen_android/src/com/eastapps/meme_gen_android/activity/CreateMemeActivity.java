@@ -38,14 +38,12 @@ import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
-import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.util.Conca;
-import com.esotericsoftware.kryo.util.Util;
 
 public class CreateMemeActivity extends FragmentActivity {
 	private static final String TAG = CreateMemeActivity.class.getSimpleName();
@@ -87,7 +85,6 @@ public class CreateMemeActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_meme_layout);
 		
-		MemeService.initialize(this);
 		memeService = MemeService.getInstance();		
 		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);

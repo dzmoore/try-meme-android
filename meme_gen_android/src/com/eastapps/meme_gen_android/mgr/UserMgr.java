@@ -19,15 +19,9 @@ public class UserMgr {
 	private ShallowUser user;
 	private List<ShallowMemeType> favTypes;
 	
-	private MemeService memeSvc;
 
 	private UserMgr(final Context context) {
 		super();
-
-		MemeService.initialize(context);
-		memeSvc = MemeService.getInstance();
-		
-		CacheMgr.initialize(context);
 	}
 
 	public static synchronized void initialize(final Context context) {
@@ -56,15 +50,19 @@ public class UserMgr {
 		setterCallback.callback(inst.user);
 	}
 	
+	private MemeService getMemeService() {
+		return MemeService.getInstance();
+	}
+	
 	private void queryForAndInitFavTypes() {
-		if (user != null && memeSvc != null) {
-			favTypes = memeSvc.getFavMemeTypesForUser(user.getId());
+		if (user != null && getMemeService() != null) {
+			favTypes = getMemeService().getFavMemeTypesForUser(user.getId());
 		}
 	}
 
 	private void createNewUser() {
 		// get a new install key
-		final String installKey = memeSvc.getNewInstallKey();
+		final String installKey = getMemeService().getNewInstallKey();
 		
 		// set the username and install key to the 
 		// new install key from the server
@@ -74,7 +72,7 @@ public class UserMgr {
 		
 		// store the new user and check whether the 
 		// store was successful
-		final int newUserId = memeSvc.storeNewUser(newUser);
+		final int newUserId = getMemeService().storeNewUser(newUser);
 		if (newUserId > 0) {
 			// store successful;
 			// set the user id and set the
@@ -100,7 +98,7 @@ public class UserMgr {
 				inst.favTypes = (List<ShallowMemeType>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
 				
 			} else {
-				inst.favTypes = inst.memeSvc.getFavMemeTypesForUser(getUser().getId());
+				inst.favTypes = inst.getMemeService().getFavMemeTypesForUser(getUser().getId());
 			}
 		}
 		
@@ -119,7 +117,7 @@ public class UserMgr {
 		final UserMgr inst = getInstance();
 		final ShallowUser u = getUser();
 		
-		iCallback.callback(inst.memeSvc.storeFavType(u.getId(), typeId));
+		iCallback.callback(inst.getMemeService().storeFavType(u.getId(), typeId));
 	}
 	
 	public static ShallowUser getUser() {
@@ -139,7 +137,7 @@ public class UserMgr {
 		final UserMgr inst = getInstance();
 		final ShallowUser u = getUser();
 		
-		iCallback.callback(inst.memeSvc.removeFavType(u.getId(), typeId));
+		iCallback.callback(inst.getMemeService().removeFavType(u.getId(), typeId));
 	}
 
 }

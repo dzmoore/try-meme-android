@@ -26,7 +26,7 @@ public class CacheMgr {
 	private Map<String, Serializable> installMap;
 	private Context context;
 	
-	private CacheMgr(final Context context) {
+	public CacheMgr(final Context context) {
 		super();
 
 		this.context = context;

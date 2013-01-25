@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 import android.test.AndroidTestCase;
 
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
-import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
