@@ -1,6 +1,8 @@
 package com.eastapps.meme_gen_android.widget;
 
 import com.eastapps.meme_gen_android.R;
+import com.eastapps.util.Conca;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TagMgr {
@@ -41,6 +43,14 @@ public class TagMgr {
 
 	public static int getNextMemeListItemId() {
 		return memeListItemIncrementor.incrementAndGet();
+	}
+
+	public static Object getMemeViewLayoutTag(int id) {
+		return Conca.t("meme_view_layout_", id);
+	}
+
+	public static String getMemeFileName(int id) {
+		return Conca.t("meme_", System.currentTimeMillis(), ".jpg");
 	}
 	
 }

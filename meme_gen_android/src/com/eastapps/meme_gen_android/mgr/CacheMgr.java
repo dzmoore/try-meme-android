@@ -86,7 +86,7 @@ public class CacheMgr {
 		}
 	}
 
-	private File getInstallFile() {
+	public File getInstallFile() {
 		return new File(context.getFilesDir(), Constants.INSTALL_FILE);
 	}
 	
