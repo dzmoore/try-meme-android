@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
+import com.eastapps.meme_gen_android.mgr.AdMgr;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -108,7 +109,11 @@ public class CreateMemeActivity extends FragmentActivity {
 				}
 			}).start();
 		}
+		
+		AdMgr.getInstance().initAd(this, R.id.create_view_advertising_banner_view);
 	}
+	
+	
 	
 	private boolean isLoaded() {
 		return isLoadComplete.get();
