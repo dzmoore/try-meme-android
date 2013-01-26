@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
+import com.eastapps.meme_gen_android.mgr.AdMgr;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.Ini;
@@ -68,6 +69,12 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		items = Collections.emptyList();
 		
 		initFilterBar();
+		
+		AdMgr.getInstance().initAd(this, R.id.advertising_banner_view);
+	}
+	
+	private void initAd() {
+		
 	}
 
 	private void initFilterBar() {
@@ -196,7 +203,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		});
 		
 		final FragmentManager fragMgr = getSupportFragmentManager();
-		final MemeListFragment memeListFrag = (MemeListFragment) fragMgr.findFragmentById(R.id.meme_list_fragment);
+		final MemeListFragment memeListFrag = (MemeListFragment) fragMgr.findFragmentByTag("list_frag");
 		
 		memeListFrag.setListAdapter(listAdapter);
 	}

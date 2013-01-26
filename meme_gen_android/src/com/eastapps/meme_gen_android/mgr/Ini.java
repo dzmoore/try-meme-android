@@ -10,5 +10,6 @@ public class Ini {
 		CacheMgr.initialize(context);
 		UserMgr.initialize(context);
 		MemeService.initialize(context);
+		AdMgr.initialize();
 	}
 }

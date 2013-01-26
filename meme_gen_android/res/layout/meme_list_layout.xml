@@ -9,12 +9,22 @@
         android:id="@+id/meme_list_filter_bar_fragment"
         android:name="com.eastapps.meme_gen_android.widget.fragment.MemeListFilterBarFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="175dp"
+        android:layout_weight="1" />
 
     <fragment
         android:id="@+id/meme_list_fragment"
         android:name="com.eastapps.meme_gen_android.widget.fragment.MemeListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:tag="list_frag" />
+
+    <com.mobclix.android.sdk.MobclixMMABannerXLAdView
+        android:id="@+id/advertising_banner_view"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:tag="adspace" />
 
 </LinearLayout>
