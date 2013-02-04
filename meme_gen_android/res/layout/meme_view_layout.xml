@@ -16,7 +16,6 @@
         android:scaleType="fitXY"
         android:src="@drawable/config_icon" />
     
-    <!-- <TextView -->
     <com.eastapps.meme_gen_android.widget.OutlineTextView 
         android:id="@+id/top_text_view"
         android:layout_width="wrap_content"
@@ -29,7 +28,6 @@
         android:paddingRight="@dimen/text_padding"
         android:shadowRadius="7"/>
     
-    <!-- <TextView -->
    <com.eastapps.meme_gen_android.widget.OutlineTextView 
         android:id="@+id/bottom_text_view"
         android:layout_width="wrap_content"
@@ -40,34 +38,7 @@
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/text_padding"
         android:paddingRight="@dimen/text_padding"
+        android:paddingBottom="@dimen/bottom_text_padding"
         android:shadowRadius="7"/>
     
-   <!--  <fragment 
-        android:name="com.eastapps.meme_gen_android.widget.fragment.MemeTextFragment"
-        android:id="@+id/top_text_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/image_view"
-        android:layout_alignRight="@id/image_view"
-        android:layout_alignTop="@id/image_view"
-        android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/text_padding"
-        android:paddingRight="@dimen/text_padding"
-        android:shadowRadius="7"
-        android:text="DUMMY TOP TEXT" /> -->
-
-<!--     <fragment
-        android:name="com.eastapps.meme_gen_android.widget.fragment.MemeTextFragment"
-        android:id="@+id/bottom_text_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/image_view"
-        android:layout_alignLeft="@id/image_view"
-        android:layout_alignRight="@id/image_view"
-        android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/text_padding"
-        android:paddingRight="@dimen/text_padding"
-        android:shadowRadius="7"
-        android:text="DUMMY BOTTOM TEXT" /> -->
-
 </RelativeLayout>

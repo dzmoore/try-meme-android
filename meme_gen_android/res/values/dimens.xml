@@ -2,4 +2,5 @@
 <resources>
     <dimen name="zero_dip">0dip</dimen>
     <dimen name="text_padding">15dip</dimen>
+    <dimen name="bottom_text_padding">15dp</dimen>
 </resources>

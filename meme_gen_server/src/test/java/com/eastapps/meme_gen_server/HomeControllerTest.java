@@ -1,8 +1,9 @@
 package com.eastapps.meme_gen_server;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -15,12 +16,12 @@ import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.eastapps.meme_gen_server.constants.Constants;
 import com.eastapps.meme_gen_server.domain.DeviceInfo;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.LvMemeType;
@@ -33,26 +34,43 @@ import com.eastapps.meme_gen_server.domain.User;
 import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.meme_gen_server.util.Util;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({
+	Constants.ROOT_CONTEXT,
+	Constants.SERVLET_CONTEXT
+})
 public class HomeControllerTest {
+	@Autowired
 	private SessionFactory sessionFactory;
-	private String imgsRoot;
-	private String thumbImgsRoot;
-	private long installKeyTimeoutMs;
+	
+	@Autowired
+	private String memeImagesRootDir;
+	
+	@Autowired
+	private String memeThumbImagesRootDir;
+	
+	@Autowired
+	private Long installKeyTimeoutMs;
+	
+	@Resource 
+	private ApplicationContext appContext;
 	
 	private static final Logger logger = Logger.getLogger(HomeControllerTest.class);
 	private HomeController homeCtrllr;
 	
 	@Before
 	public void setUp() throws Exception {
-		final Resource rsrc = new FileSystemResource(new File("src/test/resources/test-context.xml"));
-		BeanFactory fac = new XmlBeanFactory(rsrc);
-
-		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
-		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
-		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
-		installKeyTimeoutMs = (Long) fac.getBean("installKeyTimeoutMs");
+//		final Resource rsrc = new FileSystemResource(new File(com.eastapps.meme_gen_server.Constants.ROOT_CONTEXT));
+//		BeanFactory fac = new XmlBeanFactory(rsrc);
+//		FileSystemXmlApplicationContext fac = new FileSystemXmlApplicationContext(Constants.ROOT_CONTEXT);
 		
-		homeCtrllr = new HomeController(new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs));
+		
+//		sessionFactory = (SessionFactory) fac.getBean(Constants.SESSION_FACTORY);
+//		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
+//		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
+//		installKeyTimeoutMs = (Long) fac.getBean("installKeyTimeoutMs");
+		
+		homeCtrllr = new HomeController(new MemeService(sessionFactory, memeImagesRootDir, memeThumbImagesRootDir, installKeyTimeoutMs));
 	}
 
 	@After
@@ -86,17 +104,17 @@ public class HomeControllerTest {
 		m.setMemeBackground(bg);
 		
 		final String topText = "toptext";
-		m.getMemeTexts().add(new MemeText(m, topText, Constants.TOP, 26));
+		m.getMemeTexts().add(new MemeText(m, topText, com.eastapps.meme_gen_server.constants.Constants.TOP, 26));
 		
 		final String bottomText = "bottomtext";
-		m.getMemeTexts().add(new MemeText(m, bottomText, Constants.BOTTOM, 26));
+		m.getMemeTexts().add(new MemeText(m, bottomText, com.eastapps.meme_gen_server.constants.Constants.BOTTOM, 26));
 		m.setUser(user);
 		
 		final HomeController controller = homeCtrllr;
 
 		final IntResult result = controller.storeMeme(new ShallowMeme(m));
 		Assert.assertNotNull(result);
-		Assert.assertTrue(result.getResult() > Constants.INVALID);
+		Assert.assertTrue(result.getResult() > com.eastapps.meme_gen_server.constants.Constants.INVALID);
 		m.setId(result.getResult());
 		
 		sesh.beginTransaction();
@@ -127,7 +145,7 @@ public class HomeControllerTest {
 
 	private MemeBackground createMemeBackground(final MemeBackground bg, final Session sesh) {
 		bg.setActive(true);
-		bg.setPath(imgsRoot);
+		bg.setPath(memeImagesRootDir);
 
 		// store meme_background
 		sesh.beginTransaction();

@@ -14,6 +14,7 @@ public final class R {
         public static final int debug_toasts_enabled=0x7f080000;
     }
     public static final class dimen {
+        public static final int bottom_text_padding=0x7f050002;
         public static final int text_padding=0x7f050001;
         public static final int zero_dip=0x7f050000;
     }
