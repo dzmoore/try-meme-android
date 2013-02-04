@@ -1,6 +1,5 @@
 package com.eastapps.meme_gen_server;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,12 +12,11 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -26,24 +24,30 @@ import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.meme_gen_server.service.MemeService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({
+	Constants.ROOT_CONTEXT,
+	Constants.SERVLET_CONTEXT
+})
 public class MemeServiceTest {
+	@Autowired
 	private SessionFactory sessionFactory;
-	private String imgsRoot;
+	
+	@Autowired
+	private String memeImagesRootDir;
+	
+	@Autowired
 	private MemeService memeSvc;
-	private String thumbImgsRoot;
+	
+	@Autowired
+	private String memeThumbImagesRootDir;
+	
+	@Autowired
 	private Long installKeyTimeoutMs;
 
 	@Before
 	public void setUp() throws Exception {
-		final Resource rsrc = new FileSystemResource(new File("src/test/resources/test-context.xml"));
-		BeanFactory fac = new XmlBeanFactory(rsrc);
-
-		sessionFactory = (SessionFactory) fac.getBean("mySessionFactory");
-		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
-		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
-		installKeyTimeoutMs = (Long) fac.getBean("installKeyTimeoutMs");
-		
-		memeSvc = new MemeService(sessionFactory, imgsRoot, thumbImgsRoot, installKeyTimeoutMs);
+		memeSvc = new MemeService(sessionFactory, memeImagesRootDir, memeThumbImagesRootDir, installKeyTimeoutMs);
 	}
 
 	@After
