@@ -47,7 +47,6 @@ public class MemeServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		memeSvc = new MemeService(sessionFactory, memeImagesRootDir, memeThumbImagesRootDir, installKeyTimeoutMs);
 	}
 
 	@After

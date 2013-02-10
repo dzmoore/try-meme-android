@@ -6,14 +6,21 @@
         components -->
     <import resource="db.xml" />
     
+    <bean name="imageFileReader" class="com.eastapps.meme_gen_server.service.UrlFileReader" >
+        <property name="urlBase" ref="urlBase"/>   
+    </bean>
     
-    <bean name="memeImagesRootDir" class="java.lang.String">
-        <constructor-arg value="/meme_imgs" />
+    <bean name="urlBase" class="java.lang.String">
+        <constructor-arg value="https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs" />
     </bean>
-    <bean name="memeThumbImagesRootDir" class="java.lang.String">
-        <constructor-arg value="/meme_imgs/thumbs" />
+    
+    <bean name="memeThumbDirName" class="java.lang.String">
+        <constructor-arg value="thumbs"/>
     </bean>
+    
     <bean name="installKeyTimeoutMs" class="java.lang.Long">
         <constructor-arg value="420000" />
     </bean>
+    
+    
 </beans>

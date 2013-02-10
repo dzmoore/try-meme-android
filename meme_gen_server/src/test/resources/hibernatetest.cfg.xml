@@ -5,9 +5,9 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">password</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/mgsdb</property>
-        <property name="hibernate.connection.username">mgsdb_user</property>
+<!--         <property name="hibernate.connection.password">b21b5e8f</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/heroku_b630f8d967bd52a</property>
+        <property name="hibernate.connection.username">b0799366f0bdc2</property> -->
         
         <!-- Use the C3P0 connection pool. -->
         <property name="c3p0.min_size">3</property>

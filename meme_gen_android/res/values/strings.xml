@@ -21,8 +21,8 @@
     <string name="sslHttp">https://</string>
     <string name="nonSslHttp">http://</string>
     
-     <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> 
-<!--     <string name="webServiceAddress">http://192.168.1.45:8080/meme_gen_server/spring</string> -->
+     <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string> 
+   <!--   <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> -->
     <string name="webServiceMemeDataSuffix">meme_data</string>
     <string name="webServiceBackgroundSuffix">background</string>
     <string name="webServiceJsonSuffix">json</string>
