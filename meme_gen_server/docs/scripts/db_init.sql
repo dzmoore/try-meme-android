@@ -1,5 +1,8 @@
-create database mgsdb;
-use mgsdb;
+set foreign_key_checks = 0;
+
+drop table if exists user, device_info, lv_meme_type, meme_background, meme, user_fav_meme_type, meme_type_popularity, meme_text;
+
+set foreign_key_checks = 1;
 
 create table user (
     id int(21) not null auto_increment,
@@ -94,25 +97,75 @@ insert into user (active, username, password) values (1, 'most_inty_user_world',
 
 insert into user (username, password) values ('testuser', 'password');
 
-insert into user_fav_meme_type (meme_type_fk, user_fk) values (1, 1);
+insert into user_fav_meme_type 
+(meme_type_fk, user_fk) values
+((select id from lv_meme_type where descr = 'MostIntManWorld' limit 1),
+(select id from user limit 1));
 
-insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk) values (1, 1, 1);
-insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk, is_sample_meme) values (1, 1, 1, 1);
+insert into meme 
+(meme_background_fk, lv_meme_type_fk, created_by_user_fk) values 
+((select id from meme_background where path = 'ducreux.jpg' limit 1),
+(select id from lv_meme_type where descr='Ducreux' limit 1),
+(select id from user where username = 'testuser' limit 1));
 
-insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk) values (2, 2, 1);
-insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk, is_sample_meme) values (2, 2, 1, 1);
+insert into meme 
+(meme_background_fk, lv_meme_type_fk, created_by_user_fk, is_sample_meme) values 
+((select id from meme_background where path = 'ducreux.jpg' limit 1),
+(select id from lv_meme_type where descr='Ducreux' limit 1),
+(select id from user where username = 'testuser' limit 1),
+1);
 
-insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk) values (3, 3, 1);
-insert into meme (meme_background_fk, lv_meme_type_fk, created_by_user_fk, is_sample_meme) values (3, 3, 1, 1);
+insert into meme
+(meme_background_fk, lv_meme_type_fk, created_by_user_fk) values
+((select id from meme_background where path = 'tmimitw.jpg' limit 1),
+(select id from lv_meme_type where descr='MostIntManWorld' limit 1),
+(select id from user where username = 'most_inty_user_world' limit 1));
 
-insert into meme_text (text, text_type, font_size, meme_fk) values ("Top Text Test", "TOP", 26, 1);
-insert into meme_text (text, text_type, font_size, meme_fk) values ("Bottom Text Test", "BOTTOM", 26, 1);
 
-insert into meme_text (text, text_type, font_size, meme_fk) values ("SampleMeme Top Text Test", "TOP", 26, 2);
-insert into meme_text (text, text_type, font_size, meme_fk) values ("SampleMeme Bottom Text Test", "BOTTOM", 26, 2);
+insert into meme
+(meme_background_fk, lv_meme_type_fk, created_by_user_fk, is_sample_meme) values
+((select id from meme_background where path = 'tmimitw.jpg' limit 1),
+(select id from lv_meme_type where descr='MostIntManWorld' limit 1),
+(select id from user where username = 'most_inty_user_world' limit 1),
+1);
 
-insert into meme_type_popularity (lv_meme_type_fk, ranking) values (2, 1);
-insert into meme_type_popularity (lv_meme_type_fk, ranking) values (3, 2);
-insert into meme_type_popularity (lv_meme_type_fk, ranking) values (1, 3);
+insert into meme
+(meme_background_fk, lv_meme_type_fk, created_by_user_fk) values
+((select id from meme_background where path = 'most_int.jpg' limit 1),
+(select id from lv_meme_type where descr='Most_Int_Man_In_World' limit 1),
+(select id from user where username = 'mostintuser' limit 1));
 
+insert into meme
+(meme_background_fk, lv_meme_type_fk, created_by_user_fk, is_sample_meme) values
+((select id from meme_background where path = 'most_int.jpg' limit 1),
+(select id from lv_meme_type where descr='Most_Int_Man_In_World' limit 1),
+(select id from user where username = 'mostintuser' limit 1),
+1);
+
+insert into meme_text (text, text_type, font_size, meme_fk) values 
+("Top Text Test", 
+"TOP", 
+26, 
+(select m.id from meme m join meme_background mb on (m.meme_background_fk = mb.id) 
+	where mb.path = 'ducreux.jpg' limit 1));
+
+insert into meme_text (text, text_type, font_size, meme_fk) values
+("Bottom Text Test",
+"BOTTOM",
+26,
+(select m.id from meme m join meme_background mb on (m.meme_background_fk = mb.id)
+    where mb.path = 'ducreux.jpg' limit 1));
+
+
+insert into meme_type_popularity (lv_meme_type_fk, ranking) values 
+((select id from lv_meme_type where descr = 'Ducreux' limit 1),
+1);
+
+insert into meme_type_popularity (lv_meme_type_fk, ranking) values
+((select id from lv_meme_type where descr = 'MostIntManWorld' limit 1),
+3);
+
+insert into meme_type_popularity (lv_meme_type_fk, ranking) values
+((select id from lv_meme_type where descr = 'Most_Int_Man_In_World' limit 1),
+2);
 

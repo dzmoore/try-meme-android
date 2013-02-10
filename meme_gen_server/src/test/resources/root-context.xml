@@ -6,6 +6,13 @@
         components -->
     <import resource="db.xml" />
     
+    <bean name="imageFileReader" class="com.eastapps.meme_gen_server.service.LocalFileReader">
+        
+    </bean>
+    
+    <bean name="memeThumbDirName" class="java.lang.String">
+        <constructor-arg value="thumbs"/>
+    </bean>
     
     <bean name="memeImagesRootDir" class="java.lang.String">
         <constructor-arg value="/meme_imgs" />

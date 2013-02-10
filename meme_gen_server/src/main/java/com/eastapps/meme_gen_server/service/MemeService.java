@@ -43,13 +43,13 @@ public class MemeService {
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	private String memeImagesRootDir;
-	
-	@Autowired
-	private String memeThumbImagesRootDir;
-	
-	@Autowired
 	private Long installKeyTimeoutMs;
+	
+	@Autowired
+	private String 	memeThumbDirName;
+	
+	@Autowired
+	private IMemeFileReader imageFileReader;
 
 
 	public MemeService() {
@@ -58,19 +58,19 @@ public class MemeService {
 	}
 
 
-	public MemeService(
-		final SessionFactory sessionFactory, 
-		final String memeImagesRootDir, 
-		final String memeThumbImagesRootDir,
-		final Long installKeyTimeoutMs) 
-	{
-		super();
-
-		this.sessionFactory = sessionFactory;
-		this.memeImagesRootDir = memeImagesRootDir;
-		this.memeThumbImagesRootDir = memeThumbImagesRootDir;
-		this.installKeyTimeoutMs = installKeyTimeoutMs;
-	}
+//	public MemeService(
+//		final SessionFactory sessionFactory, 
+//		final String memeImagesRootDir, 
+//		final String memeThumbImagesRootDir,
+//		final Long installKeyTimeoutMs) 
+//	{
+//		super();
+//
+//		this.sessionFactory = sessionFactory;
+//		this.memeImagesRootDir = memeImagesRootDir;
+//		this.memeThumbImagesRootDir = memeThumbImagesRootDir;
+//		this.installKeyTimeoutMs = installKeyTimeoutMs;
+//	}
 
 	public int storeMeme(final ShallowMeme shallowMeme) {
 		final Session sesh = getSession();
@@ -318,12 +318,7 @@ public class MemeService {
 				}
 			}
 
-			final String imgPath = StringUtils.join(new Object[]{memeImagesRootDir, File.separator, bg.getPath()});
-
-			logger.debug(StringUtils.join(new Object[] {"imgPath=[", imgPath, "]"}));
-
-			final File img = new File(imgPath);
-			resultBytes = Util.getBytesFromFile(img);
+			resultBytes = imageFileReader.getBytes(bg.getPath());
 
 		} catch (Exception e) {
 			Util.rollback(sesh);
@@ -526,14 +521,9 @@ public class MemeService {
 			}
 
 			if (bg != null) {
-    			final String imgPath = StringUtils.join(new Object[]{memeThumbImagesRootDir, File.separator, bg.getPath()});
-
-    			if (logger.isDebugEnabled()) {
-        			logger.debug(StringUtils.join(new Object[] {"imgPath=[", imgPath, "]"}));
-    			}
-
-    			final File img = new File(imgPath);
-    			resultBytes = Util.getBytesFromFile(img);
+    			resultBytes = imageFileReader.getBytes(StringUtils.join(new Object[] { 
+    				memeThumbDirName, "/", bg.getPath()
+    			}));
 			}
 
 		} catch (Exception e) {
