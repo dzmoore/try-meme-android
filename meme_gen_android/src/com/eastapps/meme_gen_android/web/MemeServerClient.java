@@ -1,8 +1,6 @@
 package com.eastapps.meme_gen_android.web;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +15,7 @@ import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
+import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
@@ -49,11 +48,13 @@ public class MemeServerClient {
 		webSvcMemeTypePrefix = context.getString(R.string.webServiceMemeType);
 
 		webClient = new WebClient();
+		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
+		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));
 	}
 
 	public ShallowMeme getMeme(final int memeId) {
 		final String result = 
-			webClient.getJSONObject(Conca.t(
+			Utils.noValue(webClient.getJSONObject(Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
 				webSvcMemeDataSuffix,
@@ -61,7 +62,7 @@ public class MemeServerClient {
 				memeId,
 				Constants.URL_SEPARATOR,
 				webSvcJsonSuffix
-		));
+		)), Constants.EMPTY);
 		
 		ShallowMeme shMemeResult = new ShallowMeme();
 		if (StringUtils.isNotBlank(result)) {
@@ -87,14 +88,14 @@ public class MemeServerClient {
 	public int storeMeme(final ShallowMeme shallowMeme) {
 		int resultId = Constants.INVALID;
 
-		final String respStr = webClient.getJSONObject(
+		final String respStr = Utils.noValue(webClient.getJSONObject(
 			Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
 				webSvcStoreMemePrefix
 			),
 			new Gson().toJson(shallowMeme)
-		);
+		), Constants.EMPTY);
 
 		if (StringUtils.isNotBlank(respStr)) {
 			try {
@@ -114,7 +115,7 @@ public class MemeServerClient {
 
 	public List<ShallowMeme> getSampleMemes(int typeId) {
 		final String result = 
-			webClient.getJSONObject(Conca.t(
+			Utils.noValue(webClient.getJSONObject(Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
 				webSvcSampleMemeDataPrefix,
@@ -122,7 +123,7 @@ public class MemeServerClient {
 				typeId,
 				Constants.URL_SEPARATOR,
 				webSvcJsonSuffix
-		));
+		)), Constants.EMPTY);
 		
 		List<ShallowMeme> shMemeResult = new ArrayList<ShallowMeme>(0);
 		if (StringUtils.isNotBlank(result)) {
@@ -135,13 +136,13 @@ public class MemeServerClient {
 	
 	public List<ShallowMemeType> getMemeTypes() {
 		final String result =
-			webClient.getJSONObject(Conca.t(
+			Utils.noValue(webClient.getJSONObject(Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
 				webSvcMemeTypePrefix,
 				Constants.URL_SEPARATOR,
 				webSvcJsonSuffix
-		));
+		)), Constants.EMPTY);
 				
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
 		if (StringUtils.isNotBlank(result)) {
@@ -157,22 +158,22 @@ public class MemeServerClient {
 //		return listType;
 //	}
 	
-	public Bitmap getBackgroundForType(final int typeId) {
-		return
-			webClient.getBitmap(Conca.t(
-				webSvcAddr, 
-				Constants.URL_SEPARATOR, 
-				webSvcMemeTypePrefix,
-				Constants.URL_SEPARATOR,
-				typeId,
-				Constants.URL_SEPARATOR,
-				webSvcBgrndSuffix
-			));
-	}
+//	public Bitmap getBackgroundForType(final int typeId) {
+//		return
+//			webClient.getBitmap(Conca.t(
+//				webSvcAddr, 
+//				Constants.URL_SEPARATOR, 
+//				webSvcMemeTypePrefix,
+//				Constants.URL_SEPARATOR,
+//				typeId,
+//				Constants.URL_SEPARATOR,
+//				webSvcBgrndSuffix
+//			));
+//	}
 	
 	public ShallowUser getUserForId(final int id) {
 		final String result =
-			webClient.getJSONObject(Conca.t(
+			Utils.noValue(webClient.getJSONObject(Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
 				"user_data",
@@ -182,16 +183,16 @@ public class MemeServerClient {
 				id,
 				Constants.URL_SEPARATOR,
 				webSvcJsonSuffix
-			));
+			)), Constants.EMPTY);
 				
 		return new Gson().fromJson(result, ShallowUser.class);
 	}
 
 	public <T> T getObject(final Class<T> type, final Object... addrParts) {
-		final String result = webClient.getJSONObject(Conca.t(addrParts));
 		T typedResult = null;
 		
 		try {
+			final String result = Utils.noValue(webClient.getJSONObject(Conca.t(addrParts)), Constants.EMPTY);
 			typedResult = new Gson().fromJson(result, type);
 			
 		} catch (Exception e) {
@@ -202,7 +203,7 @@ public class MemeServerClient {
 	}
 	
 	public <T> List<T> getList(final Class<T> itemType, final Object... addrParts) {
-		final String result = webClient.getJSONObject(Conca.t(addrParts));
+		final String result = Utils.noValue(webClient.getJSONObject(Conca.t(addrParts)), Constants.EMPTY);
 		List<T> typedResult = new ArrayList<T>();
 		
 		try {
@@ -220,10 +221,10 @@ public class MemeServerClient {
 		final String addr, 
 		final Object arg)
 	{
-		final String result = webClient.getJSONObject(addr, new Gson().toJson(arg));
 		T typedResult = null;
 		
 		try {
+			final String result = webClient.getJSONObject(addr, new Gson().toJson(arg));
 			typedResult = new Gson().fromJson(result, type);
 			
 		} catch (Exception e) {
@@ -246,7 +247,7 @@ public class MemeServerClient {
 	}
 
 	public int storeNewUser(ShallowUser shallowUser) {
-		return getObjectWithArg(Integer.class, 
+		return Utils.noValue(getObjectWithArg(Integer.class, 
 			Conca.t(
 				webSvcAddr,
 				Constants.URL_SEPARATOR,
@@ -257,7 +258,7 @@ public class MemeServerClient {
 				webSvcJsonSuffix
 			),
 			shallowUser
-		);
+		), Constants.INVALID);
 			
 	}
 	
@@ -279,7 +280,7 @@ public class MemeServerClient {
 			webSvcJsonSuffix
 		);
 		
-		result = webClient.getJSONObject(addr);
+		result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
 		
 		if (StringUtils.isNotBlank(result)) {
 			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
@@ -290,31 +291,31 @@ public class MemeServerClient {
 	}
 	
 	public boolean storeFavMeme(int userId, int typeId) {
-		return getObject(Boolean.class, 
-			concatForUrl(
-				webSvcAddr,
-				"user_data",
-				"user",
-				userId,
-				"favtypes",
-				typeId,
-				"store"
-			)
-		);
+		return 
+			getObject(Boolean.class, 
+				concatForUrl(
+					webSvcAddr,
+					"user_data",
+					"user",
+					userId,
+					"favtypes",
+					typeId,
+					"store"
+				)); 
 	}
 	
 	public boolean removeFavMeme(int userId, int typeId) {
-		return getObject(Boolean.class, 
-			concatForUrl(
-				webSvcAddr,
-				"user_data",
-				"user",
-				userId,
-				"favtypes",
-				typeId,
-				"remove"
-			)
-		);
+		return 
+			getObject(Boolean.class, 
+				concatForUrl(
+					webSvcAddr,
+					"user_data",
+					"user",
+					userId,
+					"favtypes",
+					typeId,
+					"remove"
+				));
 	}
 	
 	private static final String concatForUrl(final Object... parts) {
@@ -346,7 +347,7 @@ public class MemeServerClient {
 			webSvcJsonSuffix
 		);
 		
-		result = webClient.getJSONObject(addr);
+		result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
 		
 		if (StringUtils.isNotBlank(result)) {
 			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
@@ -371,7 +372,7 @@ public class MemeServerClient {
 				webSvcJsonSuffix
 			);
 			
-			result = webClient.getJSONObject(addr);
+			result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
 			
 			if (StringUtils.isNotBlank(result)) {
 				Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();

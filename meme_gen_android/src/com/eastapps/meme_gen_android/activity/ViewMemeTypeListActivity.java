@@ -73,10 +73,6 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		AdMgr.getInstance().initAd(this, R.id.advertising_banner_view);
 	}
 	
-	private void initAd() {
-		
-	}
-
 	private void initFilterBar() {
 		if (isLoadingList.compareAndSet(false, true)) {
 			try {

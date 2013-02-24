@@ -46,6 +46,8 @@
 	<string name="title_activity_meme_type_search_results">Search Results</string>
 	<item type="bool" format="boolean" name="debug_toasts_enabled">false</item>
 	<item type="integer" format="integer" name="ad_refresh_time_ms">5000</item>
+	<item name="connectionUseCaches" type="bool" format="boolean">true</item>
+	<item name="connectionTimeoutMs" type="integer" format="integer">30000</item>
     
     
 </resources>
