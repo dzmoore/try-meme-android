@@ -13,6 +13,24 @@ import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_server.domain.MemeText;
 
 public class Utils {
+	private static final String TAG = Utils.class.getSimpleName();
+	
+	public static <T> T noValue(final T obj, final T defaultValue) {
+		T result = defaultValue;
+		
+		if (obj == null) {
+			if (defaultValue == null) {
+				Log.w(TAG, "default value is null", new Exception("stack trace only"));
+			}
+			
+		} else {
+			result = obj;
+		}
+		
+		return result;
+	}
+	
+	
 	public static Bitmap getBitmapFromBytes(final byte[] bytes) {
 		final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		Bitmap bm = null;

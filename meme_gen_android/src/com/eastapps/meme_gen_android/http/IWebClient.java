@@ -9,4 +9,6 @@ public interface IWebClient {
 	public String getJSONObject(final String addr);
 	public Bitmap getBitmap(final String addr);
 	public String getJSONObject(String addr, String jsonRequest);
+	void setConnectionTimeoutMs(int connectTimeoutMs);
+	void setConnectionUseCaches(boolean useCaches);
 }

@@ -26,7 +26,7 @@ public class MemeListItemFragment extends Fragment {
 		final ViewGroup container,
 		final Bundle savedInstanceState) 
 	{
-		final View inflated = inflater.inflate(R.layout.meme_list_item_layout, container);
+		final View inflated = inflater.inflate(R.layout.meme_list_item_layout, container, false);
 		
 		final ImageView thumb = (ImageView) inflated.findViewById(R.id.list_item_thumb_img_view);
 		thumb.setTag(TagMgr.getNextMemeListItemId());

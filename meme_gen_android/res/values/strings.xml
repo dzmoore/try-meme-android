@@ -21,8 +21,8 @@
     <string name="sslHttp">https://</string>
     <string name="nonSslHttp">http://</string>
     
-     <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> 
-<!--     <string name="webServiceAddress">http://192.168.1.45:8080/meme_gen_server/spring</string> -->
+     <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string> 
+   <!--   <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> -->
     <string name="webServiceMemeDataSuffix">meme_data</string>
     <string name="webServiceBackgroundSuffix">background</string>
     <string name="webServiceJsonSuffix">json</string>
@@ -46,9 +46,14 @@
 	<string name="title_activity_meme_type_search_results">Search Results</string>
 	<item type="bool" format="boolean" name="debug_toasts_enabled">false</item>
 	<item type="integer" format="integer" name="ad_refresh_time_ms">5000</item>
+<<<<<<< HEAD
 	<string name="favorite_button_content_descr">favorite button</string>
 	<string name="empty_string"/>
 	<item name="meme_list_descr_font_size" type="dimen" format="dimension">16sp</item>
+=======
+	<item name="connectionUseCaches" type="bool" format="boolean">true</item>
+	<item name="connectionTimeoutMs" type="integer" format="integer">30000</item>
+>>>>>>> master
     
     
 </resources>
