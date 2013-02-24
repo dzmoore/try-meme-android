@@ -46,6 +46,9 @@
 	<string name="title_activity_meme_type_search_results">Search Results</string>
 	<item type="bool" format="boolean" name="debug_toasts_enabled">false</item>
 	<item type="integer" format="integer" name="ad_refresh_time_ms">5000</item>
+	<string name="favorite_button_content_descr">favorite button</string>
+	<string name="empty_string"/>
+	<item name="meme_list_descr_font_size" type="dimen" format="dimension">16sp</item>
     
     
 </resources>

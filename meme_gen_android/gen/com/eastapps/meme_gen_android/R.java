@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class dimen {
         public static final int bottom_text_padding=0x7f050002;
+        public static final int meme_list_descr_font_size=0x7f050003;
         public static final int text_padding=0x7f050001;
         public static final int zero_dip=0x7f050000;
     }
@@ -90,6 +91,8 @@ public final class R {
         public static final int create_meme_top_row_height=0x7f060005;
         public static final int edit_bottom_text_string=0x7f060009;
         public static final int edit_top_text_string=0x7f060008;
+        public static final int empty_string=0x7f060022;
+        public static final int favorite_button_content_descr=0x7f060021;
         public static final int filter_bar_btn_txt_all=0x7f06001b;
         public static final int filter_bar_btn_txt_popular=0x7f06001a;
         public static final int hello_world=0x7f060001;
