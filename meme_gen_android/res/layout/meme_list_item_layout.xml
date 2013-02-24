@@ -12,9 +12,14 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:background="@null"
+<<<<<<< HEAD
         android:contentDescription="@string/favorite_button_content_descr"
         android:minWidth="60dp"
         android:maxWidth="165dp"
+=======
+        android:contentDescription="TODO"
+        android:minWidth="165dp"
+>>>>>>> master
         android:src="@drawable/icon_heart" />
 
     <com.eastapps.meme_gen_android.widget.ResizableImageView
@@ -31,8 +36,14 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:minWidth="300dp"
+<<<<<<< HEAD
         android:text="@string/empty_string"
         android:textColor="@android:color/white"
         android:textSize="@dimen/meme_list_descr_font_size" />
+=======
+        android:text="dummy text"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+>>>>>>> master
 
 </LinearLayout>

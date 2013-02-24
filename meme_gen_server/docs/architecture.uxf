@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>9</zoom_level>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>387</x>
+      <y>675</y>
+      <w>414</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>center:Amazon Web Services (AWS)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>387</x>
+      <y>54</y>
+      <w>819</w>
+      <h>603</h>
+    </coordinates>
+    <panel_attributes>center:Heroku</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>846</x>
+      <y>99</y>
+      <w>297</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes>center:MemeGenServer Heroku App</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.SimpleComponent</type>
+    <coordinates>
+      <x>378</x>
+      <y>135</y>
+      <w>405</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>http://polar-cliffs-6420.herokuapp.com/spring/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.SimpleComponent</type>
+    <coordinates>
+      <x>837</x>
+      <y>135</y>
+      <w>270</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>Heroku web dyno 1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>756</x>
+      <y>126</y>
+      <w>98</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>27;27;81;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>756</x>
+      <y>135</y>
+      <w>98</w>
+      <h>62</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>27;27;63;27;81;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Artefact</type>
+    <coordinates>
+      <x>882</x>
+      <y>171</y>
+      <w>180</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>meme_gen_server.jar</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Artefact</type>
+    <coordinates>
+      <x>882</x>
+      <y>288</y>
+      <w>180</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>meme_gen_server.jar</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.SimpleComponent</type>
+    <coordinates>
+      <x>837</x>
+      <y>252</y>
+      <w>270</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>Heroku web dyno 2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>882</x>
+      <y>360</y>
+      <w>198</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>...and so on
+number of dynos depends 
+on configured scale
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>756</x>
+      <y>144</y>
+      <w>98</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>27;27;63;27;72;45;54;126;81;126</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>756</x>
+      <y>153</y>
+      <w>98</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>27;27;63;27;36;144;81;144</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>36</x>
+      <y>126</y>
+      <w>306</w>
+      <h>720</h>
+    </coordinates>
+    <panel_attributes> 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+
+############################
+The Internet
+############################
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>126</y>
+      <w>80</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;</panel_attributes>
+    <additional_attributes>27;27;63;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>153</y>
+      <w>80</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;</panel_attributes>
+    <additional_attributes>63;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>387</x>
+      <y>720</y>
+      <w>387</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>center:Simple Storage Service (S3)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.SimpleComponent</type>
+    <coordinates>
+      <x>378</x>
+      <y>756</y>
+      <w>360</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>s3.amazonaws.com/mgs_dev_bucket/meme_imgs/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>747</y>
+      <w>80</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;</panel_attributes>
+    <additional_attributes>27;27;63;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>774</y>
+      <w>80</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;</panel_attributes>
+    <additional_attributes>63;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Database</type>
+    <coordinates>
+      <x>900</x>
+      <y>522</y>
+      <w>180</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>heroku_b630f8d967bd52a 
+ 
+ 
+(instance used by
+meme_gen_server)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Node</type>
+    <coordinates>
+      <x>846</x>
+      <y>468</y>
+      <w>297</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>center:ClearDB (Heroku MySQL Server)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.SimpleComponent</type>
+    <coordinates>
+      <x>378</x>
+      <y>351</y>
+      <w>432</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>mysql://us-cdbr-east-03.cleardb.com/heroku_b630f8d967bd52a</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>369</y>
+      <w>80</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;</panel_attributes>
+    <additional_attributes>63;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>342</y>
+      <w>80</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;</panel_attributes>
+    <additional_attributes>27;27;63;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>783</x>
+      <y>369</y>
+      <w>80</w>
+      <h>188</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>27;27;45;27;45;171;63;171</additional_attributes>
+  </element>
+</diagram>

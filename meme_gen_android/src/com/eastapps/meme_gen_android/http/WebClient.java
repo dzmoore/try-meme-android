@@ -29,6 +29,18 @@ import com.eastapps.util.Conca;
 public class WebClient implements IWebClient {
 	private static final String TAG = WebClient.class.getSimpleName();
 	
+	private static final int DEFAULT_CONN_TIMEOUT_MS = 30 * 1000;
+	private static final boolean DEFAULT_CONN_USE_CACHES = true;
+	
+	private int connectionTimeoutMs;
+	private boolean connectionUseCaches;
+	
+	public WebClient() {
+		super();
+		this.connectionTimeoutMs = DEFAULT_CONN_TIMEOUT_MS;
+		this.connectionUseCaches = DEFAULT_CONN_USE_CACHES;
+	}
+	
 	@Override
 	public String getJSONObject(final String addr) {
 		String result = Constants.EMPTY_STRING;
@@ -143,12 +155,23 @@ public class WebClient implements IWebClient {
 		return respStr;
 	}
 	
-	private static URLConnection createURLConnection(final String addr) throws IOException {
+	private URLConnection createURLConnection(final String addr) throws IOException {
 		final URL url = new URL(addr);
 		final URLConnection connection = url.openConnection();
-		connection.setUseCaches(true);	
+		connection.setUseCaches(connectionUseCaches);	
+		connection.setConnectTimeout(connectionTimeoutMs);
 		
 		return connection;
+	}
+
+	@Override
+	public void setConnectionTimeoutMs(int connectionTimeoutMs) {
+		this.connectionTimeoutMs = connectionTimeoutMs;
+	}
+	
+	@Override
+	public void setConnectionUseCaches(final boolean useCaches) {
+		this.connectionUseCaches = useCaches;
 	}
 
 }

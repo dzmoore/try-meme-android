@@ -42,12 +42,17 @@
        <!--  <constructor-arg value="jdbc:mysql://mgsdb_user:password@localhost:3306/mgsdb?reconnect=true"/> -->
        <constructor-arg value="${DATABASE_URL}"/> 
     </bean>
+    
+    <bean class="java.lang.String" id="defaultDb">
+        <constructor-arg value="#{dbUrl.split('.+@.+/')[1].split('\\?')[0]}"/>
+    </bean>
+    
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
- 		<property name="url" value="#{'jdbc:mysql://' + dbUrl.split('.+@')[1].split(':.+')[0] + ':' + dbUrl.split('.+@.+:')[1].split('/.+')[0] + '/' + dbUrl.split('.+@.+/')[1].split('\\?')[0] }" /> 
-		<property name="username" value="#{ @dbUrl.split('jdbc:.+//')[1].split(':.+')[0] }" />
-		<property name="password" value="#{ @dbUrl.split('@.+')[0].split('.+:')[1] }" />
+ 		<property name="url" value="#{'jdbc:mysql://' + dbUrl.split('.+@')[1].split('[:,/].+')[0] + '/' + defaultDb + '?reconnect=true' }" /> 
+		<property name="username" value="#{ @dbUrl.split('.+//')[1].split('[:,/].+')[0] }" />
+		<property name="password" value="#{ @dbUrl.split('@.+')[0].split('.+//.+?:')[1] }" />
 	</bean>
 	
 	<bean id="sessionFactory"

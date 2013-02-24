@@ -46,31 +46,18 @@ public class HomeControllerTest {
 	@Autowired
 	private String memeImagesRootDir;
 	
-	@Autowired
-	private String memeThumbImagesRootDir;
-	
-	@Autowired
-	private Long installKeyTimeoutMs;
-	
 	@Resource 
 	private ApplicationContext appContext;
+	
+	@Autowired
+	private MemeService memeService;
 	
 	private static final Logger logger = Logger.getLogger(HomeControllerTest.class);
 	private HomeController homeCtrllr;
 	
 	@Before
 	public void setUp() throws Exception {
-//		final Resource rsrc = new FileSystemResource(new File(com.eastapps.meme_gen_server.Constants.ROOT_CONTEXT));
-//		BeanFactory fac = new XmlBeanFactory(rsrc);
-//		FileSystemXmlApplicationContext fac = new FileSystemXmlApplicationContext(Constants.ROOT_CONTEXT);
-		
-		
-//		sessionFactory = (SessionFactory) fac.getBean(Constants.SESSION_FACTORY);
-//		imgsRoot = String.valueOf(fac.getBean("memeImagesRootDir"));
-//		thumbImgsRoot = String.valueOf(fac.getBean("memeThumbImagesRootDir"));
-//		installKeyTimeoutMs = (Long) fac.getBean("installKeyTimeoutMs");
-		
-		homeCtrllr = new HomeController(new MemeService(sessionFactory, memeImagesRootDir, memeThumbImagesRootDir, installKeyTimeoutMs));
+		homeCtrllr = new HomeController(memeService);
 	}
 
 	@After

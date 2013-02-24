@@ -119,9 +119,11 @@ public class MemeService implements IMemeService {
 		
 		if (!containsKey || bytes == null || bytes.length == 0) {
 			bytes = Utils.getBytesFromBitmap(client.getBackground(typeId));
-			backgroundMap.put(typeId, bytes);
 			
-			cacheMgr.storeCacheToFile(true);
+			if (bytes != null && bytes.length > 0) {
+				backgroundMap.put(typeId, bytes);
+				cacheMgr.storeCacheToFile(true);
+			}
 		}
 		
 		return bytes;

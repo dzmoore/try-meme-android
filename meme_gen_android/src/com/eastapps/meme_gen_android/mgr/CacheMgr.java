@@ -31,6 +31,8 @@ public class CacheMgr {
 
 		this.context = context;
 		
+		getInstallFile().delete();
+		
 		initInstallMap();
 	}
 	
