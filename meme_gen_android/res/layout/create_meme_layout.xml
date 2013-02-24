@@ -6,91 +6,13 @@
     android:gravity="top"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/share_save_linear"
-        android:layout_width="match_parent"
-        android:layout_height="@string/create_meme_top_row_height"
-        android:layout_weight="0"
-        android:orientation="horizontal" >
+    <!-- <include layout="@layout/create_meme_buttons_layout"  android:layout_width="wrap_content" android:layout_height="wrap_content"/> -->
 
-        <Button
-            android:id="@+id/share_btn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/share_string" />
-
-        <Button
-            android:id="@+id/save_btn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/save_string" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/top_text_linear"
-        android:layout_width="match_parent"
-        android:layout_height="@string/create_meme_top_row_height"
-        android:layout_weight="0" >
-
-        <Button
-            android:id="@+id/edit_top_text_btn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/edit_top_text_string" />
-
-        <ImageButton
-            android:id="@+id/config_top_text_btn"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:cropToPadding="true"
-            android:src="@drawable/config_icon" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bottom_text_linear"
+    <fragment
+        android:id="@+id/create_meme_buttons_fragment"
+        android:name="com.eastapps.meme_gen_android.widget.fragment.CreateMemeButtonsFragment"
         android:layout_width="fill_parent"
-        android:layout_height="@string/create_meme_top_row_height"
-        android:layout_weight="0" >
-
-        <Button
-            android:id="@+id/edit_bottom_text_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/edit_bottom_text_string" />
-
-        <ImageButton
-            android:id="@+id/config_bottom_text_btn"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:cropToPadding="true"
-            android:scaleType="center"
-            android:src="@drawable/config_icon" />
-
-    </LinearLayout>
-
-<!--     <RelativeLayout -->
-<!--         android:id="@+id/image_relative_layout" -->
-<!--         android:layout_width="fill_parent" -->
-<!--         android:layout_height="55dp" -->
-<!--         android:layout_gravity="top" -->
-<!--         android:layout_weight="1" > -->
-
-<!--         <include -->
-<!--             android:id="@+id/meme_create_meme_view" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             layout="@layout/meme_view_layout" /> -->
-<!--     </RelativeLayout> -->
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@+id/image_relative_layout"
@@ -107,7 +29,7 @@
         
     </RelativeLayout>
     
-        <com.mobclix.android.sdk.MobclixMMABannerXLAdView
+    <com.mobclix.android.sdk.MobclixMMABannerXLAdView
         android:id="@+id/create_view_advertising_banner_view"
         android:layout_width="320dp"
         android:layout_height="50dp"

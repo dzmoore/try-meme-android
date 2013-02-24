@@ -3,25 +3,21 @@ package com.eastapps.meme_gen_android.widget.fragment;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.eastapps.meme_gen_android.R;
+import com.eastapps.meme_gen_android.mgr.ICallback;
+import com.eastapps.meme_gen_android.util.Constants;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.View.OnClickListener;
 
-import com.eastapps.meme_gen_android.R;
-import com.eastapps.meme_gen_android.activity.FilterType;
-import com.eastapps.meme_gen_android.mgr.ICallback;
-import com.eastapps.meme_gen_android.util.Constants;
-
-public class MemeListFilterBarFragment extends Fragment {
-	private static final String TAG = MemeListFilterBarFragment.class.getSimpleName();
-	
+public class CreateMemeButtonsFragment extends Fragment {
 	private ICallback<Map<String, Object>> filterBtnClickedCallback;
 
-	public MemeListFilterBarFragment() {
+	public CreateMemeButtonsFragment() {
 		super();
 	}
 	
@@ -36,17 +32,13 @@ public class MemeListFilterBarFragment extends Fragment {
 		ViewGroup container,
 		Bundle savedInstanceState) 
 	{
-		final View inflated = inflater.inflate(R.layout.meme_list_filter_bar_layout, container);
+		final View inflated = inflater.inflate(R.layout.create_meme_buttons_layout, container);
 		
-		setClickListener(inflated, R.id.popular_btn);
-		setClickListener(inflated, R.id.all_btn);
-		setClickListener(inflated, R.id.fav_btn);
-		setClickListener(inflated, R.id.search_btn);
 		
 		
 		return inflated;
 	}
-
+	
 	private View getBtnFromView(final View inflated, final int btnId) {
 		return inflated.findViewById(btnId);
 	}
@@ -80,7 +72,7 @@ public class MemeListFilterBarFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 	}
-
+	
 	public void setFilterBtnClickedCallback(ICallback<Map<String, Object>> filterBtnClickedCallback) {
 		this.filterBtnClickedCallback = filterBtnClickedCallback;
 	}

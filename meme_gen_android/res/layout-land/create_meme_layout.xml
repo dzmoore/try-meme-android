@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="true"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/image_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="top"
+        android:layout_weight="1" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/meme_view_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="top|bottom"
+            android:layout_weight="1" >
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="top|bottom"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <fragment
+            android:id="@+id/create_meme_buttons_fragment"
+            android:name="com.eastapps.meme_gen_android.widget.fragment.CreateMemeButtonsFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1" />
+
+        <com.mobclix.android.sdk.MobclixMMABannerXLAdView
+            android:id="@+id/create_view_advertising_banner_view"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:tag="adspace" >
+        </com.mobclix.android.sdk.MobclixMMABannerXLAdView>
+    </LinearLayout>
+
+</LinearLayout>
