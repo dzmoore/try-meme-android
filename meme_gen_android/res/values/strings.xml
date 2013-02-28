@@ -20,9 +20,8 @@
 
     <string name="sslHttp">https://</string>
     <string name="nonSslHttp">http://</string>
-    
-     <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string> 
-   <!--   <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> -->
+    <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string>
+    <!-- <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> -->
     <string name="webServiceMemeDataSuffix">meme_data</string>
     <string name="webServiceBackgroundSuffix">background</string>
     <string name="webServiceJsonSuffix">json</string>
@@ -30,27 +29,37 @@
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
     <string name="webServiceMemeType">meme_type_data</string>
 
-	<item name="maxFontSize" format="integer" type="integer">35</item>
-	<item name="initialFontSize" format="integer" type="integer">26</item>
-	<string name="bundleconst_memebg">memebg</string>
-	<string name="bundleconst_samplememes">samplememes</string>
-	<string name="bundleconst_loaded">loaded</string>
-	<string name="bundleconst_pageradapter">pageradapter</string>
-	<string name="bundleconst_sampledlist">sampledlist</string>
-	<string name="filter_bar_btn_txt_popular">Popular</string>
-	<string name="filter_bar_btn_txt_all">All</string>
-	<string name="icon_heart_cont_descr">heart</string>
-	<string name="icon_magnifier_cont_descr">magnifier</string>
-	<string name="no_favorites_msg">No Favorites</string>
-	<string name="string_hint">Search for Meme Types</string>
-	<string name="title_activity_meme_type_search_results">Search Results</string>
-	<item type="bool" format="boolean" name="debug_toasts_enabled">false</item>
-	<item type="integer" format="integer" name="ad_refresh_time_ms">5000</item>
-	<string name="favorite_button_content_descr">favorite button</string>
-	<string name="empty_string"/>
-	<item name="meme_list_descr_font_size" type="dimen" format="dimension">16sp</item>
-	<item name="connectionUseCaches" type="bool" format="boolean">true</item>
-	<item name="connectionTimeoutMs" type="integer" format="integer">30000</item>
-    
-    
+    <item name="maxFontSize" format="integer" type="integer">35</item>
+    <item name="initialFontSize" format="integer" type="integer">26</item>
+
+    <string name="bundleconst_memebg">memebg</string>
+    <string name="bundleconst_samplememes">samplememes</string>
+    <string name="bundleconst_loaded">loaded</string>
+    <string name="bundleconst_pageradapter">pageradapter</string>
+    <string name="bundleconst_sampledlist">sampledlist</string>
+    <string name="filter_bar_btn_txt_popular">Popular</string>
+    <string name="filter_bar_btn_txt_all">All</string>
+    <string name="icon_heart_cont_descr">heart</string>
+    <string name="icon_magnifier_cont_descr">magnifier</string>
+    <string name="no_favorites_msg">No Favorites</string>
+    <string name="string_hint">Search for Meme Types</string>
+    <string name="title_activity_meme_type_search_results">Search Results</string>
+
+    <item name="debug_toasts_enabled" format="boolean" type="bool">false</item>
+    <item name="ad_refresh_time_ms" format="integer" type="integer">5000</item>
+
+    <string name="favorite_button_content_descr">favorite button</string>
+    <string name="empty_string" />
+
+    <item name="meme_list_descr_font_size" format="dimension" type="dimen">16sp</item>
+    <item name="connectionUseCaches" format="boolean" type="bool">true</item>
+    <item name="connectionTimeoutMs" format="integer" type="integer">30000</item>
+    <item name="meme_list_item_height" format="dimension" type="dimen">95dp</item>
+    <item name="meme_list_item_heart_btn_min_width" format="dimension" type="dimen">65dp</item>
+    <item name="meme_list_item_heart_btn_max_width" format="dimension" type="dimen">165dp</item>
+    <item name="meme_list_item_thumb_min_width" format="dimension" type="dimen">75dp</item>
+    <item name="meme_list_item_thumb_max_width" format="dimension" type="dimen">75dp</item>
+    <item name="meme_list_item_text_min_width" format="dimension" type="dimen">600dp</item>
+    <item name="meme_list_item_text_max_width" format="dimension" type="dimen">600dp</item>
+
 </resources>

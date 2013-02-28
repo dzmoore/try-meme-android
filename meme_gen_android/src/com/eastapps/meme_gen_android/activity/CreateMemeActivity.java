@@ -39,6 +39,7 @@ import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
@@ -100,14 +101,14 @@ public class CreateMemeActivity extends FragmentActivity {
 			initGui();
 			
 		} else {
-			new Thread(new Runnable() {
+			TaskRunner.runAsync(new Runnable() {
 				@Override
 				public void run() {
 					memeViewData = memeService.createMemeViewData(type.getTypeId());
 					
 					setMemeViewData(memeViewData);
 				}
-			}).start();
+			});
 		}
 		
 		AdMgr.getInstance().initAd(this, R.id.create_view_advertising_banner_view);
@@ -358,27 +359,33 @@ public class CreateMemeActivity extends FragmentActivity {
 	private void doHandleSaveBtnClick(final View v) {
 		final ShallowMeme shallowMeme = getSelectedMeme();
 		
-		final int id = memeService.storeMeme(shallowMeme);
-		
-		final StringBuilder sb = new StringBuilder();
-		if (id > 0) {
-			sb
-				.append("Store success! id={")
-				.append(id)
-				.append("}");
-			
-		} else {
-			sb.append("Store fail!");
-		}
-		
-		runOnUiThread(
-			new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(CreateMemeActivity.this, sb.toString(), Toast.LENGTH_LONG).show();
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				final int id = memeService.storeMeme(shallowMeme);
+				
+				final StringBuilder sb = new StringBuilder();
+				if (id > 0) {
+					sb
+					.append("Store success! id={")
+					.append(id)
+					.append("}");
+					
+				} else {
+					sb.append("Store fail!");
 				}
+				
+				runOnUiThread(
+					new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(CreateMemeActivity.this, sb.toString(), Toast.LENGTH_LONG).show();
+						}
+					}
+				);
+				
 			}
-		);
+		});
 	}
 
 	private OutlineTextView getSelectedBottomTextView() {

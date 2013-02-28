@@ -22,6 +22,7 @@ import com.eastapps.meme_gen_android.mgr.MemeTypeFavSaveRemoveHandler;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
@@ -72,39 +73,38 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	}
 	
 	private void initMemeList() {
-		final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(true);
-		
-		for (final ShallowMemeType eaFavType : favTypes) {
-			for (final MemeListItemData eaListItem : items) {
-				if (eaFavType.getTypeId() == eaListItem.getMemeType().getTypeId()) {
-					eaListItem.setFavorite(true);
-					break;
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(true);
+
+				for (final ShallowMemeType eaFavType : favTypes) {
+					for (final MemeListItemData eaListItem : items) {
+						
+						if (eaFavType.getTypeId() == eaListItem.getMemeType().getTypeId()) {
+							eaListItem.setFavorite(true);
+							break;
+						}
+					}
 				}
-			}
-		}
-		
-			runOnUiThread(
-				new Runnable() {
+
+				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						initListAdapter();
-						
+
 						if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
-							Toast.makeText(
-									MemeTypeSearchResultsActivity.this, 
-									"Loading Complete",
-									Toast.LENGTH_SHORT
-									).show();
+							Toast.makeText(MemeTypeSearchResultsActivity.this,
+								"Loading Complete", 
+								Toast.LENGTH_SHORT
+							).show();
 						}
 					}
-			});
-		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+				});
+				
 				CacheMgr.getInstance().storeCacheToFile();
 			}
-		}).start();
+		});
 	}
 	
 	private void handleHeartBtnClicked(final MemeListItemData item, final ImageButton heartImgBtn) {
@@ -150,16 +150,21 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	}
 
 	private void processSearch(final String query) {
-		final List<MemeListItemData> results = memeService.getAllTypesForSearch(query);
-		
-		if (results != null && results.size() > 0) {
-			items = results;
-		}
-			
-		runOnUiThread(new Runnable() {
+		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
-				initMemeList();
+				final List<MemeListItemData> results = memeService.getAllTypesForSearch(query);
+				
+				if (results != null && results.size() > 0) {
+					items = results;
+				}
+				
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						initMemeList();
+					}
+				});
 			}
 		});
 	}

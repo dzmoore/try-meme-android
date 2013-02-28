@@ -17,6 +17,13 @@ public final class R {
     public static final class dimen {
         public static final int bottom_text_padding=0x7f050002;
         public static final int meme_list_descr_font_size=0x7f050003;
+        public static final int meme_list_item_heart_btn_max_width=0x7f050006;
+        public static final int meme_list_item_heart_btn_min_width=0x7f050005;
+        public static final int meme_list_item_height=0x7f050004;
+        public static final int meme_list_item_text_max_width=0x7f05000a;
+        public static final int meme_list_item_text_min_width=0x7f050009;
+        public static final int meme_list_item_thumb_max_width=0x7f050008;
+        public static final int meme_list_item_thumb_min_width=0x7f050007;
         public static final int text_padding=0x7f050001;
         public static final int zero_dip=0x7f050000;
     }
@@ -116,7 +123,7 @@ public final class R {
         public static final int webServiceAddress=0x7f06000e;
         public static final int webServiceBackgroundSuffix=0x7f060010;
         public static final int webServiceJsonSuffix=0x7f060011;
-        /**    <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> 
+        /**  <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> 
          */
         public static final int webServiceMemeDataSuffix=0x7f06000f;
         public static final int webServiceMemeType=0x7f060014;

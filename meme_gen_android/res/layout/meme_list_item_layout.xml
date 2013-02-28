@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="50dp"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/meme_list_item_height"
     android:gravity="top"
-    android:orientation="horizontal" 
-    android:maxHeight="50dp" >
+    android:orientation="horizontal" >
 
     <ImageButton
         android:id="@+id/list_item_heart_img_btn"
@@ -13,8 +12,8 @@
         android:layout_gravity="center_vertical"
         android:background="@null"
         android:contentDescription="@string/favorite_button_content_descr"
-        android:minWidth="60dp"
-        android:maxWidth="165dp"
+        android:minWidth="@dimen/meme_list_item_heart_btn_min_width"
+        android:maxWidth="@dimen/meme_list_item_heart_btn_max_width"
         android:src="@drawable/icon_heart" />
 
     <com.eastapps.meme_gen_android.widget.ResizableImageView
@@ -23,16 +22,21 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:scaleType="fitStart"
+        android:minWidth="@dimen/meme_list_item_thumb_min_width"
+        android:maxWidth="@dimen/meme_list_item_thumb_max_width"
         android:src="@drawable/config_icon" />
 
     <TextView
         android:id="@+id/list_item_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical"
-        android:minWidth="300dp"
+        android:layout_gravity="right|center_horizontal"
         android:text="@string/empty_string"
+        android:gravity="right"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/meme_list_descr_font_size" />
+        android:textSize="@dimen/meme_list_descr_font_size" 
+        android:minWidth="@dimen/meme_list_item_text_min_width"/>
 
+<!-- android:maxWidth="@dimen/meme_list_item_text_max_width"
+        android:minWidth="@dimen/meme_list_item_text_min_width" -->
 </LinearLayout>
