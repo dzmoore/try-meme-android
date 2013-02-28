@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.util.Conca;
 
 public class MemeTypeFavSaveRemoveHandler {
@@ -39,7 +40,7 @@ public class MemeTypeFavSaveRemoveHandler {
 			}
 		};
 		
-		new Thread(new Runnable() {
+		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
 				if (item.isFavorite()) {
@@ -93,6 +94,6 @@ public class MemeTypeFavSaveRemoveHandler {
 					c.callback(params);
 				}
 			}
-		}).start();
+		});
 	}
 }

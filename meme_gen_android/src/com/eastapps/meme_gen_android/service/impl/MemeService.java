@@ -39,7 +39,7 @@ public class MemeService implements IMemeService {
 	
 	private MemeServerClient client;
 	private static Context context;
-	private UserMgr userMgr;
+//	private UserMgr userMgr;
 	
 	private MemeService() {
 		super();
@@ -61,11 +61,11 @@ public class MemeService implements IMemeService {
 		return client.storeMeme(shallowMeme);
 	}
 
-	@Override
-	public ShallowMeme getMeme(int id) {
-		final ShallowMeme m = client.getMeme(id);
-		return m;
-	}
+//	@Override
+//	public ShallowMeme getMeme(int id) {
+//		final ShallowMeme m = client.getMeme(id);
+//		return m;
+//	}
 	
 	@Override
 	public synchronized List<ShallowMeme> getSampleMemes(final int typeId) {
@@ -302,10 +302,10 @@ public class MemeService implements IMemeService {
 		
 	}
 	
-	@Override
-	public ShallowUser getUser(final int userId) {
-		return client.getUserForId(userId);
-	}
+//	@Override
+//	public ShallowUser getUser(final int userId) {
+//		return client.getUserForId(userId);
+//	}
 
 	@Override
 	public String getNewInstallKey() {
@@ -341,36 +341,34 @@ public class MemeService implements IMemeService {
 	}
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

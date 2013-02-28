@@ -25,6 +25,7 @@ import com.eastapps.meme_gen_android.mgr.MemeTypeFavSaveRemoveHandler;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFilterBarFragment;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
@@ -130,28 +131,41 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 
 	private void handleFavBtnClick() {
-		final List<ShallowMemeType> types = UserMgr.getFavMemeTypes(true);
-		if (types != null && types.size() > 0) {
-			loadFavTypes(); 
-			
-		} else {
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(
-						ViewMemeTypeListActivity.this, 
-						R.string.no_favorites_msg, 
-						Toast.LENGTH_SHORT
-					).show(); 
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				final List<ShallowMemeType> types = UserMgr.getFavMemeTypes(true);
+				
+				if (types != null && types.size() > 0) {
+					loadFavTypes(); 
+					
+				} else {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(
+								ViewMemeTypeListActivity.this, 
+								R.string.no_favorites_msg, 
+								Toast.LENGTH_SHORT
+							).show(); 
+						}
+					});
 				}
-			});
-		}
+				
+			}
+		});
+		
 		
 	}
 	
 	private void loadAllTypes() {
-		items = memeService.getAllMemeTypesListData();
-		initMemeList();
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				items = memeService.getAllMemeTypesListData();
+				initMemeList();
+			}
+		});
 	}
 
 	private void handleSearchBtnClick() {
@@ -159,13 +173,23 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 
 	private void loadFavTypes() {
-		items = memeService.getAllFavMemeTypesListData();
-		initMemeList();
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				items = memeService.getAllFavMemeTypesListData();
+				initMemeList();
+			}
+		});
 	}
 
 	private void loadPopularTypes() {
-		items = memeService.getAllPopularTypesListData();
-		initMemeList();
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				items = memeService.getAllPopularTypesListData();
+				initMemeList();
+			}
+		});
 	}
 
 	private void initListAdapter() {
@@ -205,38 +229,44 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 
 	private void initMemeList() {
-		final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(true);
-		
-		for (final ShallowMemeType eaFavType : favTypes) {
-			for (final MemeListItemData eaListItem : items) {
-				if (eaFavType.getTypeId() == eaListItem.getMemeType().getTypeId()) {
-					eaListItem.setFavorite(true);
-					break;
-				}
-			}
-		}
-		
-		runOnUiThread(
-			new Runnable() {
-				@Override
-				public void run() {
-					initListAdapter();
-					
-					if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
-						Toast.makeText(
-							ViewMemeTypeListActivity.this, 
-							"Loading Complete",
-							Toast.LENGTH_SHORT
-						).show();
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(true);
+				
+				for (final ShallowMemeType eaFavType : favTypes) {
+					for (final MemeListItemData eaListItem : items) {
+						if (eaFavType.getTypeId() == eaListItem.getMemeType().getTypeId()) {
+							eaListItem.setFavorite(true);
+							break;
+						}
 					}
 				}
-
+				
+				runOnUiThread(
+					new Runnable() {
+						@Override
+						public void run() {
+							initListAdapter();
+								
+							if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
+								Toast.makeText(
+									ViewMemeTypeListActivity.this, 
+									"Loading Complete",
+									Toast.LENGTH_SHORT
+								).show();
+							}
+						}
+							
+				});
+				
+				CacheMgr.getInstance().storeCacheToFile();
+			}
 		});
 		
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				CacheMgr.getInstance().storeCacheToFile();
 			}
 		}).start();
 	}

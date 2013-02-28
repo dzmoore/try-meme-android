@@ -10,7 +10,7 @@ import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 
 public interface IMemeService {
-	public ShallowMeme getMeme(final int id);
+//	public ShallowMeme getMeme(final int id);
 	
 	int storeMeme(ShallowMeme shallowMeme);
 	MemeViewData createMemeViewData(int typeId);
@@ -19,7 +19,7 @@ public interface IMemeService {
 
 	List<MemeListItemData> getAllMemeTypesListData();
 
-	ShallowUser getUser(int userId);
+//	ShallowUser getUser(int userId);
 
 	String getNewInstallKey();
 

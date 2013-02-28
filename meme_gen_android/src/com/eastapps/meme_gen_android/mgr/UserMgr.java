@@ -1,7 +1,6 @@
 package com.eastapps.meme_gen_android.mgr;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import android.content.Context;
 import android.util.Log;
@@ -32,24 +31,6 @@ public class UserMgr {
 		return instance;
 	}
 
-	public static synchronized void getUserAsync(final ICallback<ShallowUser> setterCallback) {
-		final UserMgr inst = getInstance();
-		
-		if (inst.user == null) {
-			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
-			if (cacheMgrInst.containsKey(Constants.KEY_USER)) {
-				inst.user = cacheMgrInst.getFromCache(Constants.KEY_USER, ShallowUser.class);
-				
-			} else {
-				inst.createNewUser();
-				cacheMgrInst.addToCache(Constants.KEY_USER, inst.user);
-				cacheMgrInst.storeCacheToFile(true);
-			}
-		}
-		
-		setterCallback.callback(inst.user);
-	}
-	
 	private MemeService getMemeService() {
 		return MemeService.getInstance();
 	}
@@ -105,40 +86,37 @@ public class UserMgr {
 		return inst.favTypes;
 	}
 
-	public static synchronized void getFavMemeTypesAsync(
-		final boolean refreshValue, 
-		final ICallback<List<ShallowMemeType>> callback) 
-	{
-		callback.callback(getFavMemeTypes(refreshValue));
-	}
-	
-
-	public static void saveFavForUser(int typeId, ICallback<Boolean> iCallback) {
-		final UserMgr inst = getInstance();
-		final ShallowUser u = getUser();
-		
-		iCallback.callback(inst.getMemeService().storeFavType(u.getId(), typeId));
-	}
+//	public static void saveFavForUser(int typeId, ICallback<Boolean> iCallback) {
+//		final UserMgr inst = getInstance();
+//		final ShallowUser u = getUser();
+//		
+//		iCallback.callback(inst.getMemeService().storeFavType(u.getId(), typeId));
+//	}
 	
 	public static ShallowUser getUser() {
-		final AtomicReference<ShallowUser> u = new AtomicReference<ShallowUser>();
+		final UserMgr inst = getInstance();
 		
-		getUserAsync(new ICallback<ShallowUser>() {
-			@Override
-			public void callback(ShallowUser obj) {
-				u.set(obj);
+		if (inst.user == null) {
+			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
+			if (cacheMgrInst.containsKey(Constants.KEY_USER)) {
+				inst.user = cacheMgrInst.getFromCache(Constants.KEY_USER, ShallowUser.class);
+				
+			} else {
+				inst.createNewUser();
+				cacheMgrInst.addToCache(Constants.KEY_USER, inst.user);
+				cacheMgrInst.storeCacheToFile(true);
 			}
-		});
+		}
 		
-		return u.get();
+		return inst.user;
 	}
 
-	public static void removeFavForUser(int typeId, ICallback<Boolean> iCallback) {
-		final UserMgr inst = getInstance();
-		final ShallowUser u = getUser();
-		
-		iCallback.callback(inst.getMemeService().removeFavType(u.getId(), typeId));
-	}
+//	public static void removeFavForUser(int typeId, ICallback<Boolean> iCallback) {
+//		final UserMgr inst = getInstance();
+//		final ShallowUser u = getUser();
+//		
+//		iCallback.callback(inst.getMemeService().removeFavType(u.getId(), typeId));
+//	}
 
 }
 
