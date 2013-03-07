@@ -58,7 +58,7 @@ public class MemeTypeFavSaveRemoveHandler {
 						activity.runOnUiThread(
 							new Runnable() {
 								public void run() {
-									heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.heart_unchecked));
+									heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.unselected_fav_icon_v2));
 								}
 							}
 						);
@@ -83,7 +83,7 @@ public class MemeTypeFavSaveRemoveHandler {
 						activity.runOnUiThread(
 							new Runnable() {
 								public void run() {
-									heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.icon_heart));
+									heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.fav_icon_v2));
 								}
 							}
 						);

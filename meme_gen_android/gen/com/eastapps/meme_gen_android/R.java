@@ -29,15 +29,14 @@ public final class R {
     }
     public static final class drawable {
         public static final int config_icon=0x7f020000;
-        public static final int finish_icon=0x7f020001;
-        public static final int heart_unchecked=0x7f020002;
+        public static final int fav_icon_v2=0x7f020001;
+        public static final int finish_icon=0x7f020002;
         public static final int ic_action_search=0x7f020003;
         public static final int ic_config_small=0x7f020004;
         public static final int ic_launcher=0x7f020005;
-        public static final int icon_heart=0x7f020006;
-        public static final int icon_magnifier=0x7f020007;
-        public static final int tmimitw=0x7f020008;
-        public static final int unselected_heart=0x7f020009;
+        public static final int icon_magnifier=0x7f020006;
+        public static final int tmimitw=0x7f020007;
+        public static final int unselected_fav_icon_v2=0x7f020008;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0b0009;
