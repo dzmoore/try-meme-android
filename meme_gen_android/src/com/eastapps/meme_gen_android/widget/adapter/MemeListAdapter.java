@@ -116,8 +116,8 @@ public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 		final ImageButton heartImgBtn = (ImageButton) convertView.findViewById(R.id.list_item_heart_img_btn);
 		heartImgBtn.setImageDrawable(
 			item.isFavorite() ?
-				convertView.getResources().getDrawable(R.drawable.icon_heart) :
-				convertView.getResources().getDrawable(R.drawable.heart_unchecked));
+				convertView.getResources().getDrawable(R.drawable.fav_icon_v2) :
+				convertView.getResources().getDrawable(R.drawable.unselected_fav_icon_v2));
 		
 		heartImgBtn.setOnClickListener(new View.OnClickListener() {
 			@Override

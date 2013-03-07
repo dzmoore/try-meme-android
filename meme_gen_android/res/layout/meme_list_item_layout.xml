@@ -14,7 +14,7 @@
         android:contentDescription="@string/favorite_button_content_descr"
         android:minWidth="@dimen/meme_list_item_heart_btn_min_width"
         android:maxWidth="@dimen/meme_list_item_heart_btn_max_width"
-        android:src="@drawable/icon_heart" />
+        android:src="@drawable/fav_icon_v2" />
 
     <com.eastapps.meme_gen_android.widget.ResizableImageView
         android:id="@+id/list_item_thumb_img_view"
