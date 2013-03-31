@@ -25,20 +25,33 @@ def get_caption_api_url(baseUrl, apiCaptionUrl, captionPageUrl):
 	return baseUrl + apiCaptionUrl + get_meme_id(captionPageUrl)
 
 def get_meme_name(fullPageUrl):
-	regex = re.compile("(?<=name\=).+(?=\&)")
-	return regex.findall(fullPageUrl)[0]
+	regex = re.compile("(?<=name\=).+")
+	memeName = ""
+	matches = regex.findall(fullPageUrl)
+	if len(matches) > 0:
+		memeName = matches[0]
+		ampRegex = re.compile(".*&.*")
+		if len(ampRegex.findall(memeName)) > 0:
+			reextractRegex = re.compile(".+(?=\&)")
+			reextracts = reextractRegex.findall(memeName)
+			if len(reextracts) > 0:
+				memeName = reextracts[0]
+	else:
+		print 'Could not find meme name for:[' + fullPageUrl + ']'
+	return memeName
 
-def traverse_reddit_links(pageSoup):
+def traverse_reddit_links(pageSoup, urlRegexList):
 	links = set([])
-	regex = re.compile('http://www.quickmeme.com/meme/.+/')
-	hrefStr = ""
-	for ea in pageSoup.find_all("a"):
-		if 'href' in ea.attrs.keys():
-			hrefStr = ea.attrs['href']
-			if len(hrefStr) > 0:
-				matches = regex.findall(hrefStr)
-				if len(matches) > 0:
-					links.add(hrefStr)
+	for eaRegex in urlRegexList:
+		regex = re.compile(eaRegex)
+		hrefStr = ""
+		for ea in pageSoup.find_all("a"):
+			if 'href' in ea.attrs.keys():
+				hrefStr = ea.attrs['href']
+				if len(hrefStr) > 0:
+					matches = regex.findall(hrefStr)
+					if len(matches) > 0:
+						links.add(hrefStr)
 	return links
 
 
@@ -74,11 +87,12 @@ def print_meme_detail(url):
 	# get the name from the caption page url
 	memeName = get_meme_name(pageTwoLinkUrl)
 
-	print 'URL:\t\t\t' + url
-	print 'Caption URL:\t\t' + captionApiUrl 
-	print 'Meme Name:\t\t' + memeName
-	print 'Top Text:\t\t' + topTxt
-	print 'Bottom Text:\t\t' + bottomTxt
+	if len(topTxt) > 0 and len(bottomTxt) > 0:
+		print 'URL:\t\t\t' + url
+		print 'Caption URL:\t\t' + captionApiUrl 
+		print 'Meme Name:\t\t' + memeName
+		print 'Top Text:\t\t' + topTxt
+		print 'Bottom Text:\t\t' + bottomTxt
 	
 	return 0
 
@@ -86,12 +100,18 @@ def main():
 	# first argument should be meme page url
 	args = sys.argv[1:]
 	#urlArg = args[0]
+	
+	urlRegexList = ['http://www.quickmeme.com/meme/.+/', 'http://qkme.me/.+']
 
-	linksFromReddit = traverse_reddit_links(BeautifulSoup(get_page_text('http://www.reddit.com/r/AdviceAnimals/top/?sort=top&t=hour')))
+	adviceAnimalsSoup = BeautifulSoup(get_page_text('http://www.reddit.com/r/AdviceAnimals/top/?sort=top&t=hour'))
+
+	linksFromReddit = traverse_reddit_links(adviceAnimalsSoup, urlRegexList)
 
 	for ea in linksFromReddit:
 		print_meme_detail(ea)
 		print("\n")
+
+	print "TOTAL FOUND:\t\t" + "{0}".format(len(linksFromReddit))
 
 main()
 					
