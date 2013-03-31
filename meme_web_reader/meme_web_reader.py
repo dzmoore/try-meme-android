@@ -28,6 +28,18 @@ def get_meme_name(fullPageUrl):
 	regex = re.compile("(?<=name\=).+(?=\&)")
 	return regex.findall(fullPageUrl)[0]
 
+def traverse_reddit_links(pageSoup):
+	regex = re.compile('http://www.quickmeme.com/meme/.+/')
+	hrefStr = ""
+	for ea in pageSoup.find_all("a"):
+		if 'href' in ea.attrs.keys():
+			hrefStr = ea.attrs['href']
+			if len(hrefStr) > 0:
+				matches = regex.findall(hrefStr)
+				if len(matches) > 0:
+					print hrefStr
+
+
 def main():
 		# set up some variables for this script
 		# (these should change for different sites)
@@ -71,4 +83,5 @@ def main():
 		
 		return 0
 
-main()
+#main()
+traverse_reddit_links(BeautifulSoup(get_page_text('http://www.reddit.com/r/AdviceAnimals/top/?sort=top&t=hour')))
