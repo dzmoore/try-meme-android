@@ -457,7 +457,7 @@ public class MemeService {
 		try {
 			sesh.beginTransaction();
 			
-    		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true");
+    		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true ");
     		
 			final List<?> results = qry.list();
 
