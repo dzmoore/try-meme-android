@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eastapps.meme_gen_server.domain.CrawlerMeme;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
@@ -89,6 +91,12 @@ public class HomeController {
 	@ResponseBody
 	public byte[] getMemeBackground(@PathVariable("typeid") final int typeId) throws IOException {
 		return memeService.getMemeBackground(typeId);
+	}
+	
+	@RequestMapping(value = {"/crawler/store_memes"}, method = RequestMethod.POST) 
+	@ResponseBody
+	public Boolean storeMemesFromCrawler(@RequestBody final CrawlerMeme[] memes) {
+		return memeService.storeCrawlerMemes(Arrays.asList(memes));
 	}
 
 	@RequestMapping(value = { "/meme_data/{meme_id}/json" }, method = RequestMethod.GET)

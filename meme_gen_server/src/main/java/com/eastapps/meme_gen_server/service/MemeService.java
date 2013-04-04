@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import com.eastapps.meme_gen_server.constants.Constants;
+import com.eastapps.meme_gen_server.domain.CrawlerMeme;
 import com.eastapps.meme_gen_server.domain.DeviceInfo;
 import com.eastapps.meme_gen_server.domain.LvMemeType;
 import com.eastapps.meme_gen_server.domain.Meme;
@@ -457,7 +458,7 @@ public class MemeService {
 		try {
 			sesh.beginTransaction();
 			
-    		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true ");
+    		final Query qry = sesh.createQuery("from Meme m where m.isSampleMeme = true and m.lvMemeType.active = true order by m.lvMemeType.descr");
     		
 			final List<?> results = qry.list();
 
@@ -919,6 +920,40 @@ public class MemeService {
 		}
 
 		return types;
+	}
+
+
+	public Boolean storeCrawlerMemes(final List<CrawlerMeme> memes) {
+		final Session sesh = getSession();
+		
+		boolean success = false;
+		
+		try {
+			sesh.beginTransaction();
+			
+			int i = 0;
+			for (final CrawlerMeme ea : memes) {
+    			final int id = Util.getId(sesh.save(ea));
+    			
+    			if (id <= 0) {
+    				break;
+    				
+    			} else if (++i == memes.size()) {
+    				success = true;
+    			}
+    			
+			}
+			
+		} catch (Exception e) {
+			Util.rollback(sesh);
+			
+			logger.error("error occurred while storing crawler memes", e);
+
+		} finally {
+			Util.close(sesh);
+		}
+
+		return success;
 	}
 }
 

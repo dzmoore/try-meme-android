@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.eastapps.meme_gen_server.domain.CrawlerMeme;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
@@ -185,6 +186,18 @@ public class MemeServiceTest {
 		
 		final int newId = memeSvc.storeNewUser(u);
 		return newId;
+	}
+	
+	@Test
+	public void testStoreCrawlerMemes() {
+		final CrawlerMeme m1 = new CrawlerMeme();
+		m1.setTopText("top1");
+		m1.setBottomText("bottom1");
+		m1.setName("name1");
+		
+		final List<CrawlerMeme> memes = new ArrayList<CrawlerMeme>();
+		memes.add(m1);
+		TestCase.assertTrue(memeSvc.storeCrawlerMemes(memes));
 	}
 }
 
