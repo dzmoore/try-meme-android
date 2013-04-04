@@ -83,6 +83,14 @@ create table meme_type_popularity (
 	foreign key (lv_meme_type_fk) references lv_meme_type(id)
 );
 
+create table crawler_meme (
+	id int(21) not null auto_increment,
+	name varchar(255),
+	top_text varchar(255),
+	bottom_text varchar(255),
+	last_mod timestamp default current_timestamp on update current_timestamp,
+	primary key (id)
+);
 
 insert into meme_background (active, path) values (1, 'tmimitw.jpg');
 insert into meme_background (active, path) values (1, 'most_int.jpg');

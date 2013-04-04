@@ -4,9 +4,8 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.default_schema" >mgsdb</property>
-        
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         
         <!-- Use the C3P0 connection pool. -->
         <property name="c3p0.min_size">3</property>
@@ -16,7 +15,6 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
                 
-        
         <mapping class="com.eastapps.meme_gen_server.domain.MemeText" />
         <mapping class="com.eastapps.meme_gen_server.domain.LvMemeType" />
         <mapping class="com.eastapps.meme_gen_server.domain.MemeBackground" />
@@ -25,6 +23,5 @@
         <mapping class="com.eastapps.meme_gen_server.domain.DeviceInfo" />
         <mapping class="com.eastapps.meme_gen_server.domain.UserFavMemeType" />
         <mapping class="com.eastapps.meme_gen_server.domain.MemeTypePopularity" />
-        <mapping class="com.eastapps.meme_gen_server.domain.CrawlerMeme"/>
     </session-factory>
 </hibernate-configuration>
