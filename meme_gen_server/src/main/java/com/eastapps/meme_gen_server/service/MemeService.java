@@ -924,6 +924,7 @@ public class MemeService {
 
 
 	public Boolean storeCrawlerMemes(final List<CrawlerMeme> memes) {
+		
 		final Session sesh = getSession();
 		
 		boolean success = false;
@@ -942,6 +943,10 @@ public class MemeService {
     				success = true;
     			}
     			
+			}
+			
+			if (success) {
+				Util.commit(sesh);
 			}
 			
 		} catch (Exception e) {
