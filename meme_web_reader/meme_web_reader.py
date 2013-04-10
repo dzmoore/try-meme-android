@@ -3,9 +3,6 @@ import urllib2
 import re
 import json
 import sys
-import simplejson as json
-from httplib2 import Http
-from urllib import urlencode
 
 def get_page_text(url):
 	pageResults = urllib2.urlopen(url)
@@ -161,7 +158,7 @@ def main():
 	
 	urlRegexList = ['http://www.quickmeme.com/meme/.+/', 'http://qkme.me/.+']
 
-	url = 'http://www.reddit.com/r/AdviceAnimals/rising/'
+	url = 'http://www.reddit.com/r/AdviceAnimals/top/?sort=top&t=hour'
 	if len(args) > 0:
 		url = args[0]
 	adviceAnimalsSoup = BeautifulSoup(get_page_text(url))
@@ -174,28 +171,8 @@ def main():
 
 	print "TOTAL FOUND:\t\t" + "{0}".format(len(linksFromReddit))
 
-	memeList = []
 	for ea in linksFromReddit:
-		detail = get_quickmeme_meme_detail(ea)
-	#	print detail
-		
-		memeList.append(detail)
-			
-	memeListJson = json.dumps(memeList)
-	print memeListJson
-	h = Http()
-	resp, content = h.request(
-		'http://polar-cliffs-6420.herokuapp.com/spring/crawler/store_memes', 
-		'POST', 
-		body = memeListJson,
-		headers = { 'Accept' : 'application/json', 'Content-type' : 'application/json' }
-	)
-
-	print resp
-	print content
-	
-		
-		
+		print get_quickmeme_meme_detail(ea)
 		
 
 main()
