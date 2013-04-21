@@ -19,56 +19,84 @@ def getWeKnowMemesPageText(page_num):
 def main():
 	for i in range(1, 2):
 		wkmText = getWeKnowMemesPageText(i)
-		print(wkmText)
+		#print(wkmText)
 
 		wkmBSoup = BeautifulSoup(wkmText)
+		for eaImgTag in wkmBSoup.find_all('a'):
+			#print eaImgTag
+			genLinkUrl = ''
+			memeId = -1
+			if ('href' in eaImgTag.attrs):
+				genLinkUrl = eaImgTag.attrs['href'].replace(' ', '%20')
+				memeId = getIdFromUrl(genLinkUrl)
+				print('id=' + memeId)
 
-		for eaImgTag in wkmBSoup.find_all('img'):
-			imgUrl = eaImgTag.attrs['src']
-			imgName = eaImgTag.attrs['data-title']
+			previewImgName = ''
+			if ('data-title' in eaImgTag.img.attrs):	
+				previewImgName = eaImgTag.img.attrs['data-title']
 			
-			opener = urllib2.build_opener()
-			page = opener.open(imgUrl)
-			img = page.read()
+			print('href=' + genLinkUrl)
+			print('data-tile=' + previewImgName)
+			
+			if (memeId == -1):
+				return
 
-			imgFilenameRegex = re.compile(
-				'(?<=http://weknowmemes.com/generator/uploads/generated/).+'
-			)
+			urlMemeData = 'http://weknowmemes.com/generator/ajax/get_data.php?g_id=' + memeId
+			jsonMemeData = json.loads(get_page_text(urlMemeData))
+			imgFileName = jsonMemeData['img']
+			bgImgUrl = 'http://weknowmemes.com/generator/uploads/background/' + imgFileName
+	
+			writeImgFromUrl(bgImgUrl, imgFileName)
+			
 
-			regexGroup = imgFilenameRegex.findall(imgUrl)
+
+def getIdFromUrl(url):
+	idResult = -1
+
+	if (len(url) > 0):
+		urlIdRegex = re.compile(
+			'(?<=http://weknowmemes.com/generator/caption/#id=)\d+'
+		);
+
+		urlIdRegexGroup = urlIdRegex.findall(url)
+		if (len(urlIdRegexGroup) > 0):
+			idResult = urlIdRegexGroup[0]
+	
+	return idResult
+	
+			
+			
+def writeImgFromUrl(imgUrl, imgFilename):
+	opener = urllib2.build_opener()
+	page = opener.open(imgUrl)
+	img = page.read()
+
+	imgFilenameSansSuffixRegex = re.compile(
+		'.+(?=\\.)'
+	);
+	
+	imgFilenameGroup = imgFilenameSansSuffixRegex.findall(
+		imgFilename		
+	)
+	
+	if (len(imgFilenameGroup) > 0):
+		imgFileSansSuffix = imgFilenameGroup[0]
+	
+		print(
+			'img file name sans suffix: '
+			+ str(imgFileSansSuffix)
+		)
 		
-			if (len(regexGroup) > 0):
-				imgFilename = regexGroup[0]
-				imgFilenameSansSuffixRegex = re.compile(
-					'.+(?=\\.)'
-				);
-				
-				imgFilenameGroup = imgFilenameSansSuffixRegex.findall(
-					imgFilename		
-				)
-				
-				if (len(imgFilenameGroup) > 0):
-					imgFileSansSuffix = imgFilenameGroup[0]
-				
-					print(
-						'img file name sans suffix: '
-						+ str(imgFileSansSuffix)
-					)
-					
-					filename = imgFileSansSuffix + 'png'
-					fout = open(filename, 'wb')
-					fout.write(img)
-					fout.close()
+		filename = imgFileSansSuffix + '.jpg'
+		fout = open(filename, 'wb')
+		fout.write(img)
+		fout.close()
 
-					print('stored: ' + filename)	
-					
-					#ohh wait, need to go into the actual 'generator' page using the href links
-					
-				else:
-					print('no img filename: ' + str(imgFilename))
+		print('stored: ' + filename)	
+		
+	else:
+		print('no img filename: ' + str(imgFilename))
 
-			else:
-				print('no filename: ' + str(regexGroup))
 
 main()
 
