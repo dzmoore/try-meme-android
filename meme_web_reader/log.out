@@ -1,0 +1,2494 @@
+href=http://weknowmemes.com/generator/caption/#id=224497&name=Overly Manly Man
+data-tile=Overly Manly Man
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=222870&name=Lumbergh
+data-tile=Lumbergh
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=223405&name=Scumbag Steve
+data-tile=Scumbag Steve
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=225694&name=Futurama Fry
+data-tile=Futurama Fry
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=223711&name=Advice Mallard
+data-tile=Advice Mallard
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=224075&name=South
+data-tile=South
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=224303&name=Socially Awesome Awkward Penguin
+data-tile=Socially Awesome Awkward Penguin
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=225164&name=Carrie Cry Face
+data-tile=Carrie Cry Face
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=225701&name=Success Kid
+data-tile=Success Kid
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=224777&name=Lumbergh Meme
+data-tile=Lumbergh Meme
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=224094&name=search a meme
+data-tile=search a meme
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=224875&name=Bad Luck Brian
+data-tile=Bad Luck Brian
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=225537&name=Socially Awkward Penguin
+data-tile=Socially Awkward Penguin
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=223810&name=Scumbag Brain
+data-tile=Scumbag Brain
+<bound method BeautifulSoup.prettify of <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>WeKnowMemes - Meme Generator</title><link href="" rel="image_src" type="image/jpeg"/><meta content="WeKnowMemes - Meme Generator" property="og:title"/><meta content="article" property="og:type"/><meta content="Meme Generator,Create and Make Memes" property="og:description"/><meta content="Meme Generator - Create Make and Generate Memes,y u no,all the things,template,bad luck brian,dos equis,most interesting man,memes,advice animals,ridiculously photogenic guy" name="description"/><meta content="meme generator,template,maker,creator,font,fry,most interesting man,too damn high,socially awkward penguin,advice animals,foul bachelor frog,courage wolf,business cat,first world problems" name="keywords"/><link href="http://weknowmemes.com/wp-content/themes/arras/images/favicon.ico" rel="shortcut icon"/><script type="text/javascript">
+var SiteName = "http://weknowmemes.com/generator";
+</script><link href="http://weknowmemes.com/generator/css/style.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/scripts/jquery-1.3.2.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/jquery.validate.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/master.js" type="text/javascript"></script><link href="http://weknowmemes.com/generator/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" type="text/css"/><script src="http://weknowmemes.com/generator/jquery-ui/js/jquery-ui-1.8.24.custom.min.js" type="text/javascript"></script><script src="http://weknowmemes.com/generator/scripts/editor.js" type="text/javascript"></script></head><body>
+<div class="section" id="header">
+<!--
+&lt;div id="fb-root"&gt;&lt;/div&gt;
+&lt;script&gt;(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=188572821232267";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+&lt;/script&gt;
+-->
+<div id="fb-root"></div>
+<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '188572821232267',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
+<div class="wrapper">
+<div id="topbar">
+<div id="logo"><a href="http://weknowmemes.com/generator/"><img src="http://weknowmemes.com/generator/images/weknowmemes-logo.png"/></a></div>
+<div id="header-pages">
+<ul>
+<li><a class="current" href="http://weknowmemes.com/generator/" title="latest">Featured</a></li>
+<li><a href="http://weknowmemes.com/generator/random/">Random</a></li>
+<li><a href="http://weknowmemes.com/generator/popular/">Popular</a></li>
+<li><a href="http://weknowmemes.com/generator/memes/">Memes</a></li>
+<li><a href="http://ragegenerator.com">Rage Maker</a></li>
+<li><a href="http://weknowmemes.com/generator/generator/">
+<button class="g-button g-button-submit" type="submit" value="Sign Up">CREATE MEME</button>
+</a></li>
+<li><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2Fweknowmemes&amp;send=false&amp;layout=button_count&amp;width=150&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=194965570598454" style="border:none; overflow:hidden; width:150px; height:21px;"></iframe>
+</li></ul></div>
+</div>
+</div>
+<div id="signin_msg" style="float:right; margin-right:2px;">
+<a href="#" onclick="zipmeme.require_logged_in(); return false;"><b>log in or register</b></a>
+</div>
+</div>
+<div class="section" id="sub-header">
+<div class="wrapper">
+<div style="float:right; width:200px;">
+<div id="search"><input autocomplete="off" class="placeholder" id="search_inp" onkeypress="{if (event.keyCode==13) zm.search(); }" placeholder="search a meme" type="text"/><a href="#" onclick="zm.search(); return;"></a></div>
+</div>
+<div id="all-categories"> <strong id="all-categories-title">Trending:</strong>
+<ul class="nav clearfix">
+<li><a href="http://weknowmemes.com/generator/meme/Confession-Bear/222550/" title="View all Confession Bear">Confession Bear    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Why-The-Fuck-Picard/222518/" title="View all Why The Fuck Picard">Why The Fuck Picard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/First/222566/" title="View all First">First    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Advice-Mallard/222553/" title="View all Advice Mallard">Advice Mallard    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Sudden-Clarity-Clarence/222511/" title="View all Sudden Clarity Clarence">Sudden Clarity Clarence    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme//224611/" title="View all ">    </a> </li>
+<li><a href="http://weknowmemes.com/generator/meme/Angry/222660/" title="View all Angry">Angry    </a> </li>
+</ul>
+</div>
+</div>
+</div>
+<!--&lt;div class="stop-sopa" align="center"&gt;
+
+
+
+&lt;/div&gt;-->
+<!--&lt;div align="center" style="padding-top:10px"&gt;
+&lt;div id="lijit_region_134451"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="http://www.lijit.com/delivery/fp?u=ohhai&amp;i=lijit_region_134451&amp;z=134451&amp;n=1"&gt;&lt;/script&gt;
+&lt;/div&gt;--><div class="maincontent">
+<div id="inner-wrapper">
+<!--
+&lt;div style="float:right; margin-right: 12px; width: 70%;"&gt;
+  &lt;div id="swf_container" style="padding-left: 30px; padding-top:10px"&gt; Loading... &lt;/div&gt;
+&lt;/div&gt;
+-->
+<div class="editor-o1">
+<div id="editor" style="display: none; float: left;">
+<div class="caption1">
+<h2 style="text-align: center;">Caption Tool</h2>
+<table id="table">
+<tr>
+<td class="header">Style:</td>
+<td><select id="op_select" onchange="on_change_style();" style="width: 200px">
+<option value="heavycapswhite">Heavy White Capital text</option>
+<option value="heavywhite">Heavy White text</option>
+<option value="heavycapsblack">Heavy Black Capital text</option>
+<option value="heavyblack">Heavy Black text</option>
+<option value="black">Black text</option>
+<option value="white">White text</option>
+</select></td>
+</tr>
+<tr>
+<td class="header">Wrap:</td>
+<td><input checked="" id="wrap" style="display: inline;" type="checkbox"/>
+<label for="wrap" style="padding-left: 10px;">Automatically wrap long lines</label></td>
+</tr>
+<tr id="row_add_caption">
+<td colspan="2" style="padding-top: 20px; text-align: center;"><a class="btn btn-join btn-large" onclick="add_another_caption();" style="width: 60%;">MORE CAPTION</a></td>
+</tr>
+</table>
+</div>
+<div class="caption1">
+<table>
+<tr id="meme_name_tr">
+<td class="header" id="meme_name_label" style="vertical-align: middle;">Meme's Name:</td>
+<td id="meme_name_container"><input id="meme_name" style="width: 200px;" type="text" value=""/></td>
+</tr>
+<!--&lt;tr id="meme_name_tr"&gt;
+            &lt;td class="header" id="meme_name_label" style="vertical-align: middle;"&gt;Tags:&lt;/td&gt;
+            &lt;td id="meme_name_container"&gt;&lt;input type="text" id="tag" value="" style="width: 200px;" /&gt;&lt;/td&gt;
+          &lt;/tr&gt;-->
+<tr>
+<td class="header" style="vertical-align: middle;">Public:</td>
+<td style="white-space: no-wrap;"><input checked="checked" id="meme_public" style="display: inline;" type="checkbox" value="make_public"/>
+<label for="meme_public" style="padding-left: 10px;">Make This Meme Public</label></td>
+</tr>
+<tr>
+<td class="header">Created by:</td>
+<td style="white-space: no-wrap;"><div>
+<input checked="checked" id="meme_creator_anonymous" name="meme_creator" style="display: inline;" type="radio" value="anonymous"/>
+<label for="meme_creator_anonymous" style="padding-left: 10px;">Anonymous</label>
+</div>
+<div>
+<input id="meme_creator_self" name="meme_creator" style="display: inline;" type="radio" value="self"/>
+<label for="meme_creator_self" style="padding-left: 10px;">My account</label>
+</div></td>
+</tr>
+</table>
+<div id="meme_upload_error" style="text-align: center; font-weight: bold; color: #F00;"></div>
+<div id="meme_upload" style=" margin-left:50px;"><a class="btn btn-join btn-large" onclick="editor.upload();" style="width: 70%;">SAVE &amp; SHARE</a></div>
+</div>
+</div>
+<div class="genprv-cont-o1">
+<div class="genprv-cont"></div>
+</div>
+</div> </div>
+<br clear="all"/>
+</div>
+<br clear="all"/>
+<div align="center">
+<!--&lt;iframe src="http://weknowmemes.com/generator/ad2.html" height="90" width="740" framespacing='0' frameborder='no' scrolling='no'&gt; &lt;/iframe&gt;-->
+<br/>
+<br/>
+</div>
+<div id="footer" style="height:50px; background-color:#000;" width="100%">
+<div align="center" style="color:#FFF;padding-top:10px;">Copyright WeKnowMemes LLC 2013</div>
+<script src="http://widgets.amung.us/small.js" type="text/javascript"></script><script type="text/javascript">WAU_small('bw8zl9uju5yy')</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18902703-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="//assets.pinterest.com/js/pinit.js" type="text/javascript"></script>
+</div>
+</body></html>>
+href=http://weknowmemes.com/generator/caption/#id=224374&name=CISPA
+data-tile=CISPA
