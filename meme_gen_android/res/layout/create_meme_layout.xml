@@ -17,7 +17,7 @@
     <RelativeLayout
         android:id="@+id/image_relative_layout"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="0dp"
         android:layout_gravity="top"
         android:layout_weight="1" >
         
