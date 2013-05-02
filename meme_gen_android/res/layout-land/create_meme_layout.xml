@@ -3,6 +3,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#80000000"
     android:baselineAligned="true"
     android:orientation="horizontal" >
 
@@ -10,15 +11,14 @@
         android:id="@+id/image_relative_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="top"
+        android:layout_gravity="top|bottom"
         android:layout_weight="1" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/meme_view_pager"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_gravity="top|bottom"
-            android:layout_weight="1" >
+            android:layout_gravity="top|bottom">
         </android.support.v4.view.ViewPager>
     </RelativeLayout>
 
@@ -34,7 +34,7 @@
             android:id="@+id/create_meme_buttons_fragment"
             android:name="com.eastapps.meme_gen_android.widget.fragment.CreateMemeButtonsFragment"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="top"
             android:layout_weight="1" />
 
@@ -42,9 +42,9 @@
             android:id="@+id/create_view_advertising_banner_view"
             android:layout_width="320dp"
             android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
+            android:layout_gravity="bottom|center"
             android:tag="adspace" >
+
         </com.mobclix.android.sdk.MobclixMMABannerXLAdView>
     </LinearLayout>
 

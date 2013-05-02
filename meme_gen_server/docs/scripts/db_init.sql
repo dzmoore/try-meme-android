@@ -92,6 +92,16 @@ create table crawler_meme (
 	primary key (id)
 );
 
+create table crawler_background (
+	id int(21) not null auto_increment,
+	crawler_img_filename varchar(255),
+	crawler_img_desc varchar(255),
+	source_desc varchar(255),
+	last_mod timestamp default current_timestamp on update current_timestamp,
+	primary key (id)
+);
+		
+
 insert into meme_background (active, path) values (1, 'tmimitw.jpg');
 insert into meme_background (active, path) values (1, 'most_int.jpg');
 insert into meme_background (active, path) values (1, 'ducreux.jpg');
