@@ -4,5 +4,6 @@ public enum FilterType {
 	POPULAR,
 	ALL,
 	FAVORITE,
-	SEARCH
+	SEARCH, 
+	UNINITIALIZED
 }

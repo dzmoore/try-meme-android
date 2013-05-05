@@ -62,5 +62,6 @@
     <item name="meme_list_item_text_min_width" format="dimension" type="dimen">600dp</item>
     <item name="meme_list_item_text_max_width" format="dimension" type="dimen">600dp</item>
     <color name="back_transparent">#80000000</color>
+    <string name="refresh_menu_item_text">Refresh</string>
 
 </resources>

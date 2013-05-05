@@ -66,6 +66,7 @@ public final class R {
         public static final int meme_view_rel_layout=0x7f0c0019;
         public static final int menu_settings=0x7f0c001d;
         public static final int popular_btn=0x7f0c000e;
+        public static final int refresh_menu_item=0x7f0c001e;
         public static final int save_btn=0x7f0c0002;
         public static final int search_btn=0x7f0c0011;
         public static final int share_btn=0x7f0c0001;
@@ -93,6 +94,7 @@ public final class R {
     public static final class menu {
         public static final int activity_create_meme=0x7f0b0000;
         public static final int activity_view_meme=0x7f0b0001;
+        public static final int type_list_view_menu=0x7f0b0002;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
@@ -114,6 +116,7 @@ public final class R {
         public static final int menu_settings=0x7f060002;
         public static final int no_favorites_msg=0x7f06001e;
         public static final int nonSslHttp=0x7f06000d;
+        public static final int refresh_menu_item_text=0x7f060023;
         public static final int save_string=0x7f060007;
         public static final int share_string=0x7f060006;
         public static final int sslHttp=0x7f06000c;
