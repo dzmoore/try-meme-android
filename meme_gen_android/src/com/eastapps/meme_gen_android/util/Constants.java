@@ -25,4 +25,5 @@ public class Constants {
 	public static final String KEY_GUI_OBJECT = "gui_obj";
 	public static final String KEY_FILTER_BAR_VIEW = "filter_bar_view";
 	public static final String KEY_FILTER_BTN_ID_CLICKED = "filter_btn_clicked";
+	public static final String KEY_FILTER_TYPE_ENUM = "filter_type_enum";
 }

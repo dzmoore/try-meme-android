@@ -804,11 +804,11 @@ public class CreateMemeActivity extends FragmentActivity {
 		return shMemes;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_create_meme, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		getMenuInflater().inflate(R.menu.activity_create_meme, menu);
+//		return true;
+//	}
 	
 	
 	private ShallowMeme getSelectedMeme() {
