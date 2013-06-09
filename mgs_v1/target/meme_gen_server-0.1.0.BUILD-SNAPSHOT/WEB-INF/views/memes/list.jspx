@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_eastapps_mgs_model_Meme" items="${memes}" z="0Ks5AAjIt+irSbnR7umUY2Xr5N4=">
+        <table:table data="${memes}" id="l_com_eastapps_mgs_model_Meme" path="/memes" z="cfKuqga1w6vhDA4qH7B4+WGYfFE=">
+            <table:column id="c_com_eastapps_mgs_model_Meme_memeBackground" property="memeBackground" z="ch/cTRvJSBNcQuTk2NxjzX0RBSI="/>
+            <table:column id="c_com_eastapps_mgs_model_Meme_topText" property="topText" z="WPsl0fjvNvY1LDtXyTG3Nwju/Mo="/>
+            <table:column id="c_com_eastapps_mgs_model_Meme_bottomText" property="bottomText" z="xqyNlS0GhVmTdn/Spbo4ZuThUlw="/>
+            <table:column id="c_com_eastapps_mgs_model_Meme_createdByUser" property="createdByUser" z="ucLkRaEgormEunumPI/3cEB5hIs="/>
+        </table:table>
+    </page:list>
+</div>

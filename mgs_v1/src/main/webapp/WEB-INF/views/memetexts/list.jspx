@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_eastapps_mgs_model_MemeText" items="${memetexts}" z="bmcNedCPpI0ONYXfQi7B8MmoPX8=">
+        <table:table data="${memetexts}" id="l_com_eastapps_mgs_model_MemeText" path="/memetexts" z="jsuIGgrRNiXUcMe9yCvEjI9AfNQ=">
+            <table:column id="c_com_eastapps_mgs_model_MemeText_text" property="text" z="2YNZzWhDe/Y7nUn5D1cYolH111U="/>
+            <table:column id="c_com_eastapps_mgs_model_MemeText_fontSize" property="fontSize" z="YCewQSisq22l+rqQtIsygRvZ/RE="/>
+        </table:table>
+    </page:list>
+</div>

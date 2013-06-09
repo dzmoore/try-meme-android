@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_eastapps_mgs_model_MemeBackground" object="${memebackground}" path="/memebackgrounds" z="+I0HOyLTkXh+NiI9+RTzQcP+SqU=">
+        <field:display field="active" id="s_com_eastapps_mgs_model_MemeBackground_active" object="${memebackground}" z="k+kr6mrPv7AmCDK0om0/iY/Eo7Y="/>
+        <field:display field="filePath" id="s_com_eastapps_mgs_model_MemeBackground_filePath" object="${memebackground}" z="ki3A+VQcyPh4NkUJ9PnYMKlouj4="/>
+        <field:display field="description" id="s_com_eastapps_mgs_model_MemeBackground_description" object="${memebackground}" z="yz8iKljbTlV0x1sNCX+wJS4YYvY="/>
+    </page:show>
+</div>

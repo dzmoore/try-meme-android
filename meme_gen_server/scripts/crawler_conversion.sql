@@ -176,11 +176,13 @@ select descr/*, text*/
 
 
 
-DROP PROCEduRE IF EXISTS move_crawler_text;
-create procedure move_crawler_text()
+DROP PROCEDURE IF EXISTS move_crawler_text;
+DELIMITER //
+CREATE PROCEDURE `move_crawler_text`()
 BEGIN
 	DECLARE isDone INT;
 	DECLARE eaMemeTypeDescr varchar(255);
+    DECLARE existingDescrCount integer(21) DEFAULT false;
 
 	DECLARE img_descr_cur CURSOR FOR
 		SELECT 
@@ -198,14 +200,25 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET isDone = 1;
 
 	open img_descr_cur;
-	
+	-- insert types into crawler_meme_type table
 	set eaMemeTypeDescr = '';
 	set isDone = 0;
 	WHILE isDone = 0 DO
 		FETCH img_descr_cur into eaMemeTypeDescr;
-		INSERT into crawler_meme_type 
-			(crawler_meme_type_descr) values (eaMemeTypeDescr);
+    
+        SELECT count(*) INTO existingDescrCount
+        FROM crawler_meme_type
+        WHERE upper(crawler_meme_type_descr) = upper(eaMemeTypeDescr);
+        
+        
+        IF existingDescrCount <= 0 THEN
+            INSERT into crawler_meme_type 
+                (crawler_meme_type_descr) values (eaMemeTypeDescr);
+        END IF;
 	END WHILE;
+
+    
 		
 	
-END;
+END//
+

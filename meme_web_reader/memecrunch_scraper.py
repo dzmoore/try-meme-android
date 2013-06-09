@@ -9,12 +9,12 @@ import cStringIO
 from httplib2 import Http
 
 def get_page_text(url):
-    pageResults = urllib2.urlopen(url)
-    pageText = ""
-    for eaLine in pageResults.readlines():
-        pageText += eaLine
-    pageResults.close()
-    return pageText
+	pageResults = urllib2.urlopen(url)
+	pageText = ""
+	for eaLine in pageResults.readlines():
+		pageText += eaLine
+	pageResults.close()
+	return pageText
 
 def getMemeCrunchPageText(page_num):
 	mcText = get_page_text('http://memecrunch.com/' + str(page_num))
@@ -43,21 +43,28 @@ def main():
 			print("imgUrl = " + imgUrl)
 			imgName = str(eaImgTag.attrs['alt']).replace(' ', '_') + ".jpg"
 
-			writeImgToS3(imgUrl, imgName)
+			writeImgToS3('/meme_imgs/', imgName, imgUrl)
+			print('wrote: /meme_imgs/' + imgName)
 
-			print('wrote: ' + imgName)
+			writeImgToS3Resized('/meme_imgs/thumbs/', imgName, imgUrl, 160, 90)
+			print ('wrote: meme_imgs/thumbs/' + imgName)
 
-			postCrawlerBackgroundData(imgName, eaImgTag.attrs['alt'])
+
+			#postCrawlerBackgroundData(imgName, eaImgTag.attrs['alt'])
 
 
-def writeImgToS3(imgUrl, imgFile):
+def writeImgToS3(key, imgFile, imgUrl):
+	writeImgToS3Resized(key, imgFile, imgUrl, -1, -1)
+
+def writeImgToS3Resized(key, imgFile, imgUrl, newWidth, newHeight):
 	fp = urllib2.urlopen(imgUrl)
 
 	# Load the URL data into the image
 	img = Image.open(cStringIO.StringIO(fp.read()))
 
 	# Resize the image
-	#im2 = im.resize((500, 100), Image.NEAREST)  
+	if (newWidth > -1 and newHeight > -1):
+		img = img.resize((newWidth, newHeight), Image.NEAREST)  
 
 	# saving the image into a cStringIO object to avoid writing to disk
 	out_img = cStringIO.StringIO()
@@ -71,14 +78,13 @@ def writeImgToS3(imgUrl, imgFile):
 
 	#Connect to bucket and create key
 	b = conn.get_bucket('mgs_dev_bucket')
-	imgKey = b.new_key('/meme_imgs/mc_imgs/'+imgFile)
+	imgKey = b.new_key(key+imgFile)
 
 	#  setting contents from the in-memory string provided by cStringIO
 	imgKey.set_contents_from_string(out_img.getvalue())
 	
 	imgKey.set_acl('public-read')
-
-		
+	
 		
 			
 def writeImgFromUrl(imgUrl, imgFilename):
@@ -120,7 +126,7 @@ def postCrawlerBackgroundData(imgFilename, imgDesc):
 		'POST',
 		body = json.dumps(bgList),
 		headers = { 'Accept' : 'application/json', 'Content-type' : 'application/json' }
-    )
+	)
 
 	print resp
 	print content
