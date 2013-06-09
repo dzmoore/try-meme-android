@@ -1,0 +1,19 @@
+package com.eastapps.mgs.model;
+
+import javax.validation.constraints.NotNull;
+import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
+import org.springframework.roo.addon.tostring.RooToString;
+
+@RooJavaBean
+@RooToString
+@RooJpaActiveRecord
+public class MemeBackground {
+
+    @NotNull
+    private Boolean active;
+
+    private String filePath;
+
+    private String description;
+}

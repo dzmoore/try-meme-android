@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+        <menu:category id="c_memebackground" z="WcQcpfHOimEFhC2opr6u2IS3u58=">
+            <menu:item id="i_memebackground_new" messageCode="global_menu_new" url="/memebackgrounds?form" z="3Q95zzdTJFwEmSW4Lt5R/sjn1hY="/>
+            <menu:item id="i_memebackground_list" messageCode="global_menu_list" url="/memebackgrounds?page=1&amp;size=${empty param.size ? 10 : param.size}" z="+KJiDPf7iBKyaVTtlB7fU4e0nNE="/>
+        </menu:category>
+        <menu:category id="c_meme" z="0f+OjAyoopymAblIIUUtiLmYQ4Q=">
+            <menu:item id="i_meme_new" messageCode="global_menu_new" url="/memes?form" z="LZd18QTxdbPxt8J6GqpfDHxX1T0="/>
+            <menu:item id="i_meme_list" messageCode="global_menu_list" url="/memes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="ghJ6wSWN8vEc+OieoRt16Z2T2+c="/>
+        </menu:category>
+        <menu:category id="c_memetext" z="mBSLS8C1hI1mHD3o5mkdcD5s3ro=">
+            <menu:item id="i_memetext_new" messageCode="global_menu_new" url="/memetexts?form" z="ggXKo+uBz2RrIZjvVCFXaIgVwh0="/>
+            <menu:item id="i_memetext_list" messageCode="global_menu_list" url="/memetexts?page=1&amp;size=${empty param.size ? 10 : param.size}" z="78CFqUiSEBJma6yXnhY6pTLmBFw="/>
+        </menu:category>
+        <menu:category id="c_memeuser" z="30sfX2eXr5TLhE25eo3sweWb9pY=">
+            <menu:item id="i_memeuser_new" messageCode="global_menu_new" url="/memeusers?form" z="QEMGTcJXUI4zJ6gXg2bnfjLWkh0="/>
+            <menu:item id="i_memeuser_list" messageCode="global_menu_list" url="/memeusers?page=1&amp;size=${empty param.size ? 10 : param.size}" z="qnRA9ndY/1eiqLlmGc/ffYFOLsw="/>
+        </menu:category>
+        <menu:category id="c_samplememe" z="g8hP6nfZryY7I4yQXPmJHHBCws0=">
+            <menu:item id="i_samplememe_new" messageCode="global_menu_new" url="/samplememes?form" z="jp96ECdUY5eIZ87TgX0QpoqkmEs="/>
+            <menu:item id="i_samplememe_list" messageCode="global_menu_list" url="/samplememes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="u4F7/0FGYyIIMCab0Zb7hOb2LzM="/>
+        </menu:category>
+    </menu:menu>
+</div>
