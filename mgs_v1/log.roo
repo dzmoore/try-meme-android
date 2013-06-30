@@ -79,3 +79,23 @@ jpa setup --provider HIBERNATE --database HYPERSONIC_IN_MEMORY
 jpa setup --provider HIBERNATE --database MYSQL --hostName localhost --userName root --password password --databaseName mgsdbv1
 exit
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-06-09 16:50:55
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-06-29 17:07:49
+hint
+focus --class ~.model.MemeUser
+field set --fieldName favoriteMemes --type ~.model.Meme
+exit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-06-29 17:12:20
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-06-30 15:01:12
+entity jpa --class ~.model.DeviceInfo
+// [failed] field reference --fieldName user --type ~.model.MemeUser
+field reference --fieldName deviceUser --type ~.model.MemeUser
+field string --fieldName uniqueId
+entity jpa --class ~.model.CrawlerMeme
+field string --fieldName name
+field string --fieldName topText
+field string --fieldName bottomText
+entity jpa --class ~.model.CrawlerBackground
+field string --fieldName sourceDesc
+field string --fieldName crawlerImgFilename
+field string --fieldName crawlerImgDesc
+web mvc all --package com.eastapps.mgs.web

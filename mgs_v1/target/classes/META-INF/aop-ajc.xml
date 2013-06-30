@@ -1,36 +1,5 @@
 <aspectj>
 <aspects>
-<aspect name="com.eastapps.mgs.model.MemeText_Roo_Configurable"/>
-<aspect name="com.eastapps.mgs.model.MemeUser_Roo_Configurable"/>
-<aspect name="com.eastapps.mgs.model.MemeUser_Roo_Jpa_Entity"/>
-<aspect name="com.eastapps.mgs.model.MemeText_Roo_Jpa_Entity"/>
-<aspect name="com.eastapps.mgs.model.SampleMeme_Roo_ToString"/>
-<aspect name="com.eastapps.mgs.model.Meme_Roo_Jpa_ActiveRecord"/>
-<aspect name="com.eastapps.mgs.model.SampleMeme_Roo_JavaBean"/>
-<aspect name="com.eastapps.mgs.model.Meme_Roo_ToString"/>
-<aspect name="com.eastapps.mgs.model.MemeText_Roo_ToString"/>
-<aspect name="com.eastapps.mgs.web.SampleMemeController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.model.SampleMeme_Roo_Jpa_Entity"/>
-<aspect name="com.eastapps.mgs.model.Meme_Roo_JavaBean"/>
-<aspect name="com.eastapps.mgs.model.SampleMeme_Roo_Configurable"/>
-<aspect name="com.eastapps.mgs.web.MemeTextController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.web.ApplicationConversionServiceFactoryBean_Roo_ConversionService"/>
-<aspect name="com.eastapps.mgs.model.MemeUser_Roo_Jpa_ActiveRecord"/>
-<aspect name="com.eastapps.mgs.web.MemeUserController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.model.Meme_Roo_Configurable"/>
-<aspect name="com.eastapps.mgs.model.MemeUser_Roo_JavaBean"/>
-<aspect name="com.eastapps.mgs.model.MemeText_Roo_JavaBean"/>
-<aspect name="com.eastapps.mgs.model.MemeUser_Roo_ToString"/>
-<aspect name="com.eastapps.mgs.model.MemeBackground_Roo_Configurable"/>
-<aspect name="com.eastapps.mgs.web.MemeBackgroundController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.model.Meme_Roo_Jpa_Entity"/>
-<aspect name="com.eastapps.mgs.model.MemeBackground_Roo_JavaBean"/>
-<aspect name="com.eastapps.mgs.model.MemeBackground_Roo_Jpa_ActiveRecord"/>
-<aspect name="com.eastapps.mgs.web.MemeController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.model.MemeBackground_Roo_ToString"/>
-<aspect name="com.eastapps.mgs.model.MemeText_Roo_Jpa_ActiveRecord"/>
-<aspect name="com.eastapps.mgs.model.MemeBackground_Roo_Jpa_Entity"/>
-<aspect name="com.eastapps.mgs.model.SampleMeme_Roo_Jpa_ActiveRecord"/>
 </aspects>
 </aspectj>
 

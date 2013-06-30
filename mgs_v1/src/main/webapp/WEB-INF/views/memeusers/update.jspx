@@ -7,5 +7,6 @@
         <field:input field="username" id="c_com_eastapps_mgs_model_MemeUser_username" z="JRRTat53uFoCoou5NAX5brUOVjQ="/>
         <field:input field="password" id="c_com_eastapps_mgs_model_MemeUser_password" z="tzs4clarXjDYWCZjesOYDy/1D8Y="/>
         <field:input field="salt" id="c_com_eastapps_mgs_model_MemeUser_salt" z="QTybiwwyRC5dj/tZG/0Z1GTuZ+I="/>
+        <field:select field="favoriteMemes" id="c_com_eastapps_mgs_model_MemeUser_favoriteMemes" itemValue="id" items="${memes}" multiple="true" path="/memes" z="kXNwc/oz7vmI1ztM0rGMOYSTMR8="/>
     </form:update>
 </div>
