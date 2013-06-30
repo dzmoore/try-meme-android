@@ -52,25 +52,25 @@ public class MemeServerClient {
 		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));
 	}
 
-	public ShallowMeme getMeme(final int memeId) {
-		final String result = 
-			Utils.noValue(webClient.getJSONObject(Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				webSvcMemeDataSuffix,
-				Constants.URL_SEPARATOR,
-				memeId,
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-		)), Constants.EMPTY);
-		
-		ShallowMeme shMemeResult = new ShallowMeme();
-		if (StringUtils.isNotBlank(result)) {
-			shMemeResult = new Gson().fromJson(result, ShallowMeme.class);
-		}
-		
-		return shMemeResult;
-	}
+//	public ShallowMeme getMeme(final int memeId) {
+//		final String result = 
+//			Utils.noValue(webClient.getJSONObject(Conca.t(
+//				webSvcAddr,
+//				Constants.URL_SEPARATOR,
+//				webSvcMemeDataSuffix,
+//				Constants.URL_SEPARATOR,
+//				memeId,
+//				Constants.URL_SEPARATOR,
+//				webSvcJsonSuffix
+//		)), Constants.EMPTY);
+//		
+//		ShallowMeme shMemeResult = new ShallowMeme();
+//		if (StringUtils.isNotBlank(result)) {
+//			shMemeResult = new Gson().fromJson(result, ShallowMeme.class);
+//		}
+//		
+//		return shMemeResult;
+//	}
 
 	public Bitmap getBackground(final int typeId) {
 		return
