@@ -24,7 +24,7 @@ import com.eastapps.util.Conca;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class MemeServerClient {
+public class MemeServerClient implements IMemeServerClient {
 	private static final String TAG = MemeServerClient.class.getSimpleName();
 
 	private IWebClient webClient;
@@ -36,6 +36,8 @@ public class MemeServerClient {
 	private String webSvcSampleMemeDataPrefix;
 	private String webSvcMemeTypePrefix;
 
+	private String webSvcBgrndBytesSuffix;
+
 	public MemeServerClient(final Context context) {
 		super();
 
@@ -46,42 +48,24 @@ public class MemeServerClient {
 		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
 		webSvcSampleMemeDataPrefix = context.getString(R.string.webServiceSampleMemeDataPrefix);
 		webSvcMemeTypePrefix = context.getString(R.string.webServiceMemeType);
+		webSvcBgrndBytesSuffix = context.getString(R.string.webServiceBackgroundBytesSuffix);
 
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
 		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));
 	}
 
-//	public ShallowMeme getMeme(final int memeId) {
-//		final String result = 
-//			Utils.noValue(webClient.getJSONObject(Conca.t(
-//				webSvcAddr,
-//				Constants.URL_SEPARATOR,
-//				webSvcMemeDataSuffix,
-//				Constants.URL_SEPARATOR,
-//				memeId,
-//				Constants.URL_SEPARATOR,
-//				webSvcJsonSuffix
-//		)), Constants.EMPTY);
-//		
-//		ShallowMeme shMemeResult = new ShallowMeme();
-//		if (StringUtils.isNotBlank(result)) {
-//			shMemeResult = new Gson().fromJson(result, ShallowMeme.class);
-//		}
-//		
-//		return shMemeResult;
-//	}
-
-	public Bitmap getBackground(final int typeId) {
+	@Override
+	public Bitmap getBackground(final int bgId) {
 		return
 			webClient.getBitmap(Conca.t(
 				webSvcAddr, 
 				Constants.URL_SEPARATOR, 
-				webSvcMemeDataSuffix,
+				webSvcBgrndSuffix,
 				Constants.URL_SEPARATOR,
-				typeId,
+				webSvcBgrndBytesSuffix,
 				Constants.URL_SEPARATOR,
-				webSvcBgrndSuffix
+				bgId
 			));
 	}
 

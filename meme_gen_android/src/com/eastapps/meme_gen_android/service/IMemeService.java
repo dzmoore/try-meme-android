@@ -8,11 +8,11 @@ import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.Meme;
 
 public interface IMemeService {
 //	public ShallowMeme getMeme(final int id);
 	
-	int storeMeme(ShallowMeme shallowMeme);
 	MemeViewData createMemeViewData(int typeId);
 
 	List<ShallowMeme> getSampleMemes(int typeId);
@@ -40,4 +40,5 @@ public interface IMemeService {
 	List<MemeListItemData> getAllPopularTypesListData();
 
 	List<MemeListItemData> getAllTypesForSearch(String query);
+	long storeMeme(Meme shallowMeme);
 }

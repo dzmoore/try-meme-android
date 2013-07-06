@@ -1,12 +1,12 @@
 package com.eastapps.mgs.web;
 
-import com.eastapps.mgs.model.Meme;
-import com.eastapps.mgs.model.MemeBackground;
-import com.eastapps.mgs.model.MemeText;
-import com.eastapps.mgs.model.MemeUser;
 import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeText;
+import com.eastapps.mgs.model.MemeUser;
+
 @RequestMapping("/memes")
 @Controller
 @RooWebScaffold(path = "memes", formBackingObject = Meme.class)
 public class MemeController {
+	private static final Logger logger = Logger.getLogger(MemeController.class);
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid Meme meme, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -32,6 +38,30 @@ public class MemeController {
         uiModel.asMap().clear();
         meme.persist();
         return "redirect:/memes/" + encodeUrlPathSegment(meme.getId().toString(), httpServletRequest);
+    }
+    
+    @RequestMapping(method = RequestMethod.POST)
+    public Long createJson(@Valid Meme meme, BindingResult bindingResult, HttpServletRequest httpServletRequest) {
+    	long result = -1L;
+        if (bindingResult.hasErrors()) {
+        	logger.warn(StringUtils.join("validation error for meme {",meme,"}"));
+        	
+        } else {
+        	if (logger.isTraceEnabled()) {
+            	logger.trace(StringUtils.join("successfully validated meme {", meme, "}"));
+        	}
+        	
+            meme.persist();
+            
+            result = meme.getId();
+            
+        }
+        
+        if (logger.isTraceEnabled()) {
+        	logger.trace(StringUtils.join("meme id after store attempt: [",String.valueOf(result),"]"));
+        }
+        
+        return result;
     }
 
     @RequestMapping(params = "form", produces = "text/html")
