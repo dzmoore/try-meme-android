@@ -1,29 +1,11 @@
 package com.eastapps.meme_gen_server.service;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
-import com.eastapps.meme_gen_server.constants.Constants;
-import com.eastapps.meme_gen_server.util.Util;
-import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
-import com.eastapps.mgs.model.MemeText;
 
 @Component
 public class MemeService {
@@ -39,8 +21,8 @@ public class MemeService {
 //	@Autowired
 //	private String 	memeThumbDirName;
 //	
-//	@Autowired
-//	private IMemeFileReader imageFileReader;
+	@Autowired
+	private IMemeFileReader imageFileReader;
 //
 //
 //	public MemeService() {
@@ -270,43 +252,17 @@ public class MemeService {
 //		txtBtm.setId((Integer)sesh.save(txtBtm));
 //	}
 //
-//	public byte[] getMemeBackground(final int typeId) throws IOException {
-//		final Session sesh = getSession();
-//
-//		byte[] resultBytes = new byte[0];
-//		try {
-//			sesh.beginTransaction();
-//
-////			final Query qry = sesh.createQuery("from Meme where id = :id");
-//			final Query qry = sesh.createQuery("from Meme m where m.lvMemeType.id = :typeid and m.isSampleMeme = true");
-//			qry.setInteger("typeid", typeId);
-//			
-//			final List<?> results = qry.list();
-//
-//			MemeBackground bg = new MemeBackground();
-//			if (results != null && results.size() > 0) {
-//				final Object obj = results.get(0);
-//
-//				if (obj instanceof Meme) {
-//					bg = ((Meme)obj).getMemeBackground();
-//
-//					logger.debug(StringUtils.join(new Object[]{"bg=[", bg, "]"}));
-//				}
-//			}
-//
-//			resultBytes = imageFileReader.getBytes(bg.getPath());
-//
-//		} catch (Exception e) {
-//			Util.rollback(sesh);
-//			
-//			logger.error("error occurred while attempting to find bg img", e);
-//
-//		} finally {
-//			Util.close(sesh);
-//		}
-//
-//		return resultBytes;
-//	}
+	public byte[] getMemeBackgroundBytes(final long id) throws IOException {
+		byte[] resultBytes = new byte[0];
+		
+		final MemeBackground bg = MemeBackground.findMemeBackground(id);
+		
+		if (bg != null) {
+			resultBytes = imageFileReader.getBytes(bg.getFilePath());
+		}
+
+		return resultBytes;
+	}
 //
 //	public ShallowMeme getShallowMeme(final int memeId) {
 //		final Session sesh = getSession();

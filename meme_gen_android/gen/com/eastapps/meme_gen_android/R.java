@@ -98,43 +98,44 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f060000;
-        public static final int bundleconst_loaded=0x7f060017;
-        public static final int bundleconst_memebg=0x7f060015;
-        public static final int bundleconst_pageradapter=0x7f060018;
-        public static final int bundleconst_sampledlist=0x7f060019;
-        public static final int bundleconst_samplememes=0x7f060016;
+        public static final int bundleconst_loaded=0x7f060018;
+        public static final int bundleconst_memebg=0x7f060016;
+        public static final int bundleconst_pageradapter=0x7f060019;
+        public static final int bundleconst_sampledlist=0x7f06001a;
+        public static final int bundleconst_samplememes=0x7f060017;
         public static final int create_meme_top_row_height=0x7f060005;
         public static final int edit_bottom_text_string=0x7f060009;
         public static final int edit_top_text_string=0x7f060008;
-        public static final int empty_string=0x7f060022;
-        public static final int favorite_button_content_descr=0x7f060021;
-        public static final int filter_bar_btn_txt_all=0x7f06001b;
-        public static final int filter_bar_btn_txt_popular=0x7f06001a;
+        public static final int empty_string=0x7f060023;
+        public static final int favorite_button_content_descr=0x7f060022;
+        public static final int filter_bar_btn_txt_all=0x7f06001c;
+        public static final int filter_bar_btn_txt_popular=0x7f06001b;
         public static final int hello_world=0x7f060001;
-        public static final int icon_heart_cont_descr=0x7f06001c;
-        public static final int icon_magnifier_cont_descr=0x7f06001d;
+        public static final int icon_heart_cont_descr=0x7f06001d;
+        public static final int icon_magnifier_cont_descr=0x7f06001e;
         public static final int menu_settings=0x7f060002;
-        public static final int no_favorites_msg=0x7f06001e;
+        public static final int no_favorites_msg=0x7f06001f;
         public static final int nonSslHttp=0x7f06000d;
-        public static final int refresh_menu_item_text=0x7f060023;
+        public static final int refresh_menu_item_text=0x7f060024;
         public static final int save_string=0x7f060007;
         public static final int share_string=0x7f060006;
         public static final int sslHttp=0x7f06000c;
-        public static final int string_hint=0x7f06001f;
+        public static final int string_hint=0x7f060020;
         public static final int title_activity_create_meme=0x7f060003;
         public static final int title_activity_meme_list=0x7f060004;
-        public static final int title_activity_meme_type_search_results=0x7f060020;
+        public static final int title_activity_meme_type_search_results=0x7f060021;
         public static final int title_activity_view_meme=0x7f06000a;
-        public static final int webServiceAddress=0x7f06000e;
-        public static final int webServiceBackgroundSuffix=0x7f060010;
-        public static final int webServiceJsonSuffix=0x7f060011;
-        /**  <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> 
+        /**      <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string> 
          */
-        public static final int webServiceMemeDataSuffix=0x7f06000f;
-        public static final int webServiceMemeType=0x7f060014;
+        public static final int webServiceAddress=0x7f06000e;
+        public static final int webServiceBackgroundBytesSuffix=0x7f060011;
+        public static final int webServiceBackgroundSuffix=0x7f060010;
+        public static final int webServiceJsonSuffix=0x7f060012;
+        public static final int webServiceMemeSuffix=0x7f06000f;
+        public static final int webServiceMemeType=0x7f060015;
         public static final int webServiceResource=0x7f06000b;
-        public static final int webServiceSampleMemeDataPrefix=0x7f060013;
-        public static final int webServiceStoreMemePrefix=0x7f060012;
+        public static final int webServiceSampleMemeDataPrefix=0x7f060014;
+        public static final int webServiceStoreMemePrefix=0x7f060013;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0000;

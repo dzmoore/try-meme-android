@@ -6,45 +6,38 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.apache.http.cookie.SM;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 
-import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
-import com.eastapps.meme_gen_android.json.JSONException;
-import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.Utils;
+import com.eastapps.meme_gen_android.web.IMemeServerClient;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
-import com.eastapps.meme_gen_android.widget.TagMgr;
+import com.eastapps.meme_gen_android.web.MemeServerClientV2;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.Meme;
 
 public class MemeService implements IMemeService {
 	private static final String TAG = MemeService.class.getSimpleName();
 	private static MemeService instance;
 	
-	private MemeServerClient client;
+	private IMemeServerClient client;
 	private static Context context;
 //	private UserMgr userMgr;
 	
 	private MemeService() {
 		super();
 		
-		client = new MemeServerClient(context);
+		client = new MemeServerClientV2(context);
 	}
 	
 	public static synchronized void initialize(Context context) {
@@ -57,7 +50,7 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public int storeMeme(ShallowMeme shallowMeme) {
+	public long storeMeme(Meme shallowMeme) {
 		return client.storeMeme(shallowMeme);
 	}
 
