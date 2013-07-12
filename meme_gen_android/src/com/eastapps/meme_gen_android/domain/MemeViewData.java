@@ -10,21 +10,22 @@ import android.os.Parcelable;
 
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
+import com.eastapps.mgs.model.Meme;
 
 public class MemeViewData 
 	implements Serializable, Identifiable, Parcelable {
 	private static final long serialVersionUID = 7334702044762722957L;
 	
-	private ShallowMeme meme;
-	private List<ShallowMeme> sampleMemes;
+	private Meme meme;
+	private List<Meme> sampleMemes;
 	private Bitmap background;
 	private int id;
 	
 	public MemeViewData() {
 		super();
 		background = null;
-		meme = new ShallowMeme();
-		sampleMemes = new ArrayList<ShallowMeme>(0);
+		meme = new Meme();
+		sampleMemes = new ArrayList<Meme>(0);
 		id = TagMgr.getNextMemeViewId();
 	}
 	
@@ -35,19 +36,19 @@ public class MemeViewData
 		this.background = background;
 	}
 
-	public ShallowMeme getMeme() {
+	public Meme getMeme() {
 		return meme;
 	}
 
-	public void setMeme(ShallowMeme meme) {
+	public void setMeme(Meme meme) {
 		this.meme = meme;
 	}
 
-	public List<ShallowMeme> getSampleMemes() {
+	public List<Meme> getSampleMemes() {
 		return sampleMemes;
 	}
 
-	public void setSampleMemes(List<ShallowMeme> sampleMemes) {
+	public void setSampleMemes(List<Meme> sampleMemes) {
 		this.sampleMemes = sampleMemes;
 	}
 

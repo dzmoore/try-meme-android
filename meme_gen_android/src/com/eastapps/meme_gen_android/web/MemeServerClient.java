@@ -31,7 +31,6 @@ public class MemeServerClient implements IMemeServerClient {
 	private String webSvcAddr;
 	private String webSvcBgrndSuffix;
 	private String webSvcJsonSuffix;
-	private String webSvcMemeDataSuffix;
 	private String webSvcStoreMemePrefix;
 	private String webSvcSampleMemeDataPrefix;
 	private String webSvcMemeTypePrefix;
@@ -42,7 +41,6 @@ public class MemeServerClient implements IMemeServerClient {
 		super();
 
 		webSvcAddr = context.getString(R.string.webServiceAddress);
-		webSvcMemeDataSuffix = context.getString(R.string.webServiceMemeDataSuffix);
 		webSvcBgrndSuffix = context.getString(R.string.webServiceBackgroundSuffix);
 		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
 		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);

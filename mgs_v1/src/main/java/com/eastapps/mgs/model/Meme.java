@@ -1,6 +1,8 @@
 package com.eastapps.mgs.model;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -8,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -19,62 +20,87 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.transaction.annotation.Transactional;
 
-@Configurable
 @Entity
+@Configurable
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
 public class Meme {
 
-    @OneToOne
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+
+    @Version
+    @Column(name = "version")
+    private Integer version;
+
+    @PersistenceContext
+    transient EntityManager entityManager;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private MemeBackground memeBackground;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private MemeText topText;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private MemeText bottomText;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private MemeUser createdByUser;
 
-	public String toString() {
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getVersion() {
+        return this.version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	@PersistenceContext
-    transient EntityManager entityManager;
-
-	public static final EntityManager entityManager() {
+    public static final EntityManager entityManager() {
         EntityManager em = new Meme().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
 
-	public static long countMemes() {
+    public static long countMemes() {
         return entityManager().createQuery("SELECT COUNT(o) FROM Meme o", Long.class).getSingleResult();
     }
 
-	public static List<Meme> findAllMemes() {
+    public static List<com.eastapps.mgs.model.Meme> findAllMemes() {
         return entityManager().createQuery("SELECT o FROM Meme o", Meme.class).getResultList();
     }
 
-	public static Meme findMeme(Long id) {
+    public static com.eastapps.mgs.model.Meme findMeme(Long id) {
         if (id == null) return null;
         return entityManager().find(Meme.class, id);
     }
 
-	public static List<Meme> findMemeEntries(int firstResult, int maxResults) {
+    public static List<com.eastapps.mgs.model.Meme> findMemeEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Meme o", Meme.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
-	@Transactional
+    @Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
 
-	@Transactional
+    @Transactional
     public void remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
@@ -85,49 +111,24 @@ public class Meme {
         }
     }
 
-	@Transactional
+    @Transactional
     public void flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
 
-	@Transactional
+    @Transactional
     public void clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
 
-	@Transactional
-    public Meme merge() {
+    @Transactional
+    public com.eastapps.mgs.model.Meme merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         Meme merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
-    }
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
-
-	@Version
-    @Column(name = "version")
-    private Integer version;
-
-	public Long getId() {
-        return this.id;
-    }
-
-	public void setId(Long id) {
-        this.id = id;
-    }
-
-	public Integer getVersion() {
-        return this.version;
-    }
-
-	public void setVersion(Integer version) {
-        this.version = version;
     }
 
 	public MemeBackground getMemeBackground() {

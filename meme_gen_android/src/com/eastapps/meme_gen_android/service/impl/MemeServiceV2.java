@@ -8,6 +8,8 @@ import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeUser;
 
 public class MemeServiceV2 implements IMemeService {
 	private final static String TAG = MemeServiceV2.class.getName();
@@ -26,7 +28,7 @@ public class MemeServiceV2 implements IMemeService {
 	}
 
 	@Override
-	public int storeMeme(ShallowMeme shallowMeme) {
+	public long storeMeme(Meme shallowMeme) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -56,7 +58,7 @@ public class MemeServiceV2 implements IMemeService {
 	}
 
 	@Override
-	public int storeNewUser(ShallowUser shallowUser) {
+	public long storeNewUser(MemeUser shallowUser) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
