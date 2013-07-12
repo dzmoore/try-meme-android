@@ -9,6 +9,7 @@ import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeUser;
 
 public interface IMemeService {
 //	public ShallowMeme getMeme(final int id);
@@ -23,7 +24,6 @@ public interface IMemeService {
 
 	String getNewInstallKey();
 
-	int storeNewUser(ShallowUser shallowUser);
 
 	List<ShallowMemeType> getFavMemeTypesForUser(int userId);
 
@@ -41,4 +41,6 @@ public interface IMemeService {
 
 	List<MemeListItemData> getAllTypesForSearch(String query);
 	long storeMeme(Meme shallowMeme);
+
+	long storeNewUser(MemeUser shallowUser);
 }

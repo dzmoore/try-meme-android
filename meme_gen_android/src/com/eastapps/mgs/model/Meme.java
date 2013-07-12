@@ -1,9 +1,12 @@
 package com.eastapps.mgs.model;
 
+import java.io.Serializable;
 
-public class Meme {
 
-    private MemeBackground memeBackground;
+public class Meme implements Serializable {
+	private static final long serialVersionUID = -3787149307805034232L;
+
+	private MemeBackground memeBackground;
 
     private MemeText topText;
 

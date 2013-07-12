@@ -25,6 +25,8 @@ import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeUser;
 
 public class MemeService implements IMemeService {
 	private static final String TAG = MemeService.class.getSimpleName();
@@ -306,7 +308,7 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public int storeNewUser(final ShallowUser shallowUser) {
+	public int storeNewUser(final MemeUser shallowUser) {
 		return client.storeNewUser(shallowUser);
 	}
 
@@ -325,13 +327,13 @@ public class MemeService implements IMemeService {
 		return client.removeFavMeme(userId, typeId);
 	}
 
-	public List<ShallowMemeType> getPopularTypes() {
+	public List<MemeBackground> getPopularTypes() {
 		return client.getPopularTypes();
 	}
 
-	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
-		return client.getTypesForSearch(searchTerm);
-	}
+//	public List<ShallowMemeType> getTypesForSeach(String searchTerm) {
+//		return client.getTypesForSearch(searchTerm);
+//	}
 	
 
 }

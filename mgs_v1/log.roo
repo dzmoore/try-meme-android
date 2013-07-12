@@ -99,3 +99,17 @@ field string --fieldName sourceDesc
 field string --fieldName crawlerImgFilename
 field string --fieldName crawlerImgDesc
 web mvc all --package com.eastapps.mgs.web
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-07-12 08:55:24
+help
+focus --class ~.model.Meme
+help
+hint
+// [failed] entity jpa --class ~.model.Meme --testAutomatically 
+hint
+// [failed] entity jpa --class ~.model.MemeUser --testAutomatically 
+entity jpa --class ~.model.Meme 
+entity jpa --class ~.model.Meme --testAutomatically 
+field reference --type ~.model.MemeBackground --fieldName memeBackground
+field reference --type ~.model.MemeText --fieldName topText
+field reference --type ~.model.MemeText --fieldName bottomText
+field reference --type ~.model.MemeUser --fieldName createdByUser
