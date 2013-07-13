@@ -7,5 +7,6 @@
         <field:display field="username" id="s_com_eastapps_mgs_model_MemeUser_username" object="${memeuser}" z="ZDn3xCQtwDAltUHQY24x2/m8Fm0="/>
         <field:display field="password" id="s_com_eastapps_mgs_model_MemeUser_password" object="${memeuser}" z="yBf6X636G5ZCQWRdM1dLdzgNXwU="/>
         <field:display field="salt" id="s_com_eastapps_mgs_model_MemeUser_salt" object="${memeuser}" z="RtMyVA/F2TZQrgOO9zmeDq2BgB4="/>
+        <field:display field="favoriteMemes" id="s_com_eastapps_mgs_model_MemeUser_favoriteMemes" object="${memeuser}" z="zTRE+LwTlzK1stVpx6New/kT6+8="/>
     </page:show>
 </div>

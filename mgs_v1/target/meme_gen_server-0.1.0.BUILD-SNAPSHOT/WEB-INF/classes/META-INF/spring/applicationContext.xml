@@ -47,18 +47,42 @@
         <context:exclude-filter expression=".*_Roo_.*" type="regex"/>
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
-    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
-        <property name="driverClassName" value="${database.driverClassName}"/>
-        <property name="url" value="${database.url}"/>
-        <property name="username" value="${database.username}"/>
-        <property name="password" value="${database.password}"/>
+    
+    <bean class="java.lang.String" id="dbUrl">
+        <constructor-arg value="${DATABASE_URL}" />
+    </bean>
+    <bean class="java.lang.String" id="defaultDb">
+        <constructor-arg value="#{dbUrl.split('.+@.+/')[1].split('\\?')[0]}" />
+    </bean>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url"
+            value="#{'jdbc:mysql://' + dbUrl.split('.+@')[1].split('[:,/].+')[0] + '/' + defaultDb + '?reconnect=true' }" />
+        <property name="username" value="#{ @dbUrl.split('.+//')[1].split('[:,/].+')[0] }" />
+        <property name="password" value="#{ @dbUrl.split('@.+')[0].split('.+//.+?:')[1] }" />
+    </bean>
+    
+<!-- 	<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
+        <property name="driverClassName" value="${db.driverClassName}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
         <property name="testOnBorrow" value="true"/>
         <property name="testOnReturn" value="true"/>
         <property name="testWhileIdle" value="true"/>
         <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
         <property name="numTestsPerEvictionRun" value="3"/>
         <property name="minEvictableIdleTimeMillis" value="1800000"/>
-    </bean>
+        <property name="validationQuery" value="SELECT 1"/>
+    </bean> -->
+
+	<!--<Resource id="dataSource" 
+		name="jdbc/mgsdb" auth="Container" type="javax.sql.DataSource"
+		maxActive="100" maxIdle="30" maxWait="10000"
+		username="${db.un}" password="${db.pw}"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="db.url"/>-->
+
     <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>

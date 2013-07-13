@@ -77,4 +77,24 @@ public class MemeDataOnDemand {
             data.add(obj);
         }
     }
+
+	public void setBottomText(Meme obj, int index) {
+        MemeText bottomText = null;
+        obj.setBottomText(bottomText);
+    }
+
+	public void setCreatedByUser(Meme obj, int index) {
+        MemeUser createdByUser = null;
+        obj.setCreatedByUser(createdByUser);
+    }
+
+	public void setMemeBackground(Meme obj, int index) {
+        MemeBackground memeBackground = null;
+        obj.setMemeBackground(memeBackground);
+    }
+
+	public void setTopText(Meme obj, int index) {
+        MemeText topText = null;
+        obj.setTopText(topText);
+    }
 }

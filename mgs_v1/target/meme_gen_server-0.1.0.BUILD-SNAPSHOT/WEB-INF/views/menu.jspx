@@ -23,5 +23,17 @@
             <menu:item id="i_samplememe_new" messageCode="global_menu_new" url="/samplememes?form" z="jp96ECdUY5eIZ87TgX0QpoqkmEs="/>
             <menu:item id="i_samplememe_list" messageCode="global_menu_list" url="/samplememes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="u4F7/0FGYyIIMCab0Zb7hOb2LzM="/>
         </menu:category>
+        <menu:category id="c_crawlermeme" z="sxQm9jfYbl2U1AlLuak08r8otPI=">
+            <menu:item id="i_crawlermeme_new" messageCode="global_menu_new" url="/crawlermemes?form" z="48yu72eastyuCMU5HqFHoP2iHdE="/>
+            <menu:item id="i_crawlermeme_list" messageCode="global_menu_list" url="/crawlermemes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="D61puqsQeftWBHGM0wKs26wvJfs="/>
+        </menu:category>
+        <menu:category id="c_deviceinfo" z="RzWRSYX2PudFGMLETBJdulfjUJs=">
+            <menu:item id="i_deviceinfo_new" messageCode="global_menu_new" url="/deviceinfoes?form" z="XEo6tsjSkiEEnHT0MCUOmoA6jWY="/>
+            <menu:item id="i_deviceinfo_list" messageCode="global_menu_list" url="/deviceinfoes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="4AweSmP5NEvqytvQEMNZEP4Gdas="/>
+        </menu:category>
+        <menu:category id="c_crawlerbackground" z="0zBKQXe02PN9EW59Htrh7ecCeog=">
+            <menu:item id="i_crawlerbackground_new" messageCode="global_menu_new" url="/crawlerbackgrounds?form" z="2p8IGOWb4FR5URhRREDT3jpwyt8="/>
+            <menu:item id="i_crawlerbackground_list" messageCode="global_menu_list" url="/crawlerbackgrounds?page=1&amp;size=${empty param.size ? 10 : param.size}" z="0S37NJ0lx2w8MArLb+UHc2Vdc4U="/>
+        </menu:category>
     </menu:menu>
 </div>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_eastapps_mgs_model_CrawlerBackground" items="${crawlerbackgrounds}" z="K44fs+14Cxp4sPcMqb1vGp0s+LM=">
+        <table:table data="${crawlerbackgrounds}" id="l_com_eastapps_mgs_model_CrawlerBackground" path="/crawlerbackgrounds" z="l908/+6evOpw21yUg+s0bHcTiaU=">
+            <table:column id="c_com_eastapps_mgs_model_CrawlerBackground_sourceDesc" property="sourceDesc" z="f0UP7JGBdRVNPduR1ObYtNHj9BU="/>
+            <table:column id="c_com_eastapps_mgs_model_CrawlerBackground_crawlerImgFilename" property="crawlerImgFilename" z="kbDMZnSWCI9XlDTi7SEINtLFzHY="/>
+            <table:column id="c_com_eastapps_mgs_model_CrawlerBackground_crawlerImgDesc" property="crawlerImgDesc" z="npAj2i4ugSkoolLOoANxSYrDApk="/>
+        </table:table>
+    </page:list>
+</div>

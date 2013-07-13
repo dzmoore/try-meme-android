@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_eastapps_mgs_model_CrawlerMeme" object="${crawlermeme}" path="/crawlermemes" z="eB6jDz8WGhpU5xQJ9PMihth8EgU=">
+        <field:display field="name" id="s_com_eastapps_mgs_model_CrawlerMeme_name" object="${crawlermeme}" z="5TjV7Z1cnqUGtregmabjufce15A="/>
+        <field:display field="topText" id="s_com_eastapps_mgs_model_CrawlerMeme_topText" object="${crawlermeme}" z="kqSyslnnxbn/S8Cv34S+k3f9/e4="/>
+        <field:display field="bottomText" id="s_com_eastapps_mgs_model_CrawlerMeme_bottomText" object="${crawlermeme}" z="vSbQtYn+3AqBWoShLN7rCHroL00="/>
+    </page:show>
+</div>
