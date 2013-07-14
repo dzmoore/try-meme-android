@@ -17,7 +17,7 @@
             <property name="c3p0.min_size" value="3"/>
             <property name="c3p0.max_size" value="5"/>
             <property name="c3p0.timeout" value="1800"/>
-            
+            <property name="hibernate.connection.datasource" value="jdbc/mgsdb"/>
             <!-- Uncomment the following two properties for JBoss only -->
             <!-- property name="hibernate.validator.apply_to_ddl" value="false" / -->
             <!-- property name="hibernate.validator.autoregister_listeners" value="false" / -->

@@ -158,7 +158,7 @@ public class MemeIntegrationTest {
 		meme.setCreatedByUser(user);
 		
 		final String jsonMeme = new Gson().toJson(meme);
-		final String result = getJSONObject("http://localhost:8080/meme_gen_server/memes/create/json", jsonMeme);
+		final String result = getJSONObject("http://localhost:8080/memes/create/json", jsonMeme);
 		
 		TestCase.assertTrue(StringUtils.isNotBlank(result));
 		TestCase.assertTrue(Long.parseLong(result) > 0);
