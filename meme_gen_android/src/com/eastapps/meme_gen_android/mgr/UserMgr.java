@@ -5,17 +5,20 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
+import com.eastapps.meme_gen_android.service.impl.MemeServiceV2;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.MemeUser;
 
 public class UserMgr {
 	protected static final String TAG = UserMgr.class.getSimpleName();
 
 	private static UserMgr instance;
 
-	private ShallowUser user;
+	private MemeUser user;
 	private List<ShallowMemeType> favTypes;
 	
 
@@ -31,8 +34,8 @@ public class UserMgr {
 		return instance;
 	}
 
-	private MemeService getMemeService() {
-		return MemeService.getInstance();
+	private IMemeService getMemeService() {
+		return MemeServiceV2.getInstance();
 	}
 	
 	private void queryForAndInitFavTypes() {
@@ -93,13 +96,13 @@ public class UserMgr {
 //		iCallback.callback(inst.getMemeService().storeFavType(u.getId(), typeId));
 //	}
 	
-	public static ShallowUser getUser() {
+	public static MemeUser getUser() {
 		final UserMgr inst = getInstance();
 		
 		if (inst.user == null) {
 			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
 			if (cacheMgrInst.containsKey(Constants.KEY_USER)) {
-				inst.user = cacheMgrInst.getFromCache(Constants.KEY_USER, ShallowUser.class);
+				inst.user = cacheMgrInst.getFromCache(Constants.KEY_USER, MemeUser.class);
 				
 			} else {
 				inst.createNewUser();

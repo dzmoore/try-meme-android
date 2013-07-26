@@ -1,11 +1,14 @@
 package com.eastapps.mgs.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MemeUser {
+public class MemeUser implements Serializable {
 
-    private Boolean active;
+	private static final long serialVersionUID = -9022883959291231458L;
+
+	private Boolean active;
 
     private String username;
 

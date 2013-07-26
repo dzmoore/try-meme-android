@@ -1,21 +1,18 @@
 package com.eastapps.meme_gen_android.domain;
 
-import java.io.ByteArrayInputStream;
-
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.mgs.model.MemeBackground;
 
 public class MemeListItemData implements Identifiable, Parcelable {
 	private transient Bitmap thumb;
 	private int id;
-	private ShallowMemeType memeType;
+	private MemeBackground memeBackground;
 	private boolean isFavorite;
 	private byte[] thumbBytes;
 	
@@ -24,7 +21,7 @@ public class MemeListItemData implements Identifiable, Parcelable {
 		id = TagMgr.getNextMemeListItemId();
 		
 		thumb = null;
-		memeType = new ShallowMemeType();
+		memeBackground = new MemeBackground();
 		isFavorite = false;
 	}
 	
@@ -41,16 +38,16 @@ public class MemeListItemData implements Identifiable, Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(id);
 		dest.writeParcelable(thumb, PARCELABLE_WRITE_RETURN_VALUE);
-		dest.writeSerializable(memeType);
+		dest.writeSerializable(memeBackground);
 	}
 	
 	private static MemeListItemData createFromParcel(final Parcel src) {
-		final MemeListItemData mlid = new MemeListItemData();
-		mlid.id = src.readInt();
-		mlid.thumb = src.readParcelable(Bitmap.class.getClassLoader());
-		mlid.memeType = (ShallowMemeType) src.readSerializable();
+		final MemeListItemData memeListItemData = new MemeListItemData();
+		memeListItemData.id = src.readInt();
+		memeListItemData.thumb = src.readParcelable(Bitmap.class.getClassLoader());
+		memeListItemData.memeBackground = (MemeBackground) src.readSerializable();
 		
-		return mlid;
+		return memeListItemData;
 	}
 	
 	public static final Parcelable.Creator<MemeListItemData> CREATOR =
@@ -79,12 +76,12 @@ public class MemeListItemData implements Identifiable, Parcelable {
 		return thumb;
 	}
 
-	public ShallowMemeType getMemeType() {
-		return memeType;
+	public MemeBackground getMemeType() {
+		return memeBackground;
 	}
 
-	public void setMemeType(ShallowMemeType memeType) {
-		this.memeType = memeType;
+	public void setMemeType(MemeBackground memeType) {
+		this.memeBackground = memeType;
 	}
 
 	public boolean isFavorite() {

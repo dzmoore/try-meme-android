@@ -12,13 +12,17 @@ import android.graphics.Bitmap;
 
 public interface IMemeServerClient {
 
-	Bitmap getBackground(int typeId);
+	Bitmap getBackground(String path);
 
 	long storeMeme(Meme meme);
 
-	List<MemeBackground> getPopularTypes();
+	List<MemeBackground> getPopularMemeBackgrounds();
 
 	int storeNewUser(MemeUser shallowUser);
+
+	List<MemeBackground> getAllMemeBackgrounds();
+
+	List<Meme> getSampleMemes(long memeId);
 
 
 }

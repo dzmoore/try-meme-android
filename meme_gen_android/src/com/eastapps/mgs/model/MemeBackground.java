@@ -1,9 +1,13 @@
 package com.eastapps.mgs.model;
 
+import java.io.Serializable;
 
-public class MemeBackground {
 
-    private Boolean active;
+public class MemeBackground implements Serializable {
+
+	private static final long serialVersionUID = 6617358846863686747L;
+
+	private Boolean active;
 
     private String filePath;
 

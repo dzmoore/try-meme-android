@@ -48,12 +48,12 @@
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
     
-    <bean class="java.lang.String" id="dbUrl">
+<!--     <bean class="java.lang.String" id="dbUrl">
         <constructor-arg value="${DATABASE_URL}" />
     </bean>
     <bean class="java.lang.String" id="defaultDb">
         <constructor-arg value="#{dbUrl.split('.+@.+/')[1].split('\\?')[0]}" />
-    </bean>
+    </bean> -->
 <!--     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url"
