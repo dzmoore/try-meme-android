@@ -295,7 +295,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 				
 				final Intent intent = new Intent(ViewMemeTypeListActivity.this, CreateMemeActivity.class);
 				
-				intent.putExtra(Constants.KEY_MEME_TYPE, item.getMemeType());
+				intent.putExtra(Constants.KEY_MEME_BACKGROUND, item.getMemeType());
 				
 				startActivity(intent);
 			}

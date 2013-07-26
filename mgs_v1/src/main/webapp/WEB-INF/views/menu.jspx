@@ -35,5 +35,9 @@
             <menu:item id="i_crawlerbackground_new" messageCode="global_menu_new" url="/crawlerbackgrounds?form" z="2p8IGOWb4FR5URhRREDT3jpwyt8="/>
             <menu:item id="i_crawlerbackground_list" messageCode="global_menu_list" url="/crawlerbackgrounds?page=1&amp;size=${empty param.size ? 10 : param.size}" z="0S37NJ0lx2w8MArLb+UHc2Vdc4U="/>
         </menu:category>
+        <menu:category id="c_controller" z="nj8Dm3hojIyIEyPkwE1UMDIs+K8=">
+            <menu:item id="i_controller__memebackgroundpopularitiesindex_id" messageCode="global_generic" url="/memebackgroundpopularities/index" z="nqaRWDj2jB6PokMBsR2w97INVG8="/>
+            <menu:item id="i_controller__memeuserfavoritesindex_id" messageCode="global_generic" url="/memeuserfavorites/index" z="cGx9rjc01NgCgnrvEqHFMn5hN6Y="/>
+        </menu:category>
     </menu:menu>
 </div>

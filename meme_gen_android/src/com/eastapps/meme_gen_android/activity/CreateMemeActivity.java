@@ -20,7 +20,6 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,9 +42,8 @@ import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.util.Conca;
 
 public class CreateMemeActivity extends FragmentActivity {
@@ -92,7 +90,7 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
 		
-		final ShallowMemeType type = (ShallowMemeType) getIntent().getSerializableExtra(Constants.KEY_MEME_TYPE);
+		final MemeBackground memeBg = (MemeBackground) getIntent().getSerializableExtra(Constants.KEY_MEME_BACKGROUND);
 		
 		loadBundle(savedInstanceState);
 		
@@ -105,7 +103,7 @@ public class CreateMemeActivity extends FragmentActivity {
 			TaskRunner.runAsync(new Runnable() {
 				@Override
 				public void run() {
-					memeViewData = memeService.createMemeViewData(type.getTypeId());
+					memeViewData = memeService.createMemeViewData(memeBg);
 					
 					setMemeViewData(memeViewData);
 				}

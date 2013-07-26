@@ -2,6 +2,8 @@ package com.eastapps.meme_gen_android.service.impl;
 
 import java.util.List;
 
+import android.content.Context;
+
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.service.IMemeService;
@@ -16,6 +18,8 @@ public class MemeServiceV2 implements IMemeService {
 	
 	private static final Object instLock = new Object();
 	private static MemeServiceV2 instance;
+
+	public static Context context;
 	
 	public static MemeServiceV2 getInstance() {
 		synchronized (instLock) {
@@ -82,7 +86,7 @@ public class MemeServiceV2 implements IMemeService {
 	}
 
 	@Override
-	public List<ShallowMemeType> getAllMemeTypes() {
+	public List<ShallowMemeType> getAllMemeBackgrounds() {
 		// TODO Auto-generated method stub
 		return null;
 	}

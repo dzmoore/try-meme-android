@@ -9,14 +9,15 @@ import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
 
 public interface IMemeService {
 //	public ShallowMeme getMeme(final int id);
 	
-	MemeViewData createMemeViewData(int typeId);
+	MemeViewData createMemeViewData(final MemeBackground memeBackground);
 
-	List<ShallowMeme> getSampleMemes(int typeId);
+	List<Meme> getSampleMemes(final long memeBackgroundId);
 
 	List<MemeListItemData> getAllMemeTypesListData();
 
@@ -31,7 +32,8 @@ public interface IMemeService {
 
 	boolean removeFavType(int userId, int typeId);
 
-	List<ShallowMemeType> getAllMemeTypes();
+	List<MemeBackground> getAllMemeBackgrounds();
+	MemeBackground getMemeBackground(final long id);
 
 	ShallowMemeType getType(int typeId);
 

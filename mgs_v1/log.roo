@@ -113,3 +113,25 @@ field reference --type ~.model.MemeBackground --fieldName memeBackground
 field reference --type ~.model.MemeText --fieldName topText
 field reference --type ~.model.MemeText --fieldName bottomText
 field reference --type ~.model.MemeUser --fieldName createdByUser
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-07-26 09:46:34
+hint
+entity jpa --class ~.model.MemeBackgroundPopularity 
+entity jpa --class ~.model.LvPopularityType
+hint
+help
+field string --fieldName popularityTypeName
+focus --class ~.model.MemeBackgroundPopularity
+field reference --fieldName memeBackgroundPopularityType --type ~.model.LvPopularityType
+field number --fieldName memeBackgroundPopularityValue --type java.lang.Long
+web mvc controller --class ~.model.MemeBackgroundPopularity --preferredMapping /memebackgroundpopularities 
+help web mvc controller
+entity jpa --class ~.model.LvPopularityType --testAutomatically 
+field string --fieldName popularityTypeName
+entity jpa --class ~.model.MemeBackgroundPopularity --testAutomatically 
+field reference --fieldName lvPopularityType --type ~.model.LvPopularityType
+field number --type java.lang.Long --fieldName memeBackgroundPopularityValue
+web mvc controller --class ~.web.MemeBackgroundPopularityController --preferredMapping /memebackgroundpopularities 
+entity jpa --class ~.model.MemeUserFavorite --testAutomatically --serializable 
+field reference --fieldName memeUser --type ~.model.MemeUser
+field reference --fieldName memeBackground --type ~.model.MemeBackground
+web mvc controller --class ~.web.MemeUserFavoriteController --preferredMapping /memeuserfavorites

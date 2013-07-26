@@ -135,7 +135,7 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 				
 				final Intent intent = new Intent(MemeTypeSearchResultsActivity.this, CreateMemeActivity.class);
 				
-				intent.putExtra(Constants.KEY_MEME_TYPE, item.getMemeType());
+				intent.putExtra(Constants.KEY_MEME_BACKGROUND, item.getMemeType());
 				
 				startActivity(intent);
 			}

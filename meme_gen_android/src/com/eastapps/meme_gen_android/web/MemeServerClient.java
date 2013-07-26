@@ -318,7 +318,7 @@ public class MemeServerClient implements IMemeServerClient {
 	}
 
 //	"/meme_type_data/popular/json")
-	public List<ShallowMemeType> getPopularTypes() {
+	public List<ShallowMemeType> getPopularMemeBackgrounds() {
 		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
 		String result = Constants.EMPTY;
 		

@@ -13,7 +13,7 @@
     <string name="edit_top_text_string">Top Text</string>
     <string name="edit_bottom_text_string">Bottom Text</string>
     <string name="title_activity_view_meme">ViewMeme</string>
-    <string name="webServiceResource">/beermap2/android</string>
+<!--     <string name="webServiceResource">/beermap2/android</string> -->
 
     <item name="sslPort" format="integer" type="integer">8443</item>
     <item name="nonSslPort" format="integer" type="integer">8080</item>
@@ -22,13 +22,15 @@
     <string name="nonSslHttp">http://</string>
 <!--     <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string> -->
     <string name="webServiceAddress">http://dylan-mint:8080/meme_gen_server</string> 
-    <string name="webServiceMemeSuffix">memes</string>
-    <string name="webServiceBackgroundSuffix">memebackgrounds</string>
-    <string name="webServiceBackgroundBytesSuffix">background_bytes</string>
-    <string name="webServiceJsonSuffix">json</string>
+<!--     <string name="webServiceMemeSuffix">memes</string>
+    <string name="webServiceBackgroundSuffix">memebackgrounds</string>-->
+    <string name="webServiceBackgroundBytes">background_bytes</string>
+    <string name="backgroundFileAddress">https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs</string>
+    <!--  <string name="webServiceJsonSuffix">json</string>
     <string name="webServiceStoreMemePrefix">store_meme</string>
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
-    <string name="webServiceMemeType">meme_type_data</string>
+    <string name="webServiceMemeType">meme_type_data</string> -->
+    <string name="webServiceMemesCreateJson">memes/create/json</string>
 
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>
