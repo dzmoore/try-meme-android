@@ -37,7 +37,7 @@ public class MemeBackground implements Serializable {
         return this.description;
     }
 
-	public void setDescription(String description) {
+	public void setDescription(String description) { 
         this.description = description;
     }
 

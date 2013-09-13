@@ -50,7 +50,9 @@ public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter {
 		}
 		
 		for (final int index : indexesToUpdate) {
-			frags.set(index, new MemeViewFragment(memes.get(index)));
+			final MemeViewFragment mvf = new MemeViewFragment();
+			mvf.setMeme(memes.get(index));
+			frags.set(index, mvf);
 		}
 	}
 	
@@ -84,7 +86,9 @@ public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter {
 //			}
 //		}
 		
-		return new MemeViewFragment(memes.get(position));
+		final MemeViewFragment mvf = new MemeViewFragment();
+		mvf.setMeme(memes.get(position));
+		return mvf;
 	}
 	
 	@Override

@@ -26,6 +26,7 @@ import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.mgs.model.MemeBackground;
 
 public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	private List<MemeListItemData> items;
@@ -76,12 +77,12 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
-				final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(true);
+				final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(true);
 
-				for (final ShallowMemeType eaFavType : favTypes) {
+				for (final MemeBackground eaFavType : favTypes) {
 					for (final MemeListItemData eaListItem : items) {
 						
-						if (eaFavType.getTypeId() == eaListItem.getMemeType().getTypeId()) {
+						if (eaFavType.getId() == eaListItem.getMemeBackground().getId()) {
 							eaListItem.setFavorite(true);
 							break;
 						}
@@ -135,7 +136,7 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 				
 				final Intent intent = new Intent(MemeTypeSearchResultsActivity.this, CreateMemeActivity.class);
 				
-				intent.putExtra(Constants.KEY_MEME_BACKGROUND, item.getMemeType());
+				intent.putExtra(Constants.KEY_MEME_BACKGROUND, item.getMemeBackground());
 				
 				startActivity(intent);
 			}

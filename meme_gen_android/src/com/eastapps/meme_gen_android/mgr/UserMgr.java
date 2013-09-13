@@ -6,11 +6,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.service.IMemeService;
-import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeServiceV2;
 import com.eastapps.meme_gen_android.util.Constants;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
 
 public class UserMgr {
@@ -19,7 +17,7 @@ public class UserMgr {
 	private static UserMgr instance;
 
 	private MemeUser user;
-	private List<ShallowMemeType> favTypes;
+	private List<MemeBackground> favTypes;
 	
 
 	private UserMgr(final Context context) {
@@ -50,13 +48,15 @@ public class UserMgr {
 		
 		// set the username and install key to the 
 		// new install key from the server
-		final ShallowUser newUser = new ShallowUser();
+		final MemeUser newUser = new MemeUser();
 		newUser.setUsername(installKey);
-		newUser.setInstallKey(installKey);
+		
+		// TODO: install key
+//		newUser.setInstallKey(installKey);
 		
 		// store the new user and check whether the 
 		// store was successful
-		final int newUserId = getMemeService().storeNewUser(newUser);
+		final long newUserId = getMemeService().storeNewUser(newUser);
 		if (newUserId > 0) {
 			// store successful;
 			// set the user id and set the
@@ -69,7 +69,7 @@ public class UserMgr {
 		}
 	}
 	
-	public static synchronized List<ShallowMemeType> getFavMemeTypes(final boolean refresh) {
+	public static synchronized List<MemeBackground> getFavMemeTypes(final boolean refresh) {
 		final UserMgr inst = getInstance();
 		
 		if (refresh) {
@@ -79,7 +79,7 @@ public class UserMgr {
 		if (inst.favTypes == null) {
 			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
 			if (cacheMgrInst.containsKey(Constants.KEY_FAV_TYPES)) {
-				inst.favTypes = (List<ShallowMemeType>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
+				inst.favTypes = (List<MemeBackground>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
 				
 			} else {
 				inst.favTypes = inst.getMemeService().getFavMemeTypesForUser(getUser().getId());

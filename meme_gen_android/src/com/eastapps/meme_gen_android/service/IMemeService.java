@@ -13,29 +13,19 @@ import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
 
 public interface IMemeService {
-//	public ShallowMeme getMeme(final int id);
-	
 	MemeViewData createMemeViewData(final MemeBackground memeBackground);
 
 	List<Meme> getSampleMemes(final long memeBackgroundId);
 
 	List<MemeListItemData> getAllMemeTypesListData();
 
-//	ShallowUser getUser(int userId);
-
 	String getNewInstallKey();
 
 
-	List<ShallowMemeType> getFavMemeTypesForUser(int userId);
-
-	boolean storeFavType(int userId, int typeId);
-
-	boolean removeFavType(int userId, int typeId);
+	List<MemeBackground> getFavMemeTypesForUser(long userId);
 
 	List<MemeBackground> getAllMemeBackgrounds();
 	MemeBackground getMemeBackground(final long id);
-
-	ShallowMemeType getType(int typeId);
 
 	List<MemeListItemData> getAllFavMemeTypesListData();
 
@@ -45,4 +35,8 @@ public interface IMemeService {
 	long storeMeme(Meme shallowMeme);
 
 	long storeNewUser(MemeUser shallowUser);
+
+	boolean storeFavType(long userId, long memeBackgroundId);
+
+	boolean removeFavType(long userId, long memeBackgroundId);
 }

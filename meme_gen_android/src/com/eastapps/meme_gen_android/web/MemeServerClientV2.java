@@ -130,4 +130,34 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		return null;
 	}
 
+	@Override
+	public List<MemeBackground> getFavMemeTypesForUser(long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getNewInstallKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean storeFavMeme(long userId, long memeBackgroundId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeFavMeme(long userId, long typeId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<MemeBackground> getMemeBackgroundsByName(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -137,7 +137,7 @@ public class MemeListAdapter extends ArrayAdapter<MemeListItemData> {
 		thumbImg.setImageBitmap(item.getThumb());
 		
 		final TextView descTxtView = (TextView) convertView.findViewById(R.id.list_item_text_view);
-		descTxtView.setText(item.getMemeType().getTypeDescr());
+		descTxtView.setText(item.getMemeBackground().getDescription());
 		
 		
 		return convertView;
