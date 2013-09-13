@@ -20,6 +20,9 @@ import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeUser;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,31 +44,31 @@ public class MemeServerClient implements IMemeServerClient {
 		super();
 
 		webSvcAddr = context.getString(R.string.webServiceAddress);
-		webSvcBgrndSuffix = context.getString(R.string.webServiceBackgroundSuffix);
-		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
-		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
-		webSvcSampleMemeDataPrefix = context.getString(R.string.webServiceSampleMemeDataPrefix);
-		webSvcMemeTypePrefix = context.getString(R.string.webServiceMemeType);
-		webSvcBgrndBytesSuffix = context.getString(R.string.webServiceBackgroundBytesSuffix);
+//		webSvcBgrndSuffix = context.getString(R.string.webServiceBackgroundSuffix);
+//		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
+//		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
+//		webSvcSampleMemeDataPrefix = context.getString(R.string.webServiceSampleMemeDataPrefix);
+//		webSvcMemeTypePrefix = context.getString(R.string.webServiceMemeType);
+//		webSvcBgrndBytesSuffix = context.getString(R.string.webServiceBackgroundBytesSuffix);
 
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
 		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));
 	}
 
-	@Override
-	public Bitmap getBackground(final int bgId) {
-		return
-			webClient.getBitmap(Conca.t(
-				webSvcAddr, 
-				Constants.URL_SEPARATOR, 
-				webSvcBgrndSuffix,
-				Constants.URL_SEPARATOR,
-				webSvcBgrndBytesSuffix,
-				Constants.URL_SEPARATOR,
-				bgId
-			));
-	}
+//	@Override
+//	public Bitmap getBackground(final int bgId) {
+//		return
+//			webClient.getBitmap(Conca.t(
+//				webSvcAddr, 
+//				Constants.URL_SEPARATOR, 
+//				webSvcBgrndSuffix,
+//				Constants.URL_SEPARATOR,
+//				webSvcBgrndBytesSuffix,
+//				Constants.URL_SEPARATOR,
+//				bgId
+//			));
+//	}
 
 	public int storeMeme(final ShallowMeme shallowMeme) {
 		int resultId = Constants.INVALID;
@@ -318,8 +321,8 @@ public class MemeServerClient implements IMemeServerClient {
 	}
 
 //	"/meme_type_data/popular/json")
-	public List<ShallowMemeType> getPopularMemeBackgrounds() {
-		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+	public List<MemeBackground> getPopularMemeBackgrounds() {
+		List<MemeBackground> types = new ArrayList<MemeBackground>(0);
 		String result = Constants.EMPTY;
 		
 		final String addr = concatForUrl(
@@ -332,7 +335,7 @@ public class MemeServerClient implements IMemeServerClient {
 		result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
 		
 		if (StringUtils.isNotBlank(result)) {
-			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
+			Type listType = new TypeToken<Collection<MemeBackground>>(){}.getType();
 			types = new Gson().fromJson(result, listType);
 		}
 		
@@ -366,6 +369,60 @@ public class MemeServerClient implements IMemeServerClient {
 		}
 		
 		return types;
+	}
+
+	@Override
+	public Bitmap getBackground(String path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long storeMeme(Meme meme) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int storeNewUser(MemeUser shallowUser) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<MemeBackground> getAllMemeBackgrounds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Meme> getSampleMemes(long memeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemeBackground> getFavMemeTypesForUser(long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean storeFavMeme(long userId, long memeBackgroundId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeFavMeme(long userId, long typeId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<MemeBackground> getMemeBackgroundsByName(String query) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

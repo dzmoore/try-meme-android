@@ -49,7 +49,7 @@ public class MemeTypeFavSaveRemoveHandler {
 					
 					final boolean success = MemeService.getInstance().removeFavType(
 						UserMgr.getUser().getId(),
-						item.getMemeType().getTypeId()
+						item.getMemeBackground().getId()
 					);
 					
 					item.setFavorite(false);
@@ -74,7 +74,7 @@ public class MemeTypeFavSaveRemoveHandler {
 					
 					final boolean success = MemeService.getInstance().storeFavType(
 						UserMgr.getUser().getId(),
-						item.getMemeType().getTypeId()
+						item.getMemeBackground().getId()
 					);
 					
 					item.setFavorite(true);

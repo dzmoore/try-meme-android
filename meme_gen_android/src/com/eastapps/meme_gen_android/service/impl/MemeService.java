@@ -19,11 +19,7 @@ import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.web.IMemeServerClient;
-import com.eastapps.meme_gen_android.web.MemeServerClient;
 import com.eastapps.meme_gen_android.web.MemeServerClientV2;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
@@ -34,7 +30,6 @@ public class MemeService implements IMemeService {
 	
 	private IMemeServerClient client;
 	private static Context context;
-//	private UserMgr userMgr;
 	
 	private MemeService() {
 		super();
@@ -56,12 +51,6 @@ public class MemeService implements IMemeService {
 		return client.storeMeme(shallowMeme);
 	}
 
-//	@Override
-//	public ShallowMeme getMeme(int id) {
-//		final ShallowMeme m = client.getMeme(id);
-//		return m;
-//	}
-	
 	@Override
 	public synchronized List<Meme> getSampleMemes(final long memeBackgroundId) {
 		final CacheMgr cacheMgr = CacheMgr.getInstance();
@@ -201,7 +190,7 @@ public class MemeService implements IMemeService {
 	
 	@Override
 	public List<MemeListItemData> getAllFavMemeTypesListData() {
-		final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(false);
+		final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(false);
 		
 		final List<MemeListItemData> listData = populateMemeListItemDataList(favTypes);
 		
@@ -219,7 +208,7 @@ public class MemeService implements IMemeService {
 	@Override
 	public List<MemeListItemData> getAllMemeTypesListData() {
 		
-		final List<ShallowMemeType> types = getAllMemeBackgrounds();
+		final List<MemeBackground> types = getAllMemeBackgrounds();
 		
 		final List<MemeListItemData> listData = populateMemeListItemDataList(types);
 		
@@ -228,7 +217,7 @@ public class MemeService implements IMemeService {
 	
 	@Override
 	public List<MemeListItemData> getAllTypesForSearch(final String query) {
-		final List<ShallowMemeType> results = getTypesForSearch(query);
+		final List<MemeBackground> results = findMemeBackgroundsByName(query);
 		
 		return populateMemeListItemDataList(results);
 	}
@@ -286,7 +275,7 @@ public class MemeService implements IMemeService {
 		final MemeListItemData memeListItemData = new MemeListItemData();
 		
 		listData.set(finalIndex, memeListItemData);
-		memeListItemData.setMemeType(eaMemeBackground);
+		memeListItemData.setMemeBackground(eaMemeBackground);
 		memeListItemData.setThumbBytes(getBackgroundBytes(eaMemeBackground.getFilePath()));
 		
 	}
@@ -298,37 +287,39 @@ public class MemeService implements IMemeService {
 
 	@Override
 	public String getNewInstallKey() {
-		return client.getNewInstallKey();
+		// TODO: impl install key
+//		return client.getNewInstallKey();
+		return "valid";
 	}
 
 	@Override
-	public int storeNewUser(final MemeUser shallowUser) {
+	public long storeNewUser(final MemeUser shallowUser) {
 		return client.storeNewUser(shallowUser);
 	}
 
 	@Override
-	public List<ShallowMemeType> getFavMemeTypesForUser(final int userId) {
+	public List<MemeBackground> getFavMemeTypesForUser(final long userId) {
 		return client.getFavMemeTypesForUser(userId);
 	}
 
 	@Override
-	public boolean storeFavType(int userId, int typeId) {
-		return client.storeFavMeme(userId, typeId);
+	public boolean storeFavType(final long userId, final long memeBackgroundId) {
+		return client.storeFavMeme(userId, memeBackgroundId);
 	}
 
 	@Override
-	public boolean removeFavType(int userId, int typeId) {
-		return client.removeFavMeme(userId, typeId);
+	public boolean removeFavType(final long userId, final long memeBackgroundId) {
+		return client.removeFavMeme(userId, memeBackgroundId);
 	}
 
 	public List<MemeBackground> getPopularTypes() {
 		return client.getPopularMemeBackgrounds();
 	}
 
-//	public List<ShallowMemeType> getTypesForSeach(String searchTerm) {
-//		return client.getTypesForSearch(searchTerm);
-//	}
-	
+	public List<MemeBackground> findMemeBackgroundsByName(final String query) {
+		return client.getMemeBackgroundsByName(query);
+	}
+
 
 }
 

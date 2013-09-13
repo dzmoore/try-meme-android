@@ -7,10 +7,8 @@ import android.content.Context;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.service.IMemeService;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
 
 public class MemeServiceV2 implements IMemeService {
@@ -38,18 +36,6 @@ public class MemeServiceV2 implements IMemeService {
 	}
 
 	@Override
-	public MemeViewData createMemeViewData(int typeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShallowMeme> getSampleMemes(int typeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<MemeListItemData> getAllMemeTypesListData() {
 		// TODO Auto-generated method stub
 		return null;
@@ -68,36 +54,6 @@ public class MemeServiceV2 implements IMemeService {
 	}
 
 	@Override
-	public List<ShallowMemeType> getFavMemeTypesForUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean storeFavType(int userId, int typeId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeFavType(int userId, int typeId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<ShallowMemeType> getAllMemeBackgrounds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ShallowMemeType getType(int typeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<MemeListItemData> getAllFavMemeTypesListData() {
 		// TODO Auto-generated method stub
 		return null;
@@ -111,6 +67,48 @@ public class MemeServiceV2 implements IMemeService {
 
 	@Override
 	public List<MemeListItemData> getAllTypesForSearch(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemeViewData createMemeViewData(MemeBackground memeBackground) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Meme> getSampleMemes(long memeBackgroundId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MemeBackground> getFavMemeTypesForUser(long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemeBackground getMemeBackground(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean storeFavType(long userId, long memeBackgroundId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeFavType(long userId, long memeBackgroundId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<MemeBackground> getAllMemeBackgrounds() {
 		// TODO Auto-generated method stub
 		return null;
 	}

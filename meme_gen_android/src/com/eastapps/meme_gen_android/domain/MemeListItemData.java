@@ -76,11 +76,11 @@ public class MemeListItemData implements Identifiable, Parcelable {
 		return thumb;
 	}
 
-	public MemeBackground getMemeType() {
+	public MemeBackground getMemeBackground() {
 		return memeBackground;
 	}
 
-	public void setMemeType(MemeBackground memeType) {
+	public void setMemeBackground(MemeBackground memeType) {
 		this.memeBackground = memeType;
 	}
 
