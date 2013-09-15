@@ -1,6 +1,7 @@
 package com.eastapps.mgs.model;
 
 import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Configurable
 @RooIntegrationTest(entity = MemeUserFavorite.class)
-public class MemeUserFavoriteIntegrationTest {
+public class MemeUserFavoriteIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testMarkerMethod() {

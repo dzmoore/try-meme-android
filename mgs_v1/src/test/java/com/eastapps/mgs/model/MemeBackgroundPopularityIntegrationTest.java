@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
 @Transactional
 @RooIntegrationTest(entity = MemeBackgroundPopularity.class)
-public class MemeBackgroundPopularityIntegrationTest {
+public class MemeBackgroundPopularityIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testMarkerMethod() {

@@ -52,15 +52,16 @@
         <constructor-arg value="${DATABASE_URL}" />
     </bean>
     <bean class="java.lang.String" id="defaultDb">
-        <constructor-arg value="#{dbUrl.split('.+@.+/')[1].split('\\?')[0]}" />
-    </bean> -->
-<!--     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <constructor-arg value="#{@dbUrl.split('.+@.+/')[1].split('\\?')[0]}" />
+    </bean> 
+     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url"
-            value="#{'jdbc:mysql://' + dbUrl.split('.+@')[1].split('[:,/].+')[0] + '/' + defaultDb + '?reconnect=true' }" />
+            value="#{'jdbc:mysql://' + @dbUrl.split('.+@')[1].split('[:,/].+')[0] + '/' + @defaultDb + '?reconnect=true' }" />
         <property name="username" value="#{ @dbUrl.split('.+//')[1].split('[:,/].+')[0] }" />
         <property name="password" value="#{ @dbUrl.split('@.+')[0].split('.+//.+?:')[1] }" />
-    </bean> -->
+        <property name="defaultCatalog" ref="defaultDb"/>
+    </bean>  -->
     
 <!--  	<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
         <property name="driverClassName" value="${db.driverClassName}"/>

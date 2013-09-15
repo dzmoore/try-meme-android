@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Configurable
 @RooIntegrationTest(entity = LvPopularityType.class)
-public class LvPopularityTypeIntegrationTest {
+public class LvPopularityTypeIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testMarkerMethod() {
