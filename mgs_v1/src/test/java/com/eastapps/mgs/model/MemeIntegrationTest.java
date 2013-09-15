@@ -1,7 +1,6 @@
 package com.eastapps.mgs.model;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -31,7 +30,7 @@ import com.google.gson.Gson;
 @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml")
 @Transactional
 @RooIntegrationTest(entity = Meme.class)
-public class MemeIntegrationTest {
+public class MemeIntegrationTest extends AbstractIntegrationTest {
 	private static final Logger logger = Logger.getLogger(MemeIntegrationTest.class);
 
     @Test
