@@ -7,6 +7,7 @@ import com.eastapps.meme_gen_android.json.JSONObject;
 
 public interface IWebClient {
 	public String getJSONObject(final String addr);
+	public <T> T sendRequestAsJson(final String addr, final Object requestObj, final Class<T> returnType);
 	public Bitmap getBitmap(final String addr);
 	public String getJSONObject(String addr, String jsonRequest);
 	void setConnectionTimeoutMs(int connectTimeoutMs);

@@ -25,6 +25,7 @@ import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.util.Conca;
+import com.google.gson.Gson;
 
 public class WebClient implements IWebClient {
 	private static final String TAG = WebClient.class.getSimpleName();
@@ -172,6 +173,22 @@ public class WebClient implements IWebClient {
 	@Override
 	public void setConnectionUseCaches(final boolean useCaches) {
 		this.connectionUseCaches = useCaches;
+	}
+
+	@Override
+	public <T> T sendRequestAsJson(final String addr, final Object requestObj, final Class<T> returnType) {
+		if (StringUtils.isBlank(addr) || requestObj == null || returnType == null) {
+			Log.e(TAG, "problem sending request");
+			return null;
+		}
+		
+		final String requestObjJson = new Gson().toJson(requestObj);
+		
+		final String jsonResponse = getJSONObject(addr, requestObjJson);
+		
+		final T responseObj = new Gson().fromJson(jsonResponse, returnType);
+		
+		return responseObj;
 	}
 
 }
