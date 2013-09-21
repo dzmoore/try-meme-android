@@ -1,11 +1,11 @@
 package com.eastapps.mgs.web;
 
+import com.eastapps.meme_gen_server.service.MemeService;
+import com.eastapps.mgs.model.MemeBackground;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,18 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
-import com.eastapps.meme_gen_server.service.MemeService;
-import com.eastapps.mgs.model.MemeBackground;
-
 @RequestMapping("/memebackgrounds")
 @Controller
 @RooWebScaffold(path = "memebackgrounds", formBackingObject = MemeBackground.class)
 public class MemeBackgroundController {
 
-	private MemeService memeService;
+    private MemeService memeService;
 
-
-	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
+    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid MemeBackground memeBackground, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, memeBackground);
@@ -109,11 +105,4 @@ public class MemeBackgroundController {
         }
         return pathSegment;
     }
-    
-    
-	@RequestMapping(value = "/background_bytes/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public byte[] getMemeBackground(@PathVariable("id") final int id) throws IOException {
-		return memeService.getMemeBackgroundBytes(id);
-	}
 }

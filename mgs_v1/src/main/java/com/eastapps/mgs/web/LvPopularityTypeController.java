@@ -1,8 +1,6 @@
 package com.eastapps.mgs.web;
 
-import com.eastapps.mgs.model.MemeBackground;
-import com.eastapps.mgs.model.MemeUser;
-import com.eastapps.mgs.model.MemeUserFavorite;
+import com.eastapps.mgs.model.LvPopularityType;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -17,33 +15,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
-@RequestMapping("/memeuserfavorites")
+@RequestMapping("/lvpopularitytypes")
 @Controller
-@RooWebScaffold(path = "memeuserfavorites", formBackingObject = MemeUserFavorite.class)
-public class MemeUserFavoriteController {
+@RooWebScaffold(path = "lvpopularitytypes", formBackingObject = LvPopularityType.class)
+public class LvPopularityTypeController {
 
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String create(@Valid MemeUserFavorite memeUserFavorite, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+    public String create(@Valid LvPopularityType lvPopularityType, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, memeUserFavorite);
-            return "memeuserfavorites/create";
+            populateEditForm(uiModel, lvPopularityType);
+            return "lvpopularitytypes/create";
         }
         uiModel.asMap().clear();
-        memeUserFavorite.persist();
-        return "redirect:/memeuserfavorites/" + encodeUrlPathSegment(memeUserFavorite.getId().toString(), httpServletRequest);
+        lvPopularityType.persist();
+        return "redirect:/lvpopularitytypes/" + encodeUrlPathSegment(lvPopularityType.getId().toString(), httpServletRequest);
     }
 
 	@RequestMapping(params = "form", produces = "text/html")
     public String createForm(Model uiModel) {
-        populateEditForm(uiModel, new MemeUserFavorite());
-        return "memeuserfavorites/create";
+        populateEditForm(uiModel, new LvPopularityType());
+        return "lvpopularitytypes/create";
     }
 
 	@RequestMapping(value = "/{id}", produces = "text/html")
     public String show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("memeuserfavorite", MemeUserFavorite.findMemeUserFavorite(id));
+        uiModel.addAttribute("lvpopularitytype", LvPopularityType.findLvPopularityType(id));
         uiModel.addAttribute("itemId", id);
-        return "memeuserfavorites/show";
+        return "lvpopularitytypes/show";
     }
 
 	@RequestMapping(produces = "text/html")
@@ -51,46 +49,44 @@ public class MemeUserFavoriteController {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("memeuserfavorites", MemeUserFavorite.findMemeUserFavoriteEntries(firstResult, sizeNo));
-            float nrOfPages = (float) MemeUserFavorite.countMemeUserFavorites() / sizeNo;
+            uiModel.addAttribute("lvpopularitytypes", LvPopularityType.findLvPopularityTypeEntries(firstResult, sizeNo));
+            float nrOfPages = (float) LvPopularityType.countLvPopularityTypes() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("memeuserfavorites", MemeUserFavorite.findAllMemeUserFavorites());
+            uiModel.addAttribute("lvpopularitytypes", LvPopularityType.findAllLvPopularityTypes());
         }
-        return "memeuserfavorites/list";
+        return "lvpopularitytypes/list";
     }
 
 	@RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-    public String update(@Valid MemeUserFavorite memeUserFavorite, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+    public String update(@Valid LvPopularityType lvPopularityType, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, memeUserFavorite);
-            return "memeuserfavorites/update";
+            populateEditForm(uiModel, lvPopularityType);
+            return "lvpopularitytypes/update";
         }
         uiModel.asMap().clear();
-        memeUserFavorite.merge();
-        return "redirect:/memeuserfavorites/" + encodeUrlPathSegment(memeUserFavorite.getId().toString(), httpServletRequest);
+        lvPopularityType.merge();
+        return "redirect:/lvpopularitytypes/" + encodeUrlPathSegment(lvPopularityType.getId().toString(), httpServletRequest);
     }
 
 	@RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, MemeUserFavorite.findMemeUserFavorite(id));
-        return "memeuserfavorites/update";
+        populateEditForm(uiModel, LvPopularityType.findLvPopularityType(id));
+        return "lvpopularitytypes/update";
     }
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        MemeUserFavorite memeUserFavorite = MemeUserFavorite.findMemeUserFavorite(id);
-        memeUserFavorite.remove();
+        LvPopularityType lvPopularityType = LvPopularityType.findLvPopularityType(id);
+        lvPopularityType.remove();
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/memeuserfavorites";
+        return "redirect:/lvpopularitytypes";
     }
 
-	void populateEditForm(Model uiModel, MemeUserFavorite memeUserFavorite) {
-        uiModel.addAttribute("memeUserFavorite", memeUserFavorite);
-        uiModel.addAttribute("memebackgrounds", MemeBackground.findAllMemeBackgrounds());
-        uiModel.addAttribute("memeusers", MemeUser.findAllMemeUsers());
+	void populateEditForm(Model uiModel, LvPopularityType lvPopularityType) {
+        uiModel.addAttribute("lvPopularityType", lvPopularityType);
     }
 
 	String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

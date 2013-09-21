@@ -138,3 +138,9 @@ web mvc controller --class ~.web.MemeUserFavoriteController --preferredMapping /
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-09-14 16:31:54
 exit
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-09-14 16:32:28
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-09-21 09:16:28
+// [failed] web mvc all --package com.eastapps.mgs.web
+// [failed] web mvc all --package com.eastapps.mgs.web
+web mvc all --package com.eastapps.mgs.web
+exit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-09-21 09:28:05
