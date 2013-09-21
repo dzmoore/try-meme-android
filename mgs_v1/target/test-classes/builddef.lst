@@ -18,5 +18,6 @@ UTF-8
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/MemeUserFavoriteIntegrationTest.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/MemeBackgroundPopularityDataOnDemand.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/MemeIntegrationTest.java
+/media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/util/TestUtils.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/LvPopularityTypeIntegrationTest.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/MemeUserFavoriteDataOnDemand.java

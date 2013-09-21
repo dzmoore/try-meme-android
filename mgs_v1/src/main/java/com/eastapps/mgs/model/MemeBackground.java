@@ -1,6 +1,8 @@
 package com.eastapps.mgs.model;
 
 import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -26,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemeBackground {
 
     @NotNull
+	@Basic
+	@Column(name = "active", columnDefinition = "BIT", length = 1)
     private Boolean active;
 
     private String filePath;
@@ -35,6 +39,7 @@ public class MemeBackground {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 
 	public Boolean getActive() {
         return this.active;

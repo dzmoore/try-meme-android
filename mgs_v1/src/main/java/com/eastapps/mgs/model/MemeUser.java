@@ -3,6 +3,8 @@ package com.eastapps.mgs.model;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RooToString
 @RooJpaActiveRecord
 public class MemeUser {
-
+	@Basic
+	@Column(name = "active", columnDefinition = "BIT", length = 1)
     private Boolean active;
 
     private String username;

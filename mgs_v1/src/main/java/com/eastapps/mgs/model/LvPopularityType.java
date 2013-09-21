@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -84,6 +85,22 @@ public class LvPopularityType {
         if (id == null) return null;
         return entityManager().find(LvPopularityType.class, id);
     }
+	
+	public static LvPopularityType findLvPopularityTypeByName(final String name) {
+		if (name == null) return null;
+		LvPopularityType singleResult = null;
+		
+		try {
+    		singleResult = (LvPopularityType) entityManager()
+    			.createQuery("SELECT o from LvPopularityType o where o.popularityTypeName = ?")
+    			.setParameter(1, name).getSingleResult();
+    		
+		} catch (Exception e) {
+			Logger.getLogger(LvPopularityType.class).error("error occurred while attempting to retrieve lv popularity type", e);
+		}
+		
+		return singleResult;
+	}
 
 	public static List<LvPopularityType> findLvPopularityTypeEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM LvPopularityType o", LvPopularityType.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();

@@ -1,5 +1,6 @@
 package com.eastapps.mgs.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -45,6 +47,28 @@ public class MemeBackgroundPopularity {
 	public static long countMemeBackgroundPopularitys() {
         return entityManager().createQuery("SELECT COUNT(o) FROM MemeBackgroundPopularity o", Long.class).getSingleResult();
     }
+	
+	@SuppressWarnings("unchecked")
+	public static List<MemeBackgroundPopularity> findAllMemeBackgroundPopularitiesByPopularityTypeName(
+		final String popularityTypeName, 
+		final int firstResult, 
+		final int maxResults) 
+	{
+		List<MemeBackgroundPopularity> memeBackgroundPopularities = new ArrayList<MemeBackgroundPopularity>(0);
+		try {
+    		memeBackgroundPopularities = (List<MemeBackgroundPopularity>)entityManager()
+        		.createQuery("SELECT o FROM MemeBackgroundPopularity o where o.lvPopularityType.popularityTypeName = ?")
+        		.setParameter(1, popularityTypeName)
+        		.setFirstResult(firstResult)
+        		.setMaxResults(maxResults)
+        		.getResultList();
+    		
+		} catch (Exception e) {
+			Logger.getLogger(MemeBackgroundPopularity.class).error("error occurred while attempting to find meme background popularity for lv popularity type name", e);
+		}
+		
+		return memeBackgroundPopularities;
+	}
 
 	public static List<MemeBackgroundPopularity> findAllMemeBackgroundPopularitys() {
         return entityManager().createQuery("SELECT o FROM MemeBackgroundPopularity o", MemeBackgroundPopularity.class).getResultList();
@@ -58,7 +82,7 @@ public class MemeBackgroundPopularity {
 	public static List<MemeBackgroundPopularity> findMemeBackgroundPopularityEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM MemeBackgroundPopularity o", MemeBackgroundPopularity.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
-
+	
 	@Transactional
     public void persist() {
         if (this.entityManager == null) this.entityManager = entityManager();

@@ -97,18 +97,21 @@ public class MemeServerClientV2 implements IMemeServerClient {
 				path
 			));
 	}
-	
-
-
-
-
-
 
 	@Override
 	public List<MemeBackground> getPopularMemeBackgrounds(final String popularityTypeName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public int storeNewUser(MemeUser shallowUser) {

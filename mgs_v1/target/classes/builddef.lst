@@ -14,8 +14,6 @@ UTF-8
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/meme_gen_server/service/UrlFileReader.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/MemeBackgroundController.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/MemeBackgroundPopularityController.java
-/media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/LvPopularityTypeController_Roo_Controller.aj
-/media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/MemeUserFavoriteController_Roo_Controller.aj
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/model/Meme.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/model/SampleMeme.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/model/MemeUserFavorite.java
@@ -26,10 +24,9 @@ UTF-8
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/model/DeviceInfo.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/model/CrawlerBackground.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/MemeTextController.java
-/media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/DeviceInfoController.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/ApplicationConversionServiceFactoryBean.java
+/media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/DeviceInfoController.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/meme_gen_server/service/LocalFileReader.java
-/media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/MemeBackgroundPopularityController_Roo_Controller.aj
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/LvPopularityTypeController.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/model/MemeBackground.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/main/java/com/eastapps/mgs/web/MemeUserController.java
