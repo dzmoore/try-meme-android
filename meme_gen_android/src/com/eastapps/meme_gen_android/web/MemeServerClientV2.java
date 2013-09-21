@@ -30,14 +30,27 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String webServiceMemesCreateJson;
 	private String webServiceBackgroundBytes;
 	private String backgroundFileAddress;
+	private String createMemeUrl;
 
 	public MemeServerClientV2(Context context) {
 		super();
 
-		webServiceAddress = context.getString(R.string.webServiceAddress);
+		final String environment = context.getString(R.string.environment);
+		if (StringUtils.equals("dev", environment)) {
+			webServiceAddress = context.getString(R.string.devWebServiceAddress);
+			backgroundFileAddress = context.getString(R.string.prodBackgroundFileAddress);
+			
+		} else {
+			webServiceAddress = context.getString(R.string.prodWebServiceAddress);
+			backgroundFileAddress = context.getString(R.string.prodBackgroundFileAddress);
+			
+		}
+		
 		webServiceMemesCreateJson = context.getString(R.string.webServiceMemesCreateJson);
 		webServiceBackgroundBytes = context.getString(R.string.webServiceBackgroundBytes);
-		backgroundFileAddress = context.getString(R.string.backgroundFileAddress);
+		
+		createMemeUrl = Conca.t(webServiceAddress, webServiceMemesCreateJson);
+		
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -50,7 +63,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		instance = new MemeServerClientV2(context);
 	}
 	
-	private static synchronized IMemeServerClient getInstance() {
+	public static synchronized IMemeServerClient getInstance() {
 		return instance;
 	}
 	
@@ -70,7 +83,12 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		
 		return sb.toString();
 	}
-
+	
+	@Override
+	public long storeMeme(Meme meme) {
+		return webClient.sendRequestAsJson(createMemeUrl, meme, Long.class);
+	}
+	
 	@Override
 	public Bitmap getBackground(final String path) {
 		return
@@ -79,35 +97,15 @@ public class MemeServerClientV2 implements IMemeServerClient {
 				path
 			));
 	}
+	
+
+
+
+
+
 
 	@Override
-	public long storeMeme(Meme meme) {
-		int resultId = Constants.INVALID;
-
-		final String respStr = Utils.noValue(webClient.getJSONObject(
-			concatUrlPieces(
-				webServiceAddress,
-				webServiceMemesCreateJson
-			),
-			new Gson().toJson(meme)
-		), Constants.EMPTY);
-
-		if (StringUtils.isNotBlank(respStr)) {
-			
-			try {
-				resultId = new Gson().fromJson(respStr, Integer.class);
-
-			} catch (Exception e) {
-				Log.e(TAG, "err", e);
-			}
-		}
-
-
-		return resultId;
-	}
-
-	@Override
-	public List<MemeBackground> getPopularMemeBackgrounds() {
+	public List<MemeBackground> getPopularMemeBackgrounds(final String popularityTypeName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

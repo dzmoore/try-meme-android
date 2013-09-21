@@ -1,0 +1,111 @@
+package com.eastapps.meme_gen_android.test;
+
+import junit.framework.TestCase;
+import android.graphics.Bitmap;
+import android.test.AndroidTestCase;
+
+import com.eastapps.meme_gen_android.mgr.CacheMgr;
+import com.eastapps.meme_gen_android.web.IMemeServerClient;
+import com.eastapps.meme_gen_android.web.MemeServerClientV2;
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeText;
+import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.util.Conca;
+
+public class MemeServerClientTest extends AndroidTestCase  {
+	private static final String ADDR = "http://dylan-mint:8080/";
+
+	private IMemeServerClient memeServerClient;
+	
+	@Override
+	public void setUp() {
+		MemeServerClientV2.initialize(getContext());
+		memeServerClient = MemeServerClientV2.getInstance();
+		
+		CacheMgr.initialize(getContext());
+	}
+	
+	@Override
+	public void tearDown() {
+	}
+	
+	public void testStoreMeme() {
+		final Meme meme = new Meme();
+		final MemeBackground memeBackground = new MemeBackground();
+		memeBackground.setActive(true);
+		memeBackground.setDescription("test background");
+		memeBackground.setFilePath("test.path");
+		meme.setMemeBackground(memeBackground);
+		
+		final MemeText topText = new MemeText();
+		topText.setFontSize(26.0);
+		topText.setText("top text");
+		
+		meme.setTopText(topText);
+		
+		final MemeText bottomText = new MemeText();
+		bottomText.setFontSize(26.0);
+		bottomText.setText("bottom text");
+		meme.setBottomText(bottomText);
+		
+		final MemeUser user = new MemeUser();
+		user.setId(1L);
+		meme.setCreatedByUser(user);
+		
+		final Long id = memeServerClient.storeMeme(meme);
+		
+		TestCase.assertTrue(id > 0);
+	}
+	
+	public void testGetBackground() {
+		final Meme meme = new Meme();
+		final MemeBackground memeBackground = new MemeBackground();
+		memeBackground.setActive(true);
+		memeBackground.setDescription("test background");
+		memeBackground.setFilePath("College_Freshman.jpg");
+		meme.setMemeBackground(memeBackground);
+		
+		final MemeText topText = new MemeText();
+		topText.setFontSize(26.0);
+		topText.setText("top text");
+		
+		meme.setTopText(topText);
+		
+		final MemeText bottomText = new MemeText();
+		bottomText.setFontSize(26.0);
+		bottomText.setText("bottom text");
+		meme.setBottomText(bottomText);
+		
+		final MemeUser user = new MemeUser();
+		user.setId(1L);
+		meme.setCreatedByUser(user);
+		
+		final Long id = memeServerClient.storeMeme(meme);
+		
+		TestCase.assertTrue(id > 0);
+		
+		final Bitmap bgBitmap = memeServerClient.getBackground(memeBackground.getFilePath());
+		TestCase.assertNotNull(bgBitmap);
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

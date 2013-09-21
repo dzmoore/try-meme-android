@@ -1,5 +1,5 @@
 <resources>
-
+    <item name="environment" type="string" format="string">dev</item> <!-- dev, prod -->
     <string name="app_name">meme_gen_android</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
@@ -20,17 +20,17 @@
 
     <string name="sslHttp">https://</string>
     <string name="nonSslHttp">http://</string>
-<!--     <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string> -->
-    <string name="webServiceAddress">http://dylan-mint:8080/meme_gen_server</string> 
+    <string name="prodWebServiceAddress">http://arcane-chamber-4976.herokuapp.com</string> 
+    <string name="devWebServiceAddress">http://dylan-mint:8080</string> 
 <!--     <string name="webServiceMemeSuffix">memes</string>
     <string name="webServiceBackgroundSuffix">memebackgrounds</string>-->
     <string name="webServiceBackgroundBytes">background_bytes</string>
-    <string name="backgroundFileAddress">https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs</string>
+    <string name="prodBackgroundFileAddress">https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs</string>
     <!--  <string name="webServiceJsonSuffix">json</string>
     <string name="webServiceStoreMemePrefix">store_meme</string>
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
     <string name="webServiceMemeType">meme_type_data</string> -->
-    <string name="webServiceMemesCreateJson">memes/create/json</string>
+    <string name="webServiceMemesCreateJson">/memes/create/json</string>
 
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>

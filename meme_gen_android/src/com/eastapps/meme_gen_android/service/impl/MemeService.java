@@ -313,7 +313,7 @@ public class MemeService implements IMemeService {
 	}
 
 	public List<MemeBackground> getPopularTypes() {
-		return client.getPopularMemeBackgrounds();
+		return client.getPopularMemeBackgrounds(Constants.POPULAR_TYPE_NAME);
 	}
 
 	public List<MemeBackground> findMemeBackgroundsByName(final String query) {

@@ -16,7 +16,7 @@ public interface IMemeServerClient {
 
 	long storeMeme(Meme meme);
 
-	List<MemeBackground> getPopularMemeBackgrounds();
+	List<MemeBackground> getPopularMemeBackgrounds(final String popularTypeName);
 
 	int storeNewUser(MemeUser shallowUser);
 
