@@ -43,7 +43,7 @@ public class MemeServerClient implements IMemeServerClient {
 	public MemeServerClient(final Context context) {
 		super();
 
-		webSvcAddr = context.getString(R.string.webServiceAddress);
+//		webSvcAddr = context.getString(R.string.webServiceAddress);
 //		webSvcBgrndSuffix = context.getString(R.string.webServiceBackgroundSuffix);
 //		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
 //		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
@@ -321,7 +321,7 @@ public class MemeServerClient implements IMemeServerClient {
 	}
 
 //	"/meme_type_data/popular/json")
-	public List<MemeBackground> getPopularMemeBackgrounds() {
+	public List<MemeBackground> getPopularMemeBackgrounds(final String popularityTypeName) {
 		List<MemeBackground> types = new ArrayList<MemeBackground>(0);
 		String result = Constants.EMPTY;
 		

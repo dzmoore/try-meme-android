@@ -29,6 +29,9 @@ public class MemeBackgroundPopularity {
     private LvPopularityType lvPopularityType;
 
     private Long memeBackgroundPopularityValue;
+    
+    @ManyToOne
+    private MemeBackground memeBackground;
 
 	@PersistenceContext
     transient EntityManager entityManager;
@@ -137,4 +140,12 @@ public class MemeBackgroundPopularity {
 	public void setVersion(Integer version) {
         this.version = version;
     }
+
+	public MemeBackground getMemeBackground() {
+		return memeBackground;
+	}
+
+	public void setMemeBackground(MemeBackground memeBackground) {
+		this.memeBackground = memeBackground;
+	}
 }
