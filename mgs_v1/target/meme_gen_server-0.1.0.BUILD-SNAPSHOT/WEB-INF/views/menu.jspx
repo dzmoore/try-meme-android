@@ -39,5 +39,17 @@
             <menu:item id="i_controller__memebackgroundpopularitiesindex_id" messageCode="global_generic" url="/memebackgroundpopularities/index" z="nqaRWDj2jB6PokMBsR2w97INVG8="/>
             <menu:item id="i_controller__memeuserfavoritesindex_id" messageCode="global_generic" url="/memeuserfavorites/index" z="cGx9rjc01NgCgnrvEqHFMn5hN6Y="/>
         </menu:category>
+        <menu:category id="c_memeuserfavorite" z="/3mDqssrVk/0uk1GunL+tKkUAsQ=">
+            <menu:item id="i_memeuserfavorite_new" messageCode="global_menu_new" url="/memeuserfavorites?form" z="psJ+p9me1+E/LiYkkRtcvDYMqVQ="/>
+            <menu:item id="i_memeuserfavorite_list" messageCode="global_menu_list" url="/memeuserfavorites?page=1&amp;size=${empty param.size ? 10 : param.size}" z="QeI0JvY0VuZw43WXvGvxMAFx1hs="/>
+        </menu:category>
+        <menu:category id="c_memebackgroundpopularity" z="9e6cGs/7g5e+KIm8fBH/7v679zA=">
+            <menu:item id="i_memebackgroundpopularity_new" messageCode="global_menu_new" url="/memebackgroundpopularitys?form" z="AmVr7Dwz5sZHyYFLEYl2jcVOB5M="/>
+            <menu:item id="i_memebackgroundpopularity_list" messageCode="global_menu_list" url="/memebackgroundpopularitys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="qIGdJORK9qXafkJw+vVgaj29x74="/>
+        </menu:category>
+        <menu:category id="c_lvpopularitytype" z="HGGnNpKXgi83EpT8Zmx1vxMtA68=">
+            <menu:item id="i_lvpopularitytype_new" messageCode="global_menu_new" url="/lvpopularitytypes?form" z="9Syfa2wcH/uk/i8RZGDaHBcT2tg="/>
+            <menu:item id="i_lvpopularitytype_list" messageCode="global_menu_list" url="/lvpopularitytypes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="RDffn8ZaEDuyfGnLWLo3BIW8EDQ="/>
+        </menu:category>
     </menu:menu>
 </div>

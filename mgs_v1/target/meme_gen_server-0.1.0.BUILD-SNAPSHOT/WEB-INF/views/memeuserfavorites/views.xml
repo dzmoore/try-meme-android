@@ -4,4 +4,16 @@
     <definition extends="default" name="memeuserfavorites/index">
         <put-attribute name="body" value="/WEB-INF/views/memeuserfavorites/index.jspx"/>
     </definition>
+<definition extends="default" name="memeuserfavorites/list">
+        <put-attribute name="body" value="/WEB-INF/views/memeuserfavorites/list.jspx"/>
+    </definition>
+<definition extends="default" name="memeuserfavorites/show">
+        <put-attribute name="body" value="/WEB-INF/views/memeuserfavorites/show.jspx"/>
+    </definition>
+<definition extends="default" name="memeuserfavorites/create">
+        <put-attribute name="body" value="/WEB-INF/views/memeuserfavorites/create.jspx"/>
+    </definition>
+<definition extends="default" name="memeuserfavorites/update">
+        <put-attribute name="body" value="/WEB-INF/views/memeuserfavorites/update.jspx"/>
+    </definition>
 </tiles-definitions>

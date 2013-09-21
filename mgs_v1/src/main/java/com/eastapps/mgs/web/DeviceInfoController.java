@@ -21,7 +21,7 @@ import org.springframework.web.util.WebUtils;
 @RooWebScaffold(path = "deviceinfoes", formBackingObject = DeviceInfo.class)
 public class DeviceInfoController {
 
-	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
+    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid DeviceInfo deviceInfo, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, deviceInfo);
@@ -32,20 +32,20 @@ public class DeviceInfoController {
         return "redirect:/deviceinfoes/" + encodeUrlPathSegment(deviceInfo.getId().toString(), httpServletRequest);
     }
 
-	@RequestMapping(params = "form", produces = "text/html")
+    @RequestMapping(params = "form", produces = "text/html")
     public String createForm(Model uiModel) {
         populateEditForm(uiModel, new DeviceInfo());
         return "deviceinfoes/create";
     }
 
-	@RequestMapping(value = "/{id}", produces = "text/html")
+    @RequestMapping(value = "/{id}", produces = "text/html")
     public String show(@PathVariable("id") Long id, Model uiModel) {
         uiModel.addAttribute("deviceinfo", DeviceInfo.findDeviceInfo(id));
         uiModel.addAttribute("itemId", id);
         return "deviceinfoes/show";
     }
 
-	@RequestMapping(produces = "text/html")
+    @RequestMapping(produces = "text/html")
     public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
@@ -59,7 +59,7 @@ public class DeviceInfoController {
         return "deviceinfoes/list";
     }
 
-	@RequestMapping(method = RequestMethod.PUT, produces = "text/html")
+    @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
     public String update(@Valid DeviceInfo deviceInfo, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, deviceInfo);
@@ -70,13 +70,13 @@ public class DeviceInfoController {
         return "redirect:/deviceinfoes/" + encodeUrlPathSegment(deviceInfo.getId().toString(), httpServletRequest);
     }
 
-	@RequestMapping(value = "/{id}", params = "form", produces = "text/html")
+    @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String updateForm(@PathVariable("id") Long id, Model uiModel) {
         populateEditForm(uiModel, DeviceInfo.findDeviceInfo(id));
         return "deviceinfoes/update";
     }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         DeviceInfo deviceInfo = DeviceInfo.findDeviceInfo(id);
         deviceInfo.remove();
@@ -86,19 +86,20 @@ public class DeviceInfoController {
         return "redirect:/deviceinfoes";
     }
 
-	void populateEditForm(Model uiModel, DeviceInfo deviceInfo) {
+    void populateEditForm(Model uiModel, DeviceInfo deviceInfo) {
         uiModel.addAttribute("deviceInfo", deviceInfo);
         uiModel.addAttribute("memeusers", MemeUser.findAllMemeUsers());
     }
 
-	String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
+    String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
         if (enc == null) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         try {
             pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-        } catch (UnsupportedEncodingException uee) {}
+        } catch (UnsupportedEncodingException uee) {
+        }
         return pathSegment;
     }
 }
