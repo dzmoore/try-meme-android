@@ -1,8 +1,5 @@
 <aspectj>
 <aspects>
-<aspect name="com.eastapps.mgs.web.MemeUserFavoriteController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.web.LvPopularityTypeController_Roo_Controller"/>
-<aspect name="com.eastapps.mgs.web.MemeBackgroundPopularityController_Roo_Controller"/>
 </aspects>
 </aspectj>
 

@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.eastapps.mgs.util.TestUtils;
 import com.google.gson.Gson;
 
 @Configurable
@@ -31,6 +32,7 @@ import com.google.gson.Gson;
 @Transactional
 @RooIntegrationTest(entity = Meme.class)
 public class MemeIntegrationTest extends AbstractIntegrationTest {
+
 	private static final Logger logger = Logger.getLogger(MemeIntegrationTest.class);
 
     @Test
@@ -156,48 +158,13 @@ public class MemeIntegrationTest extends AbstractIntegrationTest {
 		user.setId(1L);
 		meme.setCreatedByUser(user);
 		
-		final String jsonMeme = new Gson().toJson(meme);
-		final String result = getJSONObject("http://localhost:8080/memes/create/json", jsonMeme);
+		final Long result = TestUtils.getJSONObject("/memes/create/json", meme, Long.class);
 		
-		TestCase.assertTrue(StringUtils.isNotBlank(result));
-		TestCase.assertTrue(Long.parseLong(result) > 0);
+		TestCase.assertNotNull(result);
+		TestCase.assertTrue(result > 0);
 	}
 	
-	public String getJSONObject(final String addr, final String jsonRequest) {
-		String responseStr = StringUtils.EMPTY;
-		
-		try {
-			responseStr = postJson(addr, jsonRequest);
-			if (!StringUtils.isNotBlank(responseStr)) {
-				logger.warn(StringUtils.join(
-					"response empty:request=[", jsonRequest.toString(), 
-					"],addr=[", addr, "]"
-				));
-			}
-			
-		} catch (Exception e) {
-			logger.error("error occurred while attempting to get JSON obj", e);
-			
-		} 		
-		
-		return responseStr;
-	}
 
-	private String postJson(final String addr, final String jsonRequest) throws ClientProtocolException, IOException {
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httpPost = new HttpPost(addr);
-		final StringEntity strEnt = new StringEntity(jsonRequest);
-		
-		httpPost.setEntity(strEnt);
-		
-		httpPost.setHeader("Accept", "application/json");
-		httpPost.setHeader("Content-type", "application/json");
-		
-		ResponseHandler<String> respHandler = new BasicResponseHandler();
-		
-		final String respStr = client.execute(httpPost, respHandler);
-		return respStr;
-	}
 }
 
 

@@ -1,6 +1,9 @@
 package com.eastapps.mgs.model;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +13,10 @@ import org.springframework.roo.addon.test.RooIntegrationTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.eastapps.mgs.util.TestUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @Configurable
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,7 +31,61 @@ public class MemeBackgroundPopularityIntegrationTest extends AbstractIntegration
 
 	@Autowired
     MemeBackgroundPopularityDataOnDemand dod;
+	
+	@Autowired
+	LvPopularityTypeDataOnDemand lvPopularityTypeDataOnDemand;
 
+	@Test
+	public void testFindAllMemeBackgroundPopularitiesByPopularityTypeName() {
+        final LvPopularityType lvPopularityType = createLvPopularityType();
+		
+		final List<MemeBackgroundPopularity> memeBackgroundPopularities 
+			= MemeBackgroundPopularity.findAllMemeBackgroundPopularitiesByPopularityTypeName(lvPopularityType.getPopularityTypeName(), 0, 100);
+		
+		Assert.assertNotNull("findAllMemeBackgroundPopularitiesByPopularityTypeName produced null result", memeBackgroundPopularities);
+		Assert.assertTrue("findAllMemeBackgroundPopularitiesByPopularityTypeName produced a zero-count result list", memeBackgroundPopularities.size() > 0);
+		
+	}
+	
+	@Transactional
+	private LvPopularityType createLvPopularityType() {
+		MemeBackgroundPopularity obj = dod.getRandomMemeBackgroundPopularity();
+        Assert.assertNotNull("Data on demand for 'MemeBackgroundPopularity' failed to initialize correctly", obj);
+       
+        final LvPopularityType lvPopularityType = lvPopularityTypeDataOnDemand.getRandomLvPopularityType();
+		Assert.assertNotNull("LvPopularityType Data on demand for 'MemeBackgroundPopularity' failed to provide non-null LvPopularityType", lvPopularityType);
+		
+		obj.setLvPopularityType(lvPopularityType);
+		obj = obj.merge();
+		
+		return lvPopularityType;
+	}
+	
+	@Test
+	public void testFindAllMemeBackgroundPopularitiesByPopularityTypeNameJson() {
+		MemeBackgroundPopularity obj = dod.getRandomMemeBackgroundPopularity();
+        Assert.assertNotNull("Data on demand for 'MemeBackgroundPopularity' failed to initialize correctly", obj);
+       
+        final LvPopularityType lvPopularityType = lvPopularityTypeDataOnDemand.getRandomLvPopularityType();
+		Assert.assertNotNull("LvPopularityType Data on demand for 'MemeBackgroundPopularity' failed to provide non-null LvPopularityType", lvPopularityType);
+		
+		obj.setLvPopularityType(lvPopularityType);
+		obj = obj.merge();
+		
+		Assert.assertNotNull("Merging of LvPopularityType update unsuccessful", obj);
+		
+		final String response = TestUtils.getJSONObject("/memebackgroundpopularitys/find/json", lvPopularityType.getPopularityTypeName());
+		
+		Assert.assertNotNull("Response for finding meme backgrounds based on popularity type name was null", response);
+		Assert.assertTrue("Meme background list based on popularity type response was empty.", StringUtils.isNotEmpty(response));
+		
+		final List<MemeBackground> memeBackgrounds = new Gson().fromJson(response, new TypeToken<Collection<MemeBackground>>(){}.getType());
+		
+		Assert.assertTrue("MemeBackground list from finding meme backgrounds based on popularity type name had zero size", memeBackgrounds.size() > 0);
+		
+		
+	}
+	
 	@Test
     public void testCountMemeBackgroundPopularitys() {
         Assert.assertNotNull("Data on demand for 'MemeBackgroundPopularity' failed to initialize correctly", dod.getRandomMemeBackgroundPopularity());
