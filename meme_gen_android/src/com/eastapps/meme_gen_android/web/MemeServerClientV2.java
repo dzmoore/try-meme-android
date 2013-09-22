@@ -30,10 +30,10 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private IWebClient webClient;
 	private String webServiceAddress;
 	private String webServiceMemesCreateJson;
-	private String webServiceBackgroundBytes;
 	private String backgroundFileAddress;
 	private String createMemeUrl;
 	private String findPopularMemeBackgroundsForTypeNameUrl;
+	private String createMemeUserUrl;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -50,12 +50,11 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		}
 		
 		webServiceMemesCreateJson = context.getString(R.string.webServiceMemesCreateJson);
-		webServiceBackgroundBytes = context.getString(R.string.webServiceBackgroundBytes);
 		
 		
 		createMemeUrl = Conca.t(webServiceAddress, webServiceMemesCreateJson);
 		findPopularMemeBackgroundsForTypeNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeBackgroundPopularityByTypeNameJson));
-		
+		createMemeUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeUserCreateJson));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -115,19 +114,9 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		return memeBackgrounds;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	@Override
-	public int storeNewUser(MemeUser shallowUser) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long storeNewUser(final MemeUser memeUser) {
+		return webClient.sendRequestAsJson(createMemeUserUrl, memeUser, Long.class);
 	}
 
 	@Override

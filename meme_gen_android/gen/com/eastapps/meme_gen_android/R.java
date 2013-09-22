@@ -122,7 +122,11 @@ public final class R {
         public static final int menu_settings=0x7f060003;
         public static final int no_favorites_msg=0x7f06001d;
         public static final int nonSslHttp=0x7f06000d;
-        public static final int prodBackgroundFileAddress=0x7f060011;
+        /**      <string name="webServiceMemeSuffix">memes</string>
+    <string name="webServiceBackgroundSuffix">memebackgrounds</string>
+     <string name="webServiceBackgroundBytes">background_bytes</string> 
+         */
+        public static final int prodBackgroundFileAddress=0x7f060010;
         public static final int prodWebServiceAddress=0x7f06000e;
         public static final int refresh_menu_item_text=0x7f060022;
         public static final int save_string=0x7f060008;
@@ -133,17 +137,14 @@ public final class R {
         public static final int title_activity_meme_list=0x7f060005;
         public static final int title_activity_meme_type_search_results=0x7f06001f;
         public static final int title_activity_view_meme=0x7f06000b;
-        /**      <string name="webServiceMemeSuffix">memes</string>
-    <string name="webServiceBackgroundSuffix">memebackgrounds</string>
-         */
-        public static final int webServiceBackgroundBytes=0x7f060010;
-        public static final int webServiceMemeBackgroundPopularityByTypeNameJson=0x7f060013;
+        public static final int webServiceMemeBackgroundPopularityByTypeNameJson=0x7f060012;
+        public static final int webServiceMemeUserCreateJson=0x7f060013;
         /**   <string name="webServiceJsonSuffix">json</string>
     <string name="webServiceStoreMemePrefix">store_meme</string>
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
     <string name="webServiceMemeType">meme_type_data</string> 
          */
-        public static final int webServiceMemesCreateJson=0x7f060012;
+        public static final int webServiceMemesCreateJson=0x7f060011;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0000;

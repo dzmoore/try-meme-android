@@ -96,6 +96,17 @@ public class MemeServerClientTest extends AndroidTestCase  {
 		TestCase.assertNotNull("popular memebackgrounds null", memeBackgrounds);
 		TestCase.assertTrue("Popular meme backgrounds zero length", memeBackgrounds.size() > 0);
 	}
+	
+	public void testStoreMemeUser() {
+		final MemeUser memeUser = new MemeUser();
+    	memeUser.setActive(true);
+    	memeUser.setUsername("test");
+    	memeUser.setPassword("password");
+    	memeUser.setSalt("salt");
+    	
+    	final long id = memeServerClient.storeNewUser(memeUser);
+    	TestCase.assertTrue("Create meme user: id is not greater than 0", id > 0);
+	}
 
 }
 
