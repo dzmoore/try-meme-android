@@ -384,7 +384,7 @@ public class MemeServerClient implements IMemeServerClient {
 	}
 
 	@Override
-	public int storeNewUser(MemeUser shallowUser) {
+	public long storeNewUser(MemeUser shallowUser) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

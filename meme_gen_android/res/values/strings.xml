@@ -24,7 +24,7 @@
     <string name="devWebServiceAddress">http://dylan-mint:8080</string> 
 <!--     <string name="webServiceMemeSuffix">memes</string>
     <string name="webServiceBackgroundSuffix">memebackgrounds</string>-->
-    <string name="webServiceBackgroundBytes">background_bytes</string>
+<!--     <string name="webServiceBackgroundBytes">background_bytes</string> -->
     <string name="prodBackgroundFileAddress">https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs</string>
     <!--  <string name="webServiceJsonSuffix">json</string>
     <string name="webServiceStoreMemePrefix">store_meme</string>
@@ -32,6 +32,7 @@
     <string name="webServiceMemeType">meme_type_data</string> -->
     <string name="webServiceMemesCreateJson">/memes/create/json</string>
     <string name="webServiceMemeBackgroundPopularityByTypeNameJson">/memebackgroundpopularitys/find/json</string>
+    <string name="webServiceMemeUserCreateJson">/memeusers/create/json</string>
 
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>

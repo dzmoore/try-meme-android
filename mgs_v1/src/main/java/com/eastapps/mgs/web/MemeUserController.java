@@ -1,17 +1,23 @@
 package com.eastapps.mgs.web;
 
+import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeUser;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
@@ -19,6 +25,30 @@ import org.springframework.web.util.WebUtils;
 @Controller
 @RooWebScaffold(path = "memeusers", formBackingObject = MemeUser.class)
 public class MemeUserController {
+	private static final Logger logger = Logger.getLogger(MemeUserController.class);
+
+	@RequestMapping(method = RequestMethod.POST, value = "/create/json")
+	@ResponseBody
+	public Long createJson(@RequestBody @Valid final MemeUser memeUser, final BindingResult bindingResult, final HttpServletRequest httpServletRequest) {
+		long result = -1L;
+		if (bindingResult.hasErrors()) {
+			logger.warn(StringUtils.join("validation error for meme user {", memeUser, "}"));
+			
+		} else {
+			if (logger.isTraceEnabled()) {
+				logger.trace(StringUtils.join("successfully validated meme {", memeUser, "}"));
+			}
+			
+			memeUser.persist();
+			result = memeUser.getId();
+		}
+		
+		if (logger.isTraceEnabled()) {
+			logger.trace(StringUtils.join("meme user id after store attempt: [", String.valueOf(result), "]"));
+		}
+		
+		return result;
+	}
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid MemeUser memeUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {

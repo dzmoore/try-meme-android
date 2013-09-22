@@ -11,6 +11,7 @@ UTF-8
 /media/hybrid/workspace/meme_gen/mgs_v1/target/classes:/home/dylan/.m2/repository/org/springframework/spring-aspects/3.2.0.RELEASE/spring-aspects-3.2.0.RELEASE.jar
 -d
 /media/hybrid/workspace/meme_gen/mgs_v1/target/test-classes
+/media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/MemeUserIntegrationTest.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/AbstractIntegrationTest.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/LvPopularityTypeDataOnDemand.java
 /media/hybrid/workspace/meme_gen/mgs_v1/src/test/java/com/eastapps/mgs/model/MemeDataOnDemand.java
