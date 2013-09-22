@@ -34,6 +34,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String createMemeUrl;
 	private String findPopularMemeBackgroundsForTypeNameUrl;
 	private String createMemeUserUrl;
+	private String listMemeBackgroundsUrl;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -55,6 +56,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		createMemeUrl = Conca.t(webServiceAddress, webServiceMemesCreateJson);
 		findPopularMemeBackgroundsForTypeNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeBackgroundPopularityByTypeNameJson));
 		createMemeUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeUserCreateJson));
+		listMemeBackgroundsUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceListMemeBackgroundsJson));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -121,9 +123,20 @@ public class MemeServerClientV2 implements IMemeServerClient {
 
 	@Override
 	public List<MemeBackground> getAllMemeBackgrounds() {
-		// TODO Auto-generated method stub
-		return null;
+		final String responseJson = webClient.getJSONObject(listMemeBackgroundsUrl);
+		
+		final List<MemeBackground> memeBackgrounds = new Gson().fromJson(
+			responseJson, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
+		
+		return memeBackgrounds;
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public List<Meme> getSampleMemes(long memeId) {
