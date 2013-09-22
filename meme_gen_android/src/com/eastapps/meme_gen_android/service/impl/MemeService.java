@@ -299,7 +299,7 @@ public class MemeService implements IMemeService {
 
 	@Override
 	public List<MemeBackground> getFavMemeTypesForUser(final long userId) {
-		return client.getFavMemeTypesForUser(userId);
+		return client.getFavMemeBackgroundsForUser(userId);
 	}
 
 	@Override

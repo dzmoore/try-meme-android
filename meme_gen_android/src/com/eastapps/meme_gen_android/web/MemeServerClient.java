@@ -402,7 +402,7 @@ public class MemeServerClient implements IMemeServerClient {
 	}
 
 	@Override
-	public List<MemeBackground> getFavMemeTypesForUser(long userId) {
+	public List<MemeBackground> getFavMemeBackgroundsForUser(long userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

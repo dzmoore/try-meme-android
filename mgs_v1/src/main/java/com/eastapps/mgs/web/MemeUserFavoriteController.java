@@ -4,6 +4,8 @@ import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
 import com.eastapps.mgs.model.MemeUserFavorite;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
@@ -22,6 +25,18 @@ import org.springframework.web.util.WebUtils;
 @RooWebScaffold(path = "memeuserfavorites", formBackingObject = MemeUserFavorite.class)
 public class MemeUserFavoriteController {
 
+	@RequestMapping(value = "/backgroundsforuserid/json/{page}/{size}/{userid}")
+	@ResponseBody
+	public List<MemeBackground> findAllFavoriteMemeBackgroundsForUserId(
+		@PathVariable("userid") final Long userId,
+		@PathVariable("page") final Integer page,
+		@PathVariable("size") final Integer size) 
+	{
+		int sizeNo = size == null ? 10 : size.intValue();
+        final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
+        return MemeUserFavorite.findAllFavoriteMemeBackgroundsForUserId(userId, firstResult, sizeNo);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid MemeUserFavorite memeUserFavorite, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {

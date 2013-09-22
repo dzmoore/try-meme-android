@@ -121,6 +121,13 @@ public class MemeServerClientTest extends AndroidTestCase  {
 		TestCase.assertNotNull("sample memes for background id: result is null", sampleMemes);
 		TestCase.assertTrue("sample memes for backgroundid: result list is zero size", sampleMemes.size() > 0);
 	}
+	
+	public void testFavoriteMemeBackgroundsForUserId() {
+		final List<MemeBackground> favoriteMemeBackgrounds = memeServerClient.getFavMemeBackgroundsForUser(1);
+		
+		TestCase.assertNotNull("fav memes backgrounds for user id: result is null", favoriteMemeBackgrounds);
+		TestCase.assertTrue("fav memes backgrounds for user id: result list is zero size", favoriteMemeBackgrounds.size() > 0);
+	}
 }
 
 

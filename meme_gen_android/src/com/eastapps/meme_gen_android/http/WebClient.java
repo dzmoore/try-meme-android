@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
@@ -26,8 +27,10 @@ import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
+import com.eastapps.mgs.model.SampleMeme;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class WebClient implements IWebClient {
 	private static final String TAG = WebClient.class.getSimpleName();
@@ -206,6 +209,13 @@ public class WebClient implements IWebClient {
 		
 		final List<?> responseObj = new Gson().fromJson(jsonResponse, type);
 		
+		return responseObj;
+	}
+
+	@Override
+	public List<?> getRequestAsJsonReturnList(String addr, Type returnType) {
+		final String jsonResponse = getJSONObject(addr);
+		final List<?> responseObj = new Gson().fromJson(jsonResponse, returnType);
 		return responseObj;
 	}
 
