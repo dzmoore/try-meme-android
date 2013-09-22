@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.web;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.eastapps.meme_gen_android.R;
@@ -17,6 +18,7 @@ import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,6 +33,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String webServiceBackgroundBytes;
 	private String backgroundFileAddress;
 	private String createMemeUrl;
+	private String findPopularMemeBackgroundsForTypeNameUrl;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -49,7 +52,9 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		webServiceMemesCreateJson = context.getString(R.string.webServiceMemesCreateJson);
 		webServiceBackgroundBytes = context.getString(R.string.webServiceBackgroundBytes);
 		
+		
 		createMemeUrl = Conca.t(webServiceAddress, webServiceMemesCreateJson);
+		findPopularMemeBackgroundsForTypeNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeBackgroundPopularityByTypeNameJson));
 		
 		
 		webClient = new WebClient();
@@ -100,8 +105,14 @@ public class MemeServerClientV2 implements IMemeServerClient {
 
 	@Override
 	public List<MemeBackground> getPopularMemeBackgrounds(final String popularityTypeName) {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		final List<MemeBackground> memeBackgrounds = (List<MemeBackground>) webClient.sendRequestAsJsonReturnList(
+			findPopularMemeBackgroundsForTypeNameUrl, 
+			popularityTypeName, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
+	
+		return memeBackgrounds;
 	}
 	
 	

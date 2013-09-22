@@ -31,6 +31,7 @@
     <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
     <string name="webServiceMemeType">meme_type_data</string> -->
     <string name="webServiceMemesCreateJson">/memes/create/json</string>
+    <string name="webServiceMemeBackgroundPopularityByTypeNameJson">/memebackgroundpopularitys/find/json</string>
 
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>

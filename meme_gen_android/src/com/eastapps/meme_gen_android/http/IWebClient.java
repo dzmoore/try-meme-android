@@ -1,9 +1,9 @@
 package com.eastapps.meme_gen_android.http;
 
-import android.graphics.Bitmap;
+import java.lang.reflect.Type;
+import java.util.List;
 
-import com.eastapps.meme_gen_android.R;
-import com.eastapps.meme_gen_android.json.JSONObject;
+import android.graphics.Bitmap;
 
 public interface IWebClient {
 	public String getJSONObject(final String addr);
@@ -12,4 +12,7 @@ public interface IWebClient {
 	public String getJSONObject(String addr, String jsonRequest);
 	void setConnectionTimeoutMs(int connectTimeoutMs);
 	void setConnectionUseCaches(boolean useCaches);
+	public List<?> sendRequestAsJsonReturnList(
+			String addr,
+			Object requestObj, Type type);
 }

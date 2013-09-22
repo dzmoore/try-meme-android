@@ -5,9 +5,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -174,19 +176,35 @@ public class WebClient implements IWebClient {
 	public void setConnectionUseCaches(final boolean useCaches) {
 		this.connectionUseCaches = useCaches;
 	}
-
-	@Override
-	public <T> T sendRequestAsJson(final String addr, final Object requestObj, final Class<T> returnType) {
-		if (StringUtils.isBlank(addr) || requestObj == null || returnType == null) {
+	
+	private String sendRequest(final String addr, final Object requestObj) {
+		if (StringUtils.isBlank(addr) || requestObj == null) {
 			Log.e(TAG, "problem sending request");
 			return null;
 		}
 		
-		final String requestObjJson = new Gson().toJson(requestObj);
+		final String requestObjJson = requestObj instanceof String ? requestObj.toString() : new Gson().toJson(requestObj);
 		
 		final String jsonResponse = getJSONObject(addr, requestObjJson);
 		
+		return jsonResponse;
+	}
+
+	@Override
+	public <T> T sendRequestAsJson(final String addr, final Object requestObj, final Class<T> returnType) {
+		final String jsonResponse = sendRequest(addr, requestObj);
+		
 		final T responseObj = new Gson().fromJson(jsonResponse, returnType);
+		
+		return responseObj;
+	}
+
+	@Override
+	public List<?> sendRequestAsJsonReturnList(final String addr, final Object requestObj, final Type type) 
+	{
+		final String jsonResponse = sendRequest(addr, requestObj);
+		
+		final List<?> responseObj = new Gson().fromJson(jsonResponse, type);
 		
 		return responseObj;
 	}

@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.test;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 import android.graphics.Bitmap;
 import android.test.AndroidTestCase;
@@ -87,6 +89,12 @@ public class MemeServerClientTest extends AndroidTestCase  {
 		
 		final Bitmap bgBitmap = memeServerClient.getBackground(memeBackground.getFilePath());
 		TestCase.assertNotNull(bgBitmap);
+	}
+	
+	public void testGetPopularBackgrounds() {
+		final List<MemeBackground> memeBackgrounds = memeServerClient.getPopularMemeBackgrounds("test");
+		TestCase.assertNotNull("popular memebackgrounds null", memeBackgrounds);
+		TestCase.assertTrue("Popular meme backgrounds zero length", memeBackgrounds.size() > 0);
 	}
 
 }
