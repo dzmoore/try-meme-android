@@ -22,7 +22,7 @@ public interface IMemeServerClient {
 
 	List<MemeBackground> getAllMemeBackgrounds();
 
-	List<Meme> getSampleMemes(long memeId);
+	List<Meme> getSampleMemes(long memeBackgroundId);
 
 	List<MemeBackground> getFavMemeTypesForUser(long userId);
 

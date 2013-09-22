@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.mgs.model.SampleMeme;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +37,8 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String findPopularMemeBackgroundsForTypeNameUrl;
 	private String createMemeUserUrl;
 	private String listMemeBackgroundsUrl;
+	private String listSampleMemesForBackgroundIdUrlPre;
+	private String listSampleMemesForBackgroundIdUrlPost;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -57,6 +61,8 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		findPopularMemeBackgroundsForTypeNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeBackgroundPopularityByTypeNameJson));
 		createMemeUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeUserCreateJson));
 		listMemeBackgroundsUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceListMemeBackgroundsJson));
+		listSampleMemesForBackgroundIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListSampleMemesForBackgroundIdPre));
+		listSampleMemesForBackgroundIdUrlPost = context.getString(R.string.webServiceListSampleMemesForBackgroundIdPost);
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -133,16 +139,36 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		return memeBackgrounds;
 	}
 	
-	
-	
-	
-	
-
 	@Override
-	public List<Meme> getSampleMemes(long memeId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Meme> getSampleMemes(final long memeBackgroundId) {
+		final String url = Conca.t(
+			listSampleMemesForBackgroundIdUrlPre, 
+			"/", memeBackgroundId, 
+			listSampleMemesForBackgroundIdUrlPost
+		);
+		
+		final String responseJson = webClient.getJSONObject(url);
+		
+		final List<SampleMeme> sampleMemes = new Gson().fromJson(
+			responseJson,
+			new TypeToken<Collection<SampleMeme>>(){}.getType()
+		);
+		
+		final List<Meme> memesForBackground = new ArrayList<Meme>(sampleMemes == null ? 0 : sampleMemes.size());
+		
+		if (sampleMemes != null && sampleMemes.size() > 0) {
+			for (final SampleMeme eaSampleMeme : sampleMemes) {
+				memesForBackground.add(eaSampleMeme.getSampleMeme());
+			}
+		}
+		
+		return memesForBackground;
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public List<MemeBackground> getFavMemeTypesForUser(long userId) {

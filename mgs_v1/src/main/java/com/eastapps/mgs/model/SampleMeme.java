@@ -101,6 +101,19 @@ public class SampleMeme {
 	public static List<SampleMeme> findSampleMemeEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM SampleMeme o", SampleMeme.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
+	
+	public static List<SampleMeme> findSampleMemeEntriesForMemeBackgroundId(
+		final long memeBackgroundId, 
+		final int firstResult, 
+		final int maxResults) 
+	{
+		return entityManager()
+			.createQuery("SELECT o FROM SampleMeme o where o.background.id = ?", SampleMeme.class)
+			.setParameter(1, memeBackgroundId)
+			.setFirstResult(firstResult)
+			.setMaxResults(maxResults)
+			.getResultList();
+	}
 
 	@Transactional
     public void persist() {
