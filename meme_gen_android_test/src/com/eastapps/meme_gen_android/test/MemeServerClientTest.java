@@ -108,6 +108,12 @@ public class MemeServerClientTest extends AndroidTestCase  {
     	TestCase.assertTrue("Create meme user: id is not greater than 0", id > 0);
 	}
 
+	public void testListMemeBackgrounds() {
+		final List<MemeBackground> memeBackgrounds = memeServerClient.getAllMemeBackgrounds();
+		
+		TestCase.assertNotNull("get all meme backgrounds: null result", memeBackgrounds);
+		TestCase.assertTrue("get all meme backgrounds: result list zero length", memeBackgrounds.size() > 0);
+	}
 }
 
 

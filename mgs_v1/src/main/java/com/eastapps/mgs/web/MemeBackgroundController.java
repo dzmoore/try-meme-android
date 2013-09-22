@@ -4,6 +4,9 @@ import com.eastapps.meme_gen_server.service.MemeService;
 import com.eastapps.mgs.model.MemeBackground;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
@@ -47,6 +50,24 @@ public class MemeBackgroundController {
         uiModel.addAttribute("memebackground", MemeBackground.findMemeBackground(id));
         uiModel.addAttribute("itemId", id);
         return "memebackgrounds/show";
+    }
+    
+    @RequestMapping(value = "/list/json/{page}/{size}")
+    @ResponseBody
+    public List<MemeBackground> listJson(
+    	@PathVariable(value = "page") Integer page, 
+    	@PathVariable(value = "size") Integer size)
+	{
+    	List<MemeBackground> result = new ArrayList<MemeBackground>(0);
+        if (page != null || size != null) {
+            int sizeNo = size == null ? 10 : size.intValue();
+            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
+            
+            result = MemeBackground.findMemeBackgroundEntries(firstResult, sizeNo);
+            
+        } 
+        
+        return result;
     }
 
     @RequestMapping(produces = "text/html")

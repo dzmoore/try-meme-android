@@ -33,6 +33,7 @@
     <string name="webServiceMemesCreateJson">/memes/create/json</string>
     <string name="webServiceMemeBackgroundPopularityByTypeNameJson">/memebackgroundpopularitys/find/json</string>
     <string name="webServiceMemeUserCreateJson">/memeusers/create/json</string>
+    <string name="webServiceListMemeBackgroundsJson">/memebackgrounds/list/json/1/10</string>
 
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>
