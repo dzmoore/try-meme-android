@@ -1,11 +1,11 @@
 package com.eastapps.mgs.web;
 
-import com.eastapps.mgs.model.Meme;
-import com.eastapps.mgs.model.MemeBackground;
-import com.eastapps.mgs.model.SampleMeme;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +14,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
+
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.SampleMeme;
 
 @RequestMapping("/samplememes")
 @Controller
 @RooWebScaffold(path = "samplememes", formBackingObject = SampleMeme.class)
 public class SampleMemeController {
 
+	@RequestMapping(value = "/listforbackground/json/{id}/{page}/{size}")
+	@ResponseBody
+	public List<SampleMeme> listSampleMemeForMemeBackgroundId(
+		@PathVariable("id") final Long memeBackgroundId, 
+		@PathVariable("page") final Integer page,
+		@PathVariable("size") final Integer size) 
+	{
+        final int sizeNo = size == null ? 10 : size.intValue();
+        final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
+        
+        final List<SampleMeme> sampleMemes 
+        	= SampleMeme.findSampleMemeEntriesForMemeBackgroundId(memeBackgroundId, firstResult, sizeNo);
+        
+		return sampleMemes;
+	}
+	
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid SampleMeme sampleMeme, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
