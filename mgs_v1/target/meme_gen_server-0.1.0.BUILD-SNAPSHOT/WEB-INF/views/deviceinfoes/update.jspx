@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
-    <form:update id="fu_com_eastapps_mgs_model_DeviceInfo" modelAttribute="deviceInfo" path="/deviceinfoes" versionField="Version" z="+oYDMXLzDFH6+m5AONqk5LMBA0Q=">
-        <field:select field="deviceUser" id="c_com_eastapps_mgs_model_DeviceInfo_deviceUser" itemValue="id" items="${memeusers}" path="/memeusers" z="FbDiQkwxkkMddIOW5xzyjkIsVMo="/>
-        <field:input field="uniqueId" id="c_com_eastapps_mgs_model_DeviceInfo_uniqueId" z="63YI0OPpuWYI4NmOBk+HU9JOp1I="/>
-    </form:update>
-</div>

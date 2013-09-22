@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_com_eastapps_mgs_model_MemeText" object="${memetext}" path="/memetexts" z="Y6jzUBeO/SxvJWLvFlFV0ECvino=">
-        <field:display field="text" id="s_com_eastapps_mgs_model_MemeText_text" object="${memetext}" z="k52d9i2Dt8hSjln7hxTb0JBnnGE="/>
-        <field:display field="fontSize" id="s_com_eastapps_mgs_model_MemeText_fontSize" object="${memetext}" z="3dXm8JcLtS3+/NCyG81klfYCloE="/>
-    </page:show>
-</div>
