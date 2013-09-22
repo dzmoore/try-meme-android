@@ -12,7 +12,6 @@ public interface IWebClient {
 	public String getJSONObject(String addr, String jsonRequest);
 	void setConnectionTimeoutMs(int connectTimeoutMs);
 	void setConnectionUseCaches(boolean useCaches);
-	public List<?> sendRequestAsJsonReturnList(
-			String addr,
-			Object requestObj, Type type);
+	public List<?> sendRequestAsJsonReturnList(String addr, Object requestObj, Type type);
+	public List<?> getRequestAsJsonReturnList(String addr, Type returnType);
 }

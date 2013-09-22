@@ -39,6 +39,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String listMemeBackgroundsUrl;
 	private String listSampleMemesForBackgroundIdUrlPre;
 	private String listSampleMemesForBackgroundIdUrlPost;
+	private String listFavoriteMemeBackgroundsForUserIdUrlPre;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -63,6 +64,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		listMemeBackgroundsUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceListMemeBackgroundsJson));
 		listSampleMemesForBackgroundIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListSampleMemesForBackgroundIdPre));
 		listSampleMemesForBackgroundIdUrlPost = context.getString(R.string.webServiceListSampleMemesForBackgroundIdPost);
+		listFavoriteMemeBackgroundsForUserIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListFavoriteMemeBackgroundsForUserId));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -164,17 +166,26 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		
 		return memesForBackground;
 	}
-	
-	
-	
-	
-	
 
 	@Override
-	public List<MemeBackground> getFavMemeTypesForUser(long userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MemeBackground> getFavMemeBackgroundsForUser(long userId) {
+		final String url = Conca.t(
+			listFavoriteMemeBackgroundsForUserIdUrlPre, 
+			"/", userId
+		);
+		
+		@SuppressWarnings("unchecked")
+		final List<MemeBackground> favoriteMemeBackgrounds = 
+			(List<MemeBackground>) webClient.getRequestAsJsonReturnList(
+				url, 
+				new TypeToken<Collection<MemeBackground>>(){}.getType()
+			);
+		
+		return favoriteMemeBackgrounds;
 	}
+	
+	
+	
 
 	@Override
 	public String getNewInstallKey() {

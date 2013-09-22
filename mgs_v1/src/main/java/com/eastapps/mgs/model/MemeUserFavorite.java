@@ -1,6 +1,7 @@
 package com.eastapps.mgs.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -97,6 +98,26 @@ public class MemeUserFavorite implements Serializable {
 	public static List<MemeUserFavorite> findAllMemeUserFavorites() {
         return entityManager().createQuery("SELECT o FROM MemeUserFavorite o", MemeUserFavorite.class).getResultList();
     }
+	
+	public static List<MemeBackground> findAllFavoriteMemeBackgroundsForUserId(
+		final long userId, 
+		final int firstResult, 
+		final int maxResults) 
+	{
+		final List<MemeUserFavorite> memeUserFavorites = entityManager()
+			.createQuery("SELECT o from MemeUserFavorite o where o.memeUser.id = ?", MemeUserFavorite.class)
+			.setParameter(1, userId)
+			.setFirstResult(firstResult)
+			.setMaxResults(maxResults)
+			.getResultList();
+		
+		final List<MemeBackground> favoriteMemeBackgrounds = new ArrayList<MemeBackground>(memeUserFavorites == null ? 0 : memeUserFavorites.size());
+		for (final MemeUserFavorite eaMemeUserFavorite : memeUserFavorites) {
+			favoriteMemeBackgrounds.add(eaMemeUserFavorite.getMemeBackground());
+		}
+		
+		return favoriteMemeBackgrounds;
+	}
 
 	public static MemeUserFavorite findMemeUserFavorite(Long id) {
         if (id == null) return null;
