@@ -20,7 +20,7 @@ public class TestUtils {
 	public static String getJSONObject(final String addr, final Object requestObj) {
 		final String url = StringUtils.join(WEB_SVC_URL, addr);
 		
-		final String requestJson = new Gson().toJson(requestObj);
+		final String requestJson = requestObj instanceof String ? requestObj.toString() : new Gson().toJson(requestObj);
 		String responseStr = StringUtils.EMPTY;
 		
 		try {

@@ -46,25 +46,13 @@ public class MemeBackgroundPopularityController {
     		));
 		}
 		
-		String processedPopularityTypeName = popularityTypeName;
-		if (StringUtils.startsWith(popularityTypeName, "\"") && StringUtils.endsWith(popularityTypeName, "\"")) {
-			processedPopularityTypeName = StringUtils.removeEnd(StringUtils.removeStart(popularityTypeName, "\""), "\"");
-			
-			if (isDebugEnabled) {
-	    		logger.debug(StringUtils.join(
-	    			"MemeBackgroundPopularityController.findJson: processed popularityTypeName='",
-	    			processedPopularityTypeName, "'"
-	    		));
-			}
-		}
-		
 		final List<MemeBackgroundPopularity> memeBackgroundPopularities 
-			= MemeBackgroundPopularity.findAllMemeBackgroundPopularitiesByPopularityTypeName(processedPopularityTypeName, 0, 100);
+			= MemeBackgroundPopularity.findAllMemeBackgroundPopularitiesByPopularityTypeName(popularityTypeName, 0, 100);
 		
 		if (isDebugEnabled) {
     		logger.debug(StringUtils.join(
     			"MemeBackgroundPopularityController.findJson: found memeBackgroundPopularities of size=",
-    			memeBackgroundPopularities == null ? "null" : memeBackgroundPopularities.size()
+    			memeBackgroundPopularities == null ? "null" : ((Integer)memeBackgroundPopularities.size()).toString()
     		));
 		}
 		
