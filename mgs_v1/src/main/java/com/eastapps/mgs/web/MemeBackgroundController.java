@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,12 @@ public class MemeBackgroundController {
         uiModel.asMap().clear();
         memeBackground.persist();
         return "redirect:/memebackgrounds/" + encodeUrlPathSegment(memeBackground.getId().toString(), httpServletRequest);
+    }
+    
+    @RequestMapping(value = "/findbyname/json", method = RequestMethod.POST) 
+    @ResponseBody
+    public List<MemeBackground> findMemeBackgroundsByName(@RequestBody final String query) {
+    	return MemeBackground.findMemeBackgroundsByName(query);
     }
 
     @RequestMapping(params = "form", produces = "text/html")

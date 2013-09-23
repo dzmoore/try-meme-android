@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -106,6 +108,13 @@ public class MemeBackground {
 	public static List<MemeBackground> findAllMemeBackgrounds() {
         return entityManager().createQuery("SELECT o FROM MemeBackground o", MemeBackground.class).getResultList();
     }
+	
+	public static List<MemeBackground> findMemeBackgroundsByName(final String query) {
+		return entityManager()
+			.createQuery("SELECT o FROM MemeBackground o where lower(o.description) like :query", MemeBackground.class)
+			.setParameter("query", StringUtils.join("%", StringUtils.lowerCase(query), "%"))
+			.getResultList();
+	}
 
 	public static MemeBackground findMemeBackground(Long id) {
         if (id == null) return null;

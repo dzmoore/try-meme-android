@@ -141,6 +141,13 @@ public class MemeServerClientTest extends AndroidTestCase  {
 		
 		TestCase.assertTrue("remove fav meme background returned false", success);
 	}
+	
+	public void testFindMemeBackgroundsByName() {
+		final List<MemeBackground> memeBackgrounds = memeServerClient.getMemeBackgroundsByName("test");
+		
+		TestCase.assertNotNull("find meme backgrounds by name: response null", memeBackgrounds);
+		TestCase.assertTrue("find meme backgrounds by name: response zero size", memeBackgrounds.size() > 0);
+	}
 }
 
 
