@@ -304,7 +304,7 @@ public class MemeService implements IMemeService {
 
 	@Override
 	public boolean storeFavType(final long userId, final long memeBackgroundId) {
-		return client.storeFavMeme(userId, memeBackgroundId);
+		return client.storeFavMemeBackground(userId, memeBackgroundId);
 	}
 
 	@Override

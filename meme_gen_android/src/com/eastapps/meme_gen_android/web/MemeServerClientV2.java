@@ -17,6 +17,7 @@ import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.mgs.model.MemeUserFavorite;
 import com.eastapps.mgs.model.SampleMeme;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
@@ -40,6 +41,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String listSampleMemesForBackgroundIdUrlPre;
 	private String listSampleMemesForBackgroundIdUrlPost;
 	private String listFavoriteMemeBackgroundsForUserIdUrlPre;
+	private String storeFavoriteMemeBackgroundUrl;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -57,7 +59,6 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		
 		webServiceMemesCreateJson = context.getString(R.string.webServiceMemesCreateJson);
 		
-		
 		createMemeUrl = Conca.t(webServiceAddress, webServiceMemesCreateJson);
 		findPopularMemeBackgroundsForTypeNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeBackgroundPopularityByTypeNameJson));
 		createMemeUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeUserCreateJson));
@@ -65,6 +66,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		listSampleMemesForBackgroundIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListSampleMemesForBackgroundIdPre));
 		listSampleMemesForBackgroundIdUrlPost = context.getString(R.string.webServiceListSampleMemesForBackgroundIdPost);
 		listFavoriteMemeBackgroundsForUserIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListFavoriteMemeBackgroundsForUserId));
+		storeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceStoreMemeFavoriteJson));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -105,7 +107,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	
 	@Override
 	public Bitmap getBackground(final String path) {
-		return
+		return 
 			webClient.getBitmap(concatUrlPieces(
 				backgroundFileAddress,
 				path
@@ -183,20 +185,23 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		
 		return favoriteMemeBackgrounds;
 	}
-	
-	
-	
 
 	@Override
 	public String getNewInstallKey() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO 
+		return "valid";
 	}
 
 	@Override
-	public boolean storeFavMeme(long userId, long memeBackgroundId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean storeFavMemeBackground(long userId, long memeBackgroundId) {
+		final MemeUserFavorite favorite = new MemeUserFavorite();
+		favorite.setMemeBackground(new MemeBackground());
+		favorite.getMemeBackground().setId(memeBackgroundId);
+		
+		favorite.setMemeUser(new MemeUser());
+		favorite.getMemeUser().setId(userId);
+		
+		return webClient.sendRequestAsJson(storeFavoriteMemeBackgroundUrl, favorite, Boolean.class);
 	}
 
 	@Override

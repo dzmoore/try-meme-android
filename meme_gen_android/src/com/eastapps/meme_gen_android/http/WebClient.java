@@ -197,7 +197,13 @@ public class WebClient implements IWebClient {
 	public <T> T sendRequestAsJson(final String addr, final Object requestObj, final Class<T> returnType) {
 		final String jsonResponse = sendRequest(addr, requestObj);
 		
-		final T responseObj = new Gson().fromJson(jsonResponse, returnType);
+		T responseObj = null;
+		try {
+			responseObj = new Gson().fromJson(jsonResponse, returnType);
+			
+		} catch (Exception e) {
+			Log.e(getClass().getSimpleName(), "error occurred while parsing response", e);
+		}
 		
 		return responseObj;
 	}

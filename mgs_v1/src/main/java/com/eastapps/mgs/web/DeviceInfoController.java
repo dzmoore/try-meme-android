@@ -1,10 +1,10 @@
 package com.eastapps.mgs.web;
 
-import com.eastapps.mgs.model.DeviceInfo;
-import com.eastapps.mgs.model.MemeUser;
 import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +13,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
+
+import com.eastapps.mgs.model.DeviceInfo;
+import com.eastapps.mgs.model.MemeUser;
 
 @RequestMapping("/deviceinfoes")
 @Controller
 @RooWebScaffold(path = "deviceinfoes", formBackingObject = DeviceInfo.class)
 public class DeviceInfoController {
 
+	@RequestMapping("/new/json")
+	@ResponseBody
+	public String createNewJson() {
+		DeviceInfo deviceInfo = new DeviceInfo();
+//		deviceInfo.set
+		
+		return null;
+	}
+	
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid DeviceInfo deviceInfo, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {

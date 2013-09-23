@@ -1,18 +1,18 @@
 package com.eastapps.mgs.web;
 
-import com.eastapps.mgs.model.MemeBackground;
-import com.eastapps.mgs.model.MemeUser;
-import com.eastapps.mgs.model.MemeUserFavorite;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.mgs.model.MemeUserFavorite;
+
 @RequestMapping("/memeuserfavorites")
 @Controller
 @RooWebScaffold(path = "memeuserfavorites", formBackingObject = MemeUserFavorite.class)
 public class MemeUserFavoriteController {
+	private static final Logger logger = Logger.getLogger(MemeUserFavoriteController.class);
 
 	@RequestMapping(value = "/backgroundsforuserid/json/{page}/{size}/{userid}")
 	@ResponseBody
@@ -35,6 +40,35 @@ public class MemeUserFavoriteController {
 		int sizeNo = size == null ? 10 : size.intValue();
         final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
         return MemeUserFavorite.findAllFavoriteMemeBackgroundsForUserId(userId, firstResult, sizeNo);
+	}
+	
+	@RequestMapping(value = "/store/json", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean storeJson(@Valid @RequestBody MemeUserFavorite memeUserFavorite, BindingResult bindingResult) {
+		boolean result = false;
+		if (bindingResult.hasErrors()) {
+			logger.warn("memeuserfavorite store attempt: memeuserfavorite request body has errors");
+			result = false;
+		
+		} else {
+			final MemeBackground memeBackground  = memeUserFavorite.getMemeBackground();
+    		final MemeUser memeUser = memeUserFavorite.getMemeUser();
+			if (memeBackground != null && memeBackground.getId() > 0 
+				&& memeUser != null && memeUser.getId() > 0) 
+			{
+				memeUserFavorite.setMemeBackground(MemeBackground.findMemeBackground(memeBackground.getId()));
+				memeUserFavorite.setMemeUser(MemeUser.findMemeUser(memeUser.getId()));
+				
+				memeUserFavorite.persist();
+				result = memeUserFavorite.getId() > 0;
+				
+    		} else {
+    			logger.warn("memeuserfavorite store attempt: user or background is null or id invalid");
+    			result = false;
+    		}
+		}
+			
+		return result;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")

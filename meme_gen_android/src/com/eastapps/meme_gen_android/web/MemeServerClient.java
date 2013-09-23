@@ -408,7 +408,7 @@ public class MemeServerClient implements IMemeServerClient {
 	}
 
 	@Override
-	public boolean storeFavMeme(long userId, long memeBackgroundId) {
+	public boolean storeFavMemeBackground(long userId, long memeBackgroundId) {
 		// TODO Auto-generated method stub
 		return false;
 	}
