@@ -43,7 +43,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String listFavoriteMemeBackgroundsForUserIdUrlPre;
 	private String storeFavoriteMemeBackgroundUrl;
 	private String removeFavoriteMemeBackgroundUrl;
-	
+	private String findMemeBackgroundsByNameUrl;
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -70,6 +70,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		listFavoriteMemeBackgroundsForUserIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListFavoriteMemeBackgroundsForUserId));
 		storeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceStoreMemeFavoriteJson));
 		removeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceRemoveMemeFavoriteJson));
+		findMemeBackgroundsByNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceFindMemeBackgroundsByNameJson));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -216,13 +217,17 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		favorite.setMemeUser(new MemeUser());
 		favorite.getMemeUser().setId(userId);
 		
-		return webClient.sendRequestAsJson(storeFavoriteMemeBackgroundUrl, favorite, Boolean.class);
+		return webClient.sendRequestAsJson(removeFavoriteMemeBackgroundUrl, favorite, Boolean.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MemeBackground> getMemeBackgroundsByName(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<MemeBackground>) webClient.sendRequestAsJsonReturnList(
+			findMemeBackgroundsByNameUrl, 
+			query, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
 	}
 
 }

@@ -39,6 +39,7 @@
     <string name="webServiceListFavoriteMemeBackgroundsForUserId">/memeuserfavorites/backgroundsforuserid/json/1/10</string>
     <string name="webServiceStoreMemeFavoriteJson">/memeuserfavorites/store/json</string>
     <string name="webServiceRemoveMemeFavoriteJson">/memeuserfavorites/remove/json</string>
+    <string name="webServiceFindMemeBackgroundsByNameJson">/memebackgrounds/findbyname/json</string>
 
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>
