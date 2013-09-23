@@ -99,6 +99,14 @@ public class MemeUserFavorite implements Serializable {
         return entityManager().createQuery("SELECT o FROM MemeUserFavorite o", MemeUserFavorite.class).getResultList();
     }
 	
+	public static List<MemeUserFavorite> findAllMemeUserFavorites(final long userId, final long memeBackgroundId) {
+		return entityManager()
+			.createQuery("SELECT o from MemeUserFavorite o where o.memeUser.id = ? and o.memeBackground.id = ?", MemeUserFavorite.class)
+			.setParameter(1, userId)
+			.setParameter(2, memeBackgroundId)
+			.getResultList();
+	}
+	
 	public static List<MemeBackground> findAllFavoriteMemeBackgroundsForUserId(
 		final long userId, 
 		final int firstResult, 

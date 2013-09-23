@@ -42,6 +42,39 @@ public class MemeUserFavoriteController {
         return MemeUserFavorite.findAllFavoriteMemeBackgroundsForUserId(userId, firstResult, sizeNo);
 	}
 	
+	@RequestMapping(value = "/remove/json", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean removeJson(@Valid @RequestBody MemeUserFavorite memeUserFavorite, BindingResult bindingResult) {
+		boolean result = false;
+		if (bindingResult.hasErrors()) {
+			logger.warn("memeuserfavorite store attempt: memeuserfavorite request body has errors");
+			result = false;
+		
+		} else {
+			final MemeBackground memeBackground  = memeUserFavorite.getMemeBackground();
+    		final MemeUser memeUser = memeUserFavorite.getMemeUser();
+			if (memeBackground != null && memeBackground.getId() > 0 
+				&& memeUser != null && memeUser.getId() > 0) 
+			{
+				final List<MemeUserFavorite> favorites = MemeUserFavorite.findAllMemeUserFavorites(memeUser.getId(), memeBackground.getId());
+				try {
+					for (final MemeUserFavorite eaMemeUserFavorite : favorites) {
+						eaMemeUserFavorite.remove();
+					}
+					result = true;
+				} catch (Exception e) {
+					logger.error("error removing meme user favorite", e);
+				}
+				
+    		} else {
+    			logger.warn("memeuserfavorite store attempt: user or background is null or id invalid");
+    			result = false;
+    		}
+		}
+			
+		return result;
+	}
+	
 	@RequestMapping(value = "/store/json", method = RequestMethod.POST)
 	@ResponseBody
 	public Boolean storeJson(@Valid @RequestBody MemeUserFavorite memeUserFavorite, BindingResult bindingResult) {
@@ -70,6 +103,8 @@ public class MemeUserFavoriteController {
 			
 		return result;
 	}
+	
+	
 	
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid MemeUserFavorite memeUserFavorite, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {

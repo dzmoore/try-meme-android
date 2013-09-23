@@ -42,6 +42,8 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String listSampleMemesForBackgroundIdUrlPost;
 	private String listFavoriteMemeBackgroundsForUserIdUrlPre;
 	private String storeFavoriteMemeBackgroundUrl;
+	private String removeFavoriteMemeBackgroundUrl;
+	
 
 	public MemeServerClientV2(Context context) {
 		super();
@@ -67,6 +69,7 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		listSampleMemesForBackgroundIdUrlPost = context.getString(R.string.webServiceListSampleMemesForBackgroundIdPost);
 		listFavoriteMemeBackgroundsForUserIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListFavoriteMemeBackgroundsForUserId));
 		storeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceStoreMemeFavoriteJson));
+		removeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceRemoveMemeFavoriteJson));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -205,9 +208,15 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	}
 
 	@Override
-	public boolean removeFavMeme(long userId, long typeId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean removeFavMeme(long userId, long memeBackgroundId) {
+		final MemeUserFavorite favorite = new MemeUserFavorite();
+		favorite.setMemeBackground(new MemeBackground());
+		favorite.getMemeBackground().setId(memeBackgroundId);
+		
+		favorite.setMemeUser(new MemeUser());
+		favorite.getMemeUser().setId(userId);
+		
+		return webClient.sendRequestAsJson(storeFavoriteMemeBackgroundUrl, favorite, Boolean.class);
 	}
 
 	@Override

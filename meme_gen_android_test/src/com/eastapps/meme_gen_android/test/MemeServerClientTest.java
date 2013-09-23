@@ -134,6 +134,13 @@ public class MemeServerClientTest extends AndroidTestCase  {
 		
 		TestCase.assertTrue("store fav meme background returned false", success);
 	}
+	
+	public void testRemoveFavoriteMemeBackground() {
+		testStoreFavoriteMemeBackground();
+		final boolean success = memeServerClient.removeFavMeme(1, 1);
+		
+		TestCase.assertTrue("remove fav meme background returned false", success);
+	}
 }
 
 
