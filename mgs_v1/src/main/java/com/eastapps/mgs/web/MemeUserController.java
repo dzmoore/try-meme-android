@@ -1,8 +1,12 @@
 package com.eastapps.mgs.web;
 
+import com.eastapps.meme_gen_server.util.Util;
+import com.eastapps.mgs.model.DeviceInfo;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeUser;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -30,7 +34,7 @@ public class MemeUserController {
 	@RequestMapping(method = RequestMethod.POST, value = "/create/json")
 	@ResponseBody
 	public Long createJson(@RequestBody @Valid final MemeUser memeUser, final BindingResult bindingResult, final HttpServletRequest httpServletRequest) {
-		long result = -1L;
+		long userId = -1L;
 		if (bindingResult.hasErrors()) {
 			logger.warn(StringUtils.join("validation error for meme user {", memeUser, "}"));
 			
@@ -40,14 +44,27 @@ public class MemeUserController {
 			}
 			
 			memeUser.persist();
-			result = memeUser.getId();
+			userId = memeUser.getId();
+			
+			if (userId > 0) {
+				DeviceInfo deviceInfo = new DeviceInfo();
+				deviceInfo.setDeviceUser(memeUser);
+				try {
+					deviceInfo.setUniqueId(Util.SHA1(String.valueOf(userId)));
+				} catch (Exception e) {
+					deviceInfo.setUniqueId(String.valueOf(userId));
+					logger.error("error while attempting to SHA1 when creating user", e);
+				}
+				
+				deviceInfo.persist();
+			}
 		}
 		
 		if (logger.isTraceEnabled()) {
-			logger.trace(StringUtils.join("meme user id after store attempt: [", String.valueOf(result), "]"));
+			logger.trace(StringUtils.join("meme user id after store attempt: [", String.valueOf(userId), "]"));
 		}
 		
-		return result;
+		return userId;
 	}
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")

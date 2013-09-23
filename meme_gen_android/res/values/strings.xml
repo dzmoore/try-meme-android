@@ -37,6 +37,7 @@
     <string name="webServiceListSampleMemesForBackgroundIdPre">/samplememes/listforbackground/json</string>
     <string name="webServiceListSampleMemesForBackgroundIdPost">/1/10</string>
     <string name="webServiceListFavoriteMemeBackgroundsForUserId">/memeuserfavorites/backgroundsforuserid/json/1/10</string>
+    <string name="webServiceStoreMemeFavoriteJson">/memeuserfavorites/store/json</string>
     
 
     <item name="maxFontSize" format="integer" type="integer">35</item>

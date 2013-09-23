@@ -28,7 +28,7 @@ public interface IMemeServerClient {
 
 	String getNewInstallKey();
 
-	boolean storeFavMeme(long userId, long memeBackgroundId);
+	boolean storeFavMemeBackground(long userId, long memeBackgroundId);
 
 	boolean removeFavMeme(long userId, long typeId);
 
