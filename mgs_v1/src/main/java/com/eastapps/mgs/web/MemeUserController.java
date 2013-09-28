@@ -43,21 +43,10 @@ public class MemeUserController {
 				logger.trace(StringUtils.join("successfully validated meme {", memeUser, "}"));
 			}
 			
+			memeUser.setId(null);
 			memeUser.persist();
 			userId = memeUser.getId();
 			
-			if (userId > 0) {
-				DeviceInfo deviceInfo = new DeviceInfo();
-				deviceInfo.setDeviceUser(memeUser);
-				try {
-					deviceInfo.setUniqueId(Util.SHA1(String.valueOf(userId)));
-				} catch (Exception e) {
-					deviceInfo.setUniqueId(String.valueOf(userId));
-					logger.error("error while attempting to SHA1 when creating user", e);
-				}
-				
-				deviceInfo.persist();
-			}
 		}
 		
 		if (logger.isTraceEnabled()) {

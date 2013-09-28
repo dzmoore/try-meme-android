@@ -56,7 +56,7 @@ public class CreateMemeActivity extends FragmentActivity {
 	protected static final float SEEK_BAR_SCALAR = 12;
 
 	private MemeViewData memeViewData;
-	private List<MemeViewData> sampledList;
+	private List<MemeViewData> sampleMemesList;
 	private AtomicBoolean isEditingTopText;
 	private AtomicBoolean isEditingBottomText;
 	private AtomicBoolean isTopTextSizing;
@@ -67,6 +67,8 @@ public class CreateMemeActivity extends FragmentActivity {
 	private SeekBar bottomSeekBar;
 	private IMemeService memeService;
 	private AtomicBoolean isLoadComplete;
+	
+	private double initialFontSize;
 	
 	
 	private ViewPager memePager;
@@ -91,6 +93,8 @@ public class CreateMemeActivity extends FragmentActivity {
 		memeService = MemeService.getInstance();		
 		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
+		
+		initialFontSize = getResources().getInteger(R.integer.initialFontSize);
 		
 		final MemeBackground memeBg = (MemeBackground) getIntent().getSerializableExtra(Constants.KEY_MEME_BACKGROUND);
 		
@@ -154,12 +158,12 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		final String sampledListKey = getString(R.string.bundleconst_sampledlist);
 		if (savedInstanceState.containsKey(sampledListKey)) {
-			this.sampledList = (ArrayList<MemeViewData>) savedInstanceState.getSerializable(sampledListKey);
+			this.sampleMemesList = (ArrayList<MemeViewData>) savedInstanceState.getSerializable(sampledListKey);
 			
 			final MemePagerFragmentAdapter pagerAdapter = new MemePagerFragmentAdapter(getSupportFragmentManager());
 			memePager.setAdapter(pagerAdapter);
 			
-			pagerAdapter.setMemes(sampledList);
+			pagerAdapter.setMemes(sampleMemesList);
 		}
 		
 	}
@@ -170,7 +174,7 @@ public class CreateMemeActivity extends FragmentActivity {
 			outState.putParcelable(getString(R.string.bundleconst_memebg), memeViewData.getBackground());
 			outState.putSerializable(getString(R.string.bundleconst_samplememes), new ArrayList<Meme>(memeViewData.getSampleMemes()));
 			outState.putBoolean(getString(R.string.bundleconst_loaded), isLoadComplete.get());
-			outState.putSerializable(getString(R.string.bundleconst_sampledlist), new ArrayList<MemeViewData>(sampledList));
+			outState.putSerializable(getString(R.string.bundleconst_sampledlist), new ArrayList<MemeViewData>(sampleMemesList));
 		}
 	}
 	
@@ -402,7 +406,7 @@ public class CreateMemeActivity extends FragmentActivity {
 	private int getSelectedMemeViewId() {
 		final int selected = memePager.getCurrentItem();
 		
-		final int selectedId = sampledList == null ? Constants.INVALID : sampledList.get(selected).getId();
+		final int selectedId = sampleMemesList == null ? Constants.INVALID : sampleMemesList.get(selected).getId();
 		
 		return selectedId;
 	}
@@ -456,6 +460,10 @@ public class CreateMemeActivity extends FragmentActivity {
 						
 						selectBottomTextView.setText(newBottomText);
 						
+						if (bottomSeekBar != null) {
+							setBottomTextViewTextSize(bottomSeekBar.getProgress());
+						}
+						
 						getSelectedMeme().getBottomText().setText(newBottomText);
 					}
 				}
@@ -497,6 +505,10 @@ public class CreateMemeActivity extends FragmentActivity {
 						final String newTopText = topTextEdit.getText().toString();
 						
 						selectedTopTextView.setText(newTopText);
+						
+						if (topSeekBar != null) {
+							setTopTextViewTextSize(topSeekBar.getProgress());
+						}
 						
 						getSelectedMeme().getTopText().setText(newTopText);
 					}
@@ -541,11 +553,11 @@ public class CreateMemeActivity extends FragmentActivity {
 					final boolean fromUser) 
 			{	
 				if (isTop) {
-					getSelectedTopTextView().setTextSize((progress * SEEK_BAR_MULTIPLIER) + SEEK_BAR_SCALAR);
+					setTopTextViewTextSize(progress);
 					getSelectedMeme().getTopText().setFontSize((double) progress);
 				
 				} else {
-					getSelectedBottomTextView().setTextSize(progress * SEEK_BAR_MULTIPLIER + SEEK_BAR_SCALAR);
+					setBottomTextViewTextSize(progress);
 					getSelectedMeme().getBottomText().setFontSize((double) progress);
 				}
 			}
@@ -738,8 +750,8 @@ public class CreateMemeActivity extends FragmentActivity {
 		final MemePagerFragmentAdapter pagerAdapter 
 			= new MemePagerFragmentAdapter(getSupportFragmentManager());
 		
-		sampledList = createSampleMemeViewDataList();
-		pagerAdapter.setMemes(sampledList);
+		sampleMemesList = createSampleMemeViewDataList();
+		pagerAdapter.setMemes(sampleMemesList);
 		
 		memePager.setAdapter(pagerAdapter);
 		
@@ -763,19 +775,43 @@ public class CreateMemeActivity extends FragmentActivity {
 		});
 	}
 	
+	
 	private void loadCurrentlySelectedPage() {
 		final Meme selectedMeme = getSelectedMeme();
 		
 		final MemeText topText = selectedMeme.getTopText();
-		if (topText != null) {
-			topSeekBar.setProgress(topText.getFontSize().intValue());
-			topTextEdit.setText(topText.getText());
+		if (topText == null) {
+			selectedMeme.setTopText(createNewMemeText());
 		}
 		
+		final int topTextFontSize = topText.getFontSize().intValue();
+		topSeekBar.setProgress(topTextFontSize);
+		setTopTextViewTextSize(topTextFontSize); 
+		topTextEdit.setText(topText.getText());
+		
 		final MemeText bottomText = selectedMeme.getBottomText();
-		if (bottomText != null) {
-			bottomSeekBar.setProgress(bottomText.getFontSize().intValue());
-			bottomTextEdit.setText(bottomText.getText());
+		if (bottomText == null) {
+			selectedMeme.setBottomText(createNewMemeText());
+		}
+		
+		final int bottomTextFontSize = bottomText.getFontSize().intValue();
+		bottomSeekBar.setProgress(bottomTextFontSize);
+		setBottomTextViewTextSize(bottomTextFontSize);
+		bottomTextEdit.setText(bottomText.getText());
+	}
+
+	private MemeText createNewMemeText() {
+		final MemeText newMemeText = new MemeText();
+		newMemeText.setFontSize(initialFontSize);
+		newMemeText.setText("");
+		return newMemeText;
+	}
+
+	private void setTopTextViewTextSize(final int topTextFontSize) {
+		final OutlineTextView topTextView = getSelectedTopTextView();
+		
+		if (topTextView != null) {
+			topTextView.setTextSize((topTextFontSize * SEEK_BAR_MULTIPLIER) + SEEK_BAR_SCALAR);
 		}
 	}
 
@@ -785,23 +821,20 @@ public class CreateMemeActivity extends FragmentActivity {
 	
 
 	private List<MemeViewData> createSampleMemeViewDataList() {
-		final List<MemeViewData> shMemes 
+		final List<MemeViewData> emptyAndSampleMemeList 
 			= new ArrayList<MemeViewData>(memeViewData.getSampleMemes().size()+1);
 		
 		final Bitmap bgBm = memeViewData.getBackground();
 		
 		final MemeViewData editableMeme = new MemeViewData();
 		final Meme meme = new Meme();
-		meme.setTopText(new MemeText());
-		meme.getTopText().setFontSize((double) getResources().getInteger(R.integer.initialFontSize));
-		
-		meme.setBottomText(new MemeText());
-		meme.getBottomText().setFontSize((double) getResources().getInteger(R.integer.initialFontSize));
+		meme.setTopText(createNewMemeText());
+		meme.setBottomText(createNewMemeText());
 		
 		editableMeme.setMeme(meme);
 		editableMeme.setBackground(bgBm);
 		
-		shMemes.add(editableMeme);
+		emptyAndSampleMemeList.add(editableMeme);
 		
 		for (final Meme eaMeme : memeViewData.getSampleMemes()) {
 			final MemeViewData mvd = new MemeViewData();
@@ -809,11 +842,11 @@ public class CreateMemeActivity extends FragmentActivity {
 			mvd.setBackground(bgBm);
 			mvd.setMeme(eaMeme);
 			
-			shMemes.add(mvd);
+			emptyAndSampleMemeList.add(mvd);
 		}
 		
 		
-		return shMemes;
+		return emptyAndSampleMemeList;
 	}
 
 //	@Override
@@ -829,6 +862,14 @@ public class CreateMemeActivity extends FragmentActivity {
 		final Meme currentMeme = getMemePagerAdapter().getMemeAt(current).getMeme();
 		
 		return currentMeme;
+	}
+
+	private void setBottomTextViewTextSize(final int fontSize) {
+		final OutlineTextView bottomTextView = getSelectedBottomTextView();
+		
+		if (bottomTextView != null) {
+			bottomTextView.setTextSize(fontSize * SEEK_BAR_MULTIPLIER + SEEK_BAR_SCALAR);
+		}
 	}
 	
 }

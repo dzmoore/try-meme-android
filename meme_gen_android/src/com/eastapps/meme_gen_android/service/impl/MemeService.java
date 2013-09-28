@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -284,9 +285,7 @@ public class MemeService implements IMemeService {
 	
 	@Override
 	public String getNewInstallKey() {
-		// TODO: impl install key
-//		return client.getNewInstallKey();
-		return "valid";
+		return UUID.randomUUID().toString();
 	}
 
 	@Override

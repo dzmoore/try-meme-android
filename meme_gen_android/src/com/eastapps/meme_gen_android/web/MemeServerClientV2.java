@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
-import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.mgs.model.Meme;
@@ -182,12 +181,6 @@ public class MemeServerClientV2 implements IMemeServerClient {
 			);
 		
 		return favoriteMemeBackgrounds;
-	}
-
-	@Override
-	public String getNewInstallKey() {
-		// TODO 
-		return "valid";
 	}
 
 	@Override
