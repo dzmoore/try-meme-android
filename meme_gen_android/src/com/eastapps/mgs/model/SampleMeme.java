@@ -1,9 +1,12 @@
 package com.eastapps.mgs.model;
 
+import java.io.Serializable;
 
-public class SampleMeme {
 
-    private Meme sampleMeme;
+public class SampleMeme implements Serializable {
+	private static final long serialVersionUID = -8727955229839582767L;
+
+	private Meme sampleMeme;
 
     private MemeBackground background;
 

@@ -31,6 +31,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.mgr.AdMgr;
@@ -44,6 +45,7 @@ import com.eastapps.meme_gen_android.widget.TagMgr;
 import com.eastapps.meme_gen_android.widget.adapter.MemePagerFragmentAdapter;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeText;
 import com.eastapps.util.Conca;
 
 public class CreateMemeActivity extends FragmentActivity {
@@ -284,7 +286,9 @@ public class CreateMemeActivity extends FragmentActivity {
 			startActivity(Intent.createChooser(intent,"MMS Meme"));
 					
 		} catch (final IOException e) {
-			Log.e(TAG, "err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e);
+			}
 			
 			runOnUiThread(
 				new Runnable() {
@@ -762,11 +766,17 @@ public class CreateMemeActivity extends FragmentActivity {
 	private void loadCurrentlySelectedPage() {
 		final Meme selectedMeme = getSelectedMeme();
 		
-		topSeekBar.setProgress(selectedMeme.getTopText().getFontSize().intValue());
-		bottomSeekBar.setProgress(selectedMeme.getBottomText().getFontSize().intValue());
+		final MemeText topText = selectedMeme.getTopText();
+		if (topText != null) {
+			topSeekBar.setProgress(topText.getFontSize().intValue());
+			topTextEdit.setText(topText.getText());
+		}
 		
-		topTextEdit.setText(selectedMeme.getTopText().getText());
-		bottomTextEdit.setText(selectedMeme.getBottomText().getText());
+		final MemeText bottomText = selectedMeme.getBottomText();
+		if (bottomText != null) {
+			bottomSeekBar.setProgress(bottomText.getFontSize().intValue());
+			bottomTextEdit.setText(bottomText.getText());
+		}
 	}
 
 	private MemePagerFragmentAdapter getMemePagerAdapter() {
@@ -782,7 +792,10 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		final MemeViewData editableMeme = new MemeViewData();
 		final Meme meme = new Meme();
+		meme.setTopText(new MemeText());
 		meme.getTopText().setFontSize((double) getResources().getInteger(R.integer.initialFontSize));
+		
+		meme.setBottomText(new MemeText());
 		meme.getBottomText().setFontSize((double) getResources().getInteger(R.integer.initialFontSize));
 		
 		editableMeme.setMeme(meme);

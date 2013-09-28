@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -57,15 +58,17 @@ public class WebClient implements IWebClient {
 			result = getResponseText(conn);
 			
 		} catch (Exception e) {
-			Log.e(
-				TAG,
-				Conca.t(
-					"an error occurred while attempting to get a JSON object from [", 
-					addr, 
-					"]"
-				), 
-				e
-			);
+			if (BuildConfig.DEBUG) {
+				Log.e(
+					TAG,
+					Conca.t(
+						"an error occurred while attempting to get a JSON object from [", 
+						addr, 
+						"]"
+					), 
+					e
+				);
+			}
 		}
 		
 		return result;
@@ -83,7 +86,9 @@ public class WebClient implements IWebClient {
 			}
 			
 		} catch (Exception e) {
-			Log.e(TAG, "err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e);
+			}
 			
 		} finally {
 			if (bufReader != null) {
@@ -107,15 +112,17 @@ public class WebClient implements IWebClient {
 			bitmap = BitmapFactory.decodeStream(conn.getInputStream());
 			
 		} catch (Exception e) {
-			Log.e(
-				TAG,
-				Conca.t(	
-					"an error occurred while attempting to get a bitmap from [",
-					addr,
-					"]"
-				),
-				e
-			);
+			if (BuildConfig.DEBUG) {
+				Log.e(
+					TAG,
+					Conca.t(	
+						"an error occurred while attempting to get a bitmap from [",
+						addr,
+						"]"
+					),
+					e
+				);
+			}
 		} 
 		
 		
@@ -128,7 +135,7 @@ public class WebClient implements IWebClient {
 		
 		try {
 			responseStr = postJson(addr, jsonRequest);
-			if (!StringUtils.isNotBlank(responseStr)) {
+			if (!StringUtils.isNotBlank(responseStr) && BuildConfig.DEBUG) {
 				Log.w(TAG, Conca.t(
 					"response empty:request=[", jsonRequest.toString(), 
 					"],addr=[", addr, "]"
@@ -136,7 +143,9 @@ public class WebClient implements IWebClient {
 			}
 			
 		} catch (Exception e) {
-			Log.e(TAG, "error occurred while attempting to get JSON obj", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "error occurred while attempting to get JSON obj", e);
+			}
 			
 		} 		
 		
@@ -156,6 +165,14 @@ public class WebClient implements IWebClient {
 		httpPost.setHeader("Content-type", "application/json");
 		
 		ResponseHandler<String> respHandler = new BasicResponseHandler();
+		
+		if (BuildConfig.DEBUG) {
+			Log.d(
+				TAG, 
+				Conca.t("attempting to send json to '", addr,
+				"'; json=", jsonRequest)
+			);
+		}
 		
 		final String respStr = client.execute(httpPost, respHandler);
 		return respStr;
@@ -182,7 +199,10 @@ public class WebClient implements IWebClient {
 	
 	private String sendRequest(final String addr, final Object requestObj) {
 		if (StringUtils.isBlank(addr) || requestObj == null) {
-			Log.e(TAG, "problem sending request");
+			if (BuildConfig.DEBUG) { 
+				Log.e(TAG, "problem sending request");
+			}
+			
 			return null;
 		}
 		
@@ -201,8 +221,10 @@ public class WebClient implements IWebClient {
 		try {
 			responseObj = new Gson().fromJson(jsonResponse, returnType);
 			
-		} catch (Exception e) {
-			Log.e(getClass().getSimpleName(), "error occurred while parsing response", e);
+		} catch (Throwable e) {
+			if (BuildConfig.DEBUG) {
+				Log.e(getClass().getSimpleName(), "error occurred while parsing response", e);
+			}
 		}
 		
 		return responseObj;

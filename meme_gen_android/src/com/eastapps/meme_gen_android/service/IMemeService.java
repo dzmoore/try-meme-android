@@ -22,7 +22,7 @@ public interface IMemeService {
 	String getNewInstallKey();
 
 
-	List<MemeBackground> getFavMemeTypesForUser(long userId);
+	List<MemeBackground> getFavMemeBackgroundsForUser(long userId);
 
 	List<MemeBackground> getAllMemeBackgrounds();
 	MemeBackground getMemeBackground(final long id);

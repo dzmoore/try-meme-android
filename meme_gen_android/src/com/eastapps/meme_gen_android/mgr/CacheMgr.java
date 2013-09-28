@@ -15,6 +15,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -68,7 +69,9 @@ public class CacheMgr {
 			this.installMap = kryo.readObject(input, ConcurrentHashMap.class);
 
 		} catch (FileNotFoundException e1) {
-			Log.e(TAG, "err", e1);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e1);
+			}
 		}
 		
 	}
@@ -154,7 +157,9 @@ public class CacheMgr {
 			}
 			
 		} catch (Exception e) {
-			Log.e(TAG, "err occurred while writing install file", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err occurred while writing install file", e);
+			}
 			
 		} finally {
 			if (output != null) {

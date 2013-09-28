@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
@@ -62,7 +63,9 @@ public class MemeViewFragment extends Fragment {
 				topTextView.setTextSize((getMeme().getMeme().getBottomText().getFontSize()).floatValue());
 				
 			} catch (Exception e) {
-				Log.e(TAG, "err", e);
+				if (BuildConfig.DEBUG) {
+					Log.e(TAG, "err", e);
+				}
 			}
 //		}
 		

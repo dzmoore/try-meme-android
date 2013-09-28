@@ -3,6 +3,7 @@ package com.eastapps.mgs.web;
 import com.eastapps.mgs.model.CrawlerBackground;
 import com.eastapps.mgs.model.CrawlerMeme;
 import com.eastapps.mgs.model.DeviceInfo;
+import com.eastapps.mgs.model.LvPopularityType;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeText;
@@ -146,6 +147,15 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
             }
         };
     }
+	
+	public Converter<LvPopularityType, String> getLvPopularityTypeToStringConverter() {
+		return new Converter<LvPopularityType, String>() {
+			@Override
+			public String convert(LvPopularityType source) {
+				return source.getPopularityTypeName() == null ? "null" : source.getPopularityTypeName();
+			}
+		};
+	}
 
 	public void installLabelConverters(FormatterRegistry registry) {
         registry.addConverter(getMemeToStringConverter());
@@ -163,6 +173,7 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         registry.addConverter(getSampleMemeToStringConverter());
         registry.addConverter(getIdToSampleMemeConverter());
         registry.addConverter(getStringToSampleMemeConverter());
+        registry.addConverter(getLvPopularityTypeToStringConverter());
     }
 
 	public void afterPropertiesSet() {

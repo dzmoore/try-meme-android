@@ -47,8 +47,10 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public long storeMeme(Meme shallowMeme) {
-		return client.storeMeme(shallowMeme);
+	public long storeMeme(final Meme meme) {
+		meme.setCreatedByUser(new MemeUser());
+		meme.getCreatedByUser().setId(UserMgr.getUser().getId());
+		return client.storeMeme(meme);
 	}
 
 	@Override
@@ -280,11 +282,6 @@ public class MemeService implements IMemeService {
 		
 	}
 	
-//	@Override
-//	public ShallowUser getUser(final int userId) {
-//		return client.getUserForId(userId);
-//	}
-
 	@Override
 	public String getNewInstallKey() {
 		// TODO: impl install key
@@ -298,7 +295,7 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public List<MemeBackground> getFavMemeTypesForUser(final long userId) {
+	public List<MemeBackground> getFavMemeBackgroundsForUser(final long userId) {
 		return client.getFavMemeBackgroundsForUser(userId);
 	}
 

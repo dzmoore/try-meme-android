@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.widget;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.util.Conca;
@@ -54,17 +55,19 @@ public class OutlineTextView extends TextView {
 		
 		setTextColor(getResources().getColor(R.color.white));
 		
-		for (int i = 0; i < attrs.getAttributeCount(); i++) {
-			Log.d(
-				getClass().getSimpleName(), 
-				Conca.t(
-					"attr:[",
-					attrs.getAttributeName(i),
-					"]:[",
-					attrs.getAttributeValue(i),
-					"]"
-				)
-			);
+		if (BuildConfig.DEBUG) {
+			for (int i = 0; i < attrs.getAttributeCount(); i++) {
+				Log.d(
+					getClass().getSimpleName(), 
+					Conca.t(
+						"attr:[",
+						attrs.getAttributeName(i),
+						"]:[",
+						attrs.getAttributeValue(i),
+						"]"
+					)
+				);
+			}
 		}
 		
 		setShadowLayer(getShadowRadius(attrs), 0, 0, getResources().getColor(R.color.black));
@@ -183,8 +186,10 @@ public class OutlineTextView extends TextView {
 
 	@Override
 	public void setShadowLayer(float radius, float dx, float dy, int color) {
-//		super.setShadowLayer(radius, dx, dy, color);
-		Log.d(getClass().getSimpleName(), "setshadowlayer", new Exception("stack trace only"));
+		if (BuildConfig.DEBUG) {
+			Log.d(getClass().getSimpleName(), "setshadowlayer", new Exception("stack trace only"));
+		}
+		
 		borderSize = radius;
 		borderColor = color;
 		invalidate();

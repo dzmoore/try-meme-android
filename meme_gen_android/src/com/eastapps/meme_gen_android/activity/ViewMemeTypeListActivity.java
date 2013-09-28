@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.mgr.AdMgr;
@@ -191,7 +192,10 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 
 	private void handleFilterBtnClicked(Map<String, Object> params) {
 		if (params == null) {
-			Log.e(getClass().getSimpleName(), "error filtering types; params null");
+			if (BuildConfig.DEBUG) {
+				Log.e(getClass().getSimpleName(), "error filtering types; params null");
+			}
+			
 			return;
 		}
 		

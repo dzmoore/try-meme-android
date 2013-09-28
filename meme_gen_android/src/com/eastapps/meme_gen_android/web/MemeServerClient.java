@@ -10,6 +10,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
@@ -90,7 +91,9 @@ public class MemeServerClient implements IMemeServerClient {
 				}
 
 			} catch (Exception e) {
-				Log.e(TAG, "err", e);
+				if (BuildConfig.DEBUG) {
+					Log.e(TAG, "err", e);
+				}
 			}
 		}
 
@@ -181,7 +184,9 @@ public class MemeServerClient implements IMemeServerClient {
 			typedResult = new Gson().fromJson(result, type);
 			
 		} catch (Exception e) {
-			Log.e(TAG, "err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e);
+			}
 		}
 		
 		return typedResult;
@@ -195,7 +200,9 @@ public class MemeServerClient implements IMemeServerClient {
 			typedResult = new Gson().fromJson(result, new TypeToken<Collection<T>>(){}.getType());
 			
 		} catch (Exception e) {
-			Log.e(TAG, "err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e);
+			}
 		}
 		
 		return typedResult;
@@ -213,7 +220,9 @@ public class MemeServerClient implements IMemeServerClient {
 			typedResult = new Gson().fromJson(result, type);
 			
 		} catch (Exception e) {
-			Log.e(TAG, "err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e);
+			}
 		}
 		
 		return typedResult;
@@ -365,7 +374,9 @@ public class MemeServerClient implements IMemeServerClient {
 			}
 			
 		} catch (Exception e) {
-			Log.e(TAG, "err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(TAG, "err", e);
+			}
 		}
 		
 		return types;

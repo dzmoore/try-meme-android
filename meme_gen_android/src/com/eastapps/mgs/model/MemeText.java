@@ -1,9 +1,12 @@
 package com.eastapps.mgs.model;
 
+import java.io.Serializable;
 
-public class MemeText {
 
-    private String text;
+public class MemeText implements Serializable {
+	private static final long serialVersionUID = 5778466522510355213L;
+
+	private String text;
 
     private Double fontSize;
 

@@ -9,6 +9,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_server.domain.MemeText;
 
@@ -19,7 +20,7 @@ public class Utils {
 		T result = defaultValue;
 		
 		if (obj == null) {
-			if (defaultValue == null) {
+			if (defaultValue == null && BuildConfig.DEBUG) {
 				Log.w(TAG, "default value is null", new Exception("stack trace only"));
 			}
 			
@@ -39,7 +40,9 @@ public class Utils {
 			bm = BitmapFactory.decodeStream(bais);
 			
 		} catch (Exception e) {
-			Log.e(MemeListItemData.class.getSimpleName(), "Err", e);
+			if (BuildConfig.DEBUG) {
+				Log.e(MemeListItemData.class.getSimpleName(), "Err", e);
+			}
 		
 		} finally {
 			if (bais != null) {
@@ -65,7 +68,9 @@ public class Utils {
 				bytes = baos.toByteArray();
 				
 			} catch (Exception e) {
-				Log.e(Utils.class.getSimpleName(), "err", e);
+				if (BuildConfig.DEBUG) {
+					Log.e(Utils.class.getSimpleName(), "err", e);
+				}
 			
 			} finally {
 				if (baos != null) {
