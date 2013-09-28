@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.util.Conca;
@@ -56,9 +58,11 @@ public class ResizableImageView extends ImageView {
 				
 			}
 			
-			Log.v(TAG, Conca.t("deviceWidth=", deviceWidth, "; deviceHeight=", deviceHeight,
+			if (BuildConfig.DEBUG) {
+				Log.v(TAG, Conca.t("deviceWidth=", deviceWidth, "; deviceHeight=", deviceHeight,
 					"; imageWidth=", imageWidth, "; imageHeight=", imageHeight, 
 					"; newWidth=", newImageWidth, "; newHeight=", newImageHeight, ";"));
+			}
 			
 			setMeasuredDimension(newImageWidth, newImageHeight);
 			

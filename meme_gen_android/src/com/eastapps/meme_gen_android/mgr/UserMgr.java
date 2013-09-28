@@ -5,8 +5,9 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
+import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.service.IMemeService;
-import com.eastapps.meme_gen_android.service.impl.MemeServiceV2;
+import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
@@ -33,12 +34,12 @@ public class UserMgr {
 	}
 
 	private IMemeService getMemeService() {
-		return MemeServiceV2.getInstance();
+		return MemeService.getInstance();
 	}
 	
 	private void queryForAndInitFavTypes() {
 		if (user != null && getMemeService() != null) {
-			favTypes = getMemeService().getFavMemeTypesForUser(user.getId());
+			favTypes = getMemeService().getFavMemeBackgroundsForUser(user.getId());
 		}
 	}
 
@@ -64,7 +65,7 @@ public class UserMgr {
 			newUser.setId(newUserId);
 			this.user = newUser;
 			
-		} else {
+		} else if (BuildConfig.DEBUG) {
 			Log.w("unable to create new user", new Exception("stack trace only"));
 		}
 	}
@@ -82,7 +83,7 @@ public class UserMgr {
 				inst.favTypes = (List<MemeBackground>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
 				
 			} else {
-				inst.favTypes = inst.getMemeService().getFavMemeTypesForUser(getUser().getId());
+				inst.favTypes = inst.getMemeService().getFavMemeBackgroundsForUser(getUser().getId());
 			}
 		}
 		

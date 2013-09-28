@@ -50,6 +50,19 @@ public class MemeController {
             if (logger.isTraceEnabled()) {
                 logger.trace(StringUtils.join("successfully validated meme {", meme, "}"));
             }
+            
+            if (meme.getTopText() != null) {
+            	meme.getTopText().setId(null);
+            }
+            
+            if (meme.getBottomText() != null) {
+            	meme.getBottomText().setId(null);
+            }
+            
+            meme.setCreatedByUser(MemeUser.findMemeUser(meme.getCreatedByUser().getId()));
+            meme.setMemeBackground(MemeBackground.findMemeBackground(meme.getMemeBackground().getId()));
+            
+            meme.setId(null);
             meme.persist();
             result = meme.getId();
         }
