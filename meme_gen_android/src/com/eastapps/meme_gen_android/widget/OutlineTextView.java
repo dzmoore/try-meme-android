@@ -20,6 +20,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 public class OutlineTextView extends TextView {
@@ -210,8 +211,14 @@ public class OutlineTextView extends TextView {
 		requestLayout();
 		initPaint();
 	}
+	
+	@Override
+	protected void onVisibilityChanged(View changedView, int visibility) {
+		super.onVisibilityChanged(changedView, visibility);
+		
+		invalidate();
+	}
 
-	@SuppressLint({ "DrawAllocation", "DrawAllocation" })
 	@Override
 	protected void onDraw(Canvas canvas) {
 		Layout layout = new StaticLayout(this.text, textPaintOutline, getWidth(), Layout.Alignment.ALIGN_CENTER, spacingMult, spacingAdd, includePad);

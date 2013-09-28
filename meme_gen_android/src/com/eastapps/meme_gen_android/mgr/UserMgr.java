@@ -44,19 +44,12 @@ public class UserMgr {
 	}
 
 	private void createNewUser() {
-		// get a new install key
 		final String installKey = getMemeService().getNewInstallKey();
 		
-		// set the username and install key to the 
-		// new install key from the server
 		final MemeUser newUser = new MemeUser();
 		newUser.setUsername(installKey);
+		newUser.setActive(true);
 		
-		// TODO: install key
-//		newUser.setInstallKey(installKey);
-		
-		// store the new user and check whether the 
-		// store was successful
 		final long newUserId = getMemeService().storeNewUser(newUser);
 		if (newUserId > 0) {
 			// store successful;
@@ -66,7 +59,7 @@ public class UserMgr {
 			this.user = newUser;
 			
 		} else if (BuildConfig.DEBUG) {
-			Log.w("unable to create new user", new Exception("stack trace only"));
+			Log.w(TAG, "unable to create new user (id invalid)");
 		}
 	}
 	
@@ -80,7 +73,12 @@ public class UserMgr {
 		if (inst.favTypes == null) {
 			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
 			if (cacheMgrInst.containsKey(Constants.KEY_FAV_TYPES)) {
-				inst.favTypes = (List<MemeBackground>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
+				
+				@SuppressWarnings("unchecked")
+				final List<MemeBackground> fromCache 
+					= (List<MemeBackground>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
+				
+				inst.favTypes = fromCache;
 				
 			} else {
 				inst.favTypes = inst.getMemeService().getFavMemeBackgroundsForUser(getUser().getId());
@@ -90,13 +88,6 @@ public class UserMgr {
 		return inst.favTypes;
 	}
 
-//	public static void saveFavForUser(int typeId, ICallback<Boolean> iCallback) {
-//		final UserMgr inst = getInstance();
-//		final ShallowUser u = getUser();
-//		
-//		iCallback.callback(inst.getMemeService().storeFavType(u.getId(), typeId));
-//	}
-	
 	public static MemeUser getUser() {
 		final UserMgr inst = getInstance();
 		
@@ -114,13 +105,6 @@ public class UserMgr {
 		
 		return inst.user;
 	}
-
-//	public static void removeFavForUser(int typeId, ICallback<Boolean> iCallback) {
-//		final UserMgr inst = getInstance();
-//		final ShallowUser u = getUser();
-//		
-//		iCallback.callback(inst.getMemeService().removeFavType(u.getId(), typeId));
-//	}
 
 }
 

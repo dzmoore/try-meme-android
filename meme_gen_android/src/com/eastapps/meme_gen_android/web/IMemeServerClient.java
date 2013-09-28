@@ -26,8 +26,6 @@ public interface IMemeServerClient {
 
 	List<MemeBackground> getFavMemeBackgroundsForUser(long userId);
 
-	String getNewInstallKey();
-
 	boolean storeFavMemeBackground(long userId, long memeBackgroundId);
 
 	boolean removeFavMeme(long userId, long typeId);
