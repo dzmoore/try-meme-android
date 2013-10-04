@@ -1,15 +1,18 @@
 package com.eastapps.meme_gen_android.web;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
 import com.eastapps.mgs.model.Meme;
@@ -38,8 +41,9 @@ public class MemeServerClientV2 implements IMemeServerClient {
 	private String storeFavoriteMemeBackgroundUrl;
 	private String removeFavoriteMemeBackgroundUrl;
 	private String findMemeBackgroundsByNameUrl;
+	private ICallback<Exception> exceptionCallback;
 
-	public MemeServerClientV2(Context context) {
+	public MemeServerClientV2(final Context context) {
 		super();
 
 		final String environment = context.getString(R.string.environment);
@@ -69,6 +73,15 @@ public class MemeServerClientV2 implements IMemeServerClient {
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
 		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));		
+		webClient.setExceptionCallback(new ICallback<Exception>() {
+			@Override
+			public void callback(Exception obj) {
+
+				if (exceptionCallback != null) {
+					exceptionCallback.callback(obj);
+				}
+			}
+		});
 		
 	}
 	
@@ -215,6 +228,15 @@ public class MemeServerClientV2 implements IMemeServerClient {
 			query, 
 			new TypeToken<Collection<MemeBackground>>(){}.getType()
 		);
+	}
+
+	public ICallback<Exception> getExceptionCallback() {
+		return exceptionCallback;
+	}
+
+	@Override
+	public void setExceptionCallback(ICallback<Exception> exceptionCallback) {
+		this.exceptionCallback = exceptionCallback;
 	}
 
 }

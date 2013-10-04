@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_android.web;
 
 import java.util.List;
 
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.mgs.model.Meme;
@@ -31,6 +32,8 @@ public interface IMemeServerClient {
 	boolean removeFavMeme(long userId, long typeId);
 
 	List<MemeBackground> getMemeBackgroundsByName(String query);
+
+	void setExceptionCallback(ICallback<Exception> exceptionCallback);
 
 
 }

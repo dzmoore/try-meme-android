@@ -3,6 +3,7 @@ package com.eastapps.meme_gen_android.activity;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -35,6 +36,7 @@ import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.mgr.AdMgr;
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -90,7 +92,23 @@ public class CreateMemeActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_meme_layout);
 		
-		memeService = MemeService.getInstance();		
+		memeService = MemeService.getInstance();
+		memeService.setConnectionExceptionCallback(new ICallback<Exception>() {
+			@Override
+			public void callback(Exception obj) {
+				if (obj instanceof UnknownHostException) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(
+								CreateMemeActivity.this, 
+								"Unable to connect to server.", 
+								Toast.LENGTH_LONG
+							).show();
+						}
+					});
+				}
+			}
+		});
 		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
 		

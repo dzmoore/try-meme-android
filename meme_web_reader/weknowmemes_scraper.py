@@ -3,9 +3,6 @@ import urllib2
 import re
 import json
 import sys
-import boto
-import Image
-import cStringIO
 
 def get_page_text(url):
     pageResults = urllib2.urlopen(url)
@@ -67,35 +64,7 @@ def getIdFromUrl(url):
 	
 	return idResult
 	
-	
-def writeImgToS3(imgUrl, imgFile):
-	fp = urllib.urlopen(imgUrl)
-
-	# Load the URL data into the image
-	img = Image.open(cStringIO.StringIO(fp.read()))
-
-	# Resize the image
-	#im2 = im.resize((500, 100), Image.NEAREST)  
-
-	# saving the image into a cStringIO object to avoid writing to disk
-	out_img = cStringIO.StringIO()
-
-	# You MUST specify the file type because there is no file name to discern it from
-	img.save(out_img, 'JPEG')
-
-	# Now we connect to our s3 bucket and upload from memory
-	# credentials stored in environment AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-	conn = boto.connect_s3()
-
-	#Connect to bucket and create key
-	b = conn.get_bucket('mgs_dev_bucket')
-	imgKey = b.new_key(imgFile)
-
-	#  setting contents from the in-memory string provided by cStringIO
-	imgKey.set_contents_from_string(out_img.getvalue())
-
-		
-		
+			
 			
 def writeImgFromUrl(imgUrl, imgFilename):
 	opener = urllib2.build_opener()

@@ -96,6 +96,25 @@ public class CacheMgr {
 	}
 	
 	public void addToCache(final String key, final Serializable val) {
+		if (installMap == null) {
+			if (BuildConfig.DEBUG) {
+				Log.e(getClass().getSimpleName(), "installMap is null");
+			}
+			return;
+			
+		} else if (val == null) {
+			if (BuildConfig.DEBUG) {
+				Log.e(getClass().getSimpleName(), "val for key " + String.valueOf(key) + " is null");
+			}
+			return;
+			
+		} else if (key == null) {
+			if (BuildConfig.DEBUG) {
+				Log.e(getClass().getSimpleName(), "key is null");
+			}
+			return;
+		}
+		
 		installMap.put(key, val);
 	}
 	

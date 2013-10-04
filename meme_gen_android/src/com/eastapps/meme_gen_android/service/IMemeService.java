@@ -5,6 +5,7 @@ import java.util.List;
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.meme_gen_server.domain.ShallowUser;
@@ -39,4 +40,7 @@ public interface IMemeService {
 	boolean storeFavType(long userId, long memeBackgroundId);
 
 	boolean removeFavType(long userId, long memeBackgroundId);
+
+	void setConnectionExceptionCallback(
+			ICallback<Exception> connectionExceptionCallback);
 }
