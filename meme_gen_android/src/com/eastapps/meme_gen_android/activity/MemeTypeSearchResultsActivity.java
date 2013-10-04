@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.activity;
 
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,22 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 		}
 	
 		memeService = MemeService.getInstance();	
+		memeService.setConnectionExceptionCallback(new ICallback<Exception>() {
+			@Override
+			public void callback(Exception obj) {
+				if (obj instanceof UnknownHostException) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(
+								MemeTypeSearchResultsActivity.this, 
+								"Unable to connect to server.", 
+								Toast.LENGTH_LONG
+							).show();
+						}
+					});
+				}
+			}
+		});
 		
 		items = Collections.emptyList();
 	}

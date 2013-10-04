@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.mgr;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -81,11 +83,17 @@ public class UserMgr {
 				inst.favTypes = fromCache;
 				
 			} else {
-				inst.favTypes = inst.getMemeService().getFavMemeBackgroundsForUser(getUser().getId());
+				inst.favTypes = inst.getMemeService().getFavMemeBackgroundsForUser(getUserId());
 			}
 		}
 		
-		return inst.favTypes;
+		return inst.favTypes == null ? new ArrayList<MemeBackground>(0) : inst.favTypes;
+	}
+	
+	public static Long getUserId() {
+		final MemeUser user = getUser();
+		
+		return user == null ? -1 : user.getId();
 	}
 
 	public static MemeUser getUser() {

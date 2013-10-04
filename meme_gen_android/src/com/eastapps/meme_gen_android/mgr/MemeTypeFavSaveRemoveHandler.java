@@ -48,7 +48,7 @@ public class MemeTypeFavSaveRemoveHandler {
 					params.put("action", "Removed");
 					
 					final boolean success = MemeService.getInstance().removeFavType(
-						UserMgr.getUser().getId(),
+						UserMgr.getUserId(),
 						item.getMemeBackground().getId()
 					);
 					

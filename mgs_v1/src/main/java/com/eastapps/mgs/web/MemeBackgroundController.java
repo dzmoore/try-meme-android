@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +29,17 @@ import org.springframework.web.util.WebUtils;
 @RooWebScaffold(path = "memebackgrounds", formBackingObject = MemeBackground.class)
 public class MemeBackgroundController {
 
-    private MemeService memeService;
+	private static final Logger logger = Logger.getLogger(MemeBackgroundController.class);
 
+    @RequestMapping(value = "/create/json", method = RequestMethod.POST) 
+    @ResponseBody
+    public Long createJson(@RequestBody final MemeBackground memeBackground) {
+    	logger.debug(new StringBuilder().append(memeBackground.getFilePath()).append(' ').append(memeBackground.getDescription()).append(' ').append(memeBackground.getActive()));
+    	memeBackground.setActive(true);
+    	memeBackground.persist();
+    	return memeBackground.getId();
+    }
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String create(@Valid MemeBackground memeBackground, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {

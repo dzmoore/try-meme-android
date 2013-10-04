@@ -15,6 +15,7 @@ import android.content.Context;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -31,11 +32,20 @@ public class MemeService implements IMemeService {
 	
 	private IMemeServerClient client;
 	private static Context context;
+	private ICallback<Exception> connectionExceptionCallback;
 	
 	private MemeService() {
 		super();
 		
 		client = new MemeServerClientV2(context);
+		client.setExceptionCallback(new ICallback<Exception>() {
+			@Override
+			public void callback(Exception obj) {
+				if (connectionExceptionCallback != null) {
+					connectionExceptionCallback.callback(obj);
+				}
+			}
+		});
 	}
 	
 	public static synchronized void initialize(Context context) {
@@ -50,7 +60,7 @@ public class MemeService implements IMemeService {
 	@Override
 	public long storeMeme(final Meme meme) {
 		meme.setCreatedByUser(new MemeUser());
-		meme.getCreatedByUser().setId(UserMgr.getUser().getId());
+		meme.getCreatedByUser().setId(UserMgr.getUserId());
 		return client.storeMeme(meme);
 	}
 
@@ -183,9 +193,11 @@ public class MemeService implements IMemeService {
 		if (!containsKey || allMemeBackgrounds == null || allMemeBackgrounds.size() == 0) {
 			allMemeBackgrounds = client.getAllMemeBackgrounds();
 			
-			CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES, new ArrayList<MemeBackground>(allMemeBackgrounds));
-			
-			initAllTypesMap(allMemeBackgrounds);
+			if (allMemeBackgrounds != null) {
+				CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES, new ArrayList<MemeBackground>(allMemeBackgrounds));
+				
+				initAllTypesMap(allMemeBackgrounds);
+			}
 		}
 		
 		return allMemeBackgrounds;
@@ -227,7 +239,11 @@ public class MemeService implements IMemeService {
 	
 
 	private List<MemeListItemData> populateMemeListItemDataList(final List<MemeBackground> types) {
-		final List<MemeListItemData> listData = new ArrayList<MemeListItemData>(types.size());
+		final List<MemeListItemData> listData = new ArrayList<MemeListItemData>(types == null ? 0 : types.size());
+		if (types == null) {
+			return listData;
+		}
+		
 		for (int i = 0; i < types.size(); i++) {
 			listData.add(new MemeListItemData());
 		}
@@ -314,6 +330,16 @@ public class MemeService implements IMemeService {
 
 	public List<MemeBackground> findMemeBackgroundsByName(final String query) {
 		return client.getMemeBackgroundsByName(query);
+	}
+
+	public ICallback<Exception> getConnectionExceptionCallback() {
+		return connectionExceptionCallback;
+	}
+
+	@Override
+	public void setConnectionExceptionCallback(
+			ICallback<Exception> connectionExceptionCallback) {
+		this.connectionExceptionCallback = connectionExceptionCallback;
 	}
 
 
