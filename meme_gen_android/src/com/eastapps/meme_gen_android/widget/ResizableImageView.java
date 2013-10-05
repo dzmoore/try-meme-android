@@ -29,33 +29,21 @@ public class ResizableImageView extends ImageView {
 		
 		final float deviceWidth = getMeasuredWidth();
 		final float deviceHeight = getMeasuredHeight();
-//		final float deviceHeight = MeasureSpec.getSize(heightMeasureSpec); // appears to always be zero
 		if (d != null && (deviceWidth > 0)) {
 			
 			final float imageWidth = d.getIntrinsicWidth();
 			final float imageHeight = d.getIntrinsicHeight();
 			
-			// determine the greater image length (width or height)
-			// set the greater image length to the measured length
+			// determine the shorter view length (width or height)
+			// set the shorter length of the image to that of the view
 			// scale the other length to the image ratio
 			int newImageWidth = (int) Math.ceil(deviceWidth);
 			int newImageHeight = (int) Math.ceil(deviceHeight);
 			
-			// ceil not round - avoid thin vertical gaps along the left/right edges
-			if (imageWidth > imageHeight) {
-				// width is greater, scale the height 
-				// scaledHeight = deviceWidth * (imgHeight / imgWidth)
-				
-				newImageHeight =
-					(int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
-				
-				
-			} else {
-				// height is greater (or equal), scale the width
-				// scaledWidth = deviceHeight * (imgWidth / imgHeight)
-//				newImageHeight = (int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
+			if (deviceHeight < deviceWidth) {
 				newImageWidth = (int) Math.ceil(newImageHeight * (imageWidth / imageHeight));
-				
+			} else {
+				newImageHeight = (int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
 			}
 			
 			if (BuildConfig.DEBUG) {
@@ -66,9 +54,7 @@ public class ResizableImageView extends ImageView {
 			
 			setMeasuredDimension(newImageWidth, newImageHeight);
 			
-		} //else {
-//			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//		}
+		}
 	}
 
 }

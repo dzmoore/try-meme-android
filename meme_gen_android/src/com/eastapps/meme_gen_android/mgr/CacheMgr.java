@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.objenesis.instantiator.ObjectInstantiator;
 
@@ -26,11 +28,16 @@ public class CacheMgr {
 	private static CacheMgr instance;
 	private Map<String, Serializable> installMap;
 	private Context context;
+	private AtomicBoolean isStoring;
+	private AtomicBoolean additionalStoringWaiting;
 	
 	public CacheMgr(final Context context) {
 		super();
 
 		this.context = context;
+		
+		isStoring = new AtomicBoolean(false);
+		additionalStoringWaiting = new AtomicBoolean(false);
 		
 		getInstallFile().delete();
 		
@@ -140,7 +147,8 @@ public class CacheMgr {
 		final Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				writeMapIntoInstallFile(getInstallFile());
+				doWriteMapIntoInstallFileWithSyncing();
+				
 			}
 		};
 		
@@ -194,6 +202,28 @@ public class CacheMgr {
 					out.close();
 				} catch (Exception e) { }
 			}
+		}
+	}
+
+	private void doWriteMapIntoInstallFileWithSyncing() {
+		if (isStoring.compareAndSet(false, true)) {
+			writeMapIntoInstallFile(getInstallFile());
+			
+		} else if (additionalStoringWaiting.compareAndSet(false, true)) {
+			while (!isStoring.compareAndSet(false, true)) {
+				try {
+					Thread.sleep(150L);
+				} catch (Exception e) {
+					if (BuildConfig.DEBUG) {
+						Log.e(CacheMgr.class.getSimpleName(), "error", e);
+					}
+				}
+			}
+			
+			writeMapIntoInstallFile(getInstallFile());
+			
+			additionalStoringWaiting.set(false);
+			isStoring.set(false);
 		}
 	}
 	

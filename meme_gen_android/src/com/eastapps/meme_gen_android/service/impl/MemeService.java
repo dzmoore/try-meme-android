@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -251,8 +251,7 @@ public class MemeService implements IMemeService {
 		final int corePoolSize = 5;
 		final int maxPoolSize = 8;
 		
-		final BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(
-			Math.max(Math.min(types.size(), maxPoolSize), 1));
+		final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
 			
 		ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
 		
