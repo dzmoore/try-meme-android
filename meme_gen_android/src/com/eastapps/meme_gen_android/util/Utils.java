@@ -39,7 +39,7 @@ public class Utils {
 		try {
 			bm = BitmapFactory.decodeStream(bais);
 			
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			if (BuildConfig.DEBUG) {
 				Log.e(MemeListItemData.class.getSimpleName(), "Err", e);
 			}
