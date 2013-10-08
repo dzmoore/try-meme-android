@@ -1,6 +1,7 @@
 package com.eastapps.mgs.model;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eastapps.mgs.util.TestUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @Configurable
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -140,7 +142,7 @@ public class MemeIntegrationTest extends AbstractIntegrationTest {
 		final MemeBackground memeBackground = new MemeBackground();
 		memeBackground.setActive(true);
 		memeBackground.setDescription("test background");
-		memeBackground.setFilePath("test.path");
+		memeBackground.setFilePath("College_Freshman.jpg");
 		meme.setMemeBackground(memeBackground);
 		
 		final MemeText topText = new MemeText();
@@ -162,6 +164,46 @@ public class MemeIntegrationTest extends AbstractIntegrationTest {
 		
 		TestCase.assertNotNull(result);
 		TestCase.assertTrue(result > 0);
+	}
+	
+	@Test
+	public void testGetMemesForUser() {
+		final MemeUser user = new MemeUser();
+		user.setId(1L);
+	
+		final Meme meme = new Meme();
+		final MemeBackground memeBackground = new MemeBackground();
+		memeBackground.setActive(true);
+		memeBackground.setDescription("test background");
+		memeBackground.setFilePath("College_Freshman.jpg");
+		meme.setMemeBackground(memeBackground);
+		
+		final MemeText topText = new MemeText();
+		topText.setFontSize(26.0);
+		topText.setText("top text");
+		
+		meme.setTopText(topText);
+		
+		final MemeText bottomText = new MemeText();
+		bottomText.setFontSize(26.0);
+		bottomText.setText("bottom text");
+		meme.setBottomText(bottomText);
+		
+		meme.setCreatedByUser(user);
+		
+		final Long result = TestUtils.getJSONObject("/memes/create/json", meme, Long.class);
+		
+		TestCase.assertNotNull(result);
+		TestCase.assertTrue(result > 0);
+		
+		@SuppressWarnings("unchecked")
+		final List<Meme> memes = (List<Meme>) TestUtils.getJSONList(
+			"/memes/get_for_user/json/1/10/1", 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
+		
+		TestCase.assertNotNull("memes returned for user is null", memes);
+		TestCase.assertTrue("memes for user zero length", memes.size() > 0);
 	}
 	
 

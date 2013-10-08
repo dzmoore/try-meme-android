@@ -5,6 +5,9 @@ import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeText;
 import com.eastapps.mgs.model.MemeUser;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
@@ -71,6 +74,23 @@ public class MemeController {
         }
         return result;
     }
+    
+    @RequestMapping(value = "/get_for_user/json//{page}/{size}/{user_id}")
+    @ResponseBody
+    public List<Meme> getMemesForUser(
+    	@PathVariable("user_id") final Long userId,
+    	@PathVariable("page") final Integer page,
+    	@PathVariable("size") final Integer size) 
+	{
+    	List<Meme> results = new ArrayList<Meme>(0);
+    	if (page != null || size != null) {
+    		final int sizeNo = size == null ? 10 : size.intValue();
+    		final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
+    		results = Meme.findMemesForUserId(userId, firstResult, sizeNo);
+    	}
+    	
+    	return results;
+	}
 
     @RequestMapping(params = "form", produces = "text/html")
     public String createForm(Model uiModel) {

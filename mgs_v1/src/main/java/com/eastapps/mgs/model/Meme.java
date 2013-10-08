@@ -84,6 +84,15 @@ public class Meme {
     public static List<com.eastapps.mgs.model.Meme> findAllMemes() {
         return entityManager().createQuery("SELECT o FROM Meme o", Meme.class).getResultList();
     }
+    
+    public static List<Meme> findMemesForUserId(final Long userId, final int firstResult, final int maxResults) {
+    	return entityManager()
+    		.createQuery("select m from Meme m where m.createdByUser.id = :userId", Meme.class)
+    		.setParameter("userId", userId)
+    		.setFirstResult(firstResult)
+    		.setMaxResults(maxResults)
+    		.getResultList();
+    }
 
     public static com.eastapps.mgs.model.Meme findMeme(Long id) {
         if (id == null) return null;

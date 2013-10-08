@@ -33,5 +33,7 @@ public interface IMemeServerClient {
 
 	void setExceptionCallback(ICallback<Exception> exceptionCallback);
 
+	List<Meme> getMemesForUser(long userId);
+
 
 }

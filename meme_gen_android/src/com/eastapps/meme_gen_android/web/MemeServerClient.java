@@ -41,6 +41,7 @@ public class MemeServerClient implements IMemeServerClient {
 	private String storeFavoriteMemeBackgroundUrl;
 	private String removeFavoriteMemeBackgroundUrl;
 	private String findMemeBackgroundsByNameUrl;
+	private String listMemesForUserUrl;
 	private ICallback<Exception> exceptionCallback;
 
 	public MemeServerClient(final Context context) {
@@ -69,6 +70,7 @@ public class MemeServerClient implements IMemeServerClient {
 		storeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceStoreMemeFavoriteJson));
 		removeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceRemoveMemeFavoriteJson));
 		findMemeBackgroundsByNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceFindMemeBackgroundsByNameJson));
+		listMemesForUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceGetMemesForUserJson));
 		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
@@ -226,6 +228,15 @@ public class MemeServerClient implements IMemeServerClient {
 		return (List<MemeBackground>) webClient.sendRequestAsJsonReturnList(
 			findMemeBackgroundsByNameUrl, 
 			query, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Meme> getMemesForUser(final long userId) {
+		return (List<Meme>) webClient.getRequestAsJsonReturnList(
+			concatUrlPieces(listMemesForUserUrl, String.valueOf(userId)),
 			new TypeToken<Collection<MemeBackground>>(){}.getType()
 		);
 	}
