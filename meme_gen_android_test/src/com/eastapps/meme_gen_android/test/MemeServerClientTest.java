@@ -92,7 +92,7 @@ public class MemeServerClientTest extends AndroidTestCase  {
 	}
 	
 	public void testGetPopularBackgrounds() {
-		final List<MemeBackground> memeBackgrounds = memeServerClient.getPopularMemeBackgrounds("test");
+		final List<MemeBackground> memeBackgrounds = memeServerClient.getPopularMemeBackgrounds("popular");
 		TestCase.assertNotNull("popular memebackgrounds null", memeBackgrounds);
 		TestCase.assertTrue("Popular meme backgrounds zero length", memeBackgrounds.size() > 0);
 	}
@@ -123,6 +123,8 @@ public class MemeServerClientTest extends AndroidTestCase  {
 	}
 	
 	public void testFavoriteMemeBackgroundsForUserId() {
+		testStoreFavoriteMemeBackground();
+		
 		final List<MemeBackground> favoriteMemeBackgrounds = memeServerClient.getFavMemeBackgroundsForUser(1);
 		
 		TestCase.assertNotNull("fav memes backgrounds for user id: result is null", favoriteMemeBackgrounds);
@@ -143,10 +145,17 @@ public class MemeServerClientTest extends AndroidTestCase  {
 	}
 	
 	public void testFindMemeBackgroundsByName() {
-		final List<MemeBackground> memeBackgrounds = memeServerClient.getMemeBackgroundsByName("test");
+		final List<MemeBackground> memeBackgrounds = memeServerClient.getMemeBackgroundsByName("College");
 		
 		TestCase.assertNotNull("find meme backgrounds by name: response null", memeBackgrounds);
 		TestCase.assertTrue("find meme backgrounds by name: response zero size", memeBackgrounds.size() > 0);
+	}
+	
+	public void testGetMemesForUser() {
+		final List<Meme> memes = memeServerClient.getMemesForUser(1);
+		
+		TestCase.assertNotNull("memes for user null", memes);
+		TestCase.assertTrue("memes for user zero length", memes.size() > 0);
 	}
 }
 

@@ -1,6 +1,8 @@
 package com.eastapps.mgs.util;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.ClientProtocolException;
@@ -16,7 +18,7 @@ import com.google.gson.Gson;
 public class TestUtils {
 	private final static Logger logger = Logger.getLogger(TestUtils.class);
 	private static final String WEB_SVC_URL = "http://localhost:8080";
-	
+		
 	public static String getJSONObject(final String addr, final Object requestObj) {
 		final String url = StringUtils.join(WEB_SVC_URL, addr);
 		
@@ -40,6 +42,10 @@ public class TestUtils {
 		} 		
 		
 		return responseStr;
+	}
+	
+	public static List<?> getJSONList(final String addr, final Type type) {
+		return new Gson().fromJson(getJSONObject(addr, null), type);
 	}
 	
 	public static <T> T getJSONObject(final String addr, final Object requestObj, final Class<T> responseType) {
@@ -73,9 +79,12 @@ public class TestUtils {
 	private static String postJson(final String addr, final String jsonRequest) throws ClientProtocolException, IOException {
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpPost httpPost = new HttpPost(addr);
-		final StringEntity strEnt = new StringEntity(jsonRequest);
 		
-		httpPost.setEntity(strEnt);
+		if (StringUtils.isNotBlank(jsonRequest)) {
+    		final StringEntity strEnt = new StringEntity(jsonRequest);
+    		
+    		httpPost.setEntity(strEnt);
+		}
 		
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-type", "application/json");
