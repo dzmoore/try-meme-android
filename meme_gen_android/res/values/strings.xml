@@ -13,7 +13,6 @@
     <string name="edit_top_text_string">Top Text</string>
     <string name="edit_bottom_text_string">Bottom Text</string>
     <string name="title_activity_view_meme">ViewMeme</string>
-<!--     <string name="webServiceResource">/beermap2/android</string> -->
 
     <item name="sslPort" format="integer" type="integer">8443</item>
     <item name="nonSslPort" format="integer" type="integer">8080</item>
@@ -22,14 +21,8 @@
     <string name="nonSslHttp">http://</string>
     <string name="prodWebServiceAddress">http://arcane-chamber-4976.herokuapp.com</string> 
     <string name="devWebServiceAddress">http://dylan-mint:8080</string> 
-<!--     <string name="webServiceMemeSuffix">memes</string>
-    <string name="webServiceBackgroundSuffix">memebackgrounds</string>-->
-<!--     <string name="webServiceBackgroundBytes">background_bytes</string> -->
     <string name="prodBackgroundFileAddress">https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs</string>
-    <!--  <string name="webServiceJsonSuffix">json</string>
-    <string name="webServiceStoreMemePrefix">store_meme</string>
-    <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
-    <string name="webServiceMemeType">meme_type_data</string> -->
+    <string name="backgroundThumbDir">thumbs2</string>
     <string name="webServiceMemesCreateJson">/memes/create/json</string>
     <string name="webServiceMemeBackgroundPopularityByTypeNameJson">/memebackgroundpopularitys/find/json</string>
     <string name="webServiceMemeUserCreateJson">/memeusers/create/json</string>
@@ -75,5 +68,6 @@
     <item name="meme_list_item_text_max_width" format="dimension" type="dimen">600dp</item>
     <color name="back_transparent">#80000000</color>
     <string name="refresh_menu_item_text">Refresh</string>
+    <string name="key_popular_backgrounds">popular_backgrounds</string>
 
 </resources>

@@ -18,7 +18,9 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.BuildConfig;
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
@@ -39,7 +41,7 @@ public class CacheMgr {
 		isStoring = new AtomicBoolean(false);
 		additionalStoringWaiting = new AtomicBoolean(false);
 		
-		getInstallFile().delete();
+//		getInstallFile().delete();
 		
 		initInstallMap();
 	}
@@ -140,10 +142,6 @@ public class CacheMgr {
 	}
 	
 	public void storeCacheToFile() {
-		storeCacheToFile(false);
-	}
-	
-	public void storeCacheToFile(final boolean returnImmediately) {
 		final Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
@@ -152,13 +150,7 @@ public class CacheMgr {
 			}
 		};
 		
-		if (returnImmediately) {
-			new Thread(runnable).start();
-			
-		} else {
-			runnable.run();
-		}
-		
+		TaskRunner.runAsync(runnable);
 	}
 	
 	private void writeMapIntoInstallFile(final File installation) {
@@ -223,8 +215,8 @@ public class CacheMgr {
 			writeMapIntoInstallFile(getInstallFile());
 			
 			additionalStoringWaiting.set(false);
-			isStoring.set(false);
 		}
+		isStoring.set(false);
 	}
 	
 }

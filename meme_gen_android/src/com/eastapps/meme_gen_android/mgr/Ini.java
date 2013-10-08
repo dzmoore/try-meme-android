@@ -2,6 +2,7 @@ package com.eastapps.meme_gen_android.mgr;
 
 import android.content.Context;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 
 public class Ini {

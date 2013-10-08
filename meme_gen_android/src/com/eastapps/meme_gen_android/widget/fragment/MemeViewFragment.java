@@ -14,7 +14,6 @@ import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.widget.OutlineTextView;
 import com.eastapps.meme_gen_android.widget.ResizableImageView;
 import com.eastapps.meme_gen_android.widget.TagMgr;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.mgs.model.Meme;
 
 public class MemeViewFragment extends Fragment {

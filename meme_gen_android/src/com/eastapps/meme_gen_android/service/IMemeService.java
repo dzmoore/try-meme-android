@@ -2,13 +2,9 @@ package com.eastapps.meme_gen_android.service;
 
 import java.util.List;
 
-import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.mgr.ICallback;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
@@ -43,4 +39,6 @@ public interface IMemeService {
 
 	void setConnectionExceptionCallback(
 			ICallback<Exception> connectionExceptionCallback);
+
+	List<MemeBackground> getPopularTypes();
 }

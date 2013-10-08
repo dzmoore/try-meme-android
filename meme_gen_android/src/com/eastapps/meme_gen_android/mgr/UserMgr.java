@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.eastapps.meme_gen_android.BuildConfig;
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
@@ -107,7 +108,7 @@ public class UserMgr {
 			} else {
 				inst.createNewUser();
 				cacheMgrInst.addToCache(Constants.KEY_USER, inst.user);
-				cacheMgrInst.storeCacheToFile(true);
+				cacheMgrInst.storeCacheToFile();
 			}
 		}
 		

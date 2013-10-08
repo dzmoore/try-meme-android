@@ -15,6 +15,9 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -34,6 +37,7 @@ import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.BuildConfig;
 import com.eastapps.meme_gen_android.R;
+import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.mgr.AdMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
@@ -56,6 +60,8 @@ public class CreateMemeActivity extends FragmentActivity {
 	protected static final float SEEK_BAR_MULTIPLIER = 1.6f;
 
 	protected static final float SEEK_BAR_SCALAR = 12;
+	
+
 
 	private MemeViewData memeViewData;
 	private List<MemeViewData> sampleMemesList;
@@ -134,7 +140,12 @@ public class CreateMemeActivity extends FragmentActivity {
 			});
 		}
 		
-		AdMgr.getInstance().initAd(this, R.id.create_view_advertising_banner_view);
+//		TaskRunner.runAsync(new Runnable() {
+//			@Override
+//			public void run() {
+//				AdMgr.getInstance().initAd(CreateMemeActivity.this, R.id.create_view_advertising_banner_view);
+//			}
+//		});
 	}
 	
 	
@@ -878,6 +889,10 @@ public class CreateMemeActivity extends FragmentActivity {
 		final int current = memePager.getCurrentItem();
 		
 		final Meme currentMeme = getMemePagerAdapter().getMemeAt(current).getMeme();
+		
+		if (currentMeme.getMemeBackground() == null) {
+			currentMeme.setMemeBackground(memeViewData.getMeme().getMemeBackground());
+		}
 		
 		return currentMeme;
 	}

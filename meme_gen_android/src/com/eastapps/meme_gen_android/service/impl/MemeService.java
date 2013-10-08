@@ -1,6 +1,7 @@
 package com.eastapps.meme_gen_android.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import android.content.Context;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
@@ -21,10 +23,11 @@ import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.web.IMemeServerClient;
-import com.eastapps.meme_gen_android.web.MemeServerClientV2;
+import com.eastapps.meme_gen_android.web.MemeServerClient;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.util.Conca;
 
 public class MemeService implements IMemeService {
 	private static final String TAG = MemeService.class.getSimpleName();
@@ -34,10 +37,14 @@ public class MemeService implements IMemeService {
 	private static Context context;
 	private ICallback<Exception> connectionExceptionCallback;
 	
-	private MemeService() {
+	private String backgroundThumbDir;
+	
+	private MemeService(final Context context2) {
 		super();
 		
-		client = new MemeServerClientV2(context);
+		backgroundThumbDir = context2.getString(R.string.backgroundThumbDir);
+		
+		client = new MemeServerClient(context);
 		client.setExceptionCallback(new ICallback<Exception>() {
 			@Override
 			public void callback(Exception obj) {
@@ -50,7 +57,7 @@ public class MemeService implements IMemeService {
 	
 	public static synchronized void initialize(Context context) {
 		MemeService.context = context;
-		instance = new MemeService();
+		instance = new MemeService(context);
 	}
 	
 	public static synchronized MemeService getInstance() {
@@ -81,7 +88,7 @@ public class MemeService implements IMemeService {
 			samples = client.getSampleMemes(memeBackgroundId);
 			sMap.put(memeBackgroundId, samples);
 			
-			cacheMgr.storeCacheToFile(true);
+			cacheMgr.storeCacheToFile();
 		}
 		
 		return samples;
@@ -101,6 +108,30 @@ public class MemeService implements IMemeService {
 		
 		return map;
 	}
+	
+	public byte[] getThumbBytes(final String path) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		byte[] bytes = new byte[0];
+		
+		final HashMap<String, Object> thumbMap = getThumbMap();
+		final boolean containsKey = thumbMap.containsKey(path);
+		if (containsKey) {
+			bytes = (byte[]) thumbMap.get(path);
+			
+		} 
+		
+		if (bytes == null || bytes.length == 0) {
+			bytes = Utils.getBytesFromBitmap(client.getBackground(path));
+			
+			if (bytes != null && bytes.length > 0) {
+				thumbMap.put(path, bytes);
+				cacheMgr.storeCacheToFile();
+			}
+		}
+		
+		return bytes;
+	}
 
 	public byte[] getBackgroundBytes(final String path) {
 		final CacheMgr cacheMgr = CacheMgr.getInstance();
@@ -114,12 +145,12 @@ public class MemeService implements IMemeService {
 			
 		} 
 		
-		if (!containsKey || bytes == null || bytes.length == 0) {
+		if (bytes == null || bytes.length == 0) {
 			bytes = Utils.getBytesFromBitmap(client.getBackground(path));
 			
 			if (bytes != null && bytes.length > 0) {
 				backgroundMap.put(path, bytes);
-				cacheMgr.storeCacheToFile(true);
+				cacheMgr.storeCacheToFile();
 			}
 		}
 		
@@ -154,10 +185,24 @@ public class MemeService implements IMemeService {
 		CacheMgr.getInstance().addToCache(Constants.KEY_ALL_MEME_BACKGROUNDS_MAP, allTypesMap);
 	}
 	
+	private synchronized HashMap<String, Object> getThumbMap() {
+		final CacheMgr cm = CacheMgr.getInstance();
+		
+		HashMap<String, Object> bgMap = null;
+		if (cm.containsKey(Constants.KEY_THUMB_MAP)) {
+			bgMap = cm.getFromCache(Constants.KEY_THUMB_MAP, HashMap.class);
+			
+		} else {
+			bgMap = new HashMap<String, Object>();
+			cm.addToCache(Constants.KEY_THUMB_MAP, bgMap);
+		}
+		return bgMap;
+	}
+	
 	private synchronized HashMap<String, Object> getBackgroundMap() {
 		final CacheMgr cm = CacheMgr.getInstance();
 		
-		HashMap<String, Object> bgMap;
+		HashMap<String, Object> bgMap = null;
 		if (cm.containsKey(Constants.KEY_BACKGROUND_MAP)) {
 			bgMap = cm.getFromCache(Constants.KEY_BACKGROUND_MAP, HashMap.class);
 			
@@ -253,7 +298,7 @@ public class MemeService implements IMemeService {
 		
 		final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
 			
-		ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
+		final ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
 		
 		int index = 0;
 		for (final MemeBackground eaMemeBackground : types) {
@@ -294,7 +339,7 @@ public class MemeService implements IMemeService {
 		
 		listData.set(finalIndex, memeListItemData);
 		memeListItemData.setMemeBackground(eaMemeBackground);
-		memeListItemData.setThumbBytes(getBackgroundBytes(eaMemeBackground.getFilePath()));
+		memeListItemData.setThumbBytes(getThumbBytes(Conca.t(backgroundThumbDir, '/', eaMemeBackground.getFilePath())));
 		
 	}
 	
@@ -323,8 +368,21 @@ public class MemeService implements IMemeService {
 		return client.removeFavMeme(userId, memeBackgroundId);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<MemeBackground> getPopularTypes() {
-		return client.getPopularMemeBackgrounds(Constants.POPULAR_TYPE_NAME);
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final String key = context.getString(R.string.key_popular_backgrounds);
+		ArrayList<MemeBackground> backgrounds = cacheMgr.getFromCache(key, ArrayList.class);
+		if (backgrounds == null) {
+			final List<MemeBackground> popularMemeBackgrounds = client.getPopularMemeBackgrounds(Constants.POPULAR_TYPE_NAME);
+			backgrounds = new ArrayList<MemeBackground>(popularMemeBackgrounds == null ? Collections.EMPTY_LIST : popularMemeBackgrounds);
+			cacheMgr.addToCache(key, backgrounds);
+			cacheMgr.storeCacheToFile();
+		}
+		
+		return backgrounds;
 	}
 
 	public List<MemeBackground> findMemeBackgroundsByName(final String query) {

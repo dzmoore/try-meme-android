@@ -8,7 +8,7 @@ import android.test.AndroidTestCase;
 
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.web.IMemeServerClient;
-import com.eastapps.meme_gen_android.web.MemeServerClientV2;
+import com.eastapps.meme_gen_android.web.MemeServerClient;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeText;
@@ -22,8 +22,8 @@ public class MemeServerClientTest extends AndroidTestCase  {
 	
 	@Override
 	public void setUp() {
-		MemeServerClientV2.initialize(getContext());
-		memeServerClient = MemeServerClientV2.getInstance();
+		MemeServerClient.initialize(getContext());
+		memeServerClient = MemeServerClient.getInstance();
 		
 		CacheMgr.initialize(getContext());
 	}

@@ -3,6 +3,7 @@ package com.eastapps.meme_gen_android.http;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 
 import android.graphics.Bitmap;

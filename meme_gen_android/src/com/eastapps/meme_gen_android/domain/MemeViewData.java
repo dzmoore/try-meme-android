@@ -9,12 +9,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.eastapps.meme_gen_android.widget.TagMgr;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
 import com.eastapps.mgs.model.Meme;
 
 public class MemeViewData 
 	implements Serializable, Identifiable, Parcelable {
 	private static final long serialVersionUID = 7334702044762722957L;
+	
+	public static final Parcelable.Creator<MemeViewData> CREATOR =
+		new Creator<MemeViewData>() {
+			@Override
+			public MemeViewData[] newArray(int size) {
+				return new MemeViewData[size];
+			}
+			
+			@Override
+			public MemeViewData createFromParcel(Parcel source) {
+				final MemeViewData memeViewData = new MemeViewData();
+				memeViewData.setMeme((Meme) source.readSerializable());
+				memeViewData.setBackground((Bitmap) source.readParcelable(null));
+				memeViewData.setId(source.readInt());
+				return memeViewData;
+			}
+		};
 	
 	private Meme meme;
 	private List<Meme> sampleMemes;
