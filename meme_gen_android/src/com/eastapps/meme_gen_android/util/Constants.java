@@ -1,5 +1,7 @@
 package com.eastapps.meme_gen_android.util;
 
+import com.eastapps.meme_gen_android.R;
+
 
 public class Constants {
 	public static final String POPULAR_TYPE_NAME = "popular";
@@ -22,6 +24,7 @@ public class Constants {
 	public static final String KEY_ALL_TYPES = "all_types";
 	public static final String KEY_ALL_MEME_BACKGROUNDS_MAP = "all_types_map";
 	public static final String KEY_BACKGROUND_MAP = "bg_map";
+	public static final String KEY_THUMB_MAP = "thumb_map";
 	public static final String KEY_SAMPLE_MAP = "sample_map";
 	public static final String KEY_GUI_OBJECT = "gui_obj";
 	public static final String KEY_FILTER_BAR_VIEW = "filter_bar_view";

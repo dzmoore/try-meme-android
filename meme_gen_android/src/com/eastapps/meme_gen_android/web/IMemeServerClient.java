@@ -2,14 +2,12 @@ package com.eastapps.meme_gen_android.web;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
+
 import com.eastapps.meme_gen_android.mgr.ICallback;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeUser;
-
-import android.graphics.Bitmap;
 
 public interface IMemeServerClient {
 

@@ -18,7 +18,6 @@ import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
-import com.eastapps.meme_gen_android.mgr.Ini;
 import com.eastapps.meme_gen_android.mgr.MemeTypeFavSaveRemoveHandler;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
@@ -26,7 +25,6 @@ import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.mgs.model.MemeBackground;
 
 public class MemeTypeSearchResultsActivity extends FragmentActivity {

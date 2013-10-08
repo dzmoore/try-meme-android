@@ -1,22 +1,5 @@
 package com.eastapps.meme_gen_android.test;
 
-import java.io.File;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
-import junit.framework.TestCase;
-
-import android.test.AndroidTestCase;
-import android.util.Log;
-
-import com.eastapps.meme_gen_android.mgr.CacheMgr;
-import com.eastapps.meme_gen_android.mgr.ICallback;
-import com.eastapps.meme_gen_android.mgr.UserMgr;
-import com.eastapps.meme_gen_android.service.impl.MemeService;
-import com.eastapps.meme_gen_android.util.Constants;
-import com.eastapps.meme_gen_android.util.StringUtils;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
 
 public class UserMgrTest {//extends AndroidTestCase {
 //	@Override

@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.widget.TagMgr;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.mgs.model.MemeBackground;
 
 public class MemeListItemData implements Identifiable, Parcelable {

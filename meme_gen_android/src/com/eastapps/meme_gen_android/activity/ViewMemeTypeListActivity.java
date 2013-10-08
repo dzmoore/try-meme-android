@@ -25,19 +25,19 @@ import com.eastapps.meme_gen_android.mgr.CacheMgr;
 import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.MemeTypeFavSaveRemoveHandler;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
+import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.service.impl.MemeService;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFilterBarFragment;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
 import com.eastapps.mgs.model.MemeBackground;
 
 public class ViewMemeTypeListActivity extends FragmentActivity {
 	private List<MemeListItemData> items;
 	private MemeListAdapter listAdapter;
-	private MemeService memeService;
+	private IMemeService memeService;
 	private AtomicBoolean isLoadingList = new AtomicBoolean(false);
 	private AtomicBoolean isViewSet = new AtomicBoolean(false);
 	private FilterType currentViewType;
@@ -127,7 +127,12 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		
 		initFilterBar();
 		
-		AdMgr.getInstance().initAd(this, R.id.advertising_banner_view);
+		TaskRunner.runAsync(new Runnable() {
+			@Override
+			public void run() {
+				AdMgr.getInstance().initAd(ViewMemeTypeListActivity.this, R.id.advertising_banner_view);
+			}
+		});
 	}
 	
 	private void initFilterBar() {
@@ -334,7 +339,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
-				final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(true);
+				final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(false);
 				
 				for (final MemeBackground eaFavType : favTypes) {
 					for (final MemeListItemData eaListItem : items) {

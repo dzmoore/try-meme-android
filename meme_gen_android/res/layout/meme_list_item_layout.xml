@@ -18,7 +18,7 @@
 
     <com.eastapps.meme_gen_android.widget.ResizableImageView
         android:id="@+id/list_item_thumb_img_view"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:minWidth="@dimen/meme_list_item_thumb_min_width"

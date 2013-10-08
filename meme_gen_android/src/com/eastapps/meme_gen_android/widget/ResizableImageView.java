@@ -39,12 +39,34 @@ public class ResizableImageView extends ImageView {
 			// scale the other length to the image ratio
 			int newImageWidth = (int) Math.ceil(deviceWidth);
 			int newImageHeight = (int) Math.ceil(deviceHeight);
+		
+			final float deviceArea = deviceWidth * deviceHeight;
+//			final float imageArea = imageWidth * imageHeight;
 			
-			if (deviceHeight < deviceWidth) {
-				newImageWidth = (int) Math.ceil(newImageHeight * (imageWidth / imageHeight));
-			} else {
-				newImageHeight = (int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
+			// set width to device width, scale height
+			newImageHeight = (int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
+			
+			// if the new area is bigger, scale the other way
+			final float newImageArea = newImageWidth * newImageHeight;
+			if (newImageArea > deviceArea) {
+				newImageHeight = (int) Math.ceil(deviceHeight);
+				newImageWidth = (int)Math.ceil(deviceHeight * (imageWidth / imageHeight));
 			}
+//			
+//			if (imageArea > deviceArea) {
+//				if (deviceHeight < deviceWidth) {
+//					newImageWidth = (int) Math.ceil(newImageHeight * (imageWidth / imageHeight));
+//				} else {
+//					newImageHeight = (int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
+//				}
+//					
+//			} else {
+//				if (imageHeight < imageWidth) {
+//					newImageHeight = (int) Math.ceil(deviceWidth * (imageHeight / imageWidth));
+//				} else {
+//					newImageWidth = (int) Math.ceil(newImageHeight * (imageWidth / imageHeight));
+//				}
+//			}
 			
 			if (BuildConfig.DEBUG) {
 				Log.v(TAG, Conca.t("deviceWidth=", deviceWidth, "; deviceHeight=", deviceHeight,

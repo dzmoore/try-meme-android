@@ -1,5 +1,6 @@
 package com.eastapps.mgs.model;
 
+import com.eastapps.meme_gen_android.R;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

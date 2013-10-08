@@ -1,17 +1,5 @@
 package com.eastapps.meme_gen_android.test;
 
-import java.util.List;
-
-import android.test.AndroidTestCase;
-
-import com.eastapps.meme_gen_android.domain.MemeListItemData;
-import com.eastapps.meme_gen_android.mgr.CacheMgr;
-import com.eastapps.meme_gen_android.service.impl.MemeService;
-import com.eastapps.meme_gen_android.util.StringUtils;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
-import com.eastapps.mgs.model.Meme;
 
 public class MemeServiceTest {//extends AndroidTestCase  {
 //	private MemeService memeSvc;

@@ -1,5 +1,6 @@
 package com.eastapps.meme_gen_android.mgr;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.mgs.model.MemeBackground;
 import com.esotericsoftware.kryo.Kryo;
