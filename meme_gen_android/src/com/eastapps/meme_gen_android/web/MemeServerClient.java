@@ -237,7 +237,7 @@ public class MemeServerClient implements IMemeServerClient {
 	public List<Meme> getMemesForUser(final long userId) {
 		return (List<Meme>) webClient.getRequestAsJsonReturnList(
 			concatUrlPieces(listMemesForUserUrl, String.valueOf(userId)),
-			new TypeToken<Collection<MemeBackground>>(){}.getType()
+			new TypeToken<Collection<Meme>>(){}.getType()
 		);
 	}
 

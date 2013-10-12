@@ -69,6 +69,8 @@
     <item name="meme_list_item_text_max_width" format="dimension" type="dimen">600dp</item>
     <color name="back_transparent">#80000000</color>
     <string name="refresh_menu_item_text">Refresh</string>
+    <string name="my_meme_item_text">My Memes</string>
     <string name="key_popular_backgrounds">popular_backgrounds</string>
+    <string name="key_my_memes">my_memes</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.eastapps.meme_gen_android.util;
 
-import com.eastapps.meme_gen_android.R;
 
 
 public class Constants {
@@ -21,6 +20,7 @@ public class Constants {
 	public static final String KEY_HEART_BTN = "heart_img_btn";
 	public static final String KEY_MEME_TYPE_LIST_ITEM = "meme_type_list_item";
 	public static final String KEY_MEME_BACKGROUND = "meme_type";
+	public static final String KEY_MEMES = "memes";
 	public static final String KEY_ALL_TYPES = "all_types";
 	public static final String KEY_ALL_MEME_BACKGROUNDS_MAP = "all_types_map";
 	public static final String KEY_BACKGROUND_MAP = "bg_map";

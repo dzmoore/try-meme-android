@@ -41,4 +41,10 @@ public interface IMemeService {
 			ICallback<Exception> connectionExceptionCallback);
 
 	List<MemeBackground> getPopularTypes();
+
+	MemeViewData createMemeViewData(List<Meme> memes);
+
+	List<MemeBackground> findMemeBackgroundsByName(String query);
+
+	List<Meme> getMemesForUser(long userId);
 }

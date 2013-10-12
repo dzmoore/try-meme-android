@@ -1,6 +1,7 @@
 package com.eastapps.meme_gen_android.activity;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFilterBarFragment;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
+import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
 
 public class ViewMemeTypeListActivity extends FragmentActivity {
@@ -86,6 +88,27 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 					params.put(Constants.KEY_FILTER_TYPE_ENUM, currentViewType);
 					handleFilterBtnClicked(params);
 				}
+				
+				return true;
+			}
+		});
+		
+		final MenuItem myMemesMenuItem = (MenuItem)menu.findItem(R.id.my_memes_menu_item);
+		myMemesMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
+					Toast.makeText(
+						ViewMemeTypeListActivity.this, 
+						"my memes clicked", 
+						Toast.LENGTH_SHORT
+					).show();
+				}
+				
+				final Intent intent = new Intent(ViewMemeTypeListActivity.this, MemeTypeSearchResultsActivity.class);
+				intent.putExtra(Constants.KEY_MEMES, new ArrayList<Meme>(memeService.getMemesForUser(UserMgr.getUserId())));
+				
+				startActivity(intent);
 				
 				return true;
 			}
