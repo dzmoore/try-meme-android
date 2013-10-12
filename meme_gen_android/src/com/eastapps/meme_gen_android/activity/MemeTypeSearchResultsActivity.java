@@ -1,9 +1,13 @@
 package com.eastapps.meme_gen_android.activity;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.SearchManager;
@@ -25,7 +29,9 @@ import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.widget.adapter.MemeListAdapter;
 import com.eastapps.meme_gen_android.widget.fragment.MemeListFragment;
+import com.eastapps.mgs.model.Meme;
 import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.util.Conca;
 
 public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	private List<MemeListItemData> items;
@@ -34,6 +40,7 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 	private AtomicBoolean isLoadingList = new AtomicBoolean(false);
 	private AtomicBoolean isSearchAction = new AtomicBoolean(false);
 	private AtomicBoolean isViewSet = new AtomicBoolean(false);
+	private Map<Long,ArrayList<Meme>> backgroundIdToMemesMap;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +92,37 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 			}
 		});
 		
-		items = Collections.emptyList();
+		backgroundIdToMemesMap = new HashMap<Long, ArrayList<Meme>>();
+		final Intent intent = getIntent();
+		if (intent.hasExtra(Constants.KEY_MEMES)) {
+			@SuppressWarnings("unchecked")
+			final List<Meme> memes = (List<Meme>)intent.getSerializableExtra(Constants.KEY_MEMES);
+			final Map<Long,MemeBackground> backgroundMap = new HashMap<Long,MemeBackground>();
+			for (final Meme eaMeme : memes) {
+				final Long bgId = eaMeme.getMemeBackground().getId();
+				if (!backgroundMap.containsKey(bgId)) {
+					backgroundMap.put(bgId, eaMeme.getMemeBackground());
+					
+					backgroundIdToMemesMap.put(bgId, new ArrayList<Meme>());
+				}
+				
+				backgroundIdToMemesMap.get(bgId).add(eaMeme);
+			}
+			
+			items = new ArrayList<MemeListItemData>();
+			
+			for (final MemeBackground eaMemeBackground : backgroundMap.values()) {
+				final MemeListItemData eaListItem = new MemeListItemData();
+				eaListItem.setMemeBackground(eaMemeBackground);
+				eaListItem.setThumbBytes(memeService.getThumbBytes(eaMemeBackground.getFilePath()));
+				items.add(eaListItem);
+			}
+			
+			initMemeList();
+			
+		} else {
+			items = Collections.emptyList();
+		}
 	}
 	
 	private void initMemeList() {
@@ -147,13 +184,24 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 		listAdapter.setListItemClickCallback(new ICallback<Map<String,Object>>() {
 			@Override
 			public void callback(Map<String, Object> obj) {
-				final MemeListItemData item = (MemeListItemData) obj.get(Constants.KEY_MEME_TYPE_LIST_ITEM);
-				
-				final Intent intent = new Intent(MemeTypeSearchResultsActivity.this, CreateMemeActivity.class);
-				
-				intent.putExtra(Constants.KEY_MEME_BACKGROUND, item.getMemeBackground());
-				
-				startActivity(intent);
+				if (isSearchAction.get()) {
+					final MemeListItemData item = (MemeListItemData) obj.get(Constants.KEY_MEME_TYPE_LIST_ITEM);
+					
+					final Intent intent = new Intent(MemeTypeSearchResultsActivity.this, CreateMemeActivity.class);
+					
+					intent.putExtra(Constants.KEY_MEME_BACKGROUND, item.getMemeBackground());
+					
+					startActivity(intent);
+					
+				} else {
+					final MemeListItemData item = (MemeListItemData) obj.get(Constants.KEY_MEME_TYPE_LIST_ITEM);
+					final ArrayList<Meme> memes = backgroundIdToMemesMap.get(item.getMemeBackground().getId());
+					
+					final Intent intent = new Intent(MemeTypeSearchResultsActivity.this, CreateMemeActivity.class);
+					intent.putExtra(Constants.KEY_MEMES, memes);
+					
+					startActivity(intent);
+				}
 			}
 		});
 		

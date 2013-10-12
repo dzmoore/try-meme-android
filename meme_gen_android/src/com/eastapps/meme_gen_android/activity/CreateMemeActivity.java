@@ -122,6 +122,11 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		final MemeBackground memeBg = (MemeBackground) getIntent().getSerializableExtra(Constants.KEY_MEME_BACKGROUND);
 		
+		@SuppressWarnings("unchecked")
+		final List<Meme> memes = getIntent().hasExtra(Constants.KEY_MEMES) ?
+			(List<Meme>)getIntent().getSerializableExtra(Constants.KEY_MEMES) :
+			null;
+		
 		loadBundle(savedInstanceState);
 		
 		if (isLoaded()) {
@@ -133,7 +138,12 @@ public class CreateMemeActivity extends FragmentActivity {
 			TaskRunner.runAsync(new Runnable() {
 				@Override
 				public void run() {
-					memeViewData = memeService.createMemeViewData(memeBg);
+					if (memes == null) {
+						memeViewData = memeService.createMemeViewData(memeBg);
+						
+					} else {
+						memeViewData = memeService.createMemeViewData(memes);
+					}
 					
 					setMemeViewData(memeViewData);
 				}
@@ -514,7 +524,7 @@ public class CreateMemeActivity extends FragmentActivity {
 			bottomTextEdit.setVisibility(View.GONE);
 			bottomTextEdit.setText(getSelectedMeme().getBottomText().getText());
 
-			
+			setBottomTextViewTextSize(getSelectedMeme().getBottomText().getFontSize().intValue());
 		}
 	}
 
@@ -561,7 +571,7 @@ public class CreateMemeActivity extends FragmentActivity {
 			topTextEdit.setText(getSelectedMeme().getTopText().getText());
 
 			
-
+			setTopTextViewTextSize(getSelectedMeme().getTopText().getFontSize().intValue());
 		}
 	}
 
@@ -856,9 +866,14 @@ public class CreateMemeActivity extends FragmentActivity {
 		final Bitmap bgBm = memeViewData.getBackground();
 		
 		final MemeViewData editableMeme = new MemeViewData();
-		final Meme meme = new Meme();
-		meme.setTopText(createNewMemeText());
-		meme.setBottomText(createNewMemeText());
+		final Meme meme = memeViewData.getMeme();
+		if (meme.getTopText() == null) {
+			meme.setTopText(createNewMemeText());
+		}
+		
+		if (meme.getBottomText() == null) {
+			meme.setBottomText(createNewMemeText());
+		}
 		
 		editableMeme.setMeme(meme);
 		editableMeme.setBackground(bgBm);

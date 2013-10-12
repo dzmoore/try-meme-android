@@ -68,7 +68,29 @@ public class MemeService implements IMemeService {
 	public long storeMeme(final Meme meme) {
 		meme.setCreatedByUser(new MemeUser());
 		meme.getCreatedByUser().setId(UserMgr.getUserId());
-		return client.storeMeme(meme);
+		final long resultId = client.storeMeme(meme);
+		
+		if (resultId > 0) {
+			meme.setId(resultId);
+		}
+		
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		final String key = context.getString(R.string.key_my_memes);
+		if (cacheMgr.containsKey(key)) {
+			@SuppressWarnings("unchecked")
+			final ArrayList<Meme> memesForUser = cacheMgr.getFromCache(key, ArrayList.class);
+			memesForUser.add(meme);
+			
+		} else {
+			final ArrayList<Meme> memesForUser = new ArrayList<Meme>();
+			memesForUser.add(meme);
+			
+			cacheMgr.addToCache(key, memesForUser);
+		}
+		
+		cacheMgr.storeCacheToFile();
+		
+		return resultId;
 	}
 
 	@Override
@@ -110,22 +132,23 @@ public class MemeService implements IMemeService {
 	}
 	
 	public byte[] getThumbBytes(final String path) {
+		final String thumbPath = Conca.t(backgroundThumbDir, '/', path);
 		final CacheMgr cacheMgr = CacheMgr.getInstance();
 		
 		byte[] bytes = new byte[0];
 		
 		final HashMap<String, Object> thumbMap = getThumbMap();
-		final boolean containsKey = thumbMap.containsKey(path);
+		final boolean containsKey = thumbMap.containsKey(thumbPath);
 		if (containsKey) {
-			bytes = (byte[]) thumbMap.get(path);
+			bytes = (byte[]) thumbMap.get(thumbPath);
 			
 		} 
 		
 		if (bytes == null || bytes.length == 0) {
-			bytes = Utils.getBytesFromBitmap(client.getBackground(path));
+			bytes = Utils.getBytesFromBitmap(client.getBackground(thumbPath));
 			
 			if (bytes != null && bytes.length > 0) {
-				thumbMap.put(path, bytes);
+				thumbMap.put(thumbPath, bytes);
 				cacheMgr.storeCacheToFile();
 			}
 		}
@@ -155,6 +178,27 @@ public class MemeService implements IMemeService {
 		}
 		
 		return bytes;
+	}
+	
+	@Override
+	public MemeViewData createMemeViewData(final List<Meme> memes) {
+		final MemeViewData memeViewData = new MemeViewData();
+		
+		if (memes != null && memes.size() > 0) {
+			final Meme firstMeme = memes.get(0);
+			memeViewData.setBackground(Utils.getBitmapFromBytes(getBackgroundBytes(firstMeme.getMemeBackground().getFilePath())));
+			
+			memeViewData.setMeme(firstMeme);
+			
+			if (memes.size() > 1) {
+				memeViewData.setSampleMemes(new ArrayList<Meme>());
+				for (int i = 1; i < memes.size(); i++) {
+					memeViewData.getSampleMemes().add(memes.get(i));
+				}
+			}
+		}
+		
+		return memeViewData;
 	}
 	
 	@Override
@@ -339,7 +383,7 @@ public class MemeService implements IMemeService {
 		
 		listData.set(finalIndex, memeListItemData);
 		memeListItemData.setMemeBackground(eaMemeBackground);
-		memeListItemData.setThumbBytes(getThumbBytes(Conca.t(backgroundThumbDir, '/', eaMemeBackground.getFilePath())));
+		memeListItemData.setThumbBytes(getThumbBytes(eaMemeBackground.getFilePath()));
 		
 	}
 	
@@ -385,8 +429,26 @@ public class MemeService implements IMemeService {
 		return backgrounds;
 	}
 
+	@Override
 	public List<MemeBackground> findMemeBackgroundsByName(final String query) {
 		return client.getMemeBackgroundsByName(query);
+	}
+	
+	@Override
+	public List<Meme> getMemesForUser(final long userId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final String key = context.getString(R.string.key_my_memes);
+		@SuppressWarnings("unchecked")
+		ArrayList<Meme> memes = cacheMgr.getFromCache(key, ArrayList.class);
+		if (memes == null) {
+			final List<Meme> memesForUser = client.getMemesForUser(userId);
+			memes = new ArrayList<Meme>(memesForUser == null ? Collections.EMPTY_LIST : memesForUser);
+			cacheMgr.addToCache(key, memes);
+			cacheMgr.storeCacheToFile();
+		}
+		
+		return memes;
 	}
 
 	public ICallback<Exception> getConnectionExceptionCallback() {
