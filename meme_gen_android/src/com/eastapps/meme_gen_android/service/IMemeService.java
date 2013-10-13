@@ -19,8 +19,6 @@ public interface IMemeService {
 	String getNewInstallKey();
 
 
-	List<MemeBackground> getFavMemeBackgroundsForUser(long userId);
-
 	List<MemeBackground> getAllMemeBackgrounds();
 
 	List<MemeListItemData> getAllFavMemeTypesListData();
@@ -46,4 +44,6 @@ public interface IMemeService {
 	List<MemeBackground> findMemeBackgroundsByName(String query);
 
 	List<Meme> getMemesForUser(long userId);
+	
+	List<MemeBackground> getFavoriteBackgrounds();
 }

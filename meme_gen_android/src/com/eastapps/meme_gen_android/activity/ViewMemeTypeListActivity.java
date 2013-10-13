@@ -260,7 +260,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
-				final List<MemeBackground> types = UserMgr.getFavMemeTypes(true);
+				final List<MemeBackground> types = memeService.getFavoriteBackgrounds();
 				
 				if (types != null && types.size() > 0) {
 					loadFavTypes(); 
@@ -362,7 +362,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
-				final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(false);
+				final List<MemeBackground> favTypes = memeService.getFavoriteBackgrounds();
 				
 				for (final MemeBackground eaFavType : favTypes) {
 					for (final MemeListItemData eaListItem : items) {

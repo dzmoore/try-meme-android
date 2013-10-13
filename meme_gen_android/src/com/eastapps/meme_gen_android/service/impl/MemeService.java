@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
@@ -22,6 +24,7 @@ import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.util.Utils;
 import com.eastapps.meme_gen_android.web.IMemeServerClient;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
@@ -235,7 +238,7 @@ public class MemeService implements IMemeService {
 	
 	@Override
 	public List<MemeListItemData> getAllFavMemeTypesListData() {
-		final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(false);
+		final List<MemeBackground> favTypes = getFavoriteBackgrounds();
 		
 		final List<MemeListItemData> listData = populateMemeListItemDataList(favTypes);
 		
@@ -339,18 +342,49 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public List<MemeBackground> getFavMemeBackgroundsForUser(final long userId) {
-		return client.getFavMemeBackgroundsForUser(userId);
-	}
-
-	@Override
 	public boolean storeFavType(final long userId, final long memeBackgroundId) {
-		return client.storeFavMemeBackground(userId, memeBackgroundId);
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final boolean storeSuccess = client.storeFavMemeBackground(userId, memeBackgroundId);
+		
+		if (storeSuccess) {
+			TaskRunner.runAsync(new Runnable() {
+				@Override
+				public void run() {
+					final String key = context.getString(R.string.fav_backgrounds);
+					cacheMgr.addToCache(key, new ArrayList<MemeBackground>(client.getFavMemeBackgroundsForUser(UserMgr.getUserId())));
+					cacheMgr.storeCacheToFile();
+				}
+			});
+		}
+		
+		return storeSuccess;
 	}
 
 	@Override
 	public boolean removeFavType(final long userId, final long memeBackgroundId) {
-		return client.removeFavMeme(userId, memeBackgroundId);
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final boolean removeSuccess = client.removeFavMeme(userId, memeBackgroundId);
+		
+		if (removeSuccess) {
+			final String key = context.getString(R.string.fav_backgrounds);
+			ArrayList<MemeBackground> favBackgrounds = null;
+			if (cacheMgr.containsKey(key)) {
+				favBackgrounds = new ArrayList<MemeBackground>(getArrayListFromCache(key, MemeBackground.class));
+				
+				for (final Iterator<MemeBackground> itr = favBackgrounds.iterator(); itr.hasNext();) {
+					final MemeBackground ea = itr.next();
+					if (ea.getId() == memeBackgroundId) {
+						itr.remove();
+					}
+				}
+				cacheMgr.addToCache(key, favBackgrounds);
+				cacheMgr.storeCacheToFile();
+			} 
+		}
+		
+		return removeSuccess;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -405,6 +439,24 @@ public class MemeService implements IMemeService {
 	public void setConnectionExceptionCallback(
 			ICallback<Exception> connectionExceptionCallback) {
 		this.connectionExceptionCallback = connectionExceptionCallback;
+	}
+
+	@Override
+	public List<MemeBackground> getFavoriteBackgrounds() {
+		final String key = context.getString(R.string.fav_backgrounds);
+		
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		ArrayList<MemeBackground> favBackgrounds = null;
+		if (cacheMgr.containsKey(key)) {
+			favBackgrounds = getArrayListFromCache(key, MemeBackground.class);
+			
+		} else {
+			favBackgrounds = new ArrayList<MemeBackground>(client.getFavMemeBackgroundsForUser(UserMgr.getUserId()));
+			cacheMgr.addToCache(key, favBackgrounds);
+			cacheMgr.storeCacheToFile();
+		}
+		
+		return favBackgrounds;
 	}
 
 
