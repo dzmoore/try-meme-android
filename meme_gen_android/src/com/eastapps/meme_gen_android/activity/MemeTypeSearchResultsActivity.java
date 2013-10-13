@@ -129,7 +129,7 @@ public class MemeTypeSearchResultsActivity extends FragmentActivity {
 		TaskRunner.runAsync(new Runnable() {
 			@Override
 			public void run() {
-				final List<MemeBackground> favTypes = UserMgr.getFavMemeTypes(true);
+				final List<MemeBackground> favTypes = memeService.getFavoriteBackgrounds();
 
 				for (final MemeBackground eaFavType : favTypes) {
 					for (final MemeListItemData eaListItem : items) {

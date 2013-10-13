@@ -76,5 +76,6 @@
     <string name="key_thumb">thumb-</string>
     <string name="key_background">background-</string>
     <string name="popular_type_name">popular</string>
+    <string name="fav_backgrounds">fav_backgrounds</string>
 
 </resources>

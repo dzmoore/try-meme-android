@@ -21,7 +21,6 @@ public class UserMgr {
 	private static UserMgr instance;
 
 	private MemeUser user;
-	private List<MemeBackground> favTypes;
 	
 
 	private UserMgr(final Context context) {
@@ -40,12 +39,6 @@ public class UserMgr {
 		return MemeService.getInstance();
 	}
 	
-	private void queryForAndInitFavTypes() {
-		if (user != null && getMemeService() != null) {
-			favTypes = getMemeService().getFavMemeBackgroundsForUser(user.getId());
-		}
-	}
-
 	private void createNewUser() {
 		final String installKey = getMemeService().getNewInstallKey();
 		
@@ -64,31 +57,6 @@ public class UserMgr {
 		} else if (BuildConfig.DEBUG) {
 			Log.w(TAG, "unable to create new user (id invalid)");
 		}
-	}
-	
-	public static synchronized List<MemeBackground> getFavMemeTypes(final boolean refresh) {
-		final UserMgr inst = getInstance();
-		
-		if (refresh) {
-			inst.queryForAndInitFavTypes();
-		} 
-			
-		if (inst.favTypes == null) {
-			final CacheMgr cacheMgrInst = CacheMgr.getInstance();
-			if (cacheMgrInst.containsKey(Constants.KEY_FAV_TYPES)) {
-				
-				@SuppressWarnings("unchecked")
-				final List<MemeBackground> fromCache 
-					= (List<MemeBackground>)cacheMgrInst.getFromCache(Constants.KEY_FAV_TYPES, List.class);
-				
-				inst.favTypes = fromCache;
-				
-			} else {
-				inst.favTypes = inst.getMemeService().getFavMemeBackgroundsForUser(getUserId());
-			}
-		}
-		
-		return inst.favTypes == null ? new ArrayList<MemeBackground>(0) : inst.favTypes;
 	}
 	
 	public static Long getUserId() {
