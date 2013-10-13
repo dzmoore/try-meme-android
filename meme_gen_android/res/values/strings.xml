@@ -72,5 +72,9 @@
     <string name="my_meme_item_text">My Memes</string>
     <string name="key_popular_backgrounds">popular_backgrounds</string>
     <string name="key_my_memes">my_memes</string>
+    <string name="key_sample_memes">sample_memes-</string>
+    <string name="key_thumb">thumb-</string>
+    <string name="key_background">background-</string>
+    <string name="popular_type_name">popular</string>
 
 </resources>
