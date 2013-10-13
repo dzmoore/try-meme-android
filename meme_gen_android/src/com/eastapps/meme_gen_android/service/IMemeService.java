@@ -22,7 +22,6 @@ public interface IMemeService {
 	List<MemeBackground> getFavMemeBackgroundsForUser(long userId);
 
 	List<MemeBackground> getAllMemeBackgrounds();
-	MemeBackground getMemeBackground(final long id);
 
 	List<MemeListItemData> getAllFavMemeTypesListData();
 

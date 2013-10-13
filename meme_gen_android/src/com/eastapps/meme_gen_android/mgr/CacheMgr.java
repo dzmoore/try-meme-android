@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,6 +26,7 @@ import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.google.gson.Gson;
 
 public class CacheMgr {
 	private static final String TAG = CacheMgr.class.getSimpleName();
@@ -61,7 +64,9 @@ public class CacheMgr {
 	}
 	
 	public boolean containsKey(final String key) {
-		return installMap.containsKey(key);
+		synchronized (installMap) {
+			return installMap.containsKey(key);
+		}
 	}
 	
 	private void readMapFromInstallFile(final File installation) {
@@ -77,10 +82,13 @@ public class CacheMgr {
 			Input input = new Input(new FileInputStream(installation));
 			this.installMap = kryo.readObject(input, ConcurrentHashMap.class);
 
-		} catch (FileNotFoundException e1) {
+		} catch (Throwable e1) {
 			if (BuildConfig.DEBUG) {
 				Log.e(TAG, "err", e1);
 			}
+			
+			installation.delete();
+			initInstallMap();
 		}
 		
 	}
@@ -89,14 +97,14 @@ public class CacheMgr {
 		initInstallMap();
 	}
 
-	private synchronized void initInstallMap() {
+	private void initInstallMap() {
 		final File installation = getInstallFile();
 		
 		if (installation.exists()) {
 			readMapFromInstallFile(installation);
 		} 
 		else {
-			installMap = new ConcurrentHashMap<String, Serializable>();
+			installMap = Collections.synchronizedMap(new HashMap<String, Serializable>());//new ConcurrentHashMap<String, Serializable>();
 		}
 	}
 
@@ -127,15 +135,17 @@ public class CacheMgr {
 		installMap.put(key, val);
 	}
 	
+	public Object getFromCache(final String key) {
+		return installMap.get(key);
+	}
+	
 	public <T> T getFromCache(final String key, final Class<T> type) {
 		T resultObj = null;
 		
-		synchronized (installMap) {
-			final Object object = installMap.get(key);
-			
-			if (object != null && type.isAssignableFrom(object.getClass())) {
-				resultObj = type.cast(object);
-			}
+		final Object object = installMap.get(key);
+		
+		if (object != null && type.isAssignableFrom(object.getClass())) {
+			resultObj = type.cast(object);
 		}
 		
 		return resultObj;
@@ -170,10 +180,8 @@ public class CacheMgr {
 			
 			output = new Output(out);
 			
-			synchronized (installMap) {
-				// write the map to the install file
-				kryo.writeObject(output, installMap);
-			}
+			// write the map to the install file
+			kryo.writeObject(output, installMap);
 			
 		} catch (Exception e) {
 			if (BuildConfig.DEBUG) {
@@ -200,8 +208,10 @@ public class CacheMgr {
 	private void doWriteMapIntoInstallFileWithSyncing() {
 		if (isStoring.compareAndSet(false, true)) {
 			writeMapIntoInstallFile(getInstallFile());
+			isStoring.set(false);
 			
-		} else if (additionalStoringWaiting.compareAndSet(false, true)) {
+		} 
+		else if (additionalStoringWaiting.compareAndSet(false, true)) {
 			while (!isStoring.compareAndSet(false, true)) {
 				try {
 					Thread.sleep(150L);
@@ -215,8 +225,8 @@ public class CacheMgr {
 			writeMapIntoInstallFile(getInstallFile());
 			
 			additionalStoringWaiting.set(false);
+			isStoring.set(false);
 		}
-		isStoring.set(false);
 	}
 	
 }
