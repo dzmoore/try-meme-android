@@ -206,6 +206,18 @@ public class MemeIntegrationTest extends AbstractIntegrationTest {
 		TestCase.assertTrue("memes for user zero length", memes.size() > 0);
 	}
 	
+//	@Test
+//	public void testCreateSampleMeme() {
+//		testCreateMemeJson();
+//		
+//		final Meme meme = Meme.findMeme(1L);
+//		final SampleMeme sampleMeme = new SampleMeme();
+//		sampleMeme.setBackground(meme.getMemeBackground());
+//		sampleMeme.setSampleMeme(meme);
+//		
+//		TestUtils.getJSONObject("/samplememes/create/json", , responseType)
+//	}
+	
 
 }
 

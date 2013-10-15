@@ -9,6 +9,8 @@ import com.eastapps.mgs.model.MemeBackground;
 import com.eastapps.mgs.model.MemeText;
 import com.eastapps.mgs.model.MemeUser;
 import com.eastapps.mgs.model.SampleMeme;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
@@ -30,8 +32,17 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 
 	public Converter<Meme, String> getMemeToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.eastapps.mgs.model.Meme, java.lang.String>() {
-            public String convert(Meme meme) {
-                return "(no displayable fields)";
+            @SuppressWarnings("unchecked")
+			public String convert(Meme meme) {
+                return StringUtils.join(
+                	meme.getId(), ": \"", 
+                	meme.getMemeBackground() != null ? meme.getMemeBackground().getDescription() : "",
+                	"\" \"",	
+                	meme.getTopText() != null ? meme.getTopText().getText() : "",
+                	"\" \"",
+                	meme.getBottomText() != null ? meme.getBottomText().getText() : "",
+                	"\""
+            	);
             }
         };
     }
