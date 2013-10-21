@@ -74,6 +74,10 @@ public class StringUtils {
 		
 		return !isBlank;
 	}
+
+	public static boolean isBlank(String addr) {
+		return addr == null || addr.length() == 0;
+	}
 	
 	
 	

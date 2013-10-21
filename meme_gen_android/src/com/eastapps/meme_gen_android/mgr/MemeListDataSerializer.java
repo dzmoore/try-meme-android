@@ -1,10 +1,8 @@
 package com.eastapps.meme_gen_android.mgr;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.CompressFormat;
-
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
+import com.eastapps.mgs.model.MemeBackground;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
@@ -19,7 +17,7 @@ public class MemeListDataSerializer extends Serializer<MemeListItemData>{
 	{
 		final MemeListItemData item = new MemeListItemData();
 		item.setId(input.readInt());
-		item.setMemeType(kryo.readObject(input, ShallowMemeType.class));
+		item.setMemeBackground(kryo.readObject(input, MemeBackground.class));
 				
 		final int thumbBytesLength = input.readInt();
 		item.setThumbBytes(input.readBytes(thumbBytesLength));
@@ -34,7 +32,7 @@ public class MemeListDataSerializer extends Serializer<MemeListItemData>{
 		final MemeListItemData item) 
 	{
 		output.writeInt(item.getId());
-		kryo.writeObject(output, item.getMemeType());
+		kryo.writeObject(output, item.getMemeBackground());
 		
 		if (item.getThumbBytes() != null && item.getThumbBytes().length > 0) {
 			output.writeInt(item.getThumbBytes().length);

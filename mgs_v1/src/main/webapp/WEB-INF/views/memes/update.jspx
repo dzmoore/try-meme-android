@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_eastapps_mgs_model_Meme" modelAttribute="meme" path="/memes" versionField="Version" z="EBIw8dapBoBGtrYA9fpdCsYMzGs=">
+        <field:select field="memeBackground" id="c_com_eastapps_mgs_model_Meme_memeBackground" itemValue="id" items="${memebackgrounds}" path="/memebackgrounds" z="JTrfnkAlx0bZnl2l3YDOtoT2/PU="/>
+        <field:select field="topText" id="c_com_eastapps_mgs_model_Meme_topText" itemValue="id" items="${memetexts}" path="/memetexts" z="A7Qg7+TFM+BOe/ks6BBgceFCcRI="/>
+        <field:select field="bottomText" id="c_com_eastapps_mgs_model_Meme_bottomText" itemValue="id" items="${memetexts}" path="/memetexts" z="QjqANx9ZhCK1RCMIjdbuoh+5hzk="/>
+        <field:select field="createdByUser" id="c_com_eastapps_mgs_model_Meme_createdByUser" itemValue="id" items="${memeusers}" path="/memeusers" z="hLMxFdG5w1jMsIdblmGifql3zgI="/>
+    </form:update>
+</div>

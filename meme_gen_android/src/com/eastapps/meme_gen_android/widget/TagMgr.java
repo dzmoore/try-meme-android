@@ -49,7 +49,7 @@ public class TagMgr {
 		return Conca.t("meme_view_layout_", id);
 	}
 
-	public static String getMemeFileName(int id) {
+	public static String getMemeFileName() {
 		return Conca.t("meme_", System.currentTimeMillis(), ".jpg");
 	}
 	

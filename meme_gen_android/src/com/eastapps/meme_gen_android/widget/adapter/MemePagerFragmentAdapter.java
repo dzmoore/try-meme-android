@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
 import com.eastapps.meme_gen_android.widget.fragment.MemeViewFragment;
 
@@ -50,7 +51,9 @@ public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter {
 		}
 		
 		for (final int index : indexesToUpdate) {
-			frags.set(index, new MemeViewFragment(memes.get(index)));
+			final MemeViewFragment mvf = new MemeViewFragment();
+			mvf.setMeme(memes.get(index));
+			frags.set(index, mvf);
 		}
 	}
 	
@@ -84,7 +87,9 @@ public class MemePagerFragmentAdapter extends FragmentStatePagerAdapter {
 //			}
 //		}
 		
-		return new MemeViewFragment(memes.get(position));
+		final MemeViewFragment mvf = new MemeViewFragment();
+		mvf.setMeme(memes.get(position));
+		return mvf;
 	}
 	
 	@Override
