@@ -122,7 +122,7 @@ public class MemeBackground {
     }
 
 	public static List<MemeBackground> findMemeBackgroundEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM MemeBackground o", MemeBackground.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery("SELECT o FROM MemeBackground o order by o.description", MemeBackground.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
 	@Transactional
