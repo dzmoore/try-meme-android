@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.eastapps.meme_gen_server.domain.CrawlerBackground;
 import com.eastapps.meme_gen_server.domain.CrawlerMeme;
 import com.eastapps.meme_gen_server.domain.Meme;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -198,6 +199,18 @@ public class MemeServiceTest {
 		final List<CrawlerMeme> memes = new ArrayList<CrawlerMeme>();
 		memes.add(m1);
 		TestCase.assertTrue(memeSvc.storeCrawlerMemes(memes));
+	}
+	
+	@Test
+	public void testStoreCrawlerBackgrounds() {
+		final CrawlerBackground bg1 = new CrawlerBackground();
+		bg1.setCrawlerImgDesc("img desc");
+		bg1.setCrawlerImgFilename("img filename1");
+		bg1.setSourceDesc("src desc 1");
+		
+		final List<CrawlerBackground> bgs = new ArrayList<CrawlerBackground>();
+		bgs.add(bg1);
+		TestCase.assertTrue(memeSvc.storeCrawlerBackground(bgs));
 	}
 }
 

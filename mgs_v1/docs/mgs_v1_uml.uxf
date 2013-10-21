@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>4</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>512</x>
+      <y>552</y>
+      <w>164</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.meme_gen_server.service::UrlFileReader
+--
+--
++UrlFileReader(): ctor
++UrlFileReader(final int readChunkSizeBytes): ctor
++getBytes(final String addr): byte[]
++getUrlBase(): String
++setUrlBase(String urlBase): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>552</y>
+      <w>124</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.meme_gen_server.util::Util
+--
+--
++getInt(final Integer i): int
++getId(final Serializable s): int
++commit(final Session session): void
++close(final Session sesh): void
++rollback(final Session sesh): void
++concat(final Object... objs): String
++getBytesFromFile(File file): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>656</y>
+      <w>536</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.web::MemeTextController
+--
+--
++create(@Valid MemeText memeText, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++createForm(Model uiModel): String
++show(@PathVariable("id") Long id, Model uiModel): String
++list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
++update(@Valid MemeText memeText, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++updateForm(@PathVariable("id") Long id, Model uiModel): String
++delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>436</x>
+      <y>320</y>
+      <w>240</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.web::ApplicationConversionServiceFactoryBean
+--
+--
++getMemeToStringConverter(): Converter&lt;Meme, String&gt;
++getIdToMemeConverter(): Converter&lt;Long, Meme&gt;
++getStringToMemeConverter(): Converter&lt;String, Meme&gt;
++getMemeBackgroundToStringConverter(): Converter&lt;MemeBackground, String&gt;
++getIdToMemeBackgroundConverter(): Converter&lt;Long, MemeBackground&gt;
++getStringToMemeBackgroundConverter(): Converter&lt;String, MemeBackground&gt;
++getMemeTextToStringConverter(): Converter&lt;MemeText, String&gt;
++getIdToMemeTextConverter(): Converter&lt;Long, MemeText&gt;
++getStringToMemeTextConverter(): Converter&lt;String, MemeText&gt;
++getMemeUserToStringConverter(): Converter&lt;MemeUser, String&gt;
++getIdToMemeUserConverter(): Converter&lt;Long, MemeUser&gt;
++getStringToMemeUserConverter(): Converter&lt;String, MemeUser&gt;
++getSampleMemeToStringConverter(): Converter&lt;SampleMeme, String&gt;
++getIdToSampleMemeConverter(): Converter&lt;Long, SampleMeme&gt;
++getStringToSampleMemeConverter(): Converter&lt;String, SampleMeme&gt;
++installLabelConverters(FormatterRegistry registry): void
++afterPropertiesSet(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>476</y>
+      <w>536</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.web::MemeUserController
+--
+--
++create(@Valid MemeUser memeUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++createForm(Model uiModel): String
++show(@PathVariable("id") Long id, Model uiModel): String
++list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
++update(@Valid MemeUser memeUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++updateForm(@PathVariable("id") Long id, Model uiModel): String
++delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>628</y>
+      <w>164</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.meme_gen_server.service::MemeService
+--
+--
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>320</y>
+      <w>212</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.model::MemeText
+--
+--
++getText(): String
++setText(String text): void
++getFontSize(): Double
++setFontSize(Double fontSize): void
++entityManager(): EntityManager
++countMemeTexts(): long
++findAllMemeTexts(): List&lt;MemeText&gt;
++findMemeText(Long id): MemeText
++findMemeTextEntries(int firstResult, int maxResults): List&lt;MemeText&gt;
++persist(): void
++remove(): void
++flush(): void
++clear(): void
++merge(): MemeText
++getId(): Long
++setId(Long id): void
++getVersion(): Integer
++setVersion(Integer version): void
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>508</x>
+      <y>124</y>
+      <w>192</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.model::Meme
+--
+--
++toString(): String
++entityManager(): EntityManager
++countMemes(): long
++findAllMemes(): List&lt;Meme&gt;
++findMeme(Long id): Meme
++findMemeEntries(int firstResult, int maxResults): List&lt;Meme&gt;
++persist(): void
++remove(): void
++flush(): void
++clear(): void
++merge(): Meme
++getId(): Long
++setId(Long id): void
++getVersion(): Integer
++setVersion(Integer version): void
++getMemeBackground(): MemeBackground
++setMemeBackground(MemeBackground memeBackground): void
++getTopText(): MemeText
++setTopText(MemeText topText): void
++getBottomText(): MemeText
++setBottomText(MemeText bottomText): void
++getCreatedByUser(): MemeUser
++setCreatedByUser(MemeUser createdByUser): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>704</x>
+      <y>124</y>
+      <w>252</w>
+      <h>164</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.model::MemeBackground
+--
+--
++toString(): String
++getActive(): Boolean
++setActive(Boolean active): void
++getFilePath(): String
++setFilePath(String filePath): void
++getDescription(): String
++setDescription(String description): void
++getId(): Long
++setId(Long id): void
++getVersion(): Integer
++setVersion(Integer version): void
++entityManager(): EntityManager
++countMemeBackgrounds(): long
++findAllMemeBackgrounds(): List&lt;MemeBackground&gt;
++findMemeBackground(Long id): MemeBackground
++findMemeBackgroundEntries(int firstResult, int maxResults): List&lt;MemeBackground&gt;
++persist(): void
++remove(): void
++flush(): void
++clear(): void
++merge(): MemeBackground
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>680</x>
+      <y>600</y>
+      <w>168</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.meme_gen_server.service::LocalFileReader
+--
+--
++LocalFileReader(): ctor
++getBytes(final String addr): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>216</x>
+      <y>808</y>
+      <w>536</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.web::SampleMemeController
+--
+--
++create(@Valid SampleMeme sampleMeme, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++createForm(Model uiModel): String
++show(@PathVariable("id") Long id, Model uiModel): String
++list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
++update(@Valid SampleMeme sampleMeme, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++updateForm(@PathVariable("id") Long id, Model uiModel): String
++delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>212</x>
+      <y>880</y>
+      <w>536</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.web::MemeController
+--
+--
++create(@Valid Meme meme, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++createForm(Model uiModel): String
++show(@PathVariable("id") Long id, Model uiModel): String
++list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
++update(@Valid Meme meme, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++updateForm(@PathVariable("id") Long id, Model uiModel): String
++delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>124</y>
+      <w>284</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.model::MemeUser
+--
+--
++getActive(): Boolean
++setActive(Boolean active): void
++getUsername(): String
++setUsername(String username): void
++getPassword(): String
++setPassword(String password): void
++getSalt(): String
++setSalt(String salt): void
++entityManager(): EntityManager
++countMemeUsers(): long
++findAllMemeUsers(): List&lt;com.eastapps.mgs.model.MemeUser&gt;
++findMemeUser(Long id): com.eastapps.mgs.model.MemeUser
++findMemeUserEntries(int firstResult, int maxResults): List&lt;com.eastapps.mgs.model.MemeUser&gt;
++persist(): void
++remove(): void
++flush(): void
++clear(): void
++merge(): com.eastapps.mgs.model.MemeUser
++toString(): String
++getId(): Long
++setId(Long id): void
++getVersion(): Integer
++setVersion(Integer version): void
++getFavoriteMemes(): Set&lt;Meme&gt;
++setFavoriteMemes(Set&lt;Meme&gt; favoriteMemes): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>696</x>
+      <y>316</y>
+      <w>228</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.model::SampleMeme
+--
+--
++getSampleMeme(): Meme
++setSampleMeme(Meme sampleMeme): void
++getBackground(): MemeBackground
++setBackground(MemeBackground background): void
++toString(): String
++getId(): Long
++setId(Long id): void
++getVersion(): Integer
++setVersion(Integer version): void
++entityManager(): EntityManager
++countSampleMemes(): long
++findAllSampleMemes(): List&lt;SampleMeme&gt;
++findSampleMeme(Long id): SampleMeme
++findSampleMemeEntries(int firstResult, int maxResults): List&lt;SampleMeme&gt;
++persist(): void
++remove(): void
++flush(): void
++clear(): void
++merge(): SampleMeme
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>736</y>
+      <w>536</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.mgs.web::MemeBackgroundController
+--
+--
++create(@Valid MemeBackground memeBackground, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++createForm(Model uiModel): String
++show(@PathVariable("id") Long id, Model uiModel): String
++list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
++update(@Valid MemeBackground memeBackground, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest): String
++updateForm(@PathVariable("id") Long id, Model uiModel): String
++delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>680</x>
+      <y>552</y>
+      <w>172</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+com.eastapps.meme_gen_server.service::IMemeFileReader
+--
+--
++getBytes(String addr): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>348</x>
+      <y>552</y>
+      <w>160</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>com.eastapps.meme_gen_server.constants::Constants
+--
++INVALID = -1: int
++TOP = "TOP": String
++BOTTOM = "BOTTOM": String
++EMPTY = "": String
++EMPTY_STRING = EMPTY: String
++MGS_DB_NAME = "mgsdb": String
+--
++getDbName(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

@@ -1,6 +1,7 @@
 package com.eastapps.meme_gen_android.util;
 
 import android.os.AsyncTask;
+import com.eastapps.meme_gen_android.R;
 
 public class TaskRunner {
 	public static void runAsync(final Runnable runnable) {

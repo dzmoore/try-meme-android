@@ -26,5 +26,6 @@
         <mapping class="com.eastapps.meme_gen_server.domain.UserFavMemeType" />
         <mapping class="com.eastapps.meme_gen_server.domain.MemeTypePopularity" />
         <mapping class="com.eastapps.meme_gen_server.domain.CrawlerMeme"/>
+        <mapping class="com.eastapps.meme_gen_server.domain.CrawlerBackground"/>
     </session-factory>
 </hibernate-configuration>

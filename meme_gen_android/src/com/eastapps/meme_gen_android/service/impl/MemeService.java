@@ -1,55 +1,67 @@
 package com.eastapps.meme_gen_android.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.apache.http.cookie.SM;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
+import android.os.AsyncTask;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.domain.MemeListItemData;
 import com.eastapps.meme_gen_android.domain.MemeViewData;
-import com.eastapps.meme_gen_android.json.JSONException;
-import com.eastapps.meme_gen_android.json.JSONObject;
 import com.eastapps.meme_gen_android.mgr.CacheMgr;
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.mgr.UserMgr;
 import com.eastapps.meme_gen_android.service.IMemeService;
 import com.eastapps.meme_gen_android.util.Constants;
+import com.eastapps.meme_gen_android.util.TaskRunner;
 import com.eastapps.meme_gen_android.util.Utils;
+import com.eastapps.meme_gen_android.web.IMemeServerClient;
 import com.eastapps.meme_gen_android.web.MemeServerClient;
-import com.eastapps.meme_gen_android.widget.TagMgr;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.util.Conca;
 
 public class MemeService implements IMemeService {
 	private static final String TAG = MemeService.class.getSimpleName();
 	private static MemeService instance;
 	
-	private MemeServerClient client;
+	private IMemeServerClient client;
 	private static Context context;
-//	private UserMgr userMgr;
+	private ICallback<Exception> connectionExceptionCallback;
 	
-	private MemeService() {
+	private String backgroundThumbDir;
+	
+	private MemeService(final Context context2) {
 		super();
 		
+		backgroundThumbDir = context2.getString(R.string.backgroundThumbDir);
+		
 		client = new MemeServerClient(context);
+		client.setExceptionCallback(new ICallback<Exception>() {
+			@Override
+			public void callback(Exception obj) {
+				if (connectionExceptionCallback != null) {
+					connectionExceptionCallback.callback(obj);
+				}
+			}
+		});
 	}
 	
 	public static synchronized void initialize(Context context) {
 		MemeService.context = context;
-		instance = new MemeService();
+		instance = new MemeService(context);
 	}
 	
 	public static synchronized MemeService getInstance() {
@@ -57,162 +69,176 @@ public class MemeService implements IMemeService {
 	}
 
 	@Override
-	public int storeMeme(ShallowMeme shallowMeme) {
-		return client.storeMeme(shallowMeme);
-	}
-
-//	@Override
-//	public ShallowMeme getMeme(int id) {
-//		final ShallowMeme m = client.getMeme(id);
-//		return m;
-//	}
-	
-	@Override
-	public synchronized List<ShallowMeme> getSampleMemes(final int typeId) {
-		final CacheMgr cacheMgr = CacheMgr.getInstance();
+	public long storeMeme(final Meme meme) {
+		meme.setCreatedByUser(new MemeUser());
+		meme.getCreatedByUser().setId(UserMgr.getUserId());
+		final long resultId = client.storeMeme(meme);
 		
-		final HashMap<Integer, List<ShallowMeme>> sMap = getSampleMap();
-		List<ShallowMeme> samples = null;
-		
-		final boolean containsKey = sMap.containsKey(typeId);
-		if (containsKey) {
-			samples = sMap.get(typeId);
-			
-		} 
-		
-		if (!containsKey || samples == null || samples.size() == 0) {
-			samples = client.getSampleMemes(typeId);
-			sMap.put(typeId, samples);
-			
-			cacheMgr.storeCacheToFile(true);
+		if (resultId > 0) {
+			meme.setId(resultId);
 		}
 		
-		return samples;
-	}
-	
-	private synchronized HashMap<Integer, List<ShallowMeme>> getSampleMap() {
-		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		addMyMemeToCache(meme);
 		
-		HashMap<Integer, List<ShallowMeme>> map = null;
-		if (cacheMgr.containsKey(Constants.KEY_SAMPLE_MAP)) {
-			map = cacheMgr.getFromCache(Constants.KEY_SAMPLE_MAP, HashMap.class);
+		return resultId;
+	}
+
+	private void addMyMemeToCache(final Meme meme) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		final String key = context.getString(R.string.key_my_memes);
+		ArrayList<Meme> memesForUser = null;
+		if (cacheMgr.containsKey(key)) {
+			memesForUser = new ArrayList<Meme>(getArrayListFromCache(key, Meme.class));
 			
 		} else {
-			map = new HashMap<Integer, List<ShallowMeme>>();
-			cacheMgr.addToCache(Constants.KEY_SAMPLE_MAP, map);
+			memesForUser = new ArrayList<Meme>();
 		}
 		
-		return map;
+		memesForUser.add(meme);
+		cacheMgr.addToCache(key, memesForUser);
+		cacheMgr.storeCacheToFile();
 	}
 
-	public byte[] getBackgroundBytes(final int typeId) {
+	private <T> ArrayList<T> getArrayListFromCache(final String key, final Class<T> type) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		@SuppressWarnings("unchecked")
+		ArrayList<T> fromCache = cacheMgr.getFromCache(key, ArrayList.class);
+		if (fromCache == null) {
+			fromCache = new ArrayList<T>(Collections.EMPTY_LIST);
+		}
+		return fromCache;
+	}
+
+	@Override
+	public synchronized List<Meme> getSampleMemes(final long memeBackgroundId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+	
+		final String key = Conca.t(context.getString(R.string.key_sample_memes), memeBackgroundId);
+		ArrayList<Meme> sampleMemes = null;
+		if (cacheMgr.containsKey(key)) {
+			sampleMemes = new ArrayList<Meme>(getArrayListFromCache(key, Meme.class));
+		
+		} else {
+			sampleMemes = new ArrayList<Meme>(client.getSampleMemes(memeBackgroundId));
+		}
+		
+		cacheMgr.addToCache(key, sampleMemes);
+		
+		cacheMgr.storeCacheToFile();
+		
+		return sampleMemes;
+	}
+	
+	public byte[] getThumbBytes(final String path) {
+		final String thumbPath = Conca.t(backgroundThumbDir, '/', path);
 		final CacheMgr cacheMgr = CacheMgr.getInstance();
 		
 		byte[] bytes = new byte[0];
 		
-		final HashMap<Integer, Object> backgroundMap = getBackgroundMap();
-		final boolean containsKey = backgroundMap.containsKey(typeId);
-		if (containsKey) {
-			bytes = (byte[]) backgroundMap.get(typeId);
+		final String key = Conca.t(context.getString(R.string.key_thumb), path);
+		if (cacheMgr.containsKey(key)) {
+			bytes = (byte[]) cacheMgr.getFromCache(key);
 			
-		} 
+		} else {
+			bytes = Utils.getBytesFromBitmap(client.getBackground(thumbPath));
+			cacheMgr.addToCache(key, bytes);
+		}
 		
-		if (!containsKey || bytes == null || bytes.length == 0) {
-			bytes = Utils.getBytesFromBitmap(client.getBackground(typeId));
+		return bytes;
+	}
+
+	public byte[] getBackgroundBytes(final String path) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		byte[] bytes = new byte[0];
+		
+		final String key = Conca.t(context.getString(R.string.key_background), path);
+		if (cacheMgr.containsKey(key)) {
+			bytes = (byte[]) cacheMgr.getFromCache(key);
 			
-			if (bytes != null && bytes.length > 0) {
-				backgroundMap.put(typeId, bytes);
-				cacheMgr.storeCacheToFile(true);
-			}
+		} else {
+			bytes = Utils.getBytesFromBitmap(client.getBackground(path));
+			cacheMgr.addToCache(key, bytes);
 		}
 		
 		return bytes;
 	}
 	
 	@Override
-	public MemeViewData createMemeViewData(int typeId) {
-		final MemeViewData dat = new MemeViewData();
+	public MemeViewData createMemeViewData(final List<Meme> memes) {
+		final MemeViewData memeViewData = new MemeViewData();
 		
-		if (typeId > 0) {
-			final ShallowMemeType type = getType(typeId);
+		if (memes != null && memes.size() > 0) {
+			final Meme firstMeme = memes.get(0);
+			memeViewData.setBackground(Utils.getBitmapFromBytes(getBackgroundBytes(firstMeme.getMemeBackground().getFilePath())));
 			
-			if (type != null) {
-				dat.setBackground(Utils.getBitmapFromBytes(getBackgroundBytes(typeId)));
-				
-				final ShallowMeme meme = new ShallowMeme();
-				meme.setUserId(UserMgr.getUser().getId());
-				meme.setMemeTypeId(typeId);
-				meme.setBackgroundFk(type.getBackgroundId());
-				
-				dat.setMeme(meme);
+			memeViewData.setMeme(firstMeme);
 			
-				dat.setSampleMemes(getSampleMemes(typeId));
+			if (memes.size() > 1) {
+				memeViewData.setSampleMemes(new ArrayList<Meme>());
+				for (int i = 1; i < memes.size(); i++) {
+					memeViewData.getSampleMemes().add(memes.get(i));
+				}
 			}
 		}
 		
-		return dat;
+		return memeViewData;
 	}
 	
-	private void initAllTypesMap(final List<ShallowMemeType> types) {
-		final HashMap<Integer, ShallowMemeType> allTypesMap = new HashMap<Integer, ShallowMemeType>();
+	@Override
+	public MemeViewData createMemeViewData(final MemeBackground memeBackground) {
+		final MemeViewData memeViewData = new MemeViewData();
 		
-		for (final ShallowMemeType eaType : types) {
-			allTypesMap.put(eaType.getTypeId(), eaType);
-		}
-		
-		CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES_MAP, allTypesMap);
-	}
-	
-	private synchronized HashMap<Integer, Object> getBackgroundMap() {
-		final CacheMgr cm = CacheMgr.getInstance();
-		
-		HashMap<Integer, Object> bgMap;
-		if (cm.containsKey(Constants.KEY_BACKGROUND_MAP)) {
-			bgMap = cm.getFromCache(Constants.KEY_BACKGROUND_MAP, HashMap.class);
+		if (memeBackground != null) {
+			memeViewData.setBackground(Utils.getBitmapFromBytes(getBackgroundBytes(memeBackground.getFilePath())));
 			
-		} else {
-			bgMap = new HashMap<Integer, Object>();
-			cm.addToCache(Constants.KEY_BACKGROUND_MAP, bgMap);
+			final Meme meme = new Meme();
+			meme.setCreatedByUser(UserMgr.getUser());
+			meme.setMemeBackground(memeBackground);
+			
+			memeViewData.setMeme(meme);
+			memeViewData.setSampleMemes(getSampleMemes(memeBackground.getId()));
 		}
-		return bgMap;
+		
+		return memeViewData;
+	}
+	
+	private void initAllTypesMap(final List<MemeBackground> memeBackgrounds) {
+		final HashMap<Long, MemeBackground> allTypesMap = new HashMap<Long, MemeBackground>();
+		
+		for (final MemeBackground eaMemeBackground : memeBackgrounds) {
+			allTypesMap.put(eaMemeBackground.getId(), eaMemeBackground);
+		}
+		
+		CacheMgr.getInstance().addToCache(Constants.KEY_ALL_MEME_BACKGROUNDS_MAP, allTypesMap);
 	}
 	
 	@Override
-	public ShallowMemeType getType(final int typeId) {
-		final CacheMgr cacheMgr = CacheMgr.getInstance();
-		if (!cacheMgr.containsKey(Constants.KEY_ALL_TYPES_MAP)) {
-			getAllMemeTypes();
-		}
-		
-		final Map<Integer, ShallowMemeType> typeMap = cacheMgr.getFromCache(Constants.KEY_ALL_TYPES_MAP, Map.class);
-		
-		return typeMap.get(typeId);
-	}
-	
-	@Override
-	public List<ShallowMemeType> getAllMemeTypes() {
-		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
+	public List<MemeBackground> getAllMemeBackgrounds() {
+		List<MemeBackground> allMemeBackgrounds = new ArrayList<MemeBackground>(0);
 		
 		final boolean containsKey = CacheMgr.getInstance().containsKey(Constants.KEY_ALL_TYPES);
 		if (containsKey) {
-			types = CacheMgr.getInstance().getFromCache(Constants.KEY_ALL_TYPES, List.class);
+			allMemeBackgrounds = CacheMgr.getInstance().getFromCache(Constants.KEY_ALL_TYPES, List.class);
 		
 		} 
 		
-		if (!containsKey || types == null || types.size() == 0) {
-			types = client.getMemeTypes();
+		if (!containsKey || allMemeBackgrounds == null || allMemeBackgrounds.size() == 0) {
+			allMemeBackgrounds = client.getAllMemeBackgrounds();
 			
-			CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES, new ArrayList<ShallowMemeType>(types));
-			
-			initAllTypesMap(types);
+			if (allMemeBackgrounds != null) {
+				CacheMgr.getInstance().addToCache(Constants.KEY_ALL_TYPES, new ArrayList<MemeBackground>(allMemeBackgrounds));
+				
+				initAllTypesMap(allMemeBackgrounds);
+			}
 		}
 		
-		return types;
+		return allMemeBackgrounds;
 	}
 	
 	@Override
 	public List<MemeListItemData> getAllFavMemeTypesListData() {
-		final List<ShallowMemeType> favTypes = UserMgr.getFavMemeTypes(false);
+		final List<MemeBackground> favTypes = getFavoriteBackgrounds();
 		
 		final List<MemeListItemData> listData = populateMemeListItemDataList(favTypes);
 		
@@ -221,7 +247,7 @@ public class MemeService implements IMemeService {
 	
 	@Override
 	public List<MemeListItemData> getAllPopularTypesListData() {
-		final List<ShallowMemeType> types = getPopularTypes();
+		final List<MemeBackground> types = getPopularTypes();
 		final List<MemeListItemData> listData = populateMemeListItemDataList(types);
 		
 		return listData;
@@ -230,7 +256,7 @@ public class MemeService implements IMemeService {
 	@Override
 	public List<MemeListItemData> getAllMemeTypesListData() {
 		
-		final List<ShallowMemeType> types = getAllMemeTypes();
+		final List<MemeBackground> types = getAllMemeBackgrounds();
 		
 		final List<MemeListItemData> listData = populateMemeListItemDataList(types);
 		
@@ -239,15 +265,18 @@ public class MemeService implements IMemeService {
 	
 	@Override
 	public List<MemeListItemData> getAllTypesForSearch(final String query) {
-		final List<ShallowMemeType> results = getTypesForSearch(query);
+		final List<MemeBackground> results = findMemeBackgroundsByName(query);
 		
 		return populateMemeListItemDataList(results);
 	}
 	
 
-	private List<MemeListItemData> populateMemeListItemDataList(
-			final List<ShallowMemeType> types) {
-		final List<MemeListItemData> listData = new ArrayList<MemeListItemData>(types.size());
+	private List<MemeListItemData> populateMemeListItemDataList(final List<MemeBackground> types) {
+		final List<MemeListItemData> listData = new ArrayList<MemeListItemData>(types == null ? 0 : types.size());
+		if (types == null) {
+			return listData;
+		}
+		
 		for (int i = 0; i < types.size(); i++) {
 			listData.add(new MemeListItemData());
 		}
@@ -255,20 +284,19 @@ public class MemeService implements IMemeService {
 		final int corePoolSize = 5;
 		final int maxPoolSize = 8;
 		
-		final BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(
-			Math.max(Math.min(types.size(), maxPoolSize), 1));
+		final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
 			
-		ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
+		final ThreadPoolExecutor tPool = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 2000, TimeUnit.MILLISECONDS, workQueue);
 		
 		int index = 0;
-		for (final ShallowMemeType eaType : types) {
+		for (final MemeBackground eaMemeBackground : types) {
 			final int finalIndex = index;
 			tPool.execute(new Runnable() {
 				@Override
 				public void run() {
 					doPopulateMemeListItemData(
 						listData, 
-						eaType,
+						eaMemeBackground,
 						finalIndex
 					);
 				}
@@ -292,54 +320,145 @@ public class MemeService implements IMemeService {
 	
 	private void doPopulateMemeListItemData(
 			final List<MemeListItemData> listData,
-			final ShallowMemeType eaType,
-			final int finalIndex) {
+			final MemeBackground eaMemeBackground,
+			final int finalIndex) 
+	{
 		final MemeListItemData memeListItemData = new MemeListItemData();
 		
 		listData.set(finalIndex, memeListItemData);
-		memeListItemData.setMemeType(eaType);
-		memeListItemData.setThumbBytes(getBackgroundBytes(eaType.getTypeId()));
+		memeListItemData.setMemeBackground(eaMemeBackground);
+		memeListItemData.setThumbBytes(getThumbBytes(eaMemeBackground.getFilePath()));
 		
 	}
 	
-//	@Override
-//	public ShallowUser getUser(final int userId) {
-//		return client.getUserForId(userId);
-//	}
-
 	@Override
 	public String getNewInstallKey() {
-		return client.getNewInstallKey();
+		return UUID.randomUUID().toString();
 	}
 
 	@Override
-	public int storeNewUser(final ShallowUser shallowUser) {
+	public long storeNewUser(final MemeUser shallowUser) {
 		return client.storeNewUser(shallowUser);
 	}
 
 	@Override
-	public List<ShallowMemeType> getFavMemeTypesForUser(final int userId) {
-		return client.getFavMemeTypesForUser(userId);
+	public boolean storeFavType(final long userId, final long memeBackgroundId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final boolean storeSuccess = client.storeFavMemeBackground(userId, memeBackgroundId);
+		
+		if (storeSuccess) {
+			TaskRunner.runAsync(new Runnable() {
+				@Override
+				public void run() {
+					final String key = context.getString(R.string.fav_backgrounds);
+					cacheMgr.addToCache(key, new ArrayList<MemeBackground>(client.getFavMemeBackgroundsForUser(UserMgr.getUserId())));
+					cacheMgr.storeCacheToFile();
+				}
+			});
+		}
+		
+		return storeSuccess;
 	}
 
 	@Override
-	public boolean storeFavType(int userId, int typeId) {
-		return client.storeFavMeme(userId, typeId);
+	public boolean removeFavType(final long userId, final long memeBackgroundId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final boolean removeSuccess = client.removeFavMeme(userId, memeBackgroundId);
+		
+		if (removeSuccess) {
+			final String key = context.getString(R.string.fav_backgrounds);
+			ArrayList<MemeBackground> favBackgrounds = null;
+			if (cacheMgr.containsKey(key)) {
+				favBackgrounds = new ArrayList<MemeBackground>(getArrayListFromCache(key, MemeBackground.class));
+				
+				for (final Iterator<MemeBackground> itr = favBackgrounds.iterator(); itr.hasNext();) {
+					final MemeBackground ea = itr.next();
+					if (ea.getId() == memeBackgroundId) {
+						itr.remove();
+					}
+				}
+				cacheMgr.addToCache(key, favBackgrounds);
+				cacheMgr.storeCacheToFile();
+			} 
+		}
+		
+		return removeSuccess;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MemeBackground> getPopularTypes() {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final String key = context.getString(R.string.key_popular_backgrounds);
+		ArrayList<MemeBackground> backgrounds = null;
+		if (cacheMgr.containsKey(key)) {
+			backgrounds = getArrayListFromCache(key, MemeBackground.class);
+			
+		} else {
+			final List<MemeBackground> popularMemeBackgrounds = client.getPopularMemeBackgrounds(context.getString(R.string.popular_type_name));
+			backgrounds = new ArrayList<MemeBackground>(popularMemeBackgrounds == null ? Collections.EMPTY_LIST : popularMemeBackgrounds);
+			cacheMgr.addToCache(key, backgrounds);
+			cacheMgr.storeCacheToFile();
+		}
+		
+		return backgrounds;
 	}
 
 	@Override
-	public boolean removeFavType(int userId, int typeId) {
-		return client.removeFavMeme(userId, typeId);
-	}
-
-	public List<ShallowMemeType> getPopularTypes() {
-		return client.getPopularTypes();
-	}
-
-	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
-		return client.getTypesForSearch(searchTerm);
+	public List<MemeBackground> findMemeBackgroundsByName(final String query) {
+		return client.getMemeBackgroundsByName(query);
 	}
 	
+	@Override
+	public List<Meme> getMemesForUser(final long userId) {
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		
+		final String key = context.getString(R.string.key_my_memes);
+		ArrayList<Meme> memes = null;
+		if (cacheMgr.containsKey(key)) {
+			memes = getArrayListFromCache(key, Meme.class);
+			
+		} else {
+			final List<Meme> memesForUser = client.getMemesForUser(userId);
+			memes = new ArrayList<Meme>(memesForUser == null ? Collections.EMPTY_LIST : memesForUser);
+			cacheMgr.addToCache(key, memes);
+			cacheMgr.storeCacheToFile();
+		}
+		
+		return memes;
+	}
+
+	public ICallback<Exception> getConnectionExceptionCallback() {
+		return connectionExceptionCallback;
+	}
+
+	@Override
+	public void setConnectionExceptionCallback(
+			ICallback<Exception> connectionExceptionCallback) {
+		this.connectionExceptionCallback = connectionExceptionCallback;
+	}
+
+	@Override
+	public List<MemeBackground> getFavoriteBackgrounds() {
+		final String key = context.getString(R.string.fav_backgrounds);
+		
+		final CacheMgr cacheMgr = CacheMgr.getInstance();
+		ArrayList<MemeBackground> favBackgrounds = null;
+		if (cacheMgr.containsKey(key)) {
+			favBackgrounds = getArrayListFromCache(key, MemeBackground.class);
+			
+		} else {
+			favBackgrounds = new ArrayList<MemeBackground>(client.getFavMemeBackgroundsForUser(UserMgr.getUserId()));
+			cacheMgr.addToCache(key, favBackgrounds);
+			cacheMgr.storeCacheToFile();
+		}
+		
+		return favBackgrounds;
+	}
+
 
 }
 

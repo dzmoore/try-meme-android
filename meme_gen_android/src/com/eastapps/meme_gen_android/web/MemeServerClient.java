@@ -1,415 +1,253 @@
 package com.eastapps.meme_gen_android.web;
 
-import java.lang.reflect.Type;
-import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.eastapps.meme_gen_android.R;
 import com.eastapps.meme_gen_android.http.IWebClient;
 import com.eastapps.meme_gen_android.http.WebClient;
+import com.eastapps.meme_gen_android.mgr.ICallback;
 import com.eastapps.meme_gen_android.util.Constants;
 import com.eastapps.meme_gen_android.util.StringUtils;
-import com.eastapps.meme_gen_android.util.Utils;
-import com.eastapps.meme_gen_server.domain.IntResult;
-import com.eastapps.meme_gen_server.domain.ShallowMeme;
-import com.eastapps.meme_gen_server.domain.ShallowMemeType;
-import com.eastapps.meme_gen_server.domain.ShallowUser;
+import com.eastapps.mgs.model.Meme;
+import com.eastapps.mgs.model.MemeBackground;
+import com.eastapps.mgs.model.MemeUser;
+import com.eastapps.mgs.model.MemeUserFavorite;
+import com.eastapps.mgs.model.SampleMeme;
 import com.eastapps.util.Conca;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class MemeServerClient {
-	private static final String TAG = MemeServerClient.class.getSimpleName();
-
+public class MemeServerClient implements IMemeServerClient {
+	private static final String TAG = MemeServerClient.class.getName();
+	private static IMemeServerClient instance;
 	private IWebClient webClient;
-	private String webSvcAddr;
-	private String webSvcBgrndSuffix;
-	private String webSvcJsonSuffix;
-	private String webSvcMemeDataSuffix;
-	private String webSvcStoreMemePrefix;
-	private String webSvcSampleMemeDataPrefix;
-	private String webSvcMemeTypePrefix;
+	private String webServiceAddress;
+	private String webServiceMemesCreateJson;
+	private String backgroundFileAddress;
+	private String createMemeUrl;
+	private String findPopularMemeBackgroundsForTypeNameUrl;
+	private String createMemeUserUrl;
+	private String listMemeBackgroundsUrl;
+	private String listSampleMemesForBackgroundIdUrlPre;
+	private String listSampleMemesForBackgroundIdUrlPost;
+	private String listFavoriteMemeBackgroundsForUserIdUrlPre;
+	private String storeFavoriteMemeBackgroundUrl;
+	private String removeFavoriteMemeBackgroundUrl;
+	private String findMemeBackgroundsByNameUrl;
+	private String listMemesForUserUrl;
+	private ICallback<Exception> exceptionCallback;
 
 	public MemeServerClient(final Context context) {
 		super();
 
-		webSvcAddr = context.getString(R.string.webServiceAddress);
-		webSvcMemeDataSuffix = context.getString(R.string.webServiceMemeDataSuffix);
-		webSvcBgrndSuffix = context.getString(R.string.webServiceBackgroundSuffix);
-		webSvcJsonSuffix = context.getString(R.string.webServiceJsonSuffix);
-		webSvcStoreMemePrefix = context.getString(R.string.webServiceStoreMemePrefix);
-		webSvcSampleMemeDataPrefix = context.getString(R.string.webServiceSampleMemeDataPrefix);
-		webSvcMemeTypePrefix = context.getString(R.string.webServiceMemeType);
-
+		final String environment = context.getString(R.string.environment);
+		if (StringUtils.equals("dev", environment)) {
+			webServiceAddress = context.getString(R.string.devWebServiceAddress);
+			backgroundFileAddress = context.getString(R.string.prodBackgroundFileAddress);
+			
+		} else {
+			webServiceAddress = context.getString(R.string.prodWebServiceAddress);
+			backgroundFileAddress = context.getString(R.string.prodBackgroundFileAddress);
+			
+		}
+		
+		webServiceMemesCreateJson = context.getString(R.string.webServiceMemesCreateJson);
+		
+		createMemeUrl = Conca.t(webServiceAddress, webServiceMemesCreateJson);
+		findPopularMemeBackgroundsForTypeNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeBackgroundPopularityByTypeNameJson));
+		createMemeUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceMemeUserCreateJson));
+		listMemeBackgroundsUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceListMemeBackgroundsJson));
+		listSampleMemesForBackgroundIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListSampleMemesForBackgroundIdPre));
+		listSampleMemesForBackgroundIdUrlPost = context.getString(R.string.webServiceListSampleMemesForBackgroundIdPost);
+		listFavoriteMemeBackgroundsForUserIdUrlPre = Conca.t(webServiceAddress, context.getString(R.string.webServiceListFavoriteMemeBackgroundsForUserId));
+		storeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceStoreMemeFavoriteJson));
+		removeFavoriteMemeBackgroundUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceRemoveMemeFavoriteJson));
+		findMemeBackgroundsByNameUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceFindMemeBackgroundsByNameJson));
+		listMemesForUserUrl = Conca.t(webServiceAddress, context.getString(R.string.webServiceGetMemesForUserJson));
+		
 		webClient = new WebClient();
 		webClient.setConnectionTimeoutMs(context.getResources().getInteger(R.integer.connectionTimeoutMs));
-		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));
-	}
+		webClient.setConnectionUseCaches(context.getResources().getBoolean(R.bool.connectionUseCaches));		
+		webClient.setExceptionCallback(new ICallback<Exception>() {
+			@Override
+			public void callback(Exception obj) {
 
-	public ShallowMeme getMeme(final int memeId) {
-		final String result = 
-			Utils.noValue(webClient.getJSONObject(Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				webSvcMemeDataSuffix,
-				Constants.URL_SEPARATOR,
-				memeId,
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-		)), Constants.EMPTY);
-		
-		ShallowMeme shMemeResult = new ShallowMeme();
-		if (StringUtils.isNotBlank(result)) {
-			shMemeResult = new Gson().fromJson(result, ShallowMeme.class);
-		}
-		
-		return shMemeResult;
-	}
-
-	public Bitmap getBackground(final int typeId) {
-		return
-			webClient.getBitmap(Conca.t(
-				webSvcAddr, 
-				Constants.URL_SEPARATOR, 
-				webSvcMemeDataSuffix,
-				Constants.URL_SEPARATOR,
-				typeId,
-				Constants.URL_SEPARATOR,
-				webSvcBgrndSuffix
-			));
-	}
-
-	public int storeMeme(final ShallowMeme shallowMeme) {
-		int resultId = Constants.INVALID;
-
-		final String respStr = Utils.noValue(webClient.getJSONObject(
-			Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				webSvcStoreMemePrefix
-			),
-			new Gson().toJson(shallowMeme)
-		), Constants.EMPTY);
-
-		if (StringUtils.isNotBlank(respStr)) {
-			try {
-				final IntResult intRes = new Gson().fromJson(respStr, IntResult.class);
-				if (intRes != null) {
-					resultId = intRes.getResult();
+				if (exceptionCallback != null) {
+					exceptionCallback.callback(obj);
 				}
-
-			} catch (Exception e) {
-				Log.e(TAG, "err", e);
 			}
-		}
-
-
-		return resultId;
-	}
-
-	public List<ShallowMeme> getSampleMemes(int typeId) {
-		final String result = 
-			Utils.noValue(webClient.getJSONObject(Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				webSvcSampleMemeDataPrefix,
-				Constants.URL_SEPARATOR,
-				typeId,
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-		)), Constants.EMPTY);
+		});
 		
-		List<ShallowMeme> shMemeResult = new ArrayList<ShallowMeme>(0);
-		if (StringUtils.isNotBlank(result)) {
-			Type listType = new TypeToken<Collection<ShallowMeme>>(){}.getType();
-			shMemeResult = new Gson().fromJson(result, listType);
-		}
-		
-		return shMemeResult;
 	}
 	
-	public List<ShallowMemeType> getMemeTypes() {
-		final String result =
-			Utils.noValue(webClient.getJSONObject(Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				webSvcMemeTypePrefix,
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-		)), Constants.EMPTY);
-				
-		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
-		if (StringUtils.isNotBlank(result)) {
-			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
-			types = new Gson().fromJson(result, listType);
-		}
-		
-		return types;
-	}
-
-//	private <T> Type getTypeForTypedList(final Class<T> type) {
-//		Type listType = new TypeToken<Collection<T>>(){}.getType();
-//		return listType;
-//	}
-	
-//	public Bitmap getBackgroundForType(final int typeId) {
-//		return
-//			webClient.getBitmap(Conca.t(
-//				webSvcAddr, 
-//				Constants.URL_SEPARATOR, 
-//				webSvcMemeTypePrefix,
-//				Constants.URL_SEPARATOR,
-//				typeId,
-//				Constants.URL_SEPARATOR,
-//				webSvcBgrndSuffix
-//			));
-//	}
-	
-	public ShallowUser getUserForId(final int id) {
-		final String result =
-			Utils.noValue(webClient.getJSONObject(Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				"user_data",
-				Constants.URL_SEPARATOR,
-				"user",
-				Constants.URL_SEPARATOR,
-				id,
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-			)), Constants.EMPTY);
-				
-		return new Gson().fromJson(result, ShallowUser.class);
-	}
-
-	public <T> T getObject(final Class<T> type, final Object... addrParts) {
-		T typedResult = null;
-		
-		try {
-			final String result = Utils.noValue(webClient.getJSONObject(Conca.t(addrParts)), Constants.EMPTY);
-			typedResult = new Gson().fromJson(result, type);
-			
-		} catch (Exception e) {
-			Log.e(TAG, "err", e);
-		}
-		
-		return typedResult;
+	public static synchronized void initialize(Context context) {
+		instance = new MemeServerClient(context);
 	}
 	
-	public <T> List<T> getList(final Class<T> itemType, final Object... addrParts) {
-		final String result = Utils.noValue(webClient.getJSONObject(Conca.t(addrParts)), Constants.EMPTY);
-		List<T> typedResult = new ArrayList<T>();
-		
-		try {
-			typedResult = new Gson().fromJson(result, new TypeToken<Collection<T>>(){}.getType());
-			
-		} catch (Exception e) {
-			Log.e(TAG, "err", e);
-		}
-		
-		return typedResult;
+	public static synchronized IMemeServerClient getInstance() {
+		return instance;
 	}
 	
-	public <T> T getObjectWithArg(
-		final Class<T> type, 
-		final String addr, 
-		final Object arg)
-	{
-		T typedResult = null;
-		
-		try {
-			final String result = webClient.getJSONObject(addr, new Gson().toJson(arg));
-			typedResult = new Gson().fromJson(result, type);
-			
-		} catch (Exception e) {
-			Log.e(TAG, "err", e);
-		}
-		
-		return typedResult;
-	}
-	
-	public String getNewInstallKey() {
-		return getObject(String.class, 
-			webSvcAddr,
-			Constants.URL_SEPARATOR,
-			"user_data",
-			Constants.URL_SEPARATOR,
-			"new_install_key",
-			Constants.URL_SEPARATOR,
-			webSvcJsonSuffix
-		);
-	}
-
-	public int storeNewUser(ShallowUser shallowUser) {
-		return Utils.noValue(getObjectWithArg(Integer.class, 
-			Conca.t(
-				webSvcAddr,
-				Constants.URL_SEPARATOR,
-				"user_data",
-				Constants.URL_SEPARATOR,
-				"store_new",
-				Constants.URL_SEPARATOR,
-				webSvcJsonSuffix
-			),
-			shallowUser
-		), Constants.INVALID);
-			
-	}
-	
-	public List<ShallowMemeType> getFavMemeTypesForUser(int userId) {
-		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
-		String result = Constants.EMPTY;
-		
-		final String addr = Conca.t(
-			webSvcAddr,
-			Constants.URL_SEPARATOR,
-			"user_data",
-			Constants.URL_SEPARATOR,
-			"user",
-			Constants.URL_SEPARATOR,
-			userId,
-			Constants.URL_SEPARATOR,
-			"favtypes",
-			Constants.URL_SEPARATOR,
-			webSvcJsonSuffix
-		);
-		
-		result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
-		
-		if (StringUtils.isNotBlank(result)) {
-			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
-			types = new Gson().fromJson(result, listType);
-		}
-		
-		return types;
-	}
-	
-	public boolean storeFavMeme(int userId, int typeId) {
-		return 
-			getObject(Boolean.class, 
-				concatForUrl(
-					webSvcAddr,
-					"user_data",
-					"user",
-					userId,
-					"favtypes",
-					typeId,
-					"store"
-				)); 
-	}
-	
-	public boolean removeFavMeme(int userId, int typeId) {
-		return 
-			getObject(Boolean.class, 
-				concatForUrl(
-					webSvcAddr,
-					"user_data",
-					"user",
-					userId,
-					"favtypes",
-					typeId,
-					"remove"
-				));
-	}
-	
-	private static final String concatForUrl(final Object... parts) {
+	private static String concatUrlPieces(final Object... parts) {
 		final StringBuilder sb = new StringBuilder();
 		
-		boolean isNotFirst = false;
-		for (final Object ea : parts) { 
-			if (isNotFirst) {
+		boolean notFirst = false;
+		for (final Object ea : parts) {
+			if (notFirst) {
 				sb.append(Constants.URL_SEPARATOR);
 			}
 			
 			sb.append(ea);
 			
-			isNotFirst = true;
+			notFirst = true;
 		}
 		
 		return sb.toString();
 	}
+	
+	@Override
+	public long storeMeme(Meme meme) {
+		return webClient.sendRequestAsJson(createMemeUrl, meme, Long.class);
+	}
+	
+	@Override
+	public Bitmap getBackground(final String path) {
+		return 
+			webClient.getBitmap(concatUrlPieces(
+				backgroundFileAddress,
+				path
+			));
+	}
 
-//	"/meme_type_data/popular/json")
-	public List<ShallowMemeType> getPopularTypes() {
-		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
-		String result = Constants.EMPTY;
+	@Override
+	public List<MemeBackground> getPopularMemeBackgrounds(final String popularityTypeName) {
+		@SuppressWarnings("unchecked")
+		final List<MemeBackground> memeBackgrounds = (List<MemeBackground>) webClient.sendRequestAsJsonReturnList(
+			findPopularMemeBackgroundsForTypeNameUrl, 
+			popularityTypeName, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
+	
+		return memeBackgrounds;
+	}
+	
+	@Override
+	public long storeNewUser(final MemeUser memeUser) {
+		return webClient.sendRequestAsJson(createMemeUserUrl, memeUser, Long.class);
+	}
+
+	@Override
+	public List<MemeBackground> getAllMemeBackgrounds() {
+		final String responseJson = webClient.getJSONObject(listMemeBackgroundsUrl);
 		
-		final String addr = concatForUrl(
-			webSvcAddr,
-			webSvcMemeTypePrefix,
-			"popular",
-			webSvcJsonSuffix
+		final List<MemeBackground> memeBackgrounds = new Gson().fromJson(
+			responseJson, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
 		);
 		
-		result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
-		
-		if (StringUtils.isNotBlank(result)) {
-			Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
-			types = new Gson().fromJson(result, listType);
-		}
-		
-		return types;
+		return memeBackgrounds;
 	}
-
-//	/meme_type_data/search/{searchTerm}/json")
-	public List<ShallowMemeType> getTypesForSearch(String searchTerm) {
-		List<ShallowMemeType> types = new ArrayList<ShallowMemeType>(0);
-		String result = Constants.EMPTY;
+	
+	@Override
+	public List<Meme> getSampleMemes(final long memeBackgroundId) {
+		final String url = Conca.t(
+			listSampleMemesForBackgroundIdUrlPre, 
+			"/", memeBackgroundId, 
+			listSampleMemesForBackgroundIdUrlPost
+		);
 		
-		String addr;
-		try {
-			addr = concatForUrl(
-				webSvcAddr,
-				webSvcMemeTypePrefix,
-				"search",
-				URLEncoder.encode(searchTerm, "utf-8"),
-				webSvcJsonSuffix
-			);
-			
-			result = Utils.noValue(webClient.getJSONObject(addr), Constants.EMPTY);
-			
-			if (StringUtils.isNotBlank(result)) {
-				Type listType = new TypeToken<Collection<ShallowMemeType>>(){}.getType();
-				types = new Gson().fromJson(result, listType);
+		final String responseJson = webClient.getJSONObject(url);
+		
+		final List<SampleMeme> sampleMemes = new Gson().fromJson(
+			responseJson,
+			new TypeToken<Collection<SampleMeme>>(){}.getType()
+		);
+		
+		final List<Meme> memesForBackground = new ArrayList<Meme>(sampleMemes == null ? 0 : sampleMemes.size());
+		
+		if (sampleMemes != null && sampleMemes.size() > 0) {
+			for (final SampleMeme eaSampleMeme : sampleMemes) {
+				memesForBackground.add(eaSampleMeme.getSampleMeme());
 			}
-			
-		} catch (Exception e) {
-			Log.e(TAG, "err", e);
 		}
 		
-		return types;
+		return memesForBackground;
 	}
 
+	@Override
+	public List<MemeBackground> getFavMemeBackgroundsForUser(long userId) {
+		final String url = Conca.t(
+			listFavoriteMemeBackgroundsForUserIdUrlPre, 
+			"/", userId
+		);
+		
+		@SuppressWarnings("unchecked")
+		final List<MemeBackground> favoriteMemeBackgrounds = 
+			(List<MemeBackground>) webClient.getRequestAsJsonReturnList(
+				url, 
+				new TypeToken<Collection<MemeBackground>>(){}.getType()
+			);
+		
+		return favoriteMemeBackgrounds;
+	}
+
+	@Override
+	public boolean storeFavMemeBackground(long userId, long memeBackgroundId) {
+		final MemeUserFavorite favorite = new MemeUserFavorite();
+		favorite.setMemeBackground(new MemeBackground());
+		favorite.getMemeBackground().setId(memeBackgroundId);
+		
+		favorite.setMemeUser(new MemeUser());
+		favorite.getMemeUser().setId(userId);
+		
+		return webClient.sendRequestAsJson(storeFavoriteMemeBackgroundUrl, favorite, Boolean.class);
+	}
+
+	@Override
+	public boolean removeFavMeme(long userId, long memeBackgroundId) {
+		final MemeUserFavorite favorite = new MemeUserFavorite();
+		favorite.setMemeBackground(new MemeBackground());
+		favorite.getMemeBackground().setId(memeBackgroundId);
+		
+		favorite.setMemeUser(new MemeUser());
+		favorite.getMemeUser().setId(userId);
+		
+		return webClient.sendRequestAsJson(removeFavoriteMemeBackgroundUrl, favorite, Boolean.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<MemeBackground> getMemeBackgroundsByName(String query) {
+		return (List<MemeBackground>) webClient.sendRequestAsJsonReturnList(
+			findMemeBackgroundsByNameUrl, 
+			query, 
+			new TypeToken<Collection<MemeBackground>>(){}.getType()
+		);
+	}
 	
-	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Meme> getMemesForUser(final long userId) {
+		return (List<Meme>) webClient.getRequestAsJsonReturnList(
+			concatUrlPieces(listMemesForUserUrl, String.valueOf(userId)),
+			new TypeToken<Collection<Meme>>(){}.getType()
+		);
+	}
+
+	public ICallback<Exception> getExceptionCallback() {
+		return exceptionCallback;
+	}
+
+	@Override
+	public void setExceptionCallback(ICallback<Exception> exceptionCallback) {
+		this.exceptionCallback = exceptionCallback;
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
