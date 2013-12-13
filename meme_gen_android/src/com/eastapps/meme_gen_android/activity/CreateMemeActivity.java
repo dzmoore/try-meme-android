@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -412,13 +413,10 @@ public class CreateMemeActivity extends FragmentActivity {
 				
 				final StringBuilder sb = new StringBuilder();
 				if (id > 0) {
-					sb
-					.append("Store success! id={")
-					.append(id)
-					.append("}");
+					sb.append(getString(R.string.memeStoredSuccessMessage));
 					
 				} else {
-					sb.append("Store fail!");
+					sb.append(getString(R.string.memeStoredFailMessage));
 				}
 				
 				runOnUiThread(

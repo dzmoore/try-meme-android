@@ -34,6 +34,9 @@
     <string name="webServiceFindMemeBackgroundsByNameJson">/memebackgrounds/findbyname/json</string>
     <string name="webServiceGetMemesForUserJson">/memes/get_for_user/json/1/100</string>
 
+    <string name="memeStoredSuccessMessage">Saved! You can now view this meme under My Memes.</string>
+    <string name="memeStoredFailMessage">We had trouble saving your meme!</string>
+    
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>
 
