@@ -140,7 +140,12 @@ public class MemeServerClient implements IMemeServerClient {
 	
 	@Override
 	public long storeNewUser(final MemeUser memeUser) {
-		return webClient.sendRequestAsJson(createMemeUserUrl, memeUser, Long.class);
+		final Long newUserId = webClient.sendRequestAsJson(createMemeUserUrl, memeUser, Long.class);
+		if (newUserId < 1) {
+			exceptionCallback.callback(new Exception("Unable to create new user!"));
+		}
+		
+		return newUserId;
 	}
 
 	@Override

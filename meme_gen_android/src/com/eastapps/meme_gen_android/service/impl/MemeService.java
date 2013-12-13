@@ -451,7 +451,14 @@ public class MemeService implements IMemeService {
 			favBackgrounds = getArrayListFromCache(key, MemeBackground.class);
 			
 		} else {
-			favBackgrounds = new ArrayList<MemeBackground>(client.getFavMemeBackgroundsForUser(UserMgr.getUserId()));
+			final List<MemeBackground> favMemeBackgroundsForUser = client.getFavMemeBackgroundsForUser(UserMgr.getUserId());
+			if (favMemeBackgroundsForUser == null || favMemeBackgroundsForUser.size() == 0) {
+				favBackgrounds = new ArrayList<MemeBackground>(0);
+				
+			} else {
+				favBackgrounds = new ArrayList<MemeBackground>(favMemeBackgroundsForUser);
+			}
+			
 			cacheMgr.addToCache(key, favBackgrounds);
 			cacheMgr.storeCacheToFile();
 		}

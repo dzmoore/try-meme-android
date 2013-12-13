@@ -56,7 +56,7 @@ public class UserMgr {
 			
 		} else if (BuildConfig.DEBUG) {
 			Log.w(TAG, "unable to create new user (id invalid)");
-		}
+		} 
 	}
 	
 	public static Long getUserId() {
