@@ -25,6 +25,7 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -844,12 +845,31 @@ public class CreateMemeActivity extends FragmentActivity {
 		return newMemeText;
 	}
 
-	private void setTopTextViewTextSize(final int topTextFontSize) {
-		final OutlineTextView topTextView = getSelectedTopTextView();
+
+
+	private float calculateTextSize(final int progress) {
+		final int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
 		
-		if (topTextView != null) {
-			topTextView.setTextSize((topTextFontSize * SEEK_BAR_MULTIPLIER) + SEEK_BAR_SCALAR);
-		}
+		final TypedValue multiplierTypedValue = new TypedValue();
+		getResources().getValue(R.dimen.memeTextViewTextMultiplier, multiplierTypedValue,  true);
+		final float multiplier = multiplierTypedValue.getFloat();
+		
+		final TypedValue constantTypedValue = new TypedValue();
+		getResources().getValue(R.dimen.memeTextViewTextConstant, constantTypedValue,  true);
+		final float constant = constantTypedValue.getFloat();
+		
+		final float multiplierHeight = multiplier * screenHeight;
+		
+		return 
+			(
+				progress 
+				* multiplierHeight
+			) 
+			+ 
+			(
+				constantTypedValue.getFloat()
+				* multiplierHeight
+			);
 	}
 
 	private MemePagerFragmentAdapter getMemePagerAdapter() {
@@ -909,12 +929,20 @@ public class CreateMemeActivity extends FragmentActivity {
 		
 		return currentMeme;
 	}
-
-	private void setBottomTextViewTextSize(final int fontSize) {
+	
+	private void setTopTextViewTextSize(final int progress) {
+		final OutlineTextView topTextView = getSelectedTopTextView();
+		
+		if (topTextView != null) {
+			topTextView.setTextSize(calculateTextSize(progress));
+		}
+	}
+	
+	private void setBottomTextViewTextSize(final int progress) {
 		final OutlineTextView bottomTextView = getSelectedBottomTextView();
 		
 		if (bottomTextView != null) {
-			bottomTextView.setTextSize(fontSize * SEEK_BAR_MULTIPLIER + SEEK_BAR_SCALAR);
+			bottomTextView.setTextSize(calculateTextSize(progress));
 		}
 	}
 	

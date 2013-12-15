@@ -79,5 +79,7 @@
     <string name="key_background">background-</string>
     <string name="popular_type_name">popular</string>
     <string name="fav_backgrounds">fav_backgrounds</string>
+    <item format="float" type="dimen" name="memeTextViewTextMultiplier">0.0008</item>
+    <item format="float" type="dimen" name="memeTextViewTextConstant">35</item>
 
 </resources>
