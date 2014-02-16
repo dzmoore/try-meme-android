@@ -6,7 +6,7 @@
     android:layout_height="fill_parent" >
 
     
-    <com.eastapps.meme_gen_android.widget.ResizableImageView
+    <com.trymeme.meme_gen_android.widget.ResizableImageView
         android:id="@+id/image_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -16,7 +16,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/config_icon" />
     
-    <com.eastapps.meme_gen_android.widget.OutlineTextView 
+    <com.trymeme.meme_gen_android.widget.OutlineTextView 
         android:id="@+id/top_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:paddingRight="@dimen/text_padding"
         android:shadowRadius="7"/>
     
-   <com.eastapps.meme_gen_android.widget.OutlineTextView 
+   <com.trymeme.meme_gen_android.widget.OutlineTextView 
         android:id="@+id/bottom_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

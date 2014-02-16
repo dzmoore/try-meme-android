@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/meme_list_filter_bar_fragment"
-        android:name="com.eastapps.meme_gen_android.widget.fragment.MemeListFilterBarFragment"
+        android:name="com.trymeme.meme_gen_android.widget.fragment.MemeListFilterBarFragment"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_weight="1" />
 
     <fragment
         android:id="@+id/meme_list_fragment"
-        android:name="com.eastapps.meme_gen_android.widget.fragment.MemeListFragment"
+        android:name="com.trymeme.meme_gen_android.widget.fragment.MemeListFragment"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
