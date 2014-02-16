@@ -1,6 +1,6 @@
 package com.eastapps.mgs.model;
 
-import com.eastapps.meme_gen_android.R;
+import com.trymeme.meme_gen_android.R;
 import java.io.Serializable;
 
 

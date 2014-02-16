@@ -102,7 +102,7 @@
 
 ##---------------Begin: meme_gen_android configuration  ----------
 
--keep class com.eastapps.** { *; }
+-keep class com.trymeme.** { *; }
 -keep class java.beans.** { *; }
 -keep class sun.reflect.** { *; }
 -keep class android.webkit.** { *; }
@@ -119,7 +119,7 @@
     public static *** v(...);
 }
 -keep class ** { *; }
--dontwarn com.eastapps.**
+-dontwarn com.trymeme.**
 -dontwarn java.beans.**
 -dontwarn sun.reflect.**
 -dontwarn android.webkit.**
