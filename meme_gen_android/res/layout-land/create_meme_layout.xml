@@ -38,14 +38,14 @@
             android:layout_gravity="top"
             android:layout_weight="1" />
 
-        <com.mobclix.android.sdk.MobclixMMABannerXLAdView
+       <!--  <com.mobclix.android.sdk.MobclixMMABannerXLAdView
             android:id="@+id/create_view_advertising_banner_view"
             android:layout_width="320dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center"
             android:tag="adspace" >
 
-        </com.mobclix.android.sdk.MobclixMMABannerXLAdView>
+        </com.mobclix.android.sdk.MobclixMMABannerXLAdView> -->
     </LinearLayout>
 
 </LinearLayout>
