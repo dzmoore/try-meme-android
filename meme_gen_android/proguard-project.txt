@@ -109,7 +109,7 @@
 -keep class android.support.** { *; }
 -keep class android.widget.** { *; }
 -keep class com.esotericsoftware.kryo.serializers.** { *; }
--keep class com.mobclix.** { *; }
+#-keep class com.mobclix.** { *; }
 -keep class com.google.ads.** { *; }
 -keep class com.millennialmedia.android.** { *; }
 -keep class com.newmonics.** { *; }
@@ -124,7 +124,7 @@
 -dontwarn sun.reflect.**
 -dontwarn android.webkit.**
 -dontwarn com.esotericsoftware.kryo.serializers.**
--dontwarn com.mobclix.**
+#-dontwarn com.mobclix.**
 -dontwarn com.google.ads.**
 -dontwarn com.millennialmedia.android.**
 
