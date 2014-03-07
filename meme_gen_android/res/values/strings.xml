@@ -1,10 +1,9 @@
 <resources>
-
-    <string name="app_name">meme_gen_android</string>
+    <item name="environment" type="string" format="string">prod</item> <!-- dev, prod -->
+    <string name="app_name">Try Meme</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_create_meme">CreateMemeActivity</string>
-    <string name="title_activity_meme_list">MemeListActivity</string>
+    <string name="title_activity_create_meme">Create Meme</string>
 
     <item name="create_meme_top_row_height" type="string">40dp</item>
 
@@ -13,22 +12,34 @@
     <string name="edit_top_text_string">Top Text</string>
     <string name="edit_bottom_text_string">Bottom Text</string>
     <string name="title_activity_view_meme">ViewMeme</string>
-    <string name="webServiceResource">/beermap2/android</string>
 
     <item name="sslPort" format="integer" type="integer">8443</item>
     <item name="nonSslPort" format="integer" type="integer">8080</item>
 
     <string name="sslHttp">https://</string>
     <string name="nonSslHttp">http://</string>
-    <string name="webServiceAddress">http://polar-cliffs-6420.herokuapp.com/spring</string>
-    <!-- <string name="webServiceAddress">http://dylanxpeth:8080/meme_gen_server/spring</string> -->
-    <string name="webServiceMemeDataSuffix">meme_data</string>
-    <string name="webServiceBackgroundSuffix">background</string>
-    <string name="webServiceJsonSuffix">json</string>
-    <string name="webServiceStoreMemePrefix">store_meme</string>
-    <string name="webServiceSampleMemeDataPrefix">sample_meme_data</string>
-    <string name="webServiceMemeType">meme_type_data</string>
+    <string name="prodWebServiceAddress">http://arcane-chamber-4976.herokuapp.com</string> 
+    <string name="devWebServiceAddress">http://dylan-mint:8080</string> 
+    <string name="prodBackgroundFileAddress">https://s3.amazonaws.com/mgs_dev_bucket/meme_imgs</string>
+    <string name="backgroundThumbDir">thumbs2</string>
+    <string name="webServiceMemesCreateJson">/memes/create/json</string>
+    <string name="webServiceMemeBackgroundPopularityByTypeNameJson">/memebackgroundpopularitys/find/json</string>
+    <string name="webServiceMemeUserCreateJson">/memeusers/create/json</string>
+    <string name="webServiceListMemeBackgroundsJson">/memebackgrounds/list/json/1/100</string>
+    <string name="webServiceListSampleMemesForBackgroundIdPre">/samplememes/listforbackground/json</string>
+    <string name="webServiceListSampleMemesForBackgroundIdPost">/1/10</string>
+    <string name="webServiceListFavoriteMemeBackgroundsForUserId">/memeuserfavorites/backgroundsforuserid/json/1/10</string>
+    <string name="webServiceStoreMemeFavoriteJson">/memeuserfavorites/store/json</string>
+    <string name="webServiceRemoveMemeFavoriteJson">/memeuserfavorites/remove/json</string>
+    <string name="webServiceFindMemeBackgroundsByNameJson">/memebackgrounds/findbyname/json</string>
+    <string name="webServiceGetMemesForUserJson">/memes/get_for_user/json/1/100</string>
+    <string name="eulaDialogMessage">Use of the Try Meme! app requires acceptance of the EULA (located at http://www.trymeme.com/eula.txt) Do you accept the EULA?</string>
+    <string name="eulaDialogAccept">Accept</string>
+    <string name="eulaDialogDecline">Decline</string>
 
+    <string name="memeStoredSuccessMessage">Saved! You can now view this meme under My Memes.</string>
+    <string name="memeStoredFailMessage">We had trouble saving your meme!</string>
+    
     <item name="maxFontSize" format="integer" type="integer">35</item>
     <item name="initialFontSize" format="integer" type="integer">26</item>
 
@@ -61,5 +72,17 @@
     <item name="meme_list_item_thumb_max_width" format="dimension" type="dimen">75dp</item>
     <item name="meme_list_item_text_min_width" format="dimension" type="dimen">600dp</item>
     <item name="meme_list_item_text_max_width" format="dimension" type="dimen">600dp</item>
+    <color name="back_transparent">#80000000</color>
+    <string name="refresh_menu_item_text">Refresh</string>
+    <string name="my_meme_item_text">My Memes</string>
+    <string name="key_popular_backgrounds">popular_backgrounds</string>
+    <string name="key_my_memes">my_memes</string>
+    <string name="key_sample_memes">sample_memes-</string>
+    <string name="key_thumb">thumb-</string>
+    <string name="key_background">background-</string>
+    <string name="popular_type_name">popular</string>
+    <string name="fav_backgrounds">fav_backgrounds</string>
+    <item format="float" type="dimen" name="memeTextViewTextMultiplier">0.0008</item>
+    <item format="float" type="dimen" name="memeTextViewTextConstant">35</item>
 
 </resources>

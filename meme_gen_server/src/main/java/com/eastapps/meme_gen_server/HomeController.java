@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eastapps.meme_gen_server.domain.CrawlerBackground;
 import com.eastapps.meme_gen_server.domain.CrawlerMeme;
 import com.eastapps.meme_gen_server.domain.IntResult;
 import com.eastapps.meme_gen_server.domain.ShallowMeme;
@@ -97,6 +98,12 @@ public class HomeController {
 	@ResponseBody
 	public Boolean storeMemesFromCrawler(@RequestBody final CrawlerMeme[] memes) {
 		return memeService.storeCrawlerMemes(Arrays.asList(memes));
+	}
+	
+	@RequestMapping(value = {"/crawler/store_backgrounds"}, method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean storeMemeBackgroundsFromCrawler(@RequestBody final CrawlerBackground[] bgs) {
+		return memeService.storeCrawlerBackground(Arrays.asList(bgs));
 	}
 
 	@RequestMapping(value = { "/meme_data/{meme_id}/json" }, method = RequestMethod.GET)

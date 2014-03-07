@@ -3,9 +3,6 @@ import urllib2
 import re
 import json
 import sys
-import simplejson as json
-from httplib2 import Http
-from urllib import urlencode
 
 def get_page_text(url):
 	pageResults = urllib2.urlopen(url)
@@ -131,6 +128,9 @@ def print_meme_detail(url):
 	
 	# create the url of the api call to retrieve the
 	# captions (top/bottom text)
+	
+	# create the url of the api call to retrieve the
+	# captions (top/bottom text)
 	captionApiUrl = get_caption_api_url(baseUrl, apiCaptionUrl, pageTwoLinkUrl)
 	
 	# call the api and process the response
@@ -179,26 +179,3 @@ def main():
 		detail = get_quickmeme_meme_detail(ea)
 	#	print detail
 		
-		memeList.append(detail)
-			
-	memeListJson = json.dumps(memeList)
-	print memeListJson
-	h = Http()
-	resp, content = h.request(
-		'http://polar-cliffs-6420.herokuapp.com/spring/crawler/store_memes', 
-		'POST', 
-		body = memeListJson,
-		headers = { 'Accept' : 'application/json', 'Content-type' : 'application/json' }
-	)
-
-	print resp
-	print content
-	
-		
-		
-		
-
-main()
-					
-
-

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_eastapps_mgs_model_DeviceInfo" items="${deviceinfoes}" z="fwjdyvsb11Ax+ONbsLnBcjG1sjc=">
+        <table:table data="${deviceinfoes}" id="l_com_eastapps_mgs_model_DeviceInfo" path="/deviceinfoes" z="PQk2QG5aH4IfR4E3tflhOPOnl08=">
+            <table:column id="c_com_eastapps_mgs_model_DeviceInfo_deviceUser" property="deviceUser" z="9+OY59AFE7B6r4f1uyltMj5/DRE="/>
+            <table:column id="c_com_eastapps_mgs_model_DeviceInfo_uniqueId" property="uniqueId" z="OWnPyYT+9dVOOc8BhYRh5aydm3Y="/>
+        </table:table>
+    </page:list>
+</div>
