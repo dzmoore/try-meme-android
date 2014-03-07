@@ -33,6 +33,9 @@
     <string name="webServiceRemoveMemeFavoriteJson">/memeuserfavorites/remove/json</string>
     <string name="webServiceFindMemeBackgroundsByNameJson">/memebackgrounds/findbyname/json</string>
     <string name="webServiceGetMemesForUserJson">/memes/get_for_user/json/1/100</string>
+    <string name="eulaDialogMessage">Use of the Try Meme! app requires acceptance of the EULA (located at http://www.trymeme.com/eula.txt) Do you accept the EULA?</string>
+    <string name="eulaDialogAccept">Accept</string>
+    <string name="eulaDialogDecline">Decline</string>
 
     <string name="memeStoredSuccessMessage">Saved! You can now view this meme under My Memes.</string>
     <string name="memeStoredFailMessage">We had trouble saving your meme!</string>

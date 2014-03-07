@@ -47,12 +47,20 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	private AtomicBoolean isLoadingList = new AtomicBoolean(false);
 	private AtomicBoolean isViewSet = new AtomicBoolean(false);
 	private FilterType currentViewType;
+	private AlertDialog eulaAlertDialog;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		currentViewType = FilterType.UNINITIALIZED;
 		
 		super.onCreate(savedInstanceState);
+		
+		if (savedInstanceState != null && savedInstanceState.containsKey("eulaAlertDialogShowing")) {
+			if (savedInstanceState.getBoolean("eulaAlertDialogShowing")) {
+				createEulaAlertDialog(new AtomicBoolean(false));
+				eulaAlertDialog.show();
+			}
+		}
 		
 		initActivity();
 	}
@@ -124,36 +132,10 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	private void initActivity() {
 		if (!UserMgr.hasUserAcceptedEula()) {
 			final AtomicBoolean doWaitLoop = new AtomicBoolean(false);
-			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder
-                .setMessage("Use of the Try Meme! app requires acceptance of the EULA located at http://www.trymeme.com/eula. Do you accept the EULA?")
-                .setCancelable(false)
-                .setPositiveButton("I Accept",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                    	UserMgr.setUserAcceptedEula(true);
-        				synchronized (ViewMemeTypeListActivity.this) {
-        					doWaitLoop.set(false);
-							ViewMemeTypeListActivity.this.notify();
-						}
-                    }
-                  })
-                .setNegativeButton("Decline",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                    	UserMgr.setUserAcceptedEula(false);
-                    	synchronized (ViewMemeTypeListActivity.this) {
-        					doWaitLoop.set(false);
-							ViewMemeTypeListActivity.this.notify();
-						}
-                    	dialog.cancel();
-                    	ViewMemeTypeListActivity.this.finish();
-                    }
-            });
-			
-            // create alert dialog
-            final AlertDialog alertDialog = alertDialogBuilder.create();
+			createEulaAlertDialog(doWaitLoop);
 
             // show it
-            alertDialog.show();
+            eulaAlertDialog.show();
 		}
 		
 		if (getResources().getBoolean(R.bool.debug_toasts_enabled)) {
@@ -194,6 +176,39 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 //				AdMgr.getInstance().initAd(ViewMemeTypeListActivity.this, R.id.advertising_banner_view);
 //			}
 //		});
+	}
+
+	private void createEulaAlertDialog(final AtomicBoolean doWaitLoop) {
+		final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder
+		    .setMessage(getString(R.string.eulaDialogMessage))
+		    .setCancelable(false)
+		    .setPositiveButton(getString(R.string.eulaDialogAccept),new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog,int id) {
+		        	UserMgr.setUserAcceptedEula(true);
+					synchronized (ViewMemeTypeListActivity.this) {
+						doWaitLoop.set(false);
+						ViewMemeTypeListActivity.this.notify();
+					}
+					
+					eulaAlertDialog = null;
+		        }
+		      })
+		    .setNegativeButton(getString(R.string.eulaDialogDecline),new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog,int id) {
+		        	UserMgr.setUserAcceptedEula(false);
+		        	synchronized (ViewMemeTypeListActivity.this) {
+						doWaitLoop.set(false);
+						ViewMemeTypeListActivity.this.notify();
+					}
+		        	dialog.cancel();
+		        	ViewMemeTypeListActivity.this.finish();
+		        	
+		        	eulaAlertDialog = null;
+		        }
+		});
+		
+		eulaAlertDialog = alertDialogBuilder.create();
 	}
 	
 	private void initFilterBar() {
@@ -442,6 +457,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		CacheMgr.getInstance().storeCacheToFile();
+		
+		outState.putBoolean("eulaAlertDialogShowing", eulaAlertDialog != null ? eulaAlertDialog.isShowing() : false);
 		
 		super.onSaveInstanceState(outState);
 	}
