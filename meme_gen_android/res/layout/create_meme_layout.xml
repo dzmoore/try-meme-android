@@ -10,14 +10,14 @@
 
     <fragment
         android:id="@+id/create_meme_buttons_fragment"
-        android:name="com.eastapps.meme_gen_android.widget.fragment.CreateMemeButtonsFragment"
+        android:name="com.trymeme.meme_gen_android.widget.fragment.CreateMemeButtonsFragment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@+id/image_relative_layout"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="0dp"
         android:layout_gravity="top"
         android:layout_weight="1" >
         
@@ -29,11 +29,11 @@
         
     </RelativeLayout>
     
-    <com.mobclix.android.sdk.MobclixMMABannerXLAdView
+    <!-- <com.mobclix.android.sdk.MobclixMMABannerXLAdView
         android:id="@+id/create_view_advertising_banner_view"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:tag="adspace" />
+        android:tag="adspace" /> -->
 
 </LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_eastapps_mgs_model_MemeUser" object="${memeuser}" path="/memeusers" z="PyaJVQxt26G6oa7RdCFj+0YdB9E=">
+        <field:display field="active" id="s_com_eastapps_mgs_model_MemeUser_active" object="${memeuser}" z="DiOL1qyg/esNBG5uqxwicDXtN50="/>
+        <field:display field="username" id="s_com_eastapps_mgs_model_MemeUser_username" object="${memeuser}" z="ZDn3xCQtwDAltUHQY24x2/m8Fm0="/>
+        <field:display field="password" id="s_com_eastapps_mgs_model_MemeUser_password" object="${memeuser}" z="yBf6X636G5ZCQWRdM1dLdzgNXwU="/>
+        <field:display field="salt" id="s_com_eastapps_mgs_model_MemeUser_salt" object="${memeuser}" z="RtMyVA/F2TZQrgOO9zmeDq2BgB4="/>
+        <field:display field="favoriteMemes" id="s_com_eastapps_mgs_model_MemeUser_favoriteMemes" object="${memeuser}" z="zTRE+LwTlzK1stVpx6New/kT6+8="/>
+    </page:show>
+</div>

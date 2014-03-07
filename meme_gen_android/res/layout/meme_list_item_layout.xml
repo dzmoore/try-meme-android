@@ -16,15 +16,14 @@
         android:maxWidth="@dimen/meme_list_item_heart_btn_max_width"
         android:src="@drawable/fav_icon_v2" />
 
-    <com.eastapps.meme_gen_android.widget.ResizableImageView
+    <com.trymeme.meme_gen_android.widget.ResizableImageView
         android:id="@+id/list_item_thumb_img_view"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
-        android:scaleType="fitStart"
         android:minWidth="@dimen/meme_list_item_thumb_min_width"
-        android:maxWidth="@dimen/meme_list_item_thumb_max_width"
-        android:src="@drawable/config_icon" />
+        android:scaleType="fitStart"
+        android:src="@drawable/college_freshman" />
 
     <TextView
         android:id="@+id/list_item_text_view"
