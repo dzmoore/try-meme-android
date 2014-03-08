@@ -9,13 +9,4 @@
 *.apk
 
 \.*
-
-meme_web_reader/*.jpg
-meme_gen_android/bin/*
-meme_gen_android/gen/*
-mgs_v1/local.out
-mgs_v1/local.log
-mgs_v1/target/*
-*\.out
-meme_gen_android/bin/
-meme_gen_android_test/bin/
+bin/
