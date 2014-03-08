@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_com_eastapps_mgs_model_LvPopularityType" object="${lvpopularitytype}" path="/lvpopularitytypes" z="7J0rFt12g35P/P8EnjjmSWVd9wA=">
-        <field:display field="popularityTypeName" id="s_com_eastapps_mgs_model_LvPopularityType_popularityTypeName" object="${lvpopularitytype}" z="v30ov7cFeDkY24ODjrkRyGyqpHE="/>
-    </page:show>
-</div>
