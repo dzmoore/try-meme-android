@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -71,6 +72,7 @@ public class CreateMemeActivity extends FragmentActivity {
 	private SeekBar bottomSeekBar;
 	private IMemeService memeService;
 	private AtomicBoolean isLoadComplete;
+	private ProgressDialog loadingDialog;
 	
 	private double initialFontSize;
 	
@@ -87,6 +89,18 @@ public class CreateMemeActivity extends FragmentActivity {
 		isBottomTextSizing = new AtomicBoolean(false);
 		
 		isLoadComplete = new AtomicBoolean(false);
+	}
+	
+	private void initLoadingDialog() {
+		loadingDialog = new ProgressDialog(this);
+		loadingDialog.setIndeterminate(true);
+		loadingDialog.setMessage("Loading Background and Samples...");
+	}
+	
+	@Override
+	protected void onResume() {
+		initLoadingDialog();
+		super.onResume();
 	}
 
 	@Override
@@ -112,6 +126,8 @@ public class CreateMemeActivity extends FragmentActivity {
 			}
 		});
 		
+		initLoadingDialog();
+		
 		memePager = (ViewPager)findViewById(R.id.meme_view_pager);
 		
 		initialFontSize = getResources().getInteger(R.integer.initialFontSize);
@@ -134,14 +150,31 @@ public class CreateMemeActivity extends FragmentActivity {
 			TaskRunner.runAsync(new Runnable() {
 				@Override
 				public void run() {
-					if (memes == null) {
-						memeViewData = memeService.createMemeViewData(memeBg);
-						
-					} else {
-						memeViewData = memeService.createMemeViewData(memes);
-					}
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							loadingDialog.show();
+						}
+					});
 					
-					setMemeViewData(memeViewData);
+					try {
+                        if (memes == null) {
+                            memeViewData = memeService.createMemeViewData(memeBg);
+                            
+                        } else {
+                            memeViewData = memeService.createMemeViewData(memes);
+                        }
+                        
+                        setMemeViewData(memeViewData);
+                        
+					} finally {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingDialog.hide();
+                            }
+                        });
+					}
 				}
 			});
 		}

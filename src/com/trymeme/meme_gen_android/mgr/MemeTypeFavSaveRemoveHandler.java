@@ -40,60 +40,71 @@ public class MemeTypeFavSaveRemoveHandler {
 			}
 		};
 		
-		TaskRunner.runAsync(new Runnable() {
-			@Override
-			public void run() {
-				if (item.isFavorite()) {
-					final Map<String, String> params = new HashMap<String, String>();
-					params.put("action", "Removed");
-					
-					final boolean success = MemeService.getInstance().removeFavType(
-						UserMgr.getUserId(),
-						item.getMemeBackground().getId()
-					);
-					
-					item.setFavorite(false);
-					
-					if (heartImgBtn != null) {
-						activity.runOnUiThread(
-							new Runnable() {
-								public void run() {
-									heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.unselected_fav_icon_v2));
+		if (heartImgBtn != null) {
+			activity.runOnUiThread(
+				new Runnable() {
+					public void run() {
+						if (item.isFavorite()) {
+                            heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.unselected_fav_icon_v2));
+                            
+						} else {
+                            heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.fav_icon_v2));
+						}
+						
+						TaskRunner.runAsync(new Runnable() {
+							@Override
+							public void run() {
+								if (item.isFavorite()) {
+									final Map<String, String> params = new HashMap<String, String>();
+									params.put("action", "Removed");
+									
+									final boolean success = MemeService.getInstance().removeFavType(
+										UserMgr.getUserId(),
+										item.getMemeBackground().getId()
+									);
+									
+									item.setFavorite(false);
+									
+									if (heartImgBtn != null) {
+										activity.runOnUiThread(
+											new Runnable() {
+												public void run() {
+													heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.unselected_fav_icon_v2));
+												}
+											}
+										);
+									}
+									
+									params.put("success", String.valueOf(success));
+									
+									c.callback(params);
+									
+								} else {
+									final Map<String, String> params = new HashMap<String, String>();
+									params.put("action", "Stored");
+									
+									final boolean success = MemeService.getInstance().storeFavType(
+										UserMgr.getUser().getId(),
+										item.getMemeBackground().getId()
+									);
+									
+									item.setFavorite(true);
+									
+									
+									
+									params.put("success", String.valueOf(success));
+									
+									c.callback(params);
 								}
 							}
-						);
+						});
 					}
-					
-					params.put("success", String.valueOf(success));
-					
-					c.callback(params);
-					
-				} else {
-					final Map<String, String> params = new HashMap<String, String>();
-					params.put("action", "Stored");
-					
-					final boolean success = MemeService.getInstance().storeFavType(
-						UserMgr.getUser().getId(),
-						item.getMemeBackground().getId()
-					);
-					
-					item.setFavorite(true);
-					
-					if (heartImgBtn != null) {
-						activity.runOnUiThread(
-							new Runnable() {
-								public void run() {
-									heartImgBtn.setImageDrawable(activity.getResources().getDrawable(R.drawable.fav_icon_v2));
-								}
-							}
-						);
-					}
-					
-					params.put("success", String.valueOf(success));
-					
-					c.callback(params);
 				}
-			}
-		});
+			);
+			
+			
+		}
+		
+		
 	}
 }

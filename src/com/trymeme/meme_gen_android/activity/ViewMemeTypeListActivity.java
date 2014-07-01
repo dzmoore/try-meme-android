@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.trymeme.meme_gen_android.BuildConfig;
@@ -48,6 +51,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	private AtomicBoolean isViewSet = new AtomicBoolean(false);
 	private FilterType currentViewType;
 	private AlertDialog eulaAlertDialog;
+	private ProgressDialog loadingDialog;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		
 		if (savedInstanceState != null && savedInstanceState.containsKey("eulaAlertDialogShowing")) {
-			if (savedInstanceState.getBoolean("eulaAlertDialogShowing")) {
+			if (savedInstanceState.getBoolean("eulaAlertDialogShowing") && !UserMgr.hasUserAcceptedEula()) {
 				createEulaAlertDialog(new AtomicBoolean(false));
 				eulaAlertDialog.show();
 			}
@@ -72,6 +77,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 		final MemeListFilterBarFragment filterBarFrag = (MemeListFilterBarFragment) fragMgr.findFragmentById(R.id.meme_list_filter_bar_fragment);
 		filterBarFrag.setFilterBtnClickedCallback(callback);
 		super.onResume();
+		
+		initLoadingDialog();
 	}
 	
 	@Override
@@ -130,6 +137,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 	}
 	
 	private void initActivity() {
+        initLoadingDialog();
+        
 		if (!UserMgr.hasUserAcceptedEula()) {
 			final AtomicBoolean doWaitLoop = new AtomicBoolean(false);
 			createEulaAlertDialog(doWaitLoop);
@@ -176,6 +185,12 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 //				AdMgr.getInstance().initAd(ViewMemeTypeListActivity.this, R.id.advertising_banner_view);
 //			}
 //		});
+	}
+
+	private void initLoadingDialog() {
+		loadingDialog = new ProgressDialog(ViewMemeTypeListActivity.this);
+		loadingDialog.setIndeterminate(true);
+		loadingDialog.setMessage("Loading Backgrounds...");
 	}
 
 	private void createEulaAlertDialog(final AtomicBoolean doWaitLoop) {
@@ -298,15 +313,35 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 			return;
 		}
 		
-		if (params.containsKey(Constants.KEY_FILTER_BTN_ID_CLICKED)) {
-			final int btnIdClicked = (Integer) params.get(Constants.KEY_FILTER_BTN_ID_CLICKED);
-			handleFilterBtnForBtnId(btnIdClicked);
-		
-		} else if (params.containsKey(Constants.KEY_FILTER_TYPE_ENUM)) {
-			final FilterType filterType = (FilterType) params.get(Constants.KEY_FILTER_TYPE_ENUM);
-			handleFilterBtnForEnum(filterType);
+		try {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+                    loadingDialog.show();
+				}
+			});
+			
+            if (params.containsKey(Constants.KEY_FILTER_BTN_ID_CLICKED)) {
+                final int btnIdClicked = (Integer) params.get(Constants.KEY_FILTER_BTN_ID_CLICKED);
+                handleFilterBtnForBtnId(btnIdClicked);
+            
+            } else if (params.containsKey(Constants.KEY_FILTER_TYPE_ENUM)) {
+                final FilterType filterType = (FilterType) params.get(Constants.KEY_FILTER_TYPE_ENUM);
+                handleFilterBtnForEnum(filterType);
+            }
+            
+		} finally {
 		}
 		
+	}
+	
+	private void stopAnyLoadingBars() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				loadingDialog.hide();
+			}
+		});
 	}
 
 	private void handleFavBtnClick() {
@@ -331,7 +366,7 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 					});
 				}
 				
-				
+				stopAnyLoadingBars();
 			}
 		});
 		
@@ -345,6 +380,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 				items = memeService.getAllMemeTypesListData();
 				initMemeList();
 				currentViewType = FilterType.ALL;
+				
+				stopAnyLoadingBars();
 			}
 		});
 	}
@@ -360,6 +397,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 				items = memeService.getAllFavMemeTypesListData();
 				initMemeList();
 				currentViewType = FilterType.FAVORITE;
+	
+				stopAnyLoadingBars();
 			}
 		});
 	}
@@ -371,6 +410,8 @@ public class ViewMemeTypeListActivity extends FragmentActivity {
 				items = memeService.getAllPopularTypesListData();
 				initMemeList();
 				currentViewType = FilterType.POPULAR;
+				
+                stopAnyLoadingBars();
 			}
 		});
 	}
